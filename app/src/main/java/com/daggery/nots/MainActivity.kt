@@ -37,11 +37,13 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.findNavController()
-/*
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            Log.d("LOL", destination.toString())
+            if(destination.id == R.id.homeFragment) {
+                Log.d("LOL", "GOTCHU")
+            } else {
+                binding.fab.visibility = View.GONE
+            }
         }
-*/
 
         // Set toolbar
         setSupportActionBar(binding.appBar)
