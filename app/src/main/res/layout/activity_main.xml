@@ -44,6 +44,7 @@
         app:tint="@color/black" />
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:name="androidx.navigation.fragment.NavHostFragment"
