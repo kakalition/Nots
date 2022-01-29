@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import com.daggery.nots.MainActivity
 import com.daggery.nots.NotsApplication
+import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.home.viewmodel.HomeViewModelFactory
@@ -29,6 +31,7 @@ class HomeFragment : Fragment() {
             (this.activity?.application as NotsApplication).database
         )
     }
+    private lateinit var notes: LiveData<List<Note>>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +44,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val notes = viewModel.notes
-
+        notes = viewModel.notes
         notes.observe(viewLifecycleOwner) {}
 
+        // Conditionally display empty illustration and notes list
         if(notes.value.isNullOrEmpty()){
             binding.emptyNotesLayout.visibility = View.VISIBLE
             binding.recyclerviewTest.visibility = View.GONE
