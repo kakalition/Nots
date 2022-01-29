@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentHomeBinding
+import com.daggery.nots.home.viewmodel.HomeViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -18,6 +20,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val viewModels: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -12,6 +12,10 @@ class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
     // Get all notes
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
 
+    fun isPrioritized(note: Note): Boolean {
+        return note.priority == 1
+    }
+
     // Get note with given uuid
     fun getNote(uuid: String): LiveData<Note?> {
         return database.noteDao().getNote(uuid).asLiveData()
