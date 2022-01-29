@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -55,5 +56,6 @@ class HomeFragment : Fragment() {
             binding.emptyNotesLayout.visibility = View.GONE
             binding.recyclerviewTest.visibility = View.VISIBLE
         }
+
     }
 }

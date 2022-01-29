@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
@@ -42,7 +43,12 @@ class MainActivity : AppCompatActivity() {
         // Set toolbar
         setSupportActionBar(binding.appBar)
         setupActionBarWithNavController(navController)
-        supportActionBar?.title = " "
+        supportActionBar?.displayOptions = DISPLAY_SHOW_CUSTOM
+
+        // OnClickListener
+        binding.apply {
+            fab.setOnClickListener(fabOnClickListener)
+        }
 
     }
 
