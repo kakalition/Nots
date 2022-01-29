@@ -3,6 +3,7 @@ package com.daggery.nots
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if(destination.id == R.id.homeFragment) {
-                Log.d("LOL", "GOTCHU")
+                binding.fab.visibility = View.VISIBLE
             } else {
                 binding.fab.visibility = View.GONE
             }

@@ -10,6 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/app_bar"
         app:title=" "
+        app:contentInsetStart="22dp"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:backgroundTint="@color/black_surface"
