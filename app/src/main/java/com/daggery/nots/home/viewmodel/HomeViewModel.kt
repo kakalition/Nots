@@ -10,7 +10,7 @@ class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
     // Get note dao
     private val noteDao = database.noteDao()
     // Get all notes
-    val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
+    val notes: LiveData<List<Note?>> = noteDao.getNotes().asLiveData()
 
     fun isPrioritized(note: Note): Boolean {
         return note.priority == 1

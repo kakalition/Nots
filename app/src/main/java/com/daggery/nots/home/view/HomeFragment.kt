@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    val viewModel: HomeViewModel by activityViewModels {
+    private val viewModel: HomeViewModel by activityViewModels {
         HomeViewModelFactory(
             (this.activity?.application as NotsApplication).database
         )
@@ -40,5 +40,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val notes = viewModel.notes
+
+        notes.observe(viewLifecycleOwner) {}
+
+        if(notes.value.isNullOrEmpty()){
+            binding.emptyNotesLayout.visibility = View.VISIBLE
+            binding.recyclerviewTest.visibility = View.GONE
+        } else {
+            binding.emptyNotesLayout.visibility = View.GONE
+            binding.recyclerviewTest.visibility = View.VISIBLE
+        }
     }
 }
