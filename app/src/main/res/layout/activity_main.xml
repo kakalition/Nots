@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/app_bar"
         app:title=" "
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:fontFamily="@font/inter_bold"
             android:textAppearance="?attr/textAppearanceHeadline5"
             tools:text="Nots." />
-    </com.google.android.material.appbar.MaterialToolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
