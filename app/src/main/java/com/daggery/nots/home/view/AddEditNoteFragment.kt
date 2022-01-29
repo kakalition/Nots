@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.daggery.nots.R
 
+// TODO: Implement Save Edit Functionality
+
 class AddEditNoteFragment : Fragment() {
 
     override fun onCreateView(
@@ -17,4 +19,8 @@ class AddEditNoteFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_edit_note, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
 }
