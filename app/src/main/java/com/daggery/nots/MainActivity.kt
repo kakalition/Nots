@@ -2,6 +2,7 @@ package com.daggery.nots
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
@@ -25,20 +26,22 @@ class MainActivity : AppCompatActivity() {
             (this.application as NotsApplication).database
         )
     }
-
-    private val fabOnClickListener = { view: View ->
-        navController.navigate(R.id.action_homeFragment_to_addEditNoteFragment)
-    }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.findNavController()
+/*
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            Log.d("LOL", destination.toString())
+        }
+*/
 
         // Set toolbar
         setSupportActionBar(binding.appBar)
@@ -49,11 +52,14 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             fab.setOnClickListener(fabOnClickListener)
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    private val fabOnClickListener = { view: View ->
+        navController.navigate(R.id.action_homeFragment_to_addEditNoteFragment)
     }
 
     fun showDeleteDialog() {
