@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:padding="20dp"
+        android:text="Whoops!"
+        android:textAppearance="?attr/textAppearanceDisplayMedium"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/empty_illustration"
+        app:layout_constraintEnd_toEndOf="@id/empty_illustration"
+        app:layout_constraintStart_toStartOf="@id/empty_illustration" />
+
+    <ImageView
+        android:id="@+id/empty_illustration"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:src="@drawable/illustration_empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_light"
+        android:padding="20dp"
+        android:text="You don't have any note, yet.\nTap the FAB to create one"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/empty_illustration" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_test"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:backgroundTintMode="add"
+        android:foregroundTintMode="add"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
