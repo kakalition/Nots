@@ -69,3 +69,13 @@ class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
         }
     }
 }
+
+class HomeViewModelFactory(private val database: NotsDatabase) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return HomeViewModel(database) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel")
+    }
+}
