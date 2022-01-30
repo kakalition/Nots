@@ -6,23 +6,21 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.daggery.nots.MainActivity
 import com.daggery.nots.NotsApplication
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentAddEditNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.home.viewmodel.HomeViewModelFactory
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 // TODO: Implement Save Edit Functionality
 // TODO: Check Observer
-// TODO: Remove 3 Dots Action
+// TODO: Implement Edit Action Button
 
-class AddEditNoteFragment : Fragment() {
+class AddViewNoteFragment : Fragment() {
 
     private var _binding: FragmentAddEditNoteBinding? = null
     private val binding get() = _binding!!
@@ -40,10 +38,30 @@ class AddEditNoteFragment : Fragment() {
         )
     }
 
-    private val args: AddEditNoteFragmentArgs by navArgs()
+    private val onDeleteTapped = {
+        MaterialAlertDialogBuilder(requireContext())
+            .setView(R.layout.dialog_delete)
+            .setCancelable(false)
+            .setPositiveButton("Delete") { dialog, which ->
+                val note = viewModel.getNote(args.uuid)
+                note.observe(viewLifecycleOwner) {
+                    it?.let {
+                        Log.d("LOL: getNote", it.toString() )
+                        viewModel.deleteNote(it)
+                        findNavController().navigateUp()
+                    }
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                dialog.dismiss()
+            }
+            .show()
+    }
 
+    private val args: AddViewNoteFragmentArgs by navArgs()
+
+/*
     private fun setAddEditEnvironment() {
-        Log.d("LOL: uuid", args.uuid)
         if(args.uuid.isNotBlank()) populateField()
         binding.apply {
             noteTitle.isEnabled = true
@@ -64,6 +82,7 @@ class AddEditNoteFragment : Fragment() {
             noteDate.visibility = View.VISIBLE
         }
     }
+*/
 
     private fun populateField() {
         val noteLiveData = viewModel.getNote(args.uuid)
@@ -79,8 +98,6 @@ class AddEditNoteFragment : Fragment() {
     }
 
     private fun logArgs() {
-        Log.d("LOL: isReading", args.isReading.toString())
-        Log.d("LOL: uuid", args.uuid)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,11 +117,8 @@ class AddEditNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         logArgs()
 
-        if(args.isReading) {
-            setReadEnvironment()
-        } else {
-            setAddEditEnvironment()
-        }
+        if(args.uuid.isNotBlank()) populateField()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -113,20 +127,20 @@ class AddEditNoteFragment : Fragment() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        if(args.isReading) {
+        if(args.uuid.isBlank()) {
 /*
             menu.add(Menu.NONE, R.id.confirm_button, Menu.NONE, "Confirm")
             menu.removeItem(R.id.edit_button)
 */
-            menu.findItem(R.id.confirm_button).setVisible(false)
-            menu.findItem(R.id.edit_button).setVisible(true)
+            menu.findItem(R.id.confirm_button).setVisible(true)
+            menu.findItem(R.id.delete_button).setVisible(false)
         } else {
 /*
             menu.add(Menu.NONE, R.id.edit_button, Menu.NONE, "Edit")
             menu.removeItem(R.id.confirm_button)
 */
-            menu.findItem(R.id.confirm_button).setVisible(true)
-            menu.findItem(R.id.edit_button).setVisible(false)
+            menu.findItem(R.id.confirm_button).setVisible(false)
+            menu.findItem(R.id.delete_button).setVisible(true)
         }
         super.onPrepareOptionsMenu(menu)
     }
@@ -136,6 +150,10 @@ class AddEditNoteFragment : Fragment() {
             R.id.confirm_button -> {
                 onConfirmTapped()
                 findNavController().navigateUp()
+                return true
+            }
+            R.id.delete_button -> {
+                onDeleteTapped()
                 return true
             }
             else -> {

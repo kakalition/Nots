@@ -80,14 +80,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun showDeleteDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setView(R.layout.dialog_delete)
-            .setPositiveButton("Delete") { dialog, which ->
-            }
-            .setNegativeButton("Cancel") { dialog, which ->
-
-            }
-            .show()
-    }
 }
