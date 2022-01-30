@@ -14,7 +14,7 @@ class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
     // Get all notes
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
 
-    private fun getCurrentDate(): String {
+    fun getCurrentDate(): String {
         val date = Calendar.getInstance().time
         val formatter = SimpleDateFormat("MMMM dd, yyyy")
         val formattedDate = formatter.format(date)

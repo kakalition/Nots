@@ -22,7 +22,7 @@
         android:id="@+id/addEditNoteFragment"
         android:name="com.daggery.nots.home.view.AddViewNoteFragment"
         android:label="fragment_add_edit_note"
-        tools:layout="@layout/fragment_add_edit_note" >
+        tools:layout="@layout/fragment_add_view_note" >
         <argument
             android:name="uuid"
             app:argType="string" />

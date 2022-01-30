@@ -29,7 +29,6 @@ import java.util.*
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
 // TODO: Load list when splash screen is shown
-// TODO: OnLongHoldListener for Note (Show Prioritize Dialog)
 // TODO: Create Options Menu
 
 class HomeFragment : Fragment() {

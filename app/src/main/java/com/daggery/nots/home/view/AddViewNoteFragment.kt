@@ -11,10 +11,11 @@ import androidx.navigation.fragment.navArgs
 import com.daggery.nots.NotsApplication
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
-import com.daggery.nots.databinding.FragmentAddEditNoteBinding
+import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.home.viewmodel.HomeViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Implement Save Edit Functionality
 // TODO: Check Observer
@@ -23,7 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class AddViewNoteFragment : Fragment() {
 
-    private var _binding: FragmentAddEditNoteBinding? = null
+    private var _binding: FragmentAddViewNoteBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by activityViewModels {
@@ -32,11 +33,17 @@ class AddViewNoteFragment : Fragment() {
         )
     }
 
+
     private val onConfirmTapped = {
-        viewModel.addNote(
-            binding.noteTitle.text.toString(),
-            binding.noteBody.text.toString()
-        )
+        val noteTitle = binding.noteTitle.text.toString()
+        val noteBody = binding.noteBody.text.toString()
+
+        if(noteTitle.isBlank() && noteBody.isBlank()) {
+            showFailToAddSnackBar()
+        } else {
+            viewModel.addNote(noteTitle, noteBody)
+            findNavController().navigateUp()
+        }
     }
 
     private val onDeleteTapped = {
@@ -60,29 +67,14 @@ class AddViewNoteFragment : Fragment() {
 
     private val args: AddViewNoteFragmentArgs by navArgs()
 
-/*
-    private fun setAddEditEnvironment() {
-        if(args.uuid.isNotBlank()) populateField()
-        binding.apply {
-            noteTitle.isEnabled = true
-            noteBody.isEnabled = true
-            noteDate.visibility = View.GONE
-        }
+    private fun showFailToAddSnackBar() {
+        val snackbar = Snackbar.make(
+            binding.addViewNoteRoot,
+            "Failed to add note. Fields cannot be blank.",
+            2000
+        )
+        snackbar.show()
     }
-
-    private fun setReadEnvironment() {
-        populateField()
-        binding.apply {
-            noteTitle.hint = ""
-            noteTitle.isEnabled = false
-            noteTitle.setTextColor((resources.getColor(R.color.white_surface, null)))
-            noteBody.hint = ""
-            noteBody.isEnabled = false
-            noteBody.setTextColor((resources.getColor(R.color.white_surface, null)))
-            noteDate.visibility = View.VISIBLE
-        }
-    }
-*/
 
     private fun populateField() {
         val noteLiveData = viewModel.getNote(args.uuid)
@@ -109,7 +101,7 @@ class AddViewNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAddEditNoteBinding.inflate(inflater, container, false)
+        _binding = FragmentAddViewNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -117,7 +109,11 @@ class AddViewNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         logArgs()
 
-        if(args.uuid.isNotBlank()) populateField()
+        if(args.uuid.isNotBlank()) {
+            populateField()
+        } else {
+            binding.noteDate.text = viewModel.getCurrentDate()
+        }
 
     }
 
@@ -128,17 +124,9 @@ class AddViewNoteFragment : Fragment() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         if(args.uuid.isBlank()) {
-/*
-            menu.add(Menu.NONE, R.id.confirm_button, Menu.NONE, "Confirm")
-            menu.removeItem(R.id.edit_button)
-*/
             menu.findItem(R.id.confirm_button).setVisible(true)
             menu.findItem(R.id.delete_button).setVisible(false)
         } else {
-/*
-            menu.add(Menu.NONE, R.id.edit_button, Menu.NONE, "Edit")
-            menu.removeItem(R.id.confirm_button)
-*/
             menu.findItem(R.id.confirm_button).setVisible(false)
             menu.findItem(R.id.delete_button).setVisible(true)
         }
@@ -149,7 +137,6 @@ class AddViewNoteFragment : Fragment() {
         return when(item.itemId) {
             R.id.confirm_button -> {
                 onConfirmTapped()
-                findNavController().navigateUp()
                 return true
             }
             R.id.delete_button -> {
