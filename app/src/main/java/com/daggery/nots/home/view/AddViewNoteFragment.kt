@@ -19,6 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 // TODO: Implement Save Edit Functionality
 // TODO: Check Observer
 // TODO: Implement Edit Action Button
+// TODO: Assert Title and Body Cannot Be Empty
 
 class AddViewNoteFragment : Fragment() {
 
@@ -39,9 +40,8 @@ class AddViewNoteFragment : Fragment() {
     }
 
     private val onDeleteTapped = {
-        MaterialAlertDialogBuilder(requireContext())
+        MaterialAlertDialogBuilder(requireContext(), R.style.NotsAlertDialog)
             .setView(R.layout.dialog_delete)
-            .setCancelable(false)
             .setPositiveButton("Delete") { dialog, which ->
                 val note = viewModel.getNote(args.uuid)
                 note.observe(viewLifecycleOwner) {

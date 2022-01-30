@@ -9,8 +9,10 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
 
-class NoteListItemAdapter(private val noteClickListener: (Note) -> Unit)
-    : ListAdapter<Note, NoteListItemAdapter.NoteViewHolder>(DiffCallback) {
+class NoteListItemAdapter(
+    private val noteClickListener: (Note) -> Unit,
+    private val noteLongClickListener: (Note) -> Unit,
+) : ListAdapter<Note, NoteListItemAdapter.NoteViewHolder>(DiffCallback) {
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Note>() {
@@ -49,8 +51,10 @@ class NoteListItemAdapter(private val noteClickListener: (Note) -> Unit)
 
     override fun onBindViewHolder(holder: NoteListItemAdapter.NoteViewHolder, position: Int) {
         val current = getItem(position)
-        holder.itemView.setOnClickListener{
-            noteClickListener(current)
+        holder.itemView.setOnClickListener{ noteClickListener(current) }
+        holder.itemView.setOnLongClickListener {
+            noteLongClickListener(current)
+            return@setOnLongClickListener true
         }
         holder.bind(current)
     }

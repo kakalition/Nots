@@ -4,4 +4,9 @@
         <item name="paddingStart">0dp</item>
         <item name="android:paddingEnd">22dp</item>
     </style>
+    <style name="NotsAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/white_surface</item>
+        <item name="android:textColor">@color/black_surface</item>
+        <item name="android:textColorPrimary">@color/black_surface</item>
+    </style>
 </resources>
