@@ -18,6 +18,7 @@ import com.daggery.nots.databinding.ActivityMainBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.home.viewmodel.HomeViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,12 +30,20 @@ class MainActivity : AppCompatActivity() {
     }
     private lateinit var binding: ActivityMainBinding
 
+    lateinit var snackbar: Snackbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        snackbar = Snackbar.make(
+            binding.root,
+            "TEST",
+            1000
+        )
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.findNavController()
@@ -55,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             fab.setOnClickListener(fabOnClickListener)
         }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

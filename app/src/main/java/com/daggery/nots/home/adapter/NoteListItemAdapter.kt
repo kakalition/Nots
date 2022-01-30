@@ -2,19 +2,38 @@ package com.daggery.nots.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
 
-class NoteListItemAdapter(val noteList: List<Note>)
-    : RecyclerView.Adapter<NoteListItemAdapter.NoteViewHolder>() {
+class NoteListItemAdapter()
+    : ListAdapter<Note, NoteListItemAdapter.NoteViewHolder>(DiffCallback) {
 
-    class NoteViewHolder(binding: ListItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
-        val itemLayout = binding.listItemLayout
-        val noteTitle = binding.noteTitle
-        val noteBody = binding.noteBody
-        val noteDate = binding.noteDate
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Note>() {
+            override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+                return oldItem.uuid == newItem.uuid
+            }
+
+            override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
+
+    class NoteViewHolder(val binding: ListItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(note: Note) {
+            if(note.priority == 1) {
+                binding.listItemLayout.setBackgroundResource(R.drawable.list_item_note_bg_priority)
+            } else binding.listItemLayout.setBackgroundResource(R.drawable.list_item_note_bg)
+            binding.noteTitle.text = note.noteTitle
+            binding.noteBody.text = note.noteBody
+            binding.noteDate.text = note.noteDate
+        }
     }
 
     override fun onCreateViewHolder(
@@ -29,15 +48,7 @@ class NoteListItemAdapter(val noteList: List<Note>)
     }
 
     override fun onBindViewHolder(holder: NoteListItemAdapter.NoteViewHolder, position: Int) {
-        if(noteList[position].priority == 1) {
-            holder.itemLayout.setBackgroundResource(R.drawable.list_item_note_bg_priority)
-        } else holder.itemLayout.setBackgroundResource(R.drawable.list_item_note_bg)
-        holder.noteTitle.text = noteList[position].noteTitle
-        holder.noteBody.text = noteList[position].noteBody
-        holder.noteDate.text = noteList[position].noteDate
-    }
-
-    override fun getItemCount(): Int {
-        return noteList.size
+        val current = getItem(position)
+        holder.bind(current)
     }
 }
