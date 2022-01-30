@@ -12,11 +12,22 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_addEditNoteFragment"
-            app:destination="@id/addEditNoteFragment" />
+            app:destination="@id/addEditNoteFragment"
+            app:enterAnim="@anim/alpha_in"
+            app:exitAnim="@anim/alpha_out"
+            app:popEnterAnim="@anim/alpha_in"
+            app:popExitAnim="@anim/alpha_out" />
     </fragment>
     <fragment
         android:id="@+id/addEditNoteFragment"
         android:name="com.daggery.nots.home.view.AddEditNoteFragment"
         android:label="fragment_add_edit_note"
-        tools:layout="@layout/fragment_add_edit_note" />
+        tools:layout="@layout/fragment_add_edit_note" >
+        <argument
+            android:name="uuid"
+            app:argType="string" />
+        <argument
+            android:name="isReading"
+            app:argType="boolean" />
+    </fragment>
 </navigation>

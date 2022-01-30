@@ -7,7 +7,7 @@
     tools:context=".home.view.AddEditNoteFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/note_title_layout"
+        android:id="@+id/note_title_input_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="22dp"
@@ -43,10 +43,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/note_title_layout">
+        app:layout_constraintTop_toBottomOf="@id/note_title_input_layout">
 
         <TextView
-            android:id="@+id/note_body_date"
+            android:id="@+id/note_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/opensans_light"
@@ -58,6 +58,7 @@
             tools:text="January 29, 2021" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/note_body_input_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:hint=" "
@@ -68,7 +69,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/note_body_date">
+            app:layout_constraintTop_toBottomOf="@id/note_date">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_body"

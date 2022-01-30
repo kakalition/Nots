@@ -9,7 +9,7 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
 
-class NoteListItemAdapter()
+class NoteListItemAdapter(private val noteClickListener: (Note) -> Unit)
     : ListAdapter<Note, NoteListItemAdapter.NoteViewHolder>(DiffCallback) {
 
     companion object {
@@ -49,6 +49,9 @@ class NoteListItemAdapter()
 
     override fun onBindViewHolder(holder: NoteListItemAdapter.NoteViewHolder, position: Int) {
         val current = getItem(position)
+        holder.itemView.setOnClickListener{
+            noteClickListener(current)
+        }
         holder.bind(current)
     }
 }

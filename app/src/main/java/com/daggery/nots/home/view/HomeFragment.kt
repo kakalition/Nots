@@ -10,7 +10,9 @@ import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
+import androidx.transition.TransitionManager
 import com.daggery.nots.MainActivity
 import com.daggery.nots.NotsApplication
 import com.daggery.nots.data.Note
@@ -20,11 +22,9 @@ import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.home.viewmodel.HomeViewModelFactory
 import java.util.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+// TODO: Load list when splash screen is shown
+// TODO: Implement note click listener -> open notes showing date, change action button to edit
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -37,6 +37,15 @@ class HomeFragment : Fragment() {
     }
     private lateinit var notesLiveData: LiveData<List<Note>>
     private var isListEmpty = true
+
+    private val noteClickListener: (Note) -> Unit = { note ->
+        val uuid = note.uuid
+        val action = HomeFragmentDirections.actionHomeFragmentToAddEditNoteFragment(
+            uuid = uuid,
+            isReading = true
+        )
+        findNavController().navigate(action)
+    }
 
 
     override fun onCreateView(
@@ -51,16 +60,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         notesLiveData = viewModel.notes
-        val adapter = NoteListItemAdapter()
+        val adapter = NoteListItemAdapter(noteClickListener)
         binding.recyclerviewTest.adapter = adapter
-        Log.d("LOL: Prior Observing", isListEmpty.toString())
         notesLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             isListEmpty = it.isEmpty()
             changeHomeState()
-            Log.d("LOL: Observing", isListEmpty.toString())
         }
-        Log.d("LOL: After Observing", isListEmpty.toString())
     }
 
     // Conditionally display empty illustration and notes list

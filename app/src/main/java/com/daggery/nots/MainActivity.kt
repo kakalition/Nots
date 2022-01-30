@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.daggery.nots.databinding.ActivityMainBinding
+import com.daggery.nots.home.view.HomeFragmentDirections
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.home.viewmodel.HomeViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -29,6 +30,13 @@ class MainActivity : AppCompatActivity() {
         )
     }
     private lateinit var binding: ActivityMainBinding
+
+    private val fabOnClickListener = { view: View ->
+        navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddEditNoteFragment(
+            uuid = "",
+            isReading = false)
+        )
+    }
 
     lateinit var snackbar: Snackbar
 
@@ -71,9 +79,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    private val fabOnClickListener = { view: View ->
-        navController.navigate(R.id.action_homeFragment_to_addEditNoteFragment)
-    }
 
     fun showDeleteDialog() {
         MaterialAlertDialogBuilder(this)

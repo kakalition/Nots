@@ -6,4 +6,9 @@
         android:id="@+id/confirm_button"
         app:showAsAction="always"
         android:icon="@drawable/ic_check"/>
+    <item
+        android:title="Edit"
+        android:id="@+id/edit_button"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_edit"/>
 </menu>
