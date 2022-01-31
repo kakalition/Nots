@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val fabOnClickListener = { view: View ->
-        navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddEditNoteFragment(
+        navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(
             uuid = "",
             isReading = false)
         )

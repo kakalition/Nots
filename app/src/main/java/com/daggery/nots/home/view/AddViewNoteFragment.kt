@@ -19,8 +19,8 @@ import com.google.android.material.snackbar.Snackbar
 
 // TODO: Implement Save Edit Functionality
 // TODO: Check Observer
-// TODO: Implement Edit Action Button
-// TODO: Assert Title and Body Cannot Be Empty
+// TODO: Design This Fragment Layout, Maybe Add Options Menu
+// TODO: In That Options, Include Change Date to Present Time
 
 class AddViewNoteFragment : Fragment() {
 
@@ -118,7 +118,7 @@ class AddViewNoteFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_add_edit_fragment, menu)
+        inflater.inflate(R.menu.menu_add_view_fragment, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

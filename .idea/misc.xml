@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/layout/dialog_prioritize.xml" value="0.5" />
         <entry key="app/src/main/res/layout/dialog_unprioritize.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_add_edit_note.xml" value="0.32901296111665007" />
+        <entry key="app/src/main/res/layout/fragment_add_view_note.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="app/src/main/res/layout/home/note_list_tile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/layout.xml" value="0.34270833333333334" />
