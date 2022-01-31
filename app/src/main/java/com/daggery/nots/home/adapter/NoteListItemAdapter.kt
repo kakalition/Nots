@@ -1,6 +1,7 @@
 package com.daggery.nots.home.adapter
 
 import android.animation.TimeInterpolator
+import android.annotation.SuppressLint
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
@@ -14,15 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
+import com.daggery.nots.home.view.HomeFragmentUtils
+import com.daggery.nots.utils.NotsVibrator
 
 class NoteListItemAdapter(
-    private val noteClickListener: (Note) -> Unit,
-    private val noteLongClickListener: (Note) -> Unit,
-    private val isVerticalScrollActive: (Boolean) -> Unit,
-    private val vibrator: Vibrator
+    private val homeFragmentUtils: HomeFragmentUtils
 ) : ListAdapter<Note, NoteListItemAdapter.NoteViewHolder>(DiffCallback) {
-
-    private var shouldVibrate = true
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Note>() {
@@ -48,13 +46,6 @@ class NoteListItemAdapter(
         }
     }
 
-    private fun vibrate() {
-        if(shouldVibrate) {
-            vibrator.vibrate(VibrationEffect.createOneShot(100, 1))
-            shouldVibrate = false
-        }
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -65,11 +56,12 @@ class NoteListItemAdapter(
             false
         ))
     }
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: NoteListItemAdapter.NoteViewHolder, position: Int) {
         val current = getItem(position)
-        holder.itemView.setOnClickListener{ noteClickListener(current) }
-        holder.itemView.setOnLongClickListener {
-            noteLongClickListener(current)
+        holder.binding.listItemLayout.setOnClickListener{ homeFragmentUtils.noteClickListener(current) }
+        holder.binding.listItemLayout.setOnLongClickListener {
+            homeFragmentUtils.noteLongClickListener(current)
             return@setOnLongClickListener true
         }
 
@@ -80,17 +72,18 @@ class NoteListItemAdapter(
         var differenceX: Float = 0f
         var swiped = false
         var translationValue = 0f
-        holder.itemView.setOnTouchListener { v, event ->
+        holder.binding.listItemLayout.setOnTouchListener { v, event ->
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     swiped = false
                     viewAnchorX = event.rawX
-                    Log.d("LOL: Down", "viewAnchorX: $viewAnchorX")
+                    Log.d("LOL: Down", "swiped: $swiped")
                 }
                 MotionEvent.ACTION_UP -> {
-                    Log.d("LOL: Up", "viewAnchorX: $viewAnchorX")
-                    shouldVibrate = true
-                    isVerticalScrollActive(true)
+                    // Log.d("LOL: Up", "viewAnchorX: $viewAnchorX")
+                    Log.d("LOL: Up", "swiped: $swiped")
+                    homeFragmentUtils.notsVibrator.resetVibrator()
+                    homeFragmentUtils.isVerticalScrollActive(true)
                     v.animate()
                         .translationX(0f)
                         .setDuration(200)
@@ -99,30 +92,27 @@ class NoteListItemAdapter(
                     if(swiped == false) {
                         v.performClick()
                     }
+                    swiped = false
+                    Log.d("LOL: Up2", "swiped: $swiped")
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val threshold = v.width/3
-                    swiped = true
-                    isVerticalScrollActive(false)
+                    homeFragmentUtils.isVerticalScrollActive(false)
                     translationValue = event.rawX - viewAnchorX
-                    Log.d("LOL: Translate", translationValue.toString())
-                    Log.d("LOL: Threshold", threshold.toString())
-                    v.translationX = (translationValue * 0.5).toFloat()
+                    // Log.d("LOL: Translate", translationValue.toString())
+                    // Log.d("LOL: Threshold", threshold.toString())
+                    if(translationValue > 10 || translationValue < 10) {
+                        v.translationX = (translationValue * 0.5).toFloat()
+                        swiped = true
+                    }
                     if(translationValue > threshold || translationValue < -threshold) {
-                        vibrate()
+                        homeFragmentUtils.notsVibrator.vibrate()
                     }
                 }
-                MotionEvent.ACTION_CANCEL -> {
-                    swiped = false
-                    shouldVibrate = true
-                    v.animate()
-                        .translationX(0f)
-                        .setDuration(200)
-                        .setInterpolator(DecelerateInterpolator())
-                        .start()
-                }
                 else -> {
-                    isVerticalScrollActive(true)
+                    Log.d("LOL: Else", event.action.toString())
+                    swiped = false
+                    homeFragmentUtils.isVerticalScrollActive(true)
                 }
             }
             return@setOnTouchListener true

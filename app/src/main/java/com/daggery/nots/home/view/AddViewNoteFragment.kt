@@ -27,12 +27,12 @@ class AddViewNoteFragment : Fragment() {
     private var _binding: FragmentAddViewNoteBinding? = null
     private val binding get() = _binding!!
 
+
     private val viewModel: HomeViewModel by activityViewModels {
         HomeViewModelFactory(
             (this.activity?.application as NotsApplication).database
         )
     }
-
 
     private val onConfirmTapped = {
         val noteTitle = binding.noteTitle.text.toString()
