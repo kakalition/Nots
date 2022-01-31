@@ -85,7 +85,7 @@ class HomeFragmentUtils(
     private val viewModel: HomeViewModel
 ) {
     val notsVibrator = NotsVibrator(fragment.requireActivity())
-    val isVerticalScrollActive: (state: Boolean) -> Unit = { state ->
+    val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
         (fragment.viewBinding.notesRecyclerview.layoutManager as HomeFragment.NoteLinearLayoutManager).changeScrollState(state)
     }
 

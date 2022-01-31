@@ -1,9 +1,6 @@
 package com.daggery.nots.home.adapter
 
-import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -16,7 +13,6 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
 import com.daggery.nots.home.view.HomeFragmentUtils
-import com.daggery.nots.utils.NotsVibrator
 
 class NoteListItemAdapter(
     private val homeFragmentUtils: HomeFragmentUtils
@@ -53,9 +49,10 @@ class NoteListItemAdapter(
         return NoteViewHolder(ListItemNoteBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false
-        ))
+            false)
+        )
     }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: NoteListItemAdapter.NoteViewHolder, position: Int) {
         val current = getItem(position)
@@ -65,54 +62,45 @@ class NoteListItemAdapter(
             return@setOnLongClickListener true
         }
 
-        // TODO: Clean This Thing Up
         // TODO: Find Out Why TranslateX Works and X Don't
-
-        var viewAnchorX: Float = 0f
-        var differenceX: Float = 0f
-        var swiped = false
-        var translationValue = 0f
+        var viewAnchorX = 0f
+        var isSwiping = false
+        var translationValue: Float
+        var swipeThreshold = 0f
         holder.binding.listItemLayout.setOnTouchListener { v, event ->
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    swiped = false
+                    Log.d("LOL Down: isSwiping", isSwiping.toString())
+                    isSwiping = false
                     viewAnchorX = event.rawX
-                    Log.d("LOL: Down", "swiped: $swiped")
+                    swipeThreshold = (v.width / 3).toFloat()
                 }
                 MotionEvent.ACTION_UP -> {
-                    // Log.d("LOL: Up", "viewAnchorX: $viewAnchorX")
-                    Log.d("LOL: Up", "swiped: $swiped")
+                    Log.d("LOL Up: isSwiping", isSwiping.toString())
+                    if(!isSwiping) v.performClick()
                     homeFragmentUtils.notsVibrator.resetVibrator()
-                    homeFragmentUtils.isVerticalScrollActive(true)
+                    homeFragmentUtils.setVerticalScrollState(true)
                     v.animate()
                         .translationX(0f)
                         .setDuration(200)
                         .setInterpolator(DecelerateInterpolator())
                         .start()
-                    if(swiped == false) {
-                        v.performClick()
-                    }
-                    swiped = false
-                    Log.d("LOL: Up2", "swiped: $swiped")
+                    isSwiping = false
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val threshold = v.width/3
-                    homeFragmentUtils.isVerticalScrollActive(false)
+                    homeFragmentUtils.setVerticalScrollState(false)
                     translationValue = event.rawX - viewAnchorX
-                    // Log.d("LOL: Translate", translationValue.toString())
-                    // Log.d("LOL: Threshold", threshold.toString())
-                    if(translationValue > 10 || translationValue < 10) {
+                    if(translationValue > 10 || translationValue < -10) {
                         v.translationX = (translationValue * 0.5).toFloat()
-                        swiped = true
+                        isSwiping = true
                     }
-                    if(translationValue > threshold || translationValue < -threshold) {
+                    if(translationValue > swipeThreshold || translationValue < -swipeThreshold) {
                         homeFragmentUtils.notsVibrator.vibrate()
                     }
                 }
                 else -> {
-                    Log.d("LOL: Else", event.action.toString())
-                    swiped = false
-                    homeFragmentUtils.isVerticalScrollActive(true)
+                    homeFragmentUtils.setVerticalScrollState(true)
+                    isSwiping = false
                 }
             }
             return@setOnTouchListener true
