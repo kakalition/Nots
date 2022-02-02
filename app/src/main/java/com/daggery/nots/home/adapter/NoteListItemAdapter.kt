@@ -1,10 +1,13 @@
 package com.daggery.nots.home.adapter
 
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
 import android.view.animation.DecelerateInterpolator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,6 +16,7 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
 import com.daggery.nots.home.view.HomeFragmentUtils
+import kotlinx.coroutines.delay
 
 class NoteListItemAdapter(
     private val homeFragmentUtils: HomeFragmentUtils
@@ -57,10 +61,6 @@ class NoteListItemAdapter(
     override fun onBindViewHolder(holder: NoteListItemAdapter.NoteViewHolder, position: Int) {
         val current = getItem(position)
         holder.binding.listItemLayout.setOnClickListener{ homeFragmentUtils.noteClickListener(current) }
-        holder.binding.listItemLayout.setOnLongClickListener {
-            homeFragmentUtils.noteLongClickListener(current)
-            return@setOnLongClickListener true
-        }
 
         // TODO: Find Out Why TranslateX Works and X Don't
         var viewAnchorX = 0f
@@ -70,13 +70,11 @@ class NoteListItemAdapter(
         holder.binding.listItemLayout.setOnTouchListener { v, event ->
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    Log.d("LOL Down: isSwiping", isSwiping.toString())
                     isSwiping = false
                     viewAnchorX = event.rawX
                     swipeThreshold = (v.width / 3).toFloat()
                 }
                 MotionEvent.ACTION_UP -> {
-                    Log.d("LOL Up: isSwiping", isSwiping.toString())
                     if(!isSwiping) v.performClick()
                     homeFragmentUtils.notsVibrator.resetVibrator()
                     homeFragmentUtils.setVerticalScrollState(true)
@@ -84,6 +82,9 @@ class NoteListItemAdapter(
                         .translationX(0f)
                         .setDuration(200)
                         .setInterpolator(DecelerateInterpolator())
+                        .withEndAction {
+                            holder.binding.swipeBg.clearColorFilter()
+                        }
                         .start()
                     isSwiping = false
                 }
@@ -96,6 +97,8 @@ class NoteListItemAdapter(
                     }
                     if(translationValue > swipeThreshold || translationValue < -swipeThreshold) {
                         homeFragmentUtils.notsVibrator.vibrate()
+                        // TODO: Differentiate Swiping Left and Right
+                        holder.binding.swipeBg.setColorFilter(R.color.purple_500)
                     }
                 }
                 else -> {

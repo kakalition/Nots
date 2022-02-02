@@ -5,5 +5,5 @@
     <corners
         android:radius="22dp"/>
     <solid
-        android:color="@color/white_surface"/>
+        android:color="@color/swipe_bg"/>
 </shape>

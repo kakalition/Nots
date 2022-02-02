@@ -2,6 +2,7 @@
 <resources>
     <color name="transparent">#00000000</color>
     <color name="black_surface">#FF1F1F1F</color>
+    <color name="swipe_bg">#FF4E4E4E</color>
     <color name="white_surface">#FFFAFAFA</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

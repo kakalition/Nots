@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.daggery.nots.MainActivity
 import com.daggery.nots.NotsApplication
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
@@ -21,76 +22,20 @@ import com.google.android.material.snackbar.Snackbar
 // TODO: Check Observer
 // TODO: Design This Fragment Layout, Maybe Add Options Menu
 // TODO: In That Options, Include Change Date to Present Time
+// TODO: Add Confirm Button in AddEdit
+// TODO: Modularize Mode
 
 class AddViewNoteFragment : Fragment() {
 
-    private var _binding: FragmentAddViewNoteBinding? = null
-    private val binding get() = _binding!!
+    private var _viewBinding: FragmentAddViewNoteBinding? = null
+    internal val viewBinding get() = _viewBinding!!
 
-
-    private val viewModel: HomeViewModel by activityViewModels {
-        HomeViewModelFactory(
-            (this.activity?.application as NotsApplication).database
-        )
+    internal val viewModel: HomeViewModel by activityViewModels {
+        HomeViewModelFactory((this.activity?.application as NotsApplication).database)
     }
-
-    private val onConfirmTapped = {
-        val noteTitle = binding.noteTitle.text.toString()
-        val noteBody = binding.noteBody.text.toString()
-
-        if(noteTitle.isBlank() && noteBody.isBlank()) {
-            showFailToAddSnackBar()
-        } else {
-            viewModel.addNote(noteTitle, noteBody)
-            findNavController().navigateUp()
-        }
-    }
-
-    private val onDeleteTapped = {
-        MaterialAlertDialogBuilder(requireContext(), R.style.NotsAlertDialog)
-            .setView(R.layout.dialog_delete)
-            .setPositiveButton("Delete") { dialog, which ->
-                val note = viewModel.getNote(args.uuid)
-                note.observe(viewLifecycleOwner) {
-                    it?.let {
-                        Log.d("LOL: getNote", it.toString() )
-                        viewModel.deleteNote(it)
-                        findNavController().navigateUp()
-                    }
-                }
-            }
-            .setNegativeButton("Cancel") { dialog, which ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
     private val args: AddViewNoteFragmentArgs by navArgs()
 
-    private fun showFailToAddSnackBar() {
-        val snackbar = Snackbar.make(
-            binding.addViewNoteRoot,
-            "Failed to add note. Fields cannot be blank.",
-            2000
-        )
-        snackbar.show()
-    }
-
-    private fun populateField() {
-        val noteLiveData = viewModel.getNote(args.uuid)
-        var note: Note?
-        noteLiveData.observe(viewLifecycleOwner) {
-            note = it
-            binding.apply {
-                noteTitle.text = Editable.Factory.getInstance().newEditable(note?.noteTitle ?: "")
-                noteDate.text = Editable.Factory.getInstance().newEditable(note?.noteDate ?: "")
-                noteBody.text = Editable.Factory.getInstance().newEditable(note?.noteBody ?: "")
-            }
-        }
-    }
-
-    private fun logArgs() {
-    }
+    private lateinit var fragmentUtils: AddViewNoteFragmentUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,19 +45,22 @@ class AddViewNoteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentAddViewNoteBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View {
+        _viewBinding = FragmentAddViewNoteBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        logArgs()
+
+        (requireActivity() as MainActivity).changeToolbarTitle("View")
+
+        fragmentUtils = AddViewNoteFragmentUtils(this, args)
 
         if(args.uuid.isNotBlank()) {
-            populateField()
+            fragmentUtils.populateField()
         } else {
-            binding.noteDate.text = viewModel.getCurrentDate()
+            viewBinding.noteDate.text = viewModel.getCurrentDate()
         }
 
     }
@@ -123,12 +71,14 @@ class AddViewNoteFragment : Fragment() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.reorder_button).isVisible = false
+        menu.findItem(R.id.settings_button).isVisible = false
         if(args.uuid.isBlank()) {
-            menu.findItem(R.id.confirm_button).setVisible(true)
-            menu.findItem(R.id.delete_button).setVisible(false)
+            menu.findItem(R.id.confirm_button).isVisible = true
+            menu.findItem(R.id.delete_button).isVisible = false
         } else {
-            menu.findItem(R.id.confirm_button).setVisible(false)
-            menu.findItem(R.id.delete_button).setVisible(true)
+            menu.findItem(R.id.confirm_button).isVisible = false
+            menu.findItem(R.id.delete_button).isVisible = true
         }
         super.onPrepareOptionsMenu(menu)
     }
@@ -136,15 +86,73 @@ class AddViewNoteFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.confirm_button -> {
-                onConfirmTapped()
+                fragmentUtils.onConfirmTapped()
                 return true
             }
             R.id.delete_button -> {
-                onDeleteTapped()
+                fragmentUtils.onDeleteTapped()
                 return true
             }
             else -> {
                 super.onOptionsItemSelected(item)
+            }
+        }
+    }
+}
+
+class AddViewNoteFragmentUtils(
+    private val fragment: AddViewNoteFragment,
+    private val args: AddViewNoteFragmentArgs
+) {
+    val onConfirmTapped = {
+        val noteTitle = fragment.viewBinding.noteTitle.text.toString()
+        val noteBody = fragment.viewBinding.noteBody.text.toString()
+
+        if(noteTitle.isBlank() && noteBody.isBlank()) {
+            showFailToAddSnackBar()
+        } else {
+            fragment.viewModel.addNote(noteTitle, noteBody)
+            fragment.findNavController().navigateUp()
+        }
+    }
+
+    val onDeleteTapped = {
+        MaterialAlertDialogBuilder(fragment.requireContext(), R.style.NotsAlertDialog)
+            .setView(R.layout.dialog_delete)
+            .setPositiveButton("Delete") { dialog, which ->
+                val note = fragment.viewModel.getNote(args.uuid)
+                note.observe(fragment.viewLifecycleOwner) {
+                    it?.let {
+                        Log.d("LOL: getNote", it.toString() )
+                        fragment.viewModel.deleteNote(it)
+                        fragment.findNavController().navigateUp()
+                    }
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    fun showFailToAddSnackBar() {
+        val snackbar = Snackbar.make(
+            fragment.viewBinding.addViewNoteRoot,
+            "Failed to add note. Fields cannot be blank.",
+            2000
+        )
+        snackbar.show()
+    }
+
+    internal fun populateField() {
+        val noteLiveData = fragment.viewModel.getNote(args.uuid)
+        var note: Note?
+        noteLiveData.observe(fragment.viewLifecycleOwner) {
+            note = it
+            fragment.viewBinding.apply {
+                noteTitle.text = Editable.Factory.getInstance().newEditable(note?.noteTitle ?: "")
+                noteDate.text = Editable.Factory.getInstance().newEditable(note?.noteDate ?: "")
+                noteBody.text = Editable.Factory.getInstance().newEditable(note?.noteBody ?: "")
             }
         }
     }

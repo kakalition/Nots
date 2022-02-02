@@ -1,17 +1,16 @@
 package com.daggery.nots.home.view
 
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Vibrator
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.daggery.nots.MainActivity
 import com.daggery.nots.NotsApplication
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
@@ -33,12 +32,12 @@ class HomeFragment : Fragment() {
         this.context,
         VERTICAL,
         false) {
-        private var canScrollHorizontallyState: Boolean = true
+        private var canScrollVerticallyState: Boolean = true
         fun changeScrollState(state: Boolean) {
-            canScrollHorizontallyState = state
+            canScrollVerticallyState = state
         }
         override fun canScrollVertically(): Boolean {
-            return canScrollHorizontallyState && super.canScrollVertically()
+            return canScrollVerticallyState && super.canScrollVertically()
         }
     }
 
@@ -49,10 +48,15 @@ class HomeFragment : Fragment() {
         HomeViewModelFactory((this.activity?.application as NotsApplication).database)
     }
 
-    private lateinit var homeFragmentUtils: HomeFragmentUtils
+    private lateinit var fragmentUtils: HomeFragmentUtils
 
     private lateinit var notesLiveData: LiveData<List<Note>>
     internal var isNotesEmpty = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,17 +69,47 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeFragmentUtils = HomeFragmentUtils(this, viewModel)
+        (requireActivity() as MainActivity).resetToolbarTitle()
 
-        val adapter = NoteListItemAdapter(homeFragmentUtils)
+        fragmentUtils = HomeFragmentUtils(this, viewModel)
+
+        val adapter = NoteListItemAdapter(fragmentUtils)
         notesLiveData = viewModel.notes
         notesLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
             isNotesEmpty = it.isEmpty()
-            homeFragmentUtils.changeHomeState()
+            fragmentUtils.changeHomeState()
         }
         viewBinding.notesRecyclerview.layoutManager = NoteLinearLayoutManager()
         viewBinding.notesRecyclerview.adapter = adapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_add_view_fragment, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem((R.id.reorder_button)).isVisible = true
+        menu.findItem((R.id.settings_button)).isVisible = true
+        menu.findItem(R.id.delete_button).isVisible = false
+        menu.findItem(R.id.confirm_button).isVisible = false
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.reorder_button -> {
+                return true
+            }
+
+            R.id.settings_button -> {
+                return true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 }
 
@@ -96,29 +130,6 @@ class HomeFragmentUtils(
             isReading = true
         )
         fragment.findNavController().navigate(action)
-    }
-
-    val noteLongClickListener: (Note) -> Unit = { note ->
-        val dialogView: Int
-        val positiveText: String
-        val action: (DialogInterface, Int) -> Unit
-
-        if(note.priority == 0) {
-            dialogView = R.layout.dialog_prioritize
-            positiveText = "Prioritize"
-            action = { _, _ -> viewModel.prioritize(note) }
-        } else {
-            dialogView = R.layout.dialog_unprioritize
-            positiveText = "Unprioritize"
-            action = { _, _ -> viewModel.unprioritize(note) }
-        }
-        MaterialAlertDialogBuilder(fragment.requireContext(), R.style.NotsAlertDialog)
-            .setView(dialogView)
-            .setPositiveButton(positiveText, action)
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
     }
 
     // Conditionally display empty illustration and notes list
