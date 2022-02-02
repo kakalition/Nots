@@ -26,8 +26,5 @@
         <argument
             android:name="uuid"
             app:argType="string" />
-        <argument
-            android:name="isReading"
-            app:argType="boolean" />
     </fragment>
 </navigation>

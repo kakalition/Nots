@@ -3,22 +3,38 @@ package com.daggery.nots.home.viewmodel
 import androidx.lifecycle.*
 import com.daggery.nots.data.Note
 import com.daggery.nots.data.NotsDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val database: NotsDatabase
+) : ViewModel() {
 
     // Get note dao
     private val noteDao = database.noteDao()
     // Get all notes
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
 
-    fun getCurrentDate(): String {
+    private fun getCurrentDate(): String {
         val date = Calendar.getInstance().time
         val formatter = SimpleDateFormat("MMMM dd, yyyy")
         val formattedDate = formatter.format(date)
         return formattedDate
+    }
+
+    fun getNewNote(): Note {
+        return Note(
+            UUID.randomUUID().toString(),
+            0,
+            notes.value?.size ?: 0,
+            "",
+            "",
+            getCurrentDate()
+        )
     }
 
     fun isPrioritized(note: Note): Boolean {
@@ -92,6 +108,7 @@ class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
         }
     }
 }
+/*
 
 class HomeViewModelFactory(private val database: NotsDatabase) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -101,4 +118,4 @@ class HomeViewModelFactory(private val database: NotsDatabase) : ViewModelProvid
         }
         throw IllegalArgumentException("Unknown ViewModel")
     }
-}
+}*/

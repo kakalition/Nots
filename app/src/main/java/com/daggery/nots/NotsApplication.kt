@@ -5,11 +5,6 @@ import com.daggery.nots.data.NotsDatabase
 import com.google.android.material.color.DynamicColors
 import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class NotsApplication : Application() {
-    val database: NotsDatabase by lazy { NotsDatabase.getDatabase(this) }
-
-    override fun onCreate() {
-        super.onCreate()
-        DynamicColors.applyToActivitiesIfAvailable(this)
-    }
 }

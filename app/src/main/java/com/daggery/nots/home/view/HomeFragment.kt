@@ -17,15 +17,16 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListItemAdapter
 import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.home.viewmodel.HomeViewModelFactory
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
 // TODO: Load list when splash screen is shown
 // TODO: Create Options Menu
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     inner class NoteLinearLayoutManager : LinearLayoutManager(
@@ -44,9 +45,7 @@ class HomeFragment : Fragment() {
     private var _viewBinding: FragmentHomeBinding? = null
     internal val viewBinding get() = _viewBinding!!
 
-    private val viewModel: HomeViewModel by activityViewModels {
-        HomeViewModelFactory((this.activity?.application as NotsApplication).database)
-    }
+    internal val viewModel: HomeViewModel by activityViewModels()
 
     private lateinit var fragmentUtils: HomeFragmentUtils
 
@@ -90,8 +89,9 @@ class HomeFragment : Fragment() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem((R.id.reorder_button)).isVisible = true
-        menu.findItem((R.id.settings_button)).isVisible = true
+        menu.findItem(R.id.edit_button).isVisible = false
+        menu.findItem(R.id.reorder_button).isVisible = true
+        menu.findItem(R.id.settings_button).isVisible = true
         menu.findItem(R.id.delete_button).isVisible = false
         menu.findItem(R.id.confirm_button).isVisible = false
         super.onPrepareOptionsMenu(menu)
@@ -125,10 +125,7 @@ class HomeFragmentUtils(
 
     val noteClickListener: (Note) -> Unit = { note ->
         val uuid = note.uuid
-        val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(
-            uuid = uuid,
-            isReading = true
-        )
+        val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
         fragment.findNavController().navigate(action)
     }
 

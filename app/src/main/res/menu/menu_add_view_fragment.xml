@@ -7,6 +7,11 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_check"/>
     <item
+        android:id="@+id/edit_button"
+        android:title="Edit"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_edit"/>
+    <item
         android:title="Delete"
         android:id="@+id/delete_button"
         app:showAsAction="ifRoom"
