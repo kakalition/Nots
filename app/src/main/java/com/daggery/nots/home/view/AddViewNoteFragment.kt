@@ -95,8 +95,6 @@ class AddViewNoteFragment : Fragment() {
 
         // Prepare Toolbar
         viewBinding.toolbarBinding.apply {
-            if (isNewNote == true) toolbarTitle.text = "New Note"
-            else toolbarTitle.text = "View"
             toolbar.inflateMenu(R.menu.menu_add_view_fragment)
             toolbar.setNavigationIcon(R.drawable.ic_back)
             toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
@@ -120,6 +118,7 @@ class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
     private val args: AddViewNoteFragmentArgs
 ) {
+    // TODO: Differentiate New Note and Existing Note
     val onConfirmTapped = {
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
@@ -170,11 +169,6 @@ class AddViewNoteFragmentUtils(
 
     val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
-            android.R.id.home -> {
-                if(!fragment.isViewing) viewEnvironment()
-                else fragment.findNavController().navigateUp()
-                true
-            }
             R.id.confirm_button -> {
                 onConfirmTapped()
                 true
@@ -198,12 +192,14 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun addEnvironment() {
+        fragment.viewBinding.toolbarBinding.toolbarTitle.text = "New Note"
         fragment.viewBinding.noteTitle.isEnabled = true
         fragment.viewBinding.noteBody.isEnabled = true
         menuAddEnvironment()
     }
 
     internal fun viewEnvironment() {
+        fragment.viewBinding.toolbarBinding.toolbarTitle.text = "View"
         fragment.viewBinding.noteTitle.isEnabled = false
         fragment.viewBinding.noteTitle.setTextColor(fragment.resources.getColor(R.color.white_surface, null))
         fragment.viewBinding.noteBody.isEnabled = false
@@ -212,6 +208,7 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun editEnvironment() {
+        fragment.viewBinding.toolbarBinding.toolbarTitle.text = "Edit"
         fragment.viewBinding.noteTitle.isEnabled = true
         fragment.viewBinding.noteBody.isEnabled = true
         menuEditEnvironment()
