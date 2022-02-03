@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.daggery.nots.MainActivity
@@ -18,6 +19,7 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
@@ -28,8 +30,6 @@ import kotlin.Exception
 // TODO: Check Observer
 // TODO: Design This Fragment Layout, Maybe Add Options Menu
 // TODO: In That Options, Include Change Date to Present Time
-// TODO: Add Confirm Button in AddEdit
-// TODO: Modularize Mode
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -43,14 +43,16 @@ class AddViewNoteFragment : Fragment() {
 
     private lateinit var fragmentUtils: AddViewNoteFragmentUtils
 
-    private var isNewNote: Boolean? = null
+    internal var isNewNote: Boolean? = null
     internal var isViewing: Boolean = true
+
+    internal lateinit var originalNote: OriginalNote
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if(!isViewing) {
+                fragmentUtils.revertChanges()
                 fragmentUtils.viewEnvironment()
-                isViewing = true
             }
             else {
                 this.isEnabled = false
@@ -123,8 +125,18 @@ class AddViewNoteFragmentUtils(
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
 
-        if(noteTitle.isBlank() && noteBody.isBlank()) {
+        if (noteTitle.isBlank() && noteBody.isBlank()) {
             showFailToAddSnackBar()
+        } else if (args.uuid.isNotBlank()) {
+            val noteLiveData = fragment.viewModel.getNote(args.uuid)
+            noteLiveData.observeOnce(fragment) {
+                val note = it?.copy(noteTitle = noteTitle, noteBody = noteBody)
+                Log.d("LOL: note", note?.toString() ?: "null")
+                note?.let {
+                    fragment.viewModel.updateNote(it)
+                    viewEnvironment()
+                }
+            }
         } else {
             fragment.viewModel.addNote(noteTitle, noteBody)
             fragment.findNavController().navigateUp()
@@ -164,7 +176,11 @@ class AddViewNoteFragmentUtils(
     }
 
     val navigationClickListener: (View) -> Unit = { view ->
-        fragment.findNavController().navigateUp()
+        if(!fragment.isViewing) {
+            viewEnvironment()
+            revertChanges()
+        }
+        else fragment.findNavController().navigateUp()
     }
 
     val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
@@ -199,6 +215,7 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun viewEnvironment() {
+        fragment.isViewing = true
         fragment.viewBinding.toolbarBinding.toolbarTitle.text = "View"
         fragment.viewBinding.noteTitle.isEnabled = false
         fragment.viewBinding.noteTitle.setTextColor(fragment.resources.getColor(R.color.white_surface, null))
@@ -208,6 +225,7 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun editEnvironment() {
+        fragment.isViewing = false
         fragment.viewBinding.toolbarBinding.toolbarTitle.text = "Edit"
         fragment.viewBinding.noteTitle.isEnabled = true
         fragment.viewBinding.noteBody.isEnabled = true
@@ -243,8 +261,15 @@ class AddViewNoteFragmentUtils(
         menu.findItem(R.id.settings_button).isVisible = false
     }
 
+    internal fun revertChanges() {
+        val originalNote = fragment.originalNote
+        fragment.viewBinding.apply {
+            noteTitle.text = Editable.Factory.getInstance().newEditable(originalNote.noteTitle ?: "")
+            noteBody.text = Editable.Factory.getInstance().newEditable(originalNote.noteBody ?: "")
+        }
+    }
 
-    fun showFailToAddSnackBar() {
+    private fun showFailToAddSnackBar() {
         val snackbar = Snackbar.make(
             fragment.viewBinding.addViewNoteRoot,
             "Failed to add note. Fields cannot be blank.",
@@ -253,6 +278,7 @@ class AddViewNoteFragmentUtils(
         snackbar.show()
     }
 
+    // TODO: Can Be Optimized
     internal fun populateField(uuid: String) {
         if(uuid.isBlank()) {
             val note = fragment.viewModel.getNewNote()
@@ -264,6 +290,9 @@ class AddViewNoteFragmentUtils(
         } else {
             val noteLiveData = fragment.viewModel.getNote(uuid)
             noteLiveData.observe(fragment.viewLifecycleOwner) {
+                it?.let {
+                    fragment.originalNote = OriginalNote(it.noteTitle, it.noteBody)
+                }
                 fragment.viewBinding.apply {
                     noteTitle.text = Editable.Factory.getInstance().newEditable(it?.noteTitle ?: "")
                     noteDate.text = Editable.Factory.getInstance().newEditable(it?.noteDate ?: "")
@@ -273,3 +302,8 @@ class AddViewNoteFragmentUtils(
         }
     }
 }
+
+data class OriginalNote(
+    val noteTitle: String,
+    val noteBody: String
+)
