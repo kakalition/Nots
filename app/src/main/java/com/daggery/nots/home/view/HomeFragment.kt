@@ -55,7 +55,6 @@ class HomeFragment : Fragment() {
     internal var isNotesEmpty = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
     }
 
@@ -70,7 +69,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as MainActivity).resetToolbarTitle()
+        viewBinding.toolbarBinding.toolbarTitle.text = "Nots"
 
         fragmentUtils = HomeFragmentUtils(this, findNavController())
 

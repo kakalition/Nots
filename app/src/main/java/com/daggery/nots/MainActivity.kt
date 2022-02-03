@@ -23,14 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     lateinit var viewBinding: ActivityMainBinding
 
-    fun changeToolbarTitle(title: String) {
-        viewBinding.appBarTitle.text = title
-    }
-
-    fun resetToolbarTitle() {
-        viewBinding.appBarTitle.text = title
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -40,15 +32,5 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.findNavController()
-
-        // Set toolbar
-        setSupportActionBar(viewBinding.appBar)
-        setupActionBarWithNavController(navController)
-        supportActionBar?.displayOptions = DISPLAY_SHOW_CUSTOM
-
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

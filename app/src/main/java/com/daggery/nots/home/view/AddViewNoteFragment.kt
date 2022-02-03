@@ -74,7 +74,6 @@ class AddViewNoteFragment : Fragment() {
         }
 
         fragmentUtils = AddViewNoteFragmentUtils(this, args)
-        fragmentUtils.changeToolbarTitle("View")
 
         fragmentUtils.populateField(args.uuid)
         if(isNewNote!!) {
@@ -176,10 +175,6 @@ class AddViewNoteFragmentUtils(
         inputMethodManager.showSoftInput(view, 0)
     }
 
-    internal fun changeToolbarTitle(title: String) {
-        (fragment.requireActivity() as MainActivity).changeToolbarTitle(title)
-    }
-
     internal fun viewEnvironment() {
         fragment.viewBinding.noteTitle.isEnabled = false
         fragment.viewBinding.noteTitle.setTextColor(fragment.resources.getColor(R.color.white_surface, null))
@@ -193,21 +188,18 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun menuAddEnvironment(menu: Menu) {
-        changeToolbarTitle("New Note")
         menu.findItem(R.id.confirm_button).isVisible = true
         menu.findItem(R.id.edit_button).isVisible = false
         menu.findItem(R.id.delete_button).isVisible = false
     }
 
     internal fun menuViewEnvironment(menu: Menu) {
-        changeToolbarTitle("View")
         menu.findItem(R.id.confirm_button).isVisible = false
         menu.findItem(R.id.edit_button).isVisible = true
         menu.findItem(R.id.delete_button).isVisible = true
     }
 
     internal fun menuEditEnvironment(menu: Menu) {
-        changeToolbarTitle("Edit")
         menu.findItem(R.id.confirm_button).isVisible = true
         menu.findItem(R.id.edit_button).isVisible = false
         menu.findItem(R.id.delete_button).isVisible = false
