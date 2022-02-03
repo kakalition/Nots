@@ -6,6 +6,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
+import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -70,7 +72,7 @@ class HomeFragment : Fragment() {
 
         (requireActivity() as MainActivity).resetToolbarTitle()
 
-        fragmentUtils = HomeFragmentUtils(this, viewModel)
+        fragmentUtils = HomeFragmentUtils(this, findNavController())
 
         val adapter = NoteListItemAdapter(fragmentUtils)
         notesLiveData = viewModel.notes
@@ -81,6 +83,9 @@ class HomeFragment : Fragment() {
         }
         viewBinding.notesRecyclerview.layoutManager = NoteLinearLayoutManager()
         viewBinding.notesRecyclerview.adapter = adapter
+
+        // OnClickListener
+        viewBinding.fab.setOnClickListener(fragmentUtils.fabOnClickListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -116,7 +121,7 @@ class HomeFragment : Fragment() {
 
 class HomeFragmentUtils(
     private val fragment: HomeFragment,
-    private val viewModel: HomeViewModel
+    private val navController: NavController
 ) {
     val notsVibrator = NotsVibrator(fragment.requireActivity())
     val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
@@ -128,6 +133,12 @@ class HomeFragmentUtils(
         val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
         fragment.findNavController().navigate(action)
     }
+
+    val fabOnClickListener = { _ : View ->
+        val extras = FragmentNavigatorExtras(fragment.viewBinding.fab to "from_fab_to_add")
+        navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = ""), extras)
+    }
+
 
     // Conditionally display empty illustration and notes list
     fun changeHomeState() {

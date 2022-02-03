@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_view_note_root"
+    android:transitionName="from_fab_to_add"
     android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">

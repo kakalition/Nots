@@ -68,7 +68,6 @@ class NoteListItemAdapter(
         val current = getItem(position)
         holder.binding.listItemLayout.setOnClickListener{ homeFragmentUtils.noteClickListener(current) }
 
-        // TODO: Find Out Why TranslateX Works and X Don't
         var viewAnchorX = 0f
         var isSwiping = false
         var translationValue: Float

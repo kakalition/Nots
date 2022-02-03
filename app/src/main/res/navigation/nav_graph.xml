@@ -12,11 +12,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_addViewNoteFragment"
-            app:destination="@id/addViewNoteFragment"
-            app:enterAnim="@anim/alpha_in"
-            app:exitAnim="@anim/alpha_out"
-            app:popEnterAnim="@anim/alpha_in"
-            app:popExitAnim="@anim/alpha_out" />
+            app:destination="@id/addViewNoteFragment"/>
     </fragment>
     <fragment
         android:id="@+id/addViewNoteFragment"

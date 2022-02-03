@@ -1,6 +1,7 @@
 package com.daggery.nots.home.view
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -18,6 +19,7 @@ import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.Exception
 
@@ -46,6 +48,12 @@ class AddViewNoteFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 700
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(requireContext().getColor(R.color.black_surface))
+            drawingViewId = R.id.fragment_container_view
+        }
     }
 
     override fun onCreateView(
