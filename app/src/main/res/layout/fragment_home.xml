@@ -6,31 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/app_bar"
-        app:title=" "
-        app:contentInsetStart="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:backgroundTint="@color/black_surface"
-        android:elevation="0dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:id="@+id/app_bar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:elevation="2dp"
-            android:text="Nots."
-            android:fontFamily="@font/inter_bold"
-            android:textAppearance="?attr/textAppearanceHeadline5"
-            tools:text="Nots." />
-    </androidx.appcompat.widget.Toolbar>
--->
     <FrameLayout
         android:id="@+id/app_bar_frame"
         android:layout_width="match_parent"

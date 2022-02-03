@@ -7,6 +7,7 @@ import android.text.Editable
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -43,17 +44,30 @@ class AddViewNoteFragment : Fragment() {
     private lateinit var fragmentUtils: AddViewNoteFragmentUtils
 
     private var isNewNote: Boolean? = null
-    internal var isEditing: Boolean = false
+    internal var isViewing: Boolean = true
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if(!isViewing) {
+                fragmentUtils.viewEnvironment()
+                isViewing = true
+            }
+            else {
+                this.isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             duration = 700
             scrimColor = Color.TRANSPARENT
             setAllContainerColors(requireContext().getColor(R.color.black_surface))
             drawingViewId = R.id.fragment_container_view
         }
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     override fun onCreateView(
@@ -67,59 +81,39 @@ class AddViewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /* Checking UUID Received is Valid or Not
+         * If valid, it's existing note, if not it's new note
+         */
         try {
             isNewNote = args.uuid.isBlank()
         } catch (e: Exception) {
             Log.d("Exception", e.toString())
         }
 
+        // Instantiating Fragment Utils Class
         fragmentUtils = AddViewNoteFragmentUtils(this, args)
 
+        // Prepare Toolbar
+        viewBinding.toolbarBinding.apply {
+            if (isNewNote == true) toolbarTitle.text = "New Note"
+            else toolbarTitle.text = "View"
+            toolbar.inflateMenu(R.menu.menu_add_view_fragment)
+            toolbar.setNavigationIcon(R.drawable.ic_back)
+            toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
+            toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
+        }
+
+        // Setting Fragment Environment
         fragmentUtils.populateField(args.uuid)
-        if(isNewNote!!) {
-            fragmentUtils.editEnvironment()
-        } else {
+        if (isNewNote == true) {
+            fragmentUtils.addEnvironment()
+        } else if (isViewing == true) {
             fragmentUtils.viewEnvironment()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_add_view_fragment, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        fragmentUtils.hideThreeDotsMenu(menu)
-        if(isNewNote!!) {
-            fragmentUtils.menuAddEnvironment(menu)
-        } else if(isEditing) {
-            fragmentUtils.menuEditEnvironment(menu)
         } else {
-            fragmentUtils.menuViewEnvironment(menu)
+            fragmentUtils.editEnvironment()
         }
-        super.onPrepareOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            // TODO: Differentiate Add and Edit
-            R.id.confirm_button -> {
-                fragmentUtils.onConfirmTapped()
-                return true
-            }
-            R.id.edit_button -> {
-                fragmentUtils.onEditTapped()
-                return true
-            }
-            R.id.delete_button -> {
-                fragmentUtils.onDeleteTapped()
-                return true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
-    }
 }
 
 class AddViewNoteFragmentUtils(
@@ -142,9 +136,10 @@ class AddViewNoteFragmentUtils(
     // TODO: Hide Keyboard When Confirm is Tapped
     val onEditTapped = {
         val noteBody = fragment.viewBinding.noteBody
-        fragment.isEditing = true
-        fragment.requireActivity().invalidateOptionsMenu()
+        fragment.isViewing = false
         editEnvironment()
+
+        // Show Keyboard with Pointer at The End of Text
         fragment.viewBinding.noteBody.requestFocus()
         noteBody.setSelection(noteBody.text?.length ?: 0)
         showKeyboard(noteBody)
@@ -169,10 +164,43 @@ class AddViewNoteFragmentUtils(
             .show()
     }
 
+    val navigationClickListener: (View) -> Unit = { view ->
+        fragment.findNavController().navigateUp()
+    }
+
+    val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
+        when(item.itemId) {
+            android.R.id.home -> {
+                if(!fragment.isViewing) viewEnvironment()
+                else fragment.findNavController().navigateUp()
+                true
+            }
+            R.id.confirm_button -> {
+                onConfirmTapped()
+                true
+            }
+            R.id.edit_button -> {
+                onEditTapped()
+                true
+            }
+            R.id.delete_button -> {
+                onDeleteTapped()
+                true
+            }
+            else -> false
+        }
+    }
+
     internal fun showKeyboard(view: View ) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(view, 0)
+    }
+
+    internal fun addEnvironment() {
+        fragment.viewBinding.noteTitle.isEnabled = true
+        fragment.viewBinding.noteBody.isEnabled = true
+        menuAddEnvironment()
     }
 
     internal fun viewEnvironment() {
@@ -180,30 +208,37 @@ class AddViewNoteFragmentUtils(
         fragment.viewBinding.noteTitle.setTextColor(fragment.resources.getColor(R.color.white_surface, null))
         fragment.viewBinding.noteBody.isEnabled = false
         fragment.viewBinding.noteBody.setTextColor(fragment.resources.getColor(R.color.white_surface, null))
+        menuViewEnvironment()
     }
 
     internal fun editEnvironment() {
         fragment.viewBinding.noteTitle.isEnabled = true
         fragment.viewBinding.noteBody.isEnabled = true
+        menuEditEnvironment()
     }
 
-    internal fun menuAddEnvironment(menu: Menu) {
-        menu.findItem(R.id.confirm_button).isVisible = true
-        menu.findItem(R.id.edit_button).isVisible = false
-        menu.findItem(R.id.delete_button).isVisible = false
+    internal fun menuAddEnvironment() {
+        fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
+            findItem(R.id.confirm_button).isVisible = true
+            findItem(R.id.edit_button).isVisible = false
+            findItem(R.id.delete_button).isVisible = false
+        }
     }
 
-    internal fun menuViewEnvironment(menu: Menu) {
-        menu.findItem(R.id.confirm_button).isVisible = false
-        menu.findItem(R.id.edit_button).isVisible = true
-        menu.findItem(R.id.delete_button).isVisible = true
+    internal fun menuViewEnvironment() {
+        fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
+            findItem(R.id.confirm_button).isVisible = false
+            findItem(R.id.edit_button).isVisible = true
+            findItem(R.id.delete_button).isVisible = true
+        }
     }
 
-    internal fun menuEditEnvironment(menu: Menu) {
-        menu.findItem(R.id.confirm_button).isVisible = true
-        menu.findItem(R.id.edit_button).isVisible = false
-        menu.findItem(R.id.delete_button).isVisible = false
-
+    internal fun menuEditEnvironment() {
+        fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
+            findItem(R.id.confirm_button).isVisible = true
+            findItem(R.id.edit_button).isVisible = false
+            findItem(R.id.delete_button).isVisible = false
+        }
     }
 
     internal fun hideThreeDotsMenu(menu: Menu) {

@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/layout/fragment_add_edit_note.xml" value="0.32901296111665007" />
         <entry key="app/src/main/res/layout/fragment_add_view_note.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4721030042918455" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/home/note_list_tile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/layout.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/list_item_note.xml" value="0.5339925834363412" />
@@ -33,6 +34,7 @@
         <entry key="app/src/main/res/layout/testing_layout.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/menu/menu_add_edit_fragment.xml" value="0.5" />
         <entry key="app/src/main/res/menu/menu_add_view_fragment.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/menu_home_fragment.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3045" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1515" />
       </map>

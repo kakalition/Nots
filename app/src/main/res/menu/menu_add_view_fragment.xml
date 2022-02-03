@@ -16,12 +16,4 @@
         android:id="@+id/delete_button"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_delete"/>
-    <item
-        android:id="@+id/reorder_button"
-        app:showAsAction="never"
-        android:title="Reorder Notes"/>
-    <item
-        android:id="@+id/settings_button"
-        app:showAsAction="never"
-        android:title="Settings"/>
 </menu>

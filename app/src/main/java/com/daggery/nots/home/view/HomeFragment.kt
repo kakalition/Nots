@@ -34,11 +34,13 @@ class HomeFragment : Fragment() {
     inner class NoteLinearLayoutManager : LinearLayoutManager(
         this.context,
         VERTICAL,
-        false) {
+        false
+    ) {
         private var canScrollVerticallyState: Boolean = true
         fun changeScrollState(state: Boolean) {
             canScrollVerticallyState = state
         }
+
         override fun canScrollVertically(): Boolean {
             return canScrollVerticallyState && super.canScrollVertically()
         }
@@ -69,10 +71,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.toolbarBinding.toolbarTitle.text = "Nots"
-
+        // Instantiate Fragment Utils Class
         fragmentUtils = HomeFragmentUtils(this, findNavController())
 
+        // Prepare Toolbar
+        viewBinding.toolbarBinding.apply {
+            toolbarTitle.text = "Nots"
+            toolbar.inflateMenu(R.menu.menu_home_fragment)
+            toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
+        }
+
+        // Prepare RecyclerView
         val adapter = NoteListItemAdapter(fragmentUtils)
         notesLiveData = viewModel.notes
         notesLiveData.observe(viewLifecycleOwner) {
@@ -85,35 +94,6 @@ class HomeFragment : Fragment() {
 
         // OnClickListener
         viewBinding.fab.setOnClickListener(fragmentUtils.fabOnClickListener)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_add_view_fragment, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.edit_button).isVisible = false
-        menu.findItem(R.id.reorder_button).isVisible = true
-        menu.findItem(R.id.settings_button).isVisible = true
-        menu.findItem(R.id.delete_button).isVisible = false
-        menu.findItem(R.id.confirm_button).isVisible = false
-        super.onPrepareOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.reorder_button -> {
-                return true
-            }
-
-            R.id.settings_button -> {
-                return true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
     }
 }
 
@@ -136,6 +116,20 @@ class HomeFragmentUtils(
     val fabOnClickListener = { _ : View ->
         val extras = FragmentNavigatorExtras(fragment.viewBinding.fab to "from_fab_to_add")
         navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = ""), extras)
+    }
+
+    val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
+        when(item.itemId) {
+            R.id.reorder_button -> {
+                true
+            }
+            R.id.settings_button -> {
+                val destination = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+                fragment.findNavController().navigate(destination)
+                true
+            }
+            else -> false
+        }
     }
 
 
