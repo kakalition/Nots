@@ -4,6 +4,4 @@
     android:shape="rectangle">
     <corners
         android:radius="22dp"/>
-    <solid
-        android:color="@color/swipe_bg"/>
 </shape>

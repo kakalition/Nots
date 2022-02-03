@@ -131,6 +131,8 @@ class AddViewNoteFragmentUtils(
         }
     }
 
+    // TODO: Refactor
+    // TODO: Hide Keyboard When Confirm is Tapped
     val onEditTapped = {
         val noteBody = fragment.viewBinding.noteBody
         fragment.isEditing = true
