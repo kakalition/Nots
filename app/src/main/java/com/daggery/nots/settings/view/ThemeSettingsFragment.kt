@@ -1,36 +1,86 @@
 package com.daggery.nots.settings.view
 
-import android.content.Context
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
-import androidx.appcompat.widget.ThemeUtils
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
+import com.daggery.nots.databinding.TileThemeCardBinding
+import com.daggery.nots.home.viewmodel.HomeViewModel
 
-@ColorInt
-fun Context.themeColor(@AttrRes attrRes: Int): Int = TypedValue()
-    .apply { theme.resolveAttribute (attrRes, this, true) }
-    .data
+data class TileThemeData(
+    val title: String,
+    @ColorRes val primaryColorRes: Int,
+    @ColorRes val secondaryColorRes: Int,
+    @ColorRes val surfaceColorRes: Int,
+    @DrawableRes val themePortraitRes: Int,
+    val onClickListener: ((View) -> Unit)?
+)
+
+fun TileThemeCardBinding.bind(
+    fragment: Fragment,
+    tileThemeData: TileThemeData
+) {
+    primaryColor.background = ResourcesCompat.getDrawable(fragment.resources, R.drawable.bg_theme_color, null)
+    primaryColor.background.setTint(fragment.resources.getColor(tileThemeData.primaryColorRes, null))
+    secondaryColor.background = ResourcesCompat.getDrawable(fragment.resources, R.drawable.bg_theme_color, null)
+    secondaryColor.background.setTint(fragment.resources.getColor(tileThemeData.secondaryColorRes, null))
+    surfaceColor.background = ResourcesCompat.getDrawable(fragment.resources, R.drawable.bg_theme_color, null)
+    surfaceColor.background.setTint(fragment.resources.getColor(tileThemeData.surfaceColorRes, null))
+    themePortrait.setImageResource(tileThemeData.themePortraitRes)
+    themePortrait.setColorFilter(Color.parseColor("#33000000"))
+    themeTitle.setTextColor(fragment.resources.getColor(R.color.white, null))
+    themeTitle.text = tileThemeData.title
+    root.setOnClickListener(tileThemeData.onClickListener)
+}
 
 class ThemeSettingsFragment : Fragment() {
 
     private lateinit var _binding: FragmentThemeSettingsBinding
-    val binding get () = _binding
+    val binding get() = _binding
+
+    val viewModel: HomeViewModel by activityViewModels()
 
     private val navigationClickListener: (View) -> Unit = { view: View ->
         findNavController().navigateUp()
     }
+
+    private val defaultDarkTile = TileThemeData(
+        title = "Default Dark",
+        primaryColorRes = R.color.default_dark_primary,
+        secondaryColorRes = R.color.default_dark_secondary,
+        surfaceColorRes = R.color.default_dark_surface,
+        themePortraitRes = R.drawable.default_black_portrait,
+        onClickListener = { _ ->
+            findNavController().run {
+                // TODO: call setTheme before activity setContentView
+                (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
+            }
+        }
+    )
+
+    private val azaleaTile = TileThemeData(
+        title = "Azalea",
+        primaryColorRes = R.color.azalea_primary,
+        secondaryColorRes = R.color.azalea_secondary,
+        surfaceColorRes = R.color.azalea_surface,
+        themePortraitRes = R.drawable.azalea_portrait,
+        onClickListener = { _ ->
+            findNavController().run {
+                // TODO: call setTheme before activity setContentView
+                (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
+            }
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,26 +100,15 @@ class ThemeSettingsFragment : Fragment() {
         }
 
         // Theme Layout Binding
-        binding.currentTheme.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card_selected, null)
-            themeTitle.setTextColor(resources.getColor(R.color.white_surface, null))
-            themeTitle.text = "Default Black"
-        }
-
-        binding.defaultDark.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.black_surface, null))
-            themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = "Default Black"
-            root.setOnClickListener {
-                findNavController().run {
-                    // TODO: call setTheme before activity setContentView
-                    (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
-                    popBackStack()
-                    navigate(R.id.themeSettingsFragment)
-                }
+        viewModel.themeKey.let {
+            when(it) {
+                R.style.AzaleaTheme -> binding.currentTheme.bind(this, azaleaTile)
+                else -> binding.currentTheme.bind(this, defaultDarkTile)
             }
         }
+
+
+        binding.defaultDark.bind(this, defaultDarkTile)
 
         binding.defaultWhite.apply {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
@@ -92,25 +131,6 @@ class ThemeSettingsFragment : Fragment() {
             themeTitle.text = "Jungle Mist"
         }
 
-        binding.azalea.apply {
-            primaryColor.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_color, null)
-            primaryColor.background.setTint(resources.getColor(R.color.azalea_primary, null))
-            secondaryColor.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_color, null)
-            secondaryColor.background.setTint(resources.getColor(R.color.azalea_secondary, null))
-            surfaceColor.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_color, null)
-            surfaceColor.background.setTint(resources.getColor(R.color.azalea_surface, null))
-            themePortrait.setImageResource(R.drawable.azalea)
-            themePortrait.setColorFilter(Color.parseColor("#33000000"))
-            themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = "Azalea"
-            root.setOnClickListener {
-                findNavController().run {
-                    // TODO: call setTheme before activity setContentView
-                    (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
-                    popBackStack()
-                    navigate(R.id.themeSettingsFragment)
-                }
-            }
-        }
+        binding.azalea.bind(this, azaleaTile)
     }
 }
