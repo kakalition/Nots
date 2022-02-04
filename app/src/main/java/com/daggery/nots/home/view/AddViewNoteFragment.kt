@@ -156,25 +156,6 @@ class AddViewNoteFragmentUtils(
         showKeyboard(noteBody)
     }
 
-    val onDeleteTapped = {
-        MaterialAlertDialogBuilder(fragment.requireContext(), R.style.NotsAlertDialog)
-            .setView(R.layout.dialog_delete)
-            .setPositiveButton("Delete") { dialog, which ->
-                val note = fragment.viewModel.getNote(args.uuid)
-                note.observe(fragment.viewLifecycleOwner) {
-                    it?.let {
-                        Log.d("LOL: getNote", it.toString() )
-                        fragment.viewModel.deleteNote(it)
-                        fragment.findNavController().navigateUp()
-                    }
-                }
-            }
-            .setNegativeButton("Cancel") { dialog, which ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
     val navigationClickListener: (View) -> Unit = { view ->
         if(!fragment.isViewing) {
             viewEnvironment()
@@ -194,7 +175,6 @@ class AddViewNoteFragmentUtils(
                 true
             }
             R.id.delete_button -> {
-                onDeleteTapped()
                 true
             }
             else -> false

@@ -113,12 +113,14 @@ class NoteListItemAdapter(
                                 Color.argb(255, 78, 78, 78)
                             )
                             shouldChangePriority = false
+                            shouldDelete = false
                         }
                         translationValue > swipeThreshold -> {
                             homeFragmentUtils.notsVibrator.vibrate()
                             (holder.binding.swipeBg.background as GradientDrawable).setColor(
                                 Color.argb(255, 255, 105, 97)
                             )
+                            shouldDelete = true
                         }
                         translationValue < -swipeThreshold -> {
                             homeFragmentUtils.notsVibrator.vibrate()
