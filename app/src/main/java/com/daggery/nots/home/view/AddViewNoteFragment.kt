@@ -256,11 +256,6 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun hideThreeDotsMenu(menu: Menu) {
-        menu.findItem(R.id.reorder_button).isVisible = false
-        menu.findItem(R.id.settings_button).isVisible = false
-    }
-
     internal fun revertChanges() {
         val originalNote = fragment.originalNote
         fragment.viewBinding.apply {

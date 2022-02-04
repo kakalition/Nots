@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".settings.view.ThemeSettingsFragment">
+
+        <FrameLayout
+            android:id="@+id/app_bar_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/toolbar_binding"
+                layout="@layout/appbar_title" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/theme_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/inter_bold"
+            android:padding="22dp"
+            android:text="Theme"
+            android:textAppearance="?attr/textAppearanceDisplayMedium"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/current_theme_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="11dp"
+            android:text="Current Theme"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/white" />
+
+        <include
+            android:id="@+id/current_theme"
+            layout="@layout/tile_theme_card" />
+
+        <TextView
+            android:id="@+id/available_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="11dp"
+            android:text="Available Theme"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="@color/white" />
+
+        <include
+            android:id="@+id/default_white"
+            layout="@layout/tile_theme_card" />
+
+        <include
+            android:id="@+id/pale_blue"
+            layout="@layout/tile_theme_card" />
+
+        <include
+            android:id="@+id/jungle_mist"
+            layout="@layout/tile_theme_card" />
+
+        <include
+            android:id="@+id/azalea"
+            layout="@layout/tile_theme_card" />
+
+    </LinearLayout>
+
+</ScrollView>
