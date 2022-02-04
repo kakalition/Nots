@@ -3,67 +3,36 @@ package com.daggery.nots
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
-import androidx.navigation.NavHostController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.daggery.nots.databinding.ActivityMainBinding
-import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.home.viewmodel.HomeViewModelFactory
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.daggery.nots.home.view.HomeFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: Move Add
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-    private val viewModel by viewModels<HomeViewModel> {
-        HomeViewModelFactory(
-            (this.application as NotsApplication).database
-        )
-    }
-
-    private val fabOnClickListener = { view: View ->
-        navController.navigate(R.id.action_homeFragment_to_addEditNoteFragment)
-    }
+    lateinit var viewBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.findNavController()
 
-        // Set toolbar
-        setSupportActionBar(binding.appBar)
-        setupActionBarWithNavController(navController)
-        supportActionBar?.displayOptions = DISPLAY_SHOW_CUSTOM
-
-        // OnClickListener
-        binding.apply {
-            fab.setOnClickListener(fabOnClickListener)
-        }
-
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    fun showDeleteDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setView(R.layout.dialog_delete)
-            .setPositiveButton("Delete") { dialog, which ->
-            }
-            .setNegativeButton("Cancel") { dialog, which ->
-
-            }
-            .show()
-    }
 }

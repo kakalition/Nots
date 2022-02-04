@@ -1,3 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="NotsActionButton" parent="Widget.AppCompat.ActionButton">
+    </style>
+    <style name="NotsAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/white_surface</item>
+        <item name="android:textColor">@color/black_surface</item>
+        <item name="android:textColorPrimary">@color/black_surface</item>
+    </style>
 </resources>

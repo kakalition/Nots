@@ -1,61 +1,146 @@
 package com.daggery.nots.home.view
 
+import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.MainActivity
 import com.daggery.nots.NotsApplication
+import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
+import com.daggery.nots.home.adapter.NoteListItemAdapter
 import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.home.viewmodel.HomeViewModelFactory
+import com.daggery.nots.utils.NotsVibrator
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+// TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
+// TODO: Load list when splash screen is shown
+// TODO: Create Options Menu
+
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    inner class NoteLinearLayoutManager : LinearLayoutManager(
+        this.context,
+        VERTICAL,
+        false
+    ) {
+        private var canScrollVerticallyState: Boolean = true
+        fun changeScrollState(state: Boolean) {
+            canScrollVerticallyState = state
+        }
 
-    private val viewModel: HomeViewModel by activityViewModels {
-        HomeViewModelFactory(
-            (this.activity?.application as NotsApplication).database
-        )
+        override fun canScrollVertically(): Boolean {
+            return canScrollVerticallyState && super.canScrollVertically()
+        }
     }
-    private lateinit var notes: LiveData<List<Note>>
+
+    private var _viewBinding: FragmentHomeBinding? = null
+    internal val viewBinding get() = _viewBinding!!
+
+    internal val viewModel: HomeViewModel by activityViewModels()
+
+    private lateinit var fragmentUtils: HomeFragmentUtils
+
+    private lateinit var notesLiveData: LiveData<List<Note>>
+    internal var isNotesEmpty = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View {
+        _viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        notes = viewModel.notes
-        notes.observe(viewLifecycleOwner) {}
+        // Instantiate Fragment Utils Class
+        fragmentUtils = HomeFragmentUtils(this, findNavController())
 
-        // Conditionally display empty illustration and notes list
-        if(notes.value.isNullOrEmpty()){
-            binding.emptyNotesLayout.visibility = View.VISIBLE
-            binding.recyclerviewTest.visibility = View.GONE
-        } else {
-            binding.emptyNotesLayout.visibility = View.GONE
-            binding.recyclerviewTest.visibility = View.VISIBLE
+        // Prepare Toolbar
+        viewBinding.toolbarBinding.apply {
+            toolbarTitle.text = "Nots"
+            toolbar.inflateMenu(R.menu.menu_home_fragment)
+            toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
         }
 
+        // Prepare RecyclerView
+        val adapter = NoteListItemAdapter(fragmentUtils)
+        notesLiveData = viewModel.notes
+        notesLiveData.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+            isNotesEmpty = it.isEmpty()
+            fragmentUtils.changeHomeState()
+        }
+        viewBinding.notesRecyclerview.layoutManager = NoteLinearLayoutManager()
+        viewBinding.notesRecyclerview.adapter = adapter
+
+        // OnClickListener
+        viewBinding.fab.setOnClickListener(fragmentUtils.fabOnClickListener)
+    }
+}
+
+
+class HomeFragmentUtils(
+    private val fragment: HomeFragment,
+    private val navController: NavController
+) {
+    val notsVibrator = NotsVibrator(fragment.requireActivity())
+    val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
+        (fragment.viewBinding.notesRecyclerview.layoutManager as HomeFragment.NoteLinearLayoutManager).changeScrollState(state)
+    }
+
+    val noteClickListener: (Note) -> Unit = { note ->
+        val uuid = note.uuid
+        val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
+        fragment.findNavController().navigate(action)
+    }
+
+    val fabOnClickListener = { _ : View ->
+        val extras = FragmentNavigatorExtras(fragment.viewBinding.fab to "from_fab_to_add")
+        navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = ""), extras)
+    }
+
+    val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
+        when(item.itemId) {
+            R.id.reorder_button -> {
+                true
+            }
+            R.id.settings_button -> {
+                val destination = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+                fragment.findNavController().navigate(destination)
+                true
+            }
+            else -> false
+        }
+    }
+
+
+    // Conditionally display empty illustration and notes list
+    fun changeHomeState() {
+        if(fragment.isNotesEmpty) {
+            fragment.viewBinding.emptyNotesLayout.visibility = View.VISIBLE
+            fragment.viewBinding.notesRecyclerview.visibility = View.GONE
+        } else {
+            fragment.viewBinding.emptyNotesLayout.visibility = View.GONE
+            fragment.viewBinding.notesRecyclerview.visibility = View.VISIBLE
+        }
     }
 }

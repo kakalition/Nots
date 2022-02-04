@@ -11,12 +11,24 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_addEditNoteFragment"
-            app:destination="@id/addEditNoteFragment" />
+            android:id="@+id/action_homeFragment_to_addViewNoteFragment"
+            app:destination="@id/addViewNoteFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addEditNoteFragment"
-        android:name="com.daggery.nots.home.view.AddEditNoteFragment"
-        android:label="fragment_add_edit_note"
-        tools:layout="@layout/fragment_add_edit_note" />
+        android:id="@+id/addViewNoteFragment"
+        android:name="com.daggery.nots.home.view.AddViewNoteFragment"
+        android:label="fragment_add_view_note"
+        tools:layout="@layout/fragment_add_view_note">
+        <argument
+            android:name="uuid"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.daggery.nots.home.view.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

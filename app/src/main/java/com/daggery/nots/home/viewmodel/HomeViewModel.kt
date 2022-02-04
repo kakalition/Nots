@@ -3,14 +3,39 @@ package com.daggery.nots.home.viewmodel
 import androidx.lifecycle.*
 import com.daggery.nots.data.Note
 import com.daggery.nots.data.NotsDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import javax.inject.Inject
 
-class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val database: NotsDatabase
+) : ViewModel() {
 
     // Get note dao
     private val noteDao = database.noteDao()
     // Get all notes
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
+
+    private fun getCurrentDate(): String {
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("MMMM dd, yyyy")
+        val formattedDate = formatter.format(date)
+        return formattedDate
+    }
+
+    fun getNewNote(): Note {
+        return Note(
+            UUID.randomUUID().toString(),
+            0,
+            notes.value?.size ?: 0,
+            "",
+            "",
+            getCurrentDate()
+        )
+    }
 
     fun isPrioritized(note: Note): Boolean {
         return note.priority == 1
@@ -45,7 +70,21 @@ class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
         }
     }
 
-    fun addNote(note: Note) {
+    fun addNote(
+        title: String,
+        body: String) {
+        val note = Note(
+            uuid = UUID.randomUUID().toString(),
+            priority = 0,
+            noteOrder = notes.value?.size ?: 0,
+            noteTitle = title,
+            noteBody = body,
+            noteDate = getCurrentDate()
+        )
+        addNoteToDatabase(note)
+    }
+
+    private fun addNoteToDatabase(note: Note) {
         viewModelScope.launch {
             database.noteDao().addNote(note)
         }
@@ -69,6 +108,7 @@ class HomeViewModel(private val database: NotsDatabase) : ViewModel() {
         }
     }
 }
+/*
 
 class HomeViewModelFactory(private val database: NotsDatabase) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -78,4 +118,4 @@ class HomeViewModelFactory(private val database: NotsDatabase) : ViewModelProvid
         }
         throw IllegalArgumentException("Unknown ViewModel")
     }
-}
+}*/

@@ -2,16 +2,44 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp">
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/app_bar_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <include android:id="@+id/toolbar_binding"
+            layout="@layout/appbar_title" />
+    </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:transitionName="from_fab_to_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:backgroundTint="@color/white_surface"
+        android:contentDescription="Add new note"
+        android:elevation="2dp"
+        android:src="@drawable/ic_add"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="36dp"
+        app:tint="@color/black" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/empty_notes_layout"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_frame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -53,17 +81,17 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_test"
-        tools:visibility="gone"
-        android:layout_width="0dp"
+        android:id="@+id/notes_recyclerview"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginHorizontal="20dp"
         android:backgroundTintMode="add"
         android:foregroundTintMode="add"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/app_bar_frame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
