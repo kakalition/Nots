@@ -1,5 +1,6 @@
 package com.daggery.nots.settings.view
 
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -66,10 +67,23 @@ class ThemeSettingsFragment : Fragment() {
         }
 
         binding.azalea.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.azalea, null))
+            primaryColor.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_color, null)
+            primaryColor.background.setTint(resources.getColor(R.color.azalea_primary, null))
+            secondaryColor.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_color, null)
+            secondaryColor.background.setTint(resources.getColor(R.color.azalea_secondary, null))
+            surfaceColor.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_color, null)
+            surfaceColor.background.setTint(resources.getColor(R.color.azalea_surface, null))
+            themePortrait.setImageResource(R.drawable.azalea)
+            themePortrait.setColorFilter(Color.parseColor("#33000000"))
             themeTitle.setTextColor(resources.getColor(R.color.white, null))
             themeTitle.text = "Azalea"
+            root.setOnClickListener {
+                requireActivity().setTheme(R.style.AzaleaTheme)
+                findNavController().run {
+                    popBackStack()
+                    navigate(R.id.themeSettingsFragment)
+                }
+            }
         }
     }
 }
