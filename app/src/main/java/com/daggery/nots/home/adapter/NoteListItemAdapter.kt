@@ -65,6 +65,8 @@ class NoteListItemAdapter(
         var swipeWeight = 0.45f
         var swipeThreshold = 0f
         val changeSwipeColorRange = -5f..5f
+        var shouldChangePriority = false
+        var shouldDelete = false
         holder.binding.listItemLayout.setOnTouchListener { v, event ->
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -85,7 +87,18 @@ class NoteListItemAdapter(
                         }
                         .start()
                     isSwiping = false
+                    if(shouldChangePriority && current.priority == 0) {
+                        homeFragmentUtils.prioritize(current)
+                    } else if(shouldChangePriority && current.priority != 0){
+                        homeFragmentUtils.unprioritize(current)
+                    } else if(shouldDelete) {
+                        homeFragmentUtils.deleteNote(current)
+                    } else {
+                        shouldChangePriority = false
+                        shouldDelete = false
+                    }
                 }
+                // TODO: Optimize
                 MotionEvent.ACTION_MOVE -> {
                     homeFragmentUtils.setVerticalScrollState(false)
                     translationValue = event.rawX - viewAnchorX
@@ -99,6 +112,7 @@ class NoteListItemAdapter(
                             (holder.binding.swipeBg.background as GradientDrawable).setColor(
                                 Color.argb(255, 78, 78, 78)
                             )
+                            shouldChangePriority = false
                         }
                         translationValue > swipeThreshold -> {
                             homeFragmentUtils.notsVibrator.vibrate()
@@ -111,6 +125,7 @@ class NoteListItemAdapter(
                             (holder.binding.swipeBg.background as GradientDrawable).setColor(
                                 Color.argb(255, 78, 175, 201)
                             )
+                            shouldChangePriority = true
                         }
                     }
                 }

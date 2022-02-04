@@ -132,6 +132,17 @@ class HomeFragmentUtils(
         }
     }
 
+    fun prioritize(note: Note) {
+        fragment.viewModel.prioritize(note)
+    }
+
+    fun unprioritize(note: Note) {
+        fragment.viewModel.unprioritize(note)
+    }
+
+    fun deleteNote(note: Note) {
+        fragment.viewModel.deleteNote(note)
+    }
 
     // Conditionally display empty illustration and notes list
     fun changeHomeState() {
