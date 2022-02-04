@@ -99,6 +99,7 @@ class NoteListItemAdapter(
                     }
                 }
                 // TODO: Optimize
+                // TODO: Cancel Request if Swipe is Less than Threshold
                 MotionEvent.ACTION_MOVE -> {
                     homeFragmentUtils.setVerticalScrollState(false)
                     translationValue = event.rawX - viewAnchorX

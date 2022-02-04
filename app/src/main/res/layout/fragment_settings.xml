@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Settings"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnSurface"
         android:fontFamily="@font/inter_bold"
         android:textAppearance="?attr/textAppearanceDisplayMedium"
         android:layout_marginTop="40dp"

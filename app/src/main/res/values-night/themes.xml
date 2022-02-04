@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Nots" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorSurface">@color/black_surface</item>
+    <style name="Theme.Nots" parent="DefaultDarkTheme">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:actionButtonStyle">@style/NotsActionButton</item>
     </style>

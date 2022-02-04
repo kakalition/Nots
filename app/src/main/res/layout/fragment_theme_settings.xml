@@ -19,7 +19,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <include
                 android:id="@+id/toolbar_binding"
                 layout="@layout/appbar_title" />
@@ -34,7 +33,7 @@
             android:padding="22dp"
             android:text="Theme"
             android:textAppearance="?attr/textAppearanceDisplayMedium"
-            android:textColor="@color/white" />
+            android:textColor="?attr/colorOnSurface" />
 
         <TextView
             android:id="@+id/current_theme_text"
@@ -46,7 +45,8 @@
             android:paddingBottom="11dp"
             android:text="Current Theme"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="@color/white" />
+            android:textColor="?attr/colorOnSurface"
+             />
 
         <include
             android:id="@+id/current_theme"
@@ -62,10 +62,15 @@
             android:paddingBottom="11dp"
             android:text="Available Theme"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="@color/white" />
+            android:textColor="?attr/colorOnSurface"
+             />
 
         <include
             android:id="@+id/default_white"
+            layout="@layout/tile_theme_card" />
+
+        <include
+            android:id="@+id/default_dark"
             layout="@layout/tile_theme_card" />
 
         <include

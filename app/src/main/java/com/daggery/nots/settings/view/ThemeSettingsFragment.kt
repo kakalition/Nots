@@ -1,16 +1,27 @@
 package com.daggery.nots.settings.view
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
+import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
+
+@ColorInt
+fun Context.themeColor(@AttrRes attrRes: Int): Int = TypedValue()
+    .apply { theme.resolveAttribute (attrRes, this, true) }
+    .data
 
 class ThemeSettingsFragment : Fragment() {
 
@@ -43,6 +54,21 @@ class ThemeSettingsFragment : Fragment() {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card_selected, null)
             themeTitle.setTextColor(resources.getColor(R.color.white_surface, null))
             themeTitle.text = "Default Black"
+        }
+
+        binding.defaultDark.apply {
+            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
+            root.background.setTint(resources.getColor(R.color.black_surface, null))
+            themeTitle.setTextColor(resources.getColor(R.color.white, null))
+            themeTitle.text = "Default Black"
+            root.setOnClickListener {
+                findNavController().run {
+                    // TODO: call setTheme before activity setContentView
+                    (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
+                    popBackStack()
+                    navigate(R.id.themeSettingsFragment)
+                }
+            }
         }
 
         binding.defaultWhite.apply {
@@ -78,8 +104,9 @@ class ThemeSettingsFragment : Fragment() {
             themeTitle.setTextColor(resources.getColor(R.color.white, null))
             themeTitle.text = "Azalea"
             root.setOnClickListener {
-                requireActivity().setTheme(R.style.AzaleaTheme)
                 findNavController().run {
+                    // TODO: call setTheme before activity setContentView
+                    (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
                     popBackStack()
                     navigate(R.id.themeSettingsFragment)
                 }

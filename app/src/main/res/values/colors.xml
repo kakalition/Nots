@@ -8,12 +8,21 @@
     <color name="blue_pastel">#FF4EAFC9</color>
     <color name="pale_blue">#FFB6D8F2</color>
     <color name="jungle_mist">#FFA1CDCE</color>
-    <color name="azalea_primary">#FFFF88B2</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="default_dark_primary">#FFFAFAFA</color>
+    <color name="default_dark_on_primary">#FF212121</color>
+    <color name="default_dark_secondary">#FF323232</color>
+    <color name="default_dark_on_secondary">#FFFFFFFF</color>
+    <color name="default_dark_surface">#FF1F1F1F</color>
+    <color name="default_dark_on_surface">#FFFAFAFA</color>
+
+    <color name="azalea_primary">#FF90B7</color>
     <color name="azalea_on_primary">#FF262626</color>
-    <color name="azalea_secondary">#FFF5BFD2</color>
+    <color name="azalea_secondary">#FFCDE0</color>
     <color name="azalea_on_secondary">#FF262626</color>
     <color name="azalea_surface">#FFFFE7EF</color>
     <color name="azalea_on_surface">#FF262626</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
 </resources>
