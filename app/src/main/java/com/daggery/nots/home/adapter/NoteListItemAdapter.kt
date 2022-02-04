@@ -3,6 +3,7 @@ package com.daggery.nots.home.adapter
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -64,7 +65,7 @@ class NoteListItemAdapter(
         var translationValue: Float
         var swipeWeight = 0.45f
         var swipeThreshold = 0f
-        val changeSwipeColorRange = -5f..5f
+        var neutralRange: ClosedFloatingPointRange<Float> = 0f..0f
         var shouldChangePriority = false
         var shouldDelete = false
         holder.binding.listItemLayout.setOnTouchListener { v, event ->
@@ -72,7 +73,9 @@ class NoteListItemAdapter(
                 MotionEvent.ACTION_DOWN -> {
                     isSwiping = false
                     viewAnchorX = event.rawX
-                    swipeThreshold = (v.width / 3).toFloat()
+                    swipeThreshold = (v.width / 4).toFloat()
+                    neutralRange = -swipeThreshold..swipeThreshold
+                    Log.d("LOL: swipeThresholdRange", neutralRange.toString())
                 }
                 MotionEvent.ACTION_UP -> {
                     if(!isSwiping) v.performClick()
@@ -108,7 +111,7 @@ class NoteListItemAdapter(
                     }
                     v.translationX = translationValue * swipeWeight
                     when {
-                        v.x in changeSwipeColorRange -> {
+                        v.x in neutralRange -> {
                             homeFragmentUtils.notsVibrator.resetVibrator()
                             (holder.binding.swipeBg.background as GradientDrawable).setColor(
                                 Color.argb(255, 78, 78, 78)
