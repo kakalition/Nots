@@ -1,20 +1,12 @@
 package com.daggery.nots.home.adapter
 
-import android.animation.Animator
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.Animation.AnimationListener
 import android.view.animation.DecelerateInterpolator
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +14,6 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
 import com.daggery.nots.home.view.HomeFragmentUtils
-import kotlinx.coroutines.delay
 
 class NoteListItemAdapter(
     private val homeFragmentUtils: HomeFragmentUtils
@@ -44,8 +35,8 @@ class NoteListItemAdapter(
         fun bind(note: Note) {
             (binding.swipeBg.background as GradientDrawable).setColor(Color.argb(255, 78, 78, 78))
             if(note.priority == 1) {
-                binding.listItemLayout.setBackgroundResource(R.drawable.list_item_note_bg_priority)
-            } else binding.listItemLayout.setBackgroundResource(R.drawable.list_item_note_bg)
+                binding.listItemLayout.setBackgroundResource(R.drawable.bg_note_item_priority)
+            } else binding.listItemLayout.setBackgroundResource(R.drawable.bg_note_item)
             binding.noteTitle.text = note.noteTitle
             binding.noteBody.text = note.noteBody
             binding.noteDate.text = note.noteDate
