@@ -2,6 +2,7 @@ package com.daggery.nots.home.view
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,6 +24,7 @@ import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
 // TODO: Load list when splash screen is shown
@@ -132,6 +134,27 @@ class HomeFragmentUtils(
         }
     }
 
+    fun prioritize(note: Note) {
+        fragment.viewModel.prioritize(note)
+    }
+
+    fun unprioritize(note: Note) {
+        fragment.viewModel.unprioritize(note)
+    }
+
+    fun deleteNote(note: Note) {
+        MaterialAlertDialogBuilder(fragment.requireContext(), ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+            .setIcon(R.drawable.ic_delete)
+            .setTitle("Delete Note")
+            .setMessage("Are you sure want to delete this note?\nThis action cannot be undone.")
+            .setPositiveButton("Delete") { _, _ ->
+                fragment.viewModel.deleteNote(note)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
 
     // Conditionally display empty illustration and notes list
     fun changeHomeState() {
