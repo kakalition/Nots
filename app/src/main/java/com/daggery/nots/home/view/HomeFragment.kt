@@ -143,10 +143,9 @@ class HomeFragmentUtils(
     }
 
     fun deleteNote(note: Note) {
+        val deleteIcon = fragment.resources.getDrawable(R.drawable.ic_delete, null)
         MaterialAlertDialogBuilder(fragment.requireContext(), ThemeOverlay_Material3_MaterialAlertDialog_Centered)
-            .setIcon(R.drawable.ic_delete)
-            .setTitle("Delete Note")
-            .setMessage("Are you sure want to delete this note?\nThis action cannot be undone.")
+            .setView(R.layout.dialog_delete)
             .setPositiveButton("Delete") { _, _ ->
                 fragment.viewModel.deleteNote(note)
             }
