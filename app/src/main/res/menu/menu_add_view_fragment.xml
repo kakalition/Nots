@@ -2,16 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:iconTint="?attr/colorOnSurface"
         android:title="Confirm"
         android:id="@+id/confirm_button"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_check"/>
     <item
+        android:iconTint="?attr/colorOnSurface"
         android:id="@+id/edit_button"
         android:title="Edit"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_edit"/>
     <item
+        android:iconTint="?attr/colorOnSurface"
         android:title="Delete"
         android:id="@+id/delete_button"
         app:showAsAction="ifRoom"

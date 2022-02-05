@@ -21,6 +21,7 @@
         android:layout_gravity="center"
         android:elevation="2dp"
         android:fontFamily="@font/inter_bold"
+        android:textColor="?attr/colorOnSurface"
         android:textAppearance="?attr/textAppearanceHeadline5"
         tools:text="Nots." />
 </androidx.appcompat.widget.Toolbar>

@@ -1,6 +1,7 @@
 package com.daggery.nots.home.viewmodel
 
 import androidx.lifecycle.*
+import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.data.NotsDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +14,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val database: NotsDatabase
 ) : ViewModel() {
+
+    var themeKey: Int = R.style.DefaultDarkTheme
 
     // Get note dao
     private val noteDao = database.noteDao()

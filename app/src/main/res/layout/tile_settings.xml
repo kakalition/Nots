@@ -14,13 +14,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_theme" />
+        tools:src="@drawable/ic_theme"
+        app:tint="?attr/colorOnSurface" />
 
     <TextView
         android:id="@+id/settings_item_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="22dp"
+        android:textColor="?attr/colorOnSurface"
         android:fontFamily="@font/opensans_medium"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         app:layout_constraintBottom_toTopOf="@id/settings_item_body"
@@ -34,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="22dp"
         android:fontFamily="@font/opensans_light"
+        android:textColor="?attr/colorOnSurface"
         android:textAppearance="?attr/textAppearanceSubtitle2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/settings_item_icon"

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_home"
+    android:background="?attr/colorSurface"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
-        android:backgroundTint="@color/white_surface"
+        android:backgroundTint="?attr/colorPrimary"
         android:contentDescription="Add new note"
         android:elevation="2dp"
         android:src="@drawable/ic_add"
@@ -31,7 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="36dp"
-        app:tint="@color/black" />
+        app:tint="?attr/colorOnPrimary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/empty_notes_layout"
@@ -51,7 +52,7 @@
             android:padding="20dp"
             android:text="Whoops!"
             android:textAppearance="?attr/textAppearanceDisplayMedium"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintBottom_toTopOf="@id/empty_illustration"
             app:layout_constraintEnd_toEndOf="@id/empty_illustration"
             app:layout_constraintStart_toStartOf="@id/empty_illustration" />
@@ -73,7 +74,7 @@
             android:padding="20dp"
             android:text="You don't have any note, yet.\nTap the FAB to create one"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/empty_illustration" />

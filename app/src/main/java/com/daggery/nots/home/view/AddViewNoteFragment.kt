@@ -198,9 +198,7 @@ class AddViewNoteFragmentUtils(
         fragment.isViewing = true
         fragment.viewBinding.toolbarBinding.toolbarTitle.text = "View"
         fragment.viewBinding.noteTitle.isEnabled = false
-        fragment.viewBinding.noteTitle.setTextColor(fragment.resources.getColor(R.color.white_surface, null))
         fragment.viewBinding.noteBody.isEnabled = false
-        fragment.viewBinding.noteBody.setTextColor(fragment.resources.getColor(R.color.white_surface, null))
         menuViewEnvironment()
     }
 
