@@ -38,5 +38,14 @@
     <fragment
         android:id="@+id/themeSettingsFragment"
         android:name="com.daggery.nots.settings.view.ThemeSettingsFragment"
-        android:label="ThemeSettingsFragment" />
+        android:label="ThemeSettingsFragment" >
+        <action
+            android:id="@+id/action_themeSettingsFragment_to_viewThemeFragment"
+            app:destination="@id/viewThemeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewThemeFragment"
+        android:name="com.daggery.nots.ViewThemeFragment"
+        android:label="fragment_view_theme"
+        tools:layout="@layout/fragment_view_theme" />
 </navigation>

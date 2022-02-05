@@ -63,7 +63,7 @@ class ThemeSettingsFragment : Fragment() {
         onClickListener = { _ ->
             findNavController().run {
                 // TODO: call setTheme before activity setContentView
-                (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
+                navigate(ThemeSettingsFragmentDirections.actionThemeSettingsFragmentToViewThemeFragment())
             }
         }
     )
