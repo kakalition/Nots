@@ -2,6 +2,7 @@ package com.daggery.nots
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
@@ -17,6 +18,7 @@ import com.daggery.nots.home.view.HomeFragmentDirections
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.splashscreen.SplashScreen
+import com.google.android.material.color.MaterialColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen().setKeepOnScreenCondition { viewModel.themeKey == 0 }
 
         setTheme(viewModel.themeKey)
+        prepareStatusBar()
 
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -48,5 +51,22 @@ class MainActivity : AppCompatActivity() {
     fun updateTheme(themeRes: Int) {
         viewModel.applyTheme(themeRes)
         recreate()
+    }
+
+    fun prepareStatusBar() {
+        window.apply {
+            // Set Status Bar Color
+            statusBarColor = MaterialColors.getColor(
+                this@MainActivity,
+                com.google.android.material.R.attr.colorSurface,
+                resources.getColor(R.color.transparent, null)
+            )
+
+            // Set Status Bar Icon Color
+            when(viewModel.themeKey) {
+                R.style.DefaultDarkTheme -> decorView.systemUiVisibility = 0
+                R.style.AzaleaTheme -> decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
     }
 }

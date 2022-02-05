@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Nots" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen.IconBackground">
@@ -9,6 +8,5 @@
         <item name="windowSplashScreenIconBackgroundColor">@color/white_surface</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground_black</item>
         <item name="postSplashScreenTheme">@style/Theme.Nots</item>
-        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 </resources>
