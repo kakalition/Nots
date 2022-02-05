@@ -20,6 +20,7 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListItemAdapter
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,6 +69,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(viewModel.themeKey == 0) {
+            viewModel.themePref.observeOnce(this) {
+                viewModel._themeKey = it
+                (requireActivity() as MainActivity).updateTheme(it)
+            }
+        }
 
         // Instantiate Fragment Utils Class
         fragmentUtils = HomeFragmentUtils(this, findNavController())

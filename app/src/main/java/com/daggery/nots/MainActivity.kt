@@ -16,8 +16,12 @@ import com.daggery.nots.databinding.ActivityMainBinding
 import com.daggery.nots.home.view.HomeFragmentDirections
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.core.splashscreen.SplashScreen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-// TODO: Move Add
+// Make StatusBar Translucent
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+
+        installSplashScreen().setKeepOnScreenCondition { viewModel.themeKey == 0 }
 
         setTheme(viewModel.themeKey)
 
@@ -40,8 +45,8 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
     }
 
-    fun updateTheme(styleRes: Int) {
-        viewModel.themeKey = styleRes
+    fun updateTheme(themeRes: Int) {
+        viewModel.applyTheme(themeRes)
         recreate()
     }
 }

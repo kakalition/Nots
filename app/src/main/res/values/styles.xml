@@ -15,6 +15,7 @@
         <item name="colorOnSurface">@color/default_dark_on_surface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
         <item name="actionMenuTextColor">?attr/colorOnSurface</item>
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
 
     <style name="AzaleaTheme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -26,6 +27,7 @@
         <item name="colorOnSurface">@color/azalea_on_surface</item>
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+        <item name="android:statusBarColor">@color/transparent</item>
     </style>
     
     <style name="roundedCorners">
