@@ -1,8 +1,11 @@
 package com.daggery.nots.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.daggery.nots.data.NoteDao
 import com.daggery.nots.data.NotsDatabase
+import com.daggery.nots.datastore.DataStoreManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +26,14 @@ internal object DatabaseModule {
     fun providesNoteDao(notsDatabase: NotsDatabase): NoteDao {
         return notsDatabase.noteDao()
     }
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+internal object DataStoreModule {
+    @Provides
+    @Singleton
+    fun providesDataStore(@ApplicationContext appContext: Context): DataStoreManager {
+        return DataStoreManager(appContext)
+    }
 }

@@ -27,7 +27,7 @@
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
-    
+
     <style name="roundedCorners">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
