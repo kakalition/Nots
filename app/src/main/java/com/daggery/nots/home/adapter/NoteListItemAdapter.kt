@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -75,7 +76,6 @@ class NoteListItemAdapter(
                     viewAnchorX = event.rawX
                     swipeThreshold = (v.width / 4).toFloat()
                     neutralRange = -swipeThreshold..swipeThreshold
-                    Log.d("LOL: swipeThresholdRange", neutralRange.toString())
                 }
                 MotionEvent.ACTION_UP -> {
                     if(!isSwiping) v.performClick()
@@ -114,7 +114,7 @@ class NoteListItemAdapter(
                         v.x in neutralRange -> {
                             homeFragmentUtils.notsVibrator.resetVibrator()
                             (holder.binding.swipeBg.background as GradientDrawable).setColor(
-                                Color.argb(255, 78, 78, 78)
+                                homeFragmentUtils.getSwipeBgColor()
                             )
                             shouldChangePriority = false
                             shouldDelete = false

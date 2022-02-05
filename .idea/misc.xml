@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable-v24/icon_vector_animation.xml" value="0.2145" />
         <entry key="app/src/main/res/drawable/bg_note_item.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_note_item_priority.xml" value="0.173" />
+        <entry key="app/src/main/res/drawable/bg_note_item_swipe.xml" value="0.242" />
         <entry key="app/src/main/res/drawable/bg_theme_card.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_theme_card_selected.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_theme_color.xml" value="0.173" />

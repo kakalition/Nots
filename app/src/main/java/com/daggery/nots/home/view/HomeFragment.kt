@@ -1,9 +1,11 @@
 package com.daggery.nots.home.view
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
@@ -26,6 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
+import com.google.android.material.color.MaterialColors
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
 // TODO: Load list when splash screen is shown
@@ -159,6 +162,16 @@ class HomeFragmentUtils(
             .show()
     }
 
+    fun getSwipeBgColor(): Int {
+        return ColorUtils.setAlphaComponent(
+            MaterialColors.getColor(
+                fragment.requireContext(),
+                com.google.android.material.R.attr.colorPrimary,
+                Color.parseColor("#FFFFFFFF")
+            ),
+            200
+        )
+    }
     // Conditionally display empty illustration and notes list
     fun changeHomeState() {
         if(fragment.isNotesEmpty) {

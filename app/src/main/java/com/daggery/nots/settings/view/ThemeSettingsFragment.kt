@@ -1,11 +1,14 @@
 package com.daggery.nots.settings.view
 
+import android.animation.TimeInterpolator
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
@@ -60,11 +63,17 @@ class ThemeSettingsFragment : Fragment() {
         secondaryColorRes = R.color.default_dark_secondary,
         surfaceColorRes = R.color.default_dark_surface,
         themePortraitRes = R.drawable.default_black_portrait,
-        onClickListener = { _ ->
+        onClickListener = { view ->
+            view.animate()
+                .alpha(0f)
+                .setInterpolator(DecelerateInterpolator())
+                .start()
+            /*
             findNavController().run {
                 // TODO: call setTheme before activity setContentView
                 navigate(ThemeSettingsFragmentDirections.actionThemeSettingsFragmentToViewThemeFragment())
             }
+*/
         }
     )
 
