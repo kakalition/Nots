@@ -41,11 +41,16 @@
         android:label="ThemeSettingsFragment" >
         <action
             android:id="@+id/action_themeSettingsFragment_to_viewThemeFragment"
-            app:destination="@id/viewThemeFragment" />
+            app:destination="@id/previewThemeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/viewThemeFragment"
-        android:name="com.daggery.nots.ViewThemeFragment"
+        android:id="@+id/previewThemeFragment"
+        android:name="com.daggery.nots.settings.view.PreviewThemeFragment"
         android:label="fragment_view_theme"
-        tools:layout="@layout/fragment_view_theme" />
+        tools:layout="@layout/fragment_preview_theme" >
+        <argument
+            android:name="themeEnum"
+            app:argType="com.daggery.nots.utils.ThemeEnum"
+            android:defaultValue="DEFAULT_DARK" />
+    </fragment>
 </navigation>

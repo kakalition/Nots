@@ -150,7 +150,6 @@ class HomeFragmentUtils(
     }
 
     fun deleteNote(note: Note) {
-        val deleteIcon = fragment.resources.getDrawable(R.drawable.ic_delete, null)
         MaterialAlertDialogBuilder(fragment.requireContext(), ThemeOverlay_Material3_MaterialAlertDialog_Centered)
             .setView(R.layout.dialog_delete)
             .setPositiveButton("Delete") { _, _ ->

@@ -1,8 +1,11 @@
 package com.daggery.nots.settings.view
 
+import android.animation.ArgbEvaluator
 import android.animation.TimeInterpolator
+import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +22,9 @@ import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.databinding.TileThemeCardBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.utils.GeneralUtils
+import com.daggery.nots.utils.ThemeEnum
+import com.google.android.material.color.MaterialColors
 
 data class TileThemeData(
     val title: String,
@@ -48,6 +54,7 @@ fun TileThemeCardBinding.bind(
 
 class ThemeSettingsFragment : Fragment() {
 
+    private val generalUtils = GeneralUtils()
     private lateinit var _binding: FragmentThemeSettingsBinding
     val binding get() = _binding
 
@@ -64,16 +71,13 @@ class ThemeSettingsFragment : Fragment() {
         surfaceColorRes = R.color.default_dark_surface,
         themePortraitRes = R.drawable.default_black_portrait,
         onClickListener = { view ->
-            view.animate()
-                .alpha(0f)
-                .setInterpolator(DecelerateInterpolator())
-                .start()
-            /*
             findNavController().run {
                 // TODO: call setTheme before activity setContentView
-                navigate(ThemeSettingsFragmentDirections.actionThemeSettingsFragmentToViewThemeFragment())
+                // (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
+                val navigation = ThemeSettingsFragmentDirections
+                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.DEFAULT_DARK)
+                navigate(navigation)
             }
-*/
         }
     )
 
@@ -85,8 +89,10 @@ class ThemeSettingsFragment : Fragment() {
         themePortraitRes = R.drawable.azalea_portrait,
         onClickListener = { _ ->
             findNavController().run {
-                // TODO: call setTheme before activity setContentView
-                (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
+                // (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
+                val navigation = ThemeSettingsFragmentDirections
+                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.AZALEA)
+                navigate(navigation)
             }
         }
     )
@@ -96,6 +102,7 @@ class ThemeSettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentThemeSettingsBinding.inflate(inflater, container, false)
+        generalUtils.prepareStatusBar(activity = requireActivity(), themeKey = viewModel.themeKey)
         return binding.root
     }
 
@@ -115,7 +122,6 @@ class ThemeSettingsFragment : Fragment() {
                 else -> binding.currentTheme.bind(this, defaultDarkTile)
             }
         }
-
 
         binding.defaultDark.bind(this, defaultDarkTile)
 
