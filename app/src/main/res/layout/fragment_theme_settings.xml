@@ -74,6 +74,10 @@
             layout="@layout/tile_theme_card" />
 
         <include
+            android:id="@+id/nord"
+            layout="@layout/tile_theme_card" />
+
+        <include
             android:id="@+id/pale_blue"
             layout="@layout/tile_theme_card" />
 

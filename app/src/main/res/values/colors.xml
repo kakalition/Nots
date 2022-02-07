@@ -25,4 +25,11 @@
     <color name="azalea_surface">#FFFFE7EF</color>
     <color name="azalea_on_surface">#FF262626</color>
 
+    <color name="nord_primary">#FFECEFF4</color>
+    <color name="nord_on_primary">#FF2E3440</color>
+    <color name="nord_secondary">#FF434C5E</color>
+    <color name="nord_on_secondary">#FFECEFF4</color>
+    <color name="nord_surface">#FF2E3440</color>
+    <color name="nord_on_surface">#FFECEFF4</color>
+
 </resources>

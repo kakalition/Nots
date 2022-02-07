@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.appcompat.view.menu.ListMenuItemView
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,12 +14,11 @@ import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentPreviewThemeBinding
 import com.daggery.nots.databinding.ListItemNoteBinding
-import com.daggery.nots.home.view.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.GeneralUtils
-import com.daggery.nots.utils.ThemeEnum
 import com.daggery.nots.utils.ThemeEnum.*
 
+// TODO: REFACTOR
 class PreviewThemeFragment : Fragment() {
 
     private val generalUtils = GeneralUtils()
@@ -49,6 +46,7 @@ class PreviewThemeFragment : Fragment() {
     private fun applyTheme() {
         val themeKey = when(args.themeEnum) {
             DEFAULT_DARK -> R.style.DefaultDarkTheme
+            NORD -> R.style.NordTheme
             AZALEA -> R.style.AzaleaTheme
         }
         (requireActivity() as MainActivity).updateTheme(themeKey)
@@ -62,6 +60,10 @@ class PreviewThemeFragment : Fragment() {
         val localInflater: LayoutInflater = if(args.themeEnum == AZALEA) {
             context = ContextThemeWrapper(activity, R.style.AzaleaTheme)
             themeKey = R.style.AzaleaTheme
+            inflater.cloneInContext(context)
+        } else if(args.themeEnum == NORD) {
+            context = ContextThemeWrapper(activity, R.style.NordTheme)
+            themeKey = R.style.NordTheme
             inflater.cloneInContext(context)
         } else {
             context = ContextThemeWrapper(activity, R.style.DefaultDarkTheme)

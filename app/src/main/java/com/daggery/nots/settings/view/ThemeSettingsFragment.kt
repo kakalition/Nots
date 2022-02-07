@@ -52,6 +52,8 @@ fun TileThemeCardBinding.bind(
     root.setOnClickListener(tileThemeData.onClickListener)
 }
 
+// TODO: Unify Theme Settings, add or remove theme should be easy and in one place only
+
 class ThemeSettingsFragment : Fragment() {
 
     private val generalUtils = GeneralUtils()
@@ -76,6 +78,22 @@ class ThemeSettingsFragment : Fragment() {
                 // (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
                 val navigation = ThemeSettingsFragmentDirections
                     .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.DEFAULT_DARK)
+                navigate(navigation)
+            }
+        }
+    )
+
+    private val nordTile = TileThemeData(
+        title = "Nord",
+        primaryColorRes = R.color.nord_primary,
+        secondaryColorRes = R.color.nord_secondary,
+        surfaceColorRes = R.color.nord_surface,
+        themePortraitRes = R.drawable.nord_portrait,
+        onClickListener = { _ ->
+            findNavController().run {
+                // (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
+                val navigation = ThemeSettingsFragmentDirections
+                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.NORD)
                 navigate(navigation)
             }
         }
@@ -119,6 +137,7 @@ class ThemeSettingsFragment : Fragment() {
         viewModel.themeKey.let {
             when(it) {
                 R.style.AzaleaTheme -> binding.currentTheme.bind(this, azaleaTile)
+                R.style.NordTheme -> binding.currentTheme.bind(this, azaleaTile)
                 else -> binding.currentTheme.bind(this, defaultDarkTile)
             }
         }
@@ -131,6 +150,8 @@ class ThemeSettingsFragment : Fragment() {
             themeTitle.setTextColor(resources.getColor(R.color.black, null))
             themeTitle.text = "Default White"
         }
+
+        binding.nord.bind(this, nordTile)
 
         binding.paleBlue.apply {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)

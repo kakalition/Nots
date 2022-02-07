@@ -21,6 +21,7 @@ class GeneralUtils {
             // Set Status Bar Icon Color
             when(themeKey) {
                 R.style.DefaultDarkTheme -> decorView.systemUiVisibility = 0
+                R.style.NordTheme -> decorView.systemUiVisibility = 0
                 R.style.AzaleaTheme -> decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
