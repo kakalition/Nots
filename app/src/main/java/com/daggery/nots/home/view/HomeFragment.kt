@@ -73,13 +73,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(viewModel.themeKey == 0) {
-            viewModel.themePref.observeOnce(this) {
-                viewModel._themeKey = it
-                (requireActivity() as MainActivity).updateTheme(it)
-            }
-        }
-
         // Instantiate Fragment Utils Class
         fragmentUtils = HomeFragmentUtils(this, findNavController())
 
