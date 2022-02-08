@@ -21,9 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.Exception
-import com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
 
-// TODO: Implement Save Edit Functionality
 // TODO: Check Observer
 // TODO: Design This Fragment Layout, Maybe Add Options Menu
 // TODO: In That Options, Include Change Date to Present Time
@@ -93,11 +91,11 @@ class AddViewNoteFragment : Fragment() {
         fragmentUtils = AddViewNoteFragmentUtils(this, args)
 
         // Prepare Toolbar
-        viewBinding.toolbarBinding.apply {
-            toolbar.inflateMenu(R.menu.menu_add_view_fragment)
-            toolbar.setNavigationIcon(R.drawable.ic_back)
-            toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
-            toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
+        viewBinding.toolbarBinding.toolbar.apply {
+            inflateMenu(R.menu.menu_add_view_fragment)
+            setNavigationIcon(R.drawable.ic_back)
+            setNavigationOnClickListener(fragmentUtils.navigationClickListener)
+            setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
         }
 
         // Setting Fragment Environment
@@ -146,9 +144,12 @@ class AddViewNoteFragmentUtils(
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
 
-        if (noteTitle.isBlank() && noteBody.isBlank()) {
+        val isNoteValid = noteTitle.isBlank() && noteBody.isBlank()
+        val isUuidBlank = args.uuid.isNotBlank()
+
+        if (isNoteValid) {
             showFailToAddSnackBar()
-        } else if (args.uuid.isNotBlank()) {
+        } else if (isUuidBlank) {
             val noteLiveData = fragment.viewModel.getNote(args.uuid)
             noteLiveData.observeOnce(fragment) {
                 val note = it?.copy(noteTitle = noteTitle, noteBody = noteBody)
@@ -283,7 +284,7 @@ class AddViewNoteFragmentUtils(
             }
         } else {
             val noteLiveData = fragment.viewModel.getNote(uuid)
-            noteLiveData.observe(fragment.viewLifecycleOwner) {
+            noteLiveData.observeOnce(fragment.viewLifecycleOwner) {
                 it?.let {
                     fragment.originalNote = OriginalNote(it.noteTitle, it.noteBody)
                 }

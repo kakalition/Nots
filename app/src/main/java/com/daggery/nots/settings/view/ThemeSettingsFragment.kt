@@ -16,8 +16,10 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.MainActivity
+import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.databinding.TileThemeCardBinding
@@ -56,71 +58,59 @@ fun TileThemeCardBinding.bind(
 
 class ThemeSettingsFragment : Fragment() {
 
-    private val generalUtils = GeneralUtils()
+    companion object {
+        private val defaultDarkTile = TileThemeData(
+            title = "Default Dark",
+            primaryColorRes = R.color.default_dark_primary,
+            secondaryColorRes = R.color.default_dark_secondary,
+            surfaceColorRes = R.color.default_dark_surface,
+            themePortraitRes = R.drawable.default_black_portrait,
+            onClickListener = null
+        )
+
+        private val nordTile = TileThemeData(
+            title = "Nord",
+            primaryColorRes = R.color.nord_primary,
+            secondaryColorRes = R.color.nord_secondary,
+            surfaceColorRes = R.color.nord_surface,
+            themePortraitRes = R.drawable.nord_portrait,
+            onClickListener = null
+        )
+
+        private val azaleaTile = TileThemeData(
+            title = "Azalea",
+            primaryColorRes = R.color.azalea_primary,
+            secondaryColorRes = R.color.azalea_secondary,
+            surfaceColorRes = R.color.azalea_surface,
+            themePortraitRes = R.drawable.azalea_portrait,
+            onClickListener = null
+        )
+    }
+
+
     private lateinit var _binding: FragmentThemeSettingsBinding
     val binding get() = _binding
 
-    val viewModel: HomeViewModel by activityViewModels()
+    val viewModel: MainViewModel by activityViewModels()
 
     private val navigationClickListener: (View) -> Unit = { view: View ->
         findNavController().navigateUp()
     }
 
-    private val defaultDarkTile = TileThemeData(
-        title = "Default Dark",
-        primaryColorRes = R.color.default_dark_primary,
-        secondaryColorRes = R.color.default_dark_secondary,
-        surfaceColorRes = R.color.default_dark_surface,
-        themePortraitRes = R.drawable.default_black_portrait,
-        onClickListener = { view ->
-            findNavController().run {
-                // TODO: call setTheme before activity setContentView
-                // (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
-                val navigation = ThemeSettingsFragmentDirections
-                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.DEFAULT_DARK)
-                navigate(navigation)
-            }
-        }
-    )
+    private fun getNavigationDirection(themeEnum: ThemeEnum): NavDirections {
+        return ThemeSettingsFragmentDirections
+            .actionThemeSettingsFragmentToViewThemeFragment(themeEnum)
+    }
 
-    private val nordTile = TileThemeData(
-        title = "Nord",
-        primaryColorRes = R.color.nord_primary,
-        secondaryColorRes = R.color.nord_secondary,
-        surfaceColorRes = R.color.nord_surface,
-        themePortraitRes = R.drawable.nord_portrait,
-        onClickListener = { _ ->
-            findNavController().run {
-                // (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
-                val navigation = ThemeSettingsFragmentDirections
-                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.NORD)
-                navigate(navigation)
-            }
-        }
-    )
-
-    private val azaleaTile = TileThemeData(
-        title = "Azalea",
-        primaryColorRes = R.color.azalea_primary,
-        secondaryColorRes = R.color.azalea_secondary,
-        surfaceColorRes = R.color.azalea_surface,
-        themePortraitRes = R.drawable.azalea_portrait,
-        onClickListener = { _ ->
-            findNavController().run {
-                // (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
-                val navigation = ThemeSettingsFragmentDirections
-                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.AZALEA)
-                navigate(navigation)
-            }
-        }
-    )
+    private fun navigateToPreview(themeEnum: ThemeEnum) {
+        findNavController().navigate(getNavigationDirection(themeEnum))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentThemeSettingsBinding.inflate(inflater, container, false)
-        generalUtils.prepareStatusBar(activity = requireActivity(), themeKey = viewModel.themeKey)
         return binding.root
     }
 
@@ -133,16 +123,18 @@ class ThemeSettingsFragment : Fragment() {
             toolbar.setNavigationOnClickListener(navigationClickListener)
         }
 
-        // Theme Layout Binding
+        // Current Theme Layout Binding
         viewModel.themeKey.let {
             when(it) {
                 R.style.AzaleaTheme -> binding.currentTheme.bind(this, azaleaTile)
-                R.style.NordTheme -> binding.currentTheme.bind(this, azaleaTile)
+                R.style.NordTheme -> binding.currentTheme.bind(this, nordTile)
                 else -> binding.currentTheme.bind(this, defaultDarkTile)
             }
         }
 
-        binding.defaultDark.bind(this, defaultDarkTile)
+        binding.defaultDark.bind(this, defaultDarkTile.copy {
+            navigateToPreview(ThemeEnum.DEFAULT_DARK)
+        })
 
         binding.defaultWhite.apply {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
@@ -151,7 +143,9 @@ class ThemeSettingsFragment : Fragment() {
             themeTitle.text = "Default White"
         }
 
-        binding.nord.bind(this, nordTile)
+        binding.nord.bind(this, nordTile.copy {
+            navigateToPreview(ThemeEnum.NORD)
+        })
 
         binding.paleBlue.apply {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
@@ -167,6 +161,8 @@ class ThemeSettingsFragment : Fragment() {
             themeTitle.text = "Jungle Mist"
         }
 
-        binding.azalea.bind(this, azaleaTile)
+        binding.azalea.bind(this, azaleaTile.copy {
+            navigateToPreview(ThemeEnum.AZALEA)
+        })
     }
 }
