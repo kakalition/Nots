@@ -15,11 +15,13 @@ class MainViewModel @Inject constructor(
     private val dataStore: DataStoreManager
 ) : ViewModel() {
 
-    val themeKey: LiveData<Int> = dataStore.themePreference.asLiveData()
+    val themeDataStore: LiveData<Int> = dataStore.themePreference.asLiveData()
+    var themeKey: Int = 0
 
     fun applyTheme(@StyleRes themeRes: Int) {
         viewModelScope.launch {
             dataStore.changeThemePreference(themeRes)
         }
+        themeKey = themeRes
     }
 }
