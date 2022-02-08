@@ -18,6 +18,13 @@
     <color name="default_dark_surface">#FF1F1F1F</color>
     <color name="default_dark_on_surface">#FFFAFAFA</color>
 
+    <color name="azalea_primary">#FF90B7</color>
+    <color name="azalea_on_primary">#FF262626</color>
+    <color name="azalea_secondary">#FFCDE0</color>
+    <color name="azalea_on_secondary">#FF262626</color>
+    <color name="azalea_surface">#FFFFE7EF</color>
+    <color name="azalea_on_surface">#FF262626</color>
+
     <color name="nord_primary">#FFECEFF4</color>
     <color name="nord_on_primary">#FF2E3440</color>
     <color name="nord_secondary">#FF434C5E</color>
