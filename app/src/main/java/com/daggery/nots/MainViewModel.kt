@@ -18,6 +18,15 @@ class MainViewModel @Inject constructor(
     val themeDataStore: LiveData<Int> = dataStore.themePreference.asLiveData()
     var themeKey: Int = 0
 
+    fun getThemeName(): String {
+        return when(themeKey) {
+            R.style.DefaultDarkTheme -> "Dark Theme"
+            R.style.NordTheme -> "Nord Theme"
+            R.style.AzaleaTheme -> "Azalea Theme"
+            else -> "Unspecified"
+        }
+    }
+
     fun applyTheme(@StyleRes themeRes: Int) {
         viewModelScope.launch {
             dataStore.changeThemePreference(themeRes)

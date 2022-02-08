@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentSettingsBinding
 
@@ -13,6 +15,8 @@ class SettingsFragment : Fragment() {
 
     private lateinit var _binding: FragmentSettingsBinding
     val binding get() = _binding
+
+    val viewModel: MainViewModel by activityViewModels()
 
     private lateinit var fragmentUtils: SettingsFragmentUtils
 
@@ -45,7 +49,7 @@ class SettingsFragment : Fragment() {
         binding.themeSettingsBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_theme)
             settingsItemTitle.text = "Theme"
-            settingsItemBody.text = "Burnt Charcoal"
+            settingsItemBody.text = viewModel.getThemeName()
         }
 
         // Set DateFormat Settings Item Layout
