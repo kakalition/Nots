@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable-v24/icon_vector_animation.xml" value="0.2145" />
         <entry key="app/src/main/res/drawable/bg_note_item.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_note_item_priority.xml" value="0.173" />
+        <entry key="app/src/main/res/drawable/bg_note_item_swipe.xml" value="0.242" />
         <entry key="app/src/main/res/drawable/bg_theme_card.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_theme_card_selected.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_theme_color.xml" value="0.173" />
@@ -30,12 +31,16 @@
         <entry key="app/src/main/res/drawable/list_item_note_swipe_bg.xml" value="0.242" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/appbar_title.xml" value="0.2821718683197948" />
+        <entry key="app/src/main/res/layout/child_preview_theme.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/dialog_delete.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dialog_prioritize.xml" value="0.5" />
         <entry key="app/src/main/res/layout/dialog_unprioritize.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_add_edit_note.xml" value="0.32901296111665007" />
         <entry key="app/src/main/res/layout/fragment_add_view_note.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_azalea_preview.xml" value="0.2821718683197948" />
+        <entry key="app/src/main/res/layout/fragment_default_dark_preview.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4721030042918455" />
+        <entry key="app/src/main/res/layout/fragment_preview_theme.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_theme_settings.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_view_theme.xml" value="0.40540540540540543" />

@@ -25,4 +25,25 @@
     <color name="azalea_surface">#FFFFE7EF</color>
     <color name="azalea_on_surface">#FF262626</color>
 
+    <color name="nord_primary">#FFECEFF4</color>
+    <color name="nord_on_primary">#FF2E3440</color>
+    <color name="nord_secondary">#FF434C5E</color>
+    <color name="nord_on_secondary">#FFECEFF4</color>
+    <color name="nord_surface">#FF2E3440</color>
+    <color name="nord_on_surface">#FFECEFF4</color>
+
+    <color name="royal_lavender_primary">#FFF2EEF6</color>
+    <color name="royal_lavender_on_primary">#FF212121</color>
+    <color name="royal_lavender_secondary">#FF7F5AAD</color>
+    <color name="royal_lavender_on_secondary">#FFD2EEF6</color>
+    <color name="royal_lavender_surface">#FF604187</color>
+    <color name="royal_lavender_on_surface">#FFD2EEF6</color>
+
+    <color name="steel_blue_primary">#FFFAFAFA</color>
+    <color name="steel_blue_on_primary">#FF212121</color>
+    <color name="steel_blue_secondary">#FF448EB4</color>
+    <color name="steel_blue_on_secondary">#FFFAFAFA</color>
+    <color name="steel_blue_surface">#FF1572A1</color>
+    <color name="steel_blue_on_surface">#FFFAFAFA</color>
+
 </resources>

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/DefaultDarkTheme"
-    android:background="?attr/colorSurface">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/app_bar_frame"
@@ -30,26 +27,36 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <include layout="@layout/list_item_note"
+            android:id="@+id/preview_one"
             android:layout_marginHorizontal="22dp"
             android:layout_marginBottom="22dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
         <include layout="@layout/list_item_note"
+            android:id="@+id/preview_two"
             android:layout_marginHorizontal="22dp"
             android:layout_marginBottom="22dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
         <include layout="@layout/list_item_note"
+            android:id="@+id/preview_three"
             android:layout_marginHorizontal="22dp"
             android:layout_marginBottom="22dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
+        <include layout="@layout/list_item_note"
+            android:id="@+id/preview_four"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginBottom="22dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
     </LinearLayout>
 
     <Button
+        android:id="@+id/apply_theme_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"

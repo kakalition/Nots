@@ -1,8 +1,10 @@
 package com.daggery.nots
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
@@ -10,51 +12,32 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.databinding.ActivityMainBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.utils.GeneralUtils
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
+    private val generalUtils = GeneralUtils()
     lateinit var viewBinding: ActivityMainBinding
-
     private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Show SplashScreen until ThemeKey is Loaded
         installSplashScreen().setKeepOnScreenCondition { viewModel.themeKey == 0 }
-
         setTheme(viewModel.themeKey)
-        prepareStatusBar()
+        generalUtils.prepareStatusBar(activity = this, themeKey = viewModel.themeKey)
 
+        // Binder
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
-        navController = navHostFragment.findNavController()
     }
 
     fun updateTheme(themeRes: Int) {
         viewModel.applyTheme(themeRes)
         recreate()
-    }
-
-    fun prepareStatusBar() {
-        window.apply {
-            // Set Status Bar Color
-            statusBarColor = MaterialColors.getColor(
-                this@MainActivity,
-                com.google.android.material.R.attr.colorSurface,
-                resources.getColor(R.color.transparent, null)
-            )
-
-            // Set Status Bar Icon Color
-            when(viewModel.themeKey) {
-                R.style.DefaultDarkTheme -> decorView.systemUiVisibility = 0
-                R.style.AzaleaTheme -> decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            }
-        }
     }
 }

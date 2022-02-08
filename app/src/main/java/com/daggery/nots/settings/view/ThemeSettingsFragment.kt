@@ -1,11 +1,17 @@
 package com.daggery.nots.settings.view
 
+import android.animation.ArgbEvaluator
+import android.animation.TimeInterpolator
+import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
@@ -16,6 +22,9 @@ import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.databinding.TileThemeCardBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.utils.GeneralUtils
+import com.daggery.nots.utils.ThemeEnum
+import com.google.android.material.color.MaterialColors
 
 data class TileThemeData(
     val title: String,
@@ -43,8 +52,11 @@ fun TileThemeCardBinding.bind(
     root.setOnClickListener(tileThemeData.onClickListener)
 }
 
+// TODO: Unify Theme Settings, add or remove theme should be easy and in one place only
+
 class ThemeSettingsFragment : Fragment() {
 
+    private val generalUtils = GeneralUtils()
     private lateinit var _binding: FragmentThemeSettingsBinding
     val binding get() = _binding
 
@@ -60,10 +72,29 @@ class ThemeSettingsFragment : Fragment() {
         secondaryColorRes = R.color.default_dark_secondary,
         surfaceColorRes = R.color.default_dark_surface,
         themePortraitRes = R.drawable.default_black_portrait,
-        onClickListener = { _ ->
+        onClickListener = { view ->
             findNavController().run {
                 // TODO: call setTheme before activity setContentView
-                navigate(ThemeSettingsFragmentDirections.actionThemeSettingsFragmentToViewThemeFragment())
+                // (requireActivity() as MainActivity).updateTheme(R.style.DefaultDarkTheme)
+                val navigation = ThemeSettingsFragmentDirections
+                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.DEFAULT_DARK)
+                navigate(navigation)
+            }
+        }
+    )
+
+    private val nordTile = TileThemeData(
+        title = "Nord",
+        primaryColorRes = R.color.nord_primary,
+        secondaryColorRes = R.color.nord_secondary,
+        surfaceColorRes = R.color.nord_surface,
+        themePortraitRes = R.drawable.nord_portrait,
+        onClickListener = { _ ->
+            findNavController().run {
+                // (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
+                val navigation = ThemeSettingsFragmentDirections
+                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.NORD)
+                navigate(navigation)
             }
         }
     )
@@ -76,8 +107,10 @@ class ThemeSettingsFragment : Fragment() {
         themePortraitRes = R.drawable.azalea_portrait,
         onClickListener = { _ ->
             findNavController().run {
-                // TODO: call setTheme before activity setContentView
-                (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
+                // (requireActivity() as MainActivity).updateTheme(R.style.AzaleaTheme)
+                val navigation = ThemeSettingsFragmentDirections
+                    .actionThemeSettingsFragmentToViewThemeFragment(ThemeEnum.AZALEA)
+                navigate(navigation)
             }
         }
     )
@@ -87,6 +120,7 @@ class ThemeSettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentThemeSettingsBinding.inflate(inflater, container, false)
+        generalUtils.prepareStatusBar(activity = requireActivity(), themeKey = viewModel.themeKey)
         return binding.root
     }
 
@@ -103,10 +137,10 @@ class ThemeSettingsFragment : Fragment() {
         viewModel.themeKey.let {
             when(it) {
                 R.style.AzaleaTheme -> binding.currentTheme.bind(this, azaleaTile)
+                R.style.NordTheme -> binding.currentTheme.bind(this, azaleaTile)
                 else -> binding.currentTheme.bind(this, defaultDarkTile)
             }
         }
-
 
         binding.defaultDark.bind(this, defaultDarkTile)
 
@@ -116,6 +150,8 @@ class ThemeSettingsFragment : Fragment() {
             themeTitle.setTextColor(resources.getColor(R.color.black, null))
             themeTitle.text = "Default White"
         }
+
+        binding.nord.bind(this, nordTile)
 
         binding.paleBlue.apply {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
