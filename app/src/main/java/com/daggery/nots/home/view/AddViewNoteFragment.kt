@@ -30,6 +30,7 @@ import kotlin.Exception
 // TODO: Check Observer
 // TODO: Design This Fragment Layout, Maybe Add Options Menu
 // TODO: In That Options, Include Change Date to Present Time
+// TODO: Handle Long Text Body, possibly solved by using linear layout
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
