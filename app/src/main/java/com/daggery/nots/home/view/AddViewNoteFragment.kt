@@ -129,7 +129,7 @@ class AddViewNoteFragmentUtils(
         } else {
             MaterialAlertDialogBuilder(
                 fragment.requireContext(),
-                ThemeOverlay_Material3_MaterialAlertDialog_Centered
+                R.style.NotsAlertDialog
             )
                 .setView(R.layout.dialog_revert_confirmation)
                 .setPositiveButton("Revert") { _, _ ->

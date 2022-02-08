@@ -138,7 +138,10 @@ class HomeFragmentUtils(
     }
 
     fun showDeleteDialog(note: Note) {
-        MaterialAlertDialogBuilder(fragment.requireContext(), ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+        MaterialAlertDialogBuilder(
+            fragment.requireContext(),
+            R.style.NotsAlertDialog
+        )
             .setView(R.layout.dialog_delete)
             .setPositiveButton("Delete") { _, _ ->
                 fragment.viewModel.deleteNote(note)
