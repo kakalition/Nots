@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         // Show SplashScreen until ThemeKey is Loaded
         installSplashScreen().setKeepOnScreenCondition { viewModel.themeKey == 0 }
 
+        // Theme Setting
         setThemeOnInitialStart()
         setTheme(viewModel.themeKey)
         statusBarColorSetter()

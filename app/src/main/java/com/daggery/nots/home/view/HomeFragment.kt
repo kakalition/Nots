@@ -1,9 +1,8 @@
 package com.daggery.nots.home.view
 
-import android.content.DialogInterface
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
@@ -12,21 +11,15 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.daggery.nots.MainActivity
-import com.daggery.nots.NotsApplication
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListItemAdapter
 import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
 import com.google.android.material.color.MaterialColors
 
@@ -37,30 +30,15 @@ import com.google.android.material.color.MaterialColors
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    inner class NoteLinearLayoutManager : LinearLayoutManager(
-        this.context,
-        VERTICAL,
-        false
-    ) {
-        private var canScrollVerticallyState: Boolean = true
-        fun changeScrollState(state: Boolean) {
-            canScrollVerticallyState = state
-        }
-
-        override fun canScrollVertically(): Boolean {
-            return canScrollVerticallyState && super.canScrollVertically()
-        }
-    }
-
     private var _viewBinding: FragmentHomeBinding? = null
     internal val viewBinding get() = _viewBinding!!
 
     internal val viewModel: HomeViewModel by activityViewModels()
-
     private lateinit var fragmentUtils: HomeFragmentUtils
 
+    internal lateinit var noteLinearLayoutManager: NoteLinearLayoutManager
+
     private lateinit var notesLiveData: LiveData<List<Note>>
-    internal var isNotesEmpty = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,38 +53,55 @@ class HomeFragment : Fragment() {
 
         // Instantiate Fragment Utils Class
         fragmentUtils = HomeFragmentUtils(this, findNavController())
+        noteLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
 
-        // Prepare Toolbar
+        // Binds Toolbar
         viewBinding.toolbarBinding.apply {
             toolbarTitle.text = "Nots"
             toolbar.inflateMenu(R.menu.menu_home_fragment)
             toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
         }
 
-        // Prepare RecyclerView
-        val adapter = NoteListItemAdapter(fragmentUtils)
+        // Binds RecyclerView
+        val notesAdapter = NoteListItemAdapter(fragmentUtils)
         notesLiveData = viewModel.notes
         notesLiveData.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            isNotesEmpty = it.isEmpty()
-            fragmentUtils.changeHomeState()
+            notesAdapter.submitList(it)
+            fragmentUtils.changeHomeState(it.isEmpty())
         }
-        viewBinding.notesRecyclerview.layoutManager = NoteLinearLayoutManager()
-        viewBinding.notesRecyclerview.adapter = adapter
+        viewBinding.notesRecyclerview.apply {
+            layoutManager = noteLinearLayoutManager
+            adapter = notesAdapter
+        }
 
         // OnClickListener
         viewBinding.fab.setOnClickListener(fragmentUtils.fabOnClickListener)
     }
 }
 
+internal class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(
+    context,
+    VERTICAL,
+    false
+) {
+    private var canScrollVerticallyState: Boolean = true
+    fun changeScrollState(state: Boolean) {
+        canScrollVerticallyState = state
+    }
+
+    override fun canScrollVertically(): Boolean {
+        return canScrollVerticallyState && super.canScrollVertically()
+    }
+}
 
 class HomeFragmentUtils(
     private val fragment: HomeFragment,
     private val navController: NavController
 ) {
     val notsVibrator = NotsVibrator(fragment.requireActivity())
+
     val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
-        (fragment.viewBinding.notesRecyclerview.layoutManager as HomeFragment.NoteLinearLayoutManager).changeScrollState(state)
+        fragment.noteLinearLayoutManager.changeScrollState(state)
     }
 
     val noteClickListener: (Note) -> Unit = { note ->
@@ -142,7 +137,7 @@ class HomeFragmentUtils(
         fragment.viewModel.unprioritize(note)
     }
 
-    fun deleteNote(note: Note) {
+    fun showDeleteDialog(note: Note) {
         MaterialAlertDialogBuilder(fragment.requireContext(), ThemeOverlay_Material3_MaterialAlertDialog_Centered)
             .setView(R.layout.dialog_delete)
             .setPositiveButton("Delete") { _, _ ->
@@ -165,13 +160,17 @@ class HomeFragmentUtils(
         )
     }
     // Conditionally display empty illustration and notes list
-    fun changeHomeState() {
-        if(fragment.isNotesEmpty) {
-            fragment.viewBinding.emptyNotesLayout.visibility = View.VISIBLE
-            fragment.viewBinding.notesRecyclerview.visibility = View.GONE
+    fun changeHomeState(isNotesEmpty: Boolean) {
+        if(isNotesEmpty) {
+            fragment.viewBinding.apply {
+                emptyNotesLayout.visibility = View.VISIBLE
+                notesRecyclerview.visibility = View.GONE
+            }
         } else {
-            fragment.viewBinding.emptyNotesLayout.visibility = View.GONE
-            fragment.viewBinding.notesRecyclerview.visibility = View.VISIBLE
+            fragment.viewBinding.apply {
+                emptyNotesLayout.visibility = View.GONE
+                notesRecyclerview.visibility = View.VISIBLE
+            }
         }
     }
 }

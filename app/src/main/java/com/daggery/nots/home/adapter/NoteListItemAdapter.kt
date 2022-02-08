@@ -3,12 +3,10 @@ package com.daggery.nots.home.adapter
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -95,7 +93,7 @@ class NoteListItemAdapter(
                     } else if(shouldChangePriority && current.priority != 0){
                         homeFragmentUtils.unprioritize(current)
                     } else if(shouldDelete) {
-                        homeFragmentUtils.deleteNote(current)
+                        homeFragmentUtils.showDeleteDialog(current)
                     } else {
                         shouldChangePriority = false
                         shouldDelete = false

@@ -10,13 +10,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.daggery.nots.MainActivity
-import com.daggery.nots.NotsApplication
 import com.daggery.nots.R
-import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.observeOnce
@@ -25,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.Exception
+import com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
 
 // TODO: Implement Save Edit Functionality
 // TODO: Check Observer
@@ -44,7 +41,7 @@ class AddViewNoteFragment : Fragment() {
 
     private lateinit var fragmentUtils: AddViewNoteFragmentUtils
 
-    internal var isNewNote: Boolean? = null
+    private var isNewNote: Boolean? = null
     internal var isViewing: Boolean = true
 
     internal lateinit var originalNote: OriginalNote
@@ -52,8 +49,7 @@ class AddViewNoteFragment : Fragment() {
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if(!isViewing) {
-                fragmentUtils.revertChanges()
-                fragmentUtils.viewEnvironment()
+                fragmentUtils.showOnRevertConfirmation(originalNote)
             }
             else {
                 this.isEnabled = false
@@ -106,12 +102,16 @@ class AddViewNoteFragment : Fragment() {
 
         // Setting Fragment Environment
         fragmentUtils.populateField(args.uuid)
-        if (isNewNote == true) {
-            fragmentUtils.addEnvironment()
-        } else if (isViewing == true) {
-            fragmentUtils.viewEnvironment()
-        } else {
-            fragmentUtils.editEnvironment()
+        when {
+            isNewNote == true -> {
+                fragmentUtils.addEnvironment()
+            }
+            isViewing -> {
+                fragmentUtils.viewEnvironment()
+            }
+            else -> {
+                fragmentUtils.editEnvironment()
+            }
         }
     }
 
@@ -121,7 +121,27 @@ class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
     private val args: AddViewNoteFragmentArgs
 ) {
-    // TODO: Differentiate New Note and Existing Note
+    internal fun showOnRevertConfirmation(originalNote: OriginalNote) {
+        val isNoteTitleSame = fragment.viewBinding.noteTitle.text.toString() == originalNote.noteTitle
+        val isNoteBodySame = fragment.viewBinding.noteBody.text.toString() == originalNote.noteBody
+        if(isNoteTitleSame && isNoteBodySame) {
+            revertChanges(originalNote)
+        } else {
+            MaterialAlertDialogBuilder(
+                fragment.requireContext(),
+                ThemeOverlay_Material3_MaterialAlertDialog_Centered
+            )
+                .setView(R.layout.dialog_revert_confirmation)
+                .setPositiveButton("Revert") { _, _ ->
+                    revertChanges(originalNote)
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
+
     val onConfirmTapped = {
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
@@ -160,7 +180,7 @@ class AddViewNoteFragmentUtils(
     val navigationClickListener: (View) -> Unit = { view ->
         if(!fragment.isViewing) {
             viewEnvironment()
-            revertChanges()
+            revertChanges(fragment.originalNote)
         }
         else fragment.findNavController().navigateUp()
     }
@@ -235,12 +255,12 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun revertChanges() {
-        val originalNote = fragment.originalNote
+    internal fun revertChanges(originalNote: OriginalNote) {
         fragment.viewBinding.apply {
-            noteTitle.text = Editable.Factory.getInstance().newEditable(originalNote.noteTitle ?: "")
-            noteBody.text = Editable.Factory.getInstance().newEditable(originalNote.noteBody ?: "")
+            noteTitle.text = Editable.Factory.getInstance().newEditable(originalNote.noteTitle)
+            noteBody.text = Editable.Factory.getInstance().newEditable(originalNote.noteBody)
         }
+        viewEnvironment()
     }
 
     private fun showFailToAddSnackBar() {
