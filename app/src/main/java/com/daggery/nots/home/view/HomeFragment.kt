@@ -1,27 +1,19 @@
 package com.daggery.nots.home.view
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
-import androidx.navigation.NavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
-import com.daggery.nots.home.adapter.NoteListItemAdapter
+import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.utils.NotsVibrator
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.android.material.color.MaterialColors
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
 // TODO: Load list when splash screen is shown
@@ -37,7 +29,7 @@ class HomeFragment : Fragment() {
     private val fragmentUtils get() = _fragmentUtils!!
 
     internal var notesLinearLayoutManager: NoteLinearLayoutManager? = null
-    internal var notesAdapter: NoteListItemAdapter? = null
+    internal var notesAdapter: NoteListAdapter? = null
 
     internal lateinit var notesLiveData: LiveData<List<Note>>
     internal val notesObserver: (List<Note>) -> Unit = { noteList ->
@@ -58,7 +50,7 @@ class HomeFragment : Fragment() {
 
         _fragmentUtils = HomeFragmentUtils(this, findNavController())
         notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
-        notesAdapter = NoteListItemAdapter(fragmentUtils)
+        notesAdapter = NoteListAdapter(fragmentUtils)
 
         with(fragmentUtils) {
             bindsToolbar()

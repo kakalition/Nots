@@ -21,27 +21,6 @@ class HomeFragmentUtils(
 ) {
     val notsVibrator = NotsVibrator(fragment.requireActivity())
 
-    fun bindsToolbar() {
-        fragment.viewBinding.toolbarBinding.apply {
-            toolbarTitle.text = "Nots"
-            toolbar.inflateMenu(R.menu.menu_home_fragment)
-            toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
-        }
-    }
-
-    fun bindsRecyclerView() {
-        fragment.notesLiveData = fragment.viewModel.notes
-        fragment.notesLiveData.observe(fragment.viewLifecycleOwner, fragment.notesObserver)
-        fragment.viewBinding.notesRecyclerview.apply {
-            layoutManager = fragment.notesLinearLayoutManager
-            adapter = fragment.notesAdapter
-        }
-    }
-
-    fun bindsFab() {
-        fragment.viewBinding.fab.setOnClickListener(fabOnClickListener)
-    }
-
     val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
         fragment.notesLinearLayoutManager?.changeScrollState(state)
     }
@@ -70,6 +49,28 @@ class HomeFragmentUtils(
             else -> false
         }
     }
+
+    fun bindsToolbar() {
+        fragment.viewBinding.toolbarBinding.apply {
+            toolbarTitle.text = "Nots"
+            toolbar.inflateMenu(R.menu.menu_home_fragment)
+            toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
+        }
+    }
+
+    fun bindsRecyclerView() {
+        fragment.notesLiveData = fragment.viewModel.notes
+        fragment.notesLiveData.observe(fragment.viewLifecycleOwner, fragment.notesObserver)
+        fragment.viewBinding.notesRecyclerview.apply {
+            layoutManager = fragment.notesLinearLayoutManager
+            adapter = fragment.notesAdapter
+        }
+    }
+
+    fun bindsFab() {
+        fragment.viewBinding.fab.setOnClickListener(fabOnClickListener)
+    }
+
 
     fun prioritize(note: Note) {
         fragment.viewModel.prioritize(note)
