@@ -124,7 +124,7 @@ class AddViewNoteFragmentUtils(
         val isNoteTitleSame = fragment.viewBinding.noteTitle.text.toString() == uneditedNote.noteTitle
         val isNoteBodySame = fragment.viewBinding.noteBody.text.toString() == uneditedNote.noteBody
         if(isNoteTitleSame && isNoteBodySame) {
-            revertChanges(uneditedNote)
+            viewEnvironment()
         } else {
             MaterialAlertDialogBuilder(
                 fragment.requireContext(),
@@ -145,16 +145,15 @@ class AddViewNoteFragmentUtils(
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
 
-        val isNoteValid = noteTitle.isBlank() && noteBody.isBlank()
-        val isUuidBlank = args.uuid.isNotBlank()
+        val isNoteInvalid = noteTitle.isBlank() && noteBody.isBlank()
+        val isUuidValid = args.uuid.isNotBlank()
 
         when {
-            isNoteValid -> { showFailToAddSnackBar() }
-            isUuidBlank -> {
+            isNoteInvalid -> { showFailToAddSnackBar() }
+            isUuidValid -> {
                 val noteLiveData = fragment.viewModel.getNote(args.uuid)
                 noteLiveData.observeOnce(fragment) {
                     val note = it?.copy(noteTitle = noteTitle, noteBody = noteBody)
-                    Log.d("LOL: note", note?.toString() ?: "null")
                     note?.let {
                         fragment.viewModel.updateNote(it)
                         viewEnvironment()
@@ -181,8 +180,7 @@ class AddViewNoteFragmentUtils(
 
     val navigationClickListener: (View) -> Unit = {
         if(!fragment.isViewing) {
-            viewEnvironment()
-            revertChanges(fragment.uneditedNote)
+            showOnRevertConfirmation(fragment.uneditedNote)
         }
         else fragment.findNavController().navigateUp()
     }
