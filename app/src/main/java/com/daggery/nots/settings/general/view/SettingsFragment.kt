@@ -40,6 +40,7 @@ class SettingsFragment : Fragment() {
             toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
         }
 
+        bindsLanguageSettings()
         bindsThemeSettings()
         bindsShowTimeSettings()
     }

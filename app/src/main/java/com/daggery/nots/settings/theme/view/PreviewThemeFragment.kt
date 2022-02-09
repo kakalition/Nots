@@ -1,4 +1,4 @@
-package com.daggery.nots.settings.view
+package com.daggery.nots.settings.theme.view
 
 import android.content.Context
 import android.os.Bundle

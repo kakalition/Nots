@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/previewThemeFragment"
-        android:name="com.daggery.nots.settings.view.PreviewThemeFragment"
+        android:name="com.daggery.nots.settings.theme.view.PreviewThemeFragment"
         android:label="fragment_view_theme"
         tools:layout="@layout/fragment_preview_theme" >
         <argument
