@@ -1,6 +1,5 @@
 package com.daggery.nots.home.adapter
 
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.MotionEvent
 import android.view.View

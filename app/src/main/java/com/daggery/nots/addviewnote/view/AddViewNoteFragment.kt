@@ -1,4 +1,4 @@
-package com.daggery.nots.home.view
+package com.daggery.nots.addviewnote.view
 
 import android.graphics.Color
 import android.os.Bundle

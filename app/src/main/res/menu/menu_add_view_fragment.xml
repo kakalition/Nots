@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:iconTint="?attr/colorOnSurface"
-        android:title="Confirm"
+        android:title="@string/menu_add_view_fragment_confirm"
         android:id="@+id/confirm_button"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_check"/>
     <item
         android:iconTint="?attr/colorOnSurface"
         android:id="@+id/edit_button"
-        android:title="Edit"
+        android:title="@string/menu_add_view_fragment_edit"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_edit"/>
     <item
         android:iconTint="?attr/colorOnSurface"
-        android:title="Delete"
+        android:title="@string/menu_add_view_fragment_delete"
         android:id="@+id/delete_button"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_delete"/>

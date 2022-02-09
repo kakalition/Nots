@@ -1,19 +1,17 @@
 package com.daggery.nots.addviewnote.utils
 
 import android.app.Activity
-import android.graphics.Color
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
-import com.daggery.nots.home.view.AddViewNoteFragment
-import com.daggery.nots.home.view.AddViewNoteFragmentArgs
-import com.daggery.nots.home.view.UneditedNote
+import com.daggery.nots.addviewnote.view.AddViewNoteFragment
+import com.daggery.nots.addviewnote.view.AddViewNoteFragmentArgs
+import com.daggery.nots.addviewnote.view.UneditedNote
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialContainerTransform
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
@@ -104,12 +102,12 @@ class AddViewNoteFragmentUtils(
     }
 
     private fun showFailToAddSnackBar() {
-        val snackbar = Snackbar.make(
+        val snackBar = Snackbar.make(
             fragment.viewBinding.addViewNoteRoot,
             "Failed to add note. Fields cannot be blank.",
             2000
         )
-        snackbar.show()
+        snackBar.show()
     }
 
     internal fun bindsToolbar() {
@@ -152,7 +150,8 @@ class AddViewNoteFragmentUtils(
 
     internal fun addEnvironment() {
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = "New Note"
+            toolbarBinding.toolbarTitle.text = fragment.requireContext()
+                .getString(R.string.toolbar_title_new_note)
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
         }
@@ -166,7 +165,8 @@ class AddViewNoteFragmentUtils(
     internal fun viewEnvironment() {
         fragment.isEditing = false
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = "View"
+            toolbarBinding.toolbarTitle.text = fragment.requireContext()
+                .getString(R.string.toolbar_title_view)
             noteTitle.isEnabled = false
             noteBody.isEnabled = false
         }
@@ -180,7 +180,8 @@ class AddViewNoteFragmentUtils(
     internal fun editEnvironment() {
         fragment.isEditing = true
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = "Edit"
+            toolbarBinding.toolbarTitle.text = fragment.requireContext()
+                .getString(R.string.toolbar_title_edit)
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
         }

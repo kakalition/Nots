@@ -15,7 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0"
-        app:srcCompat="@drawable/ic_edit" />
+        app:srcCompat="@drawable/ic_edit"
+        android:contentDescription="@string/dialog_revert_confirmation_icon_description" />
 
     <TextView
         android:id="@+id/revert_dialog_title"
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/opensans_bold"
-        android:text="Revert Changes"
+        android:text="@string/dialog_revert_confirmation_header"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
         android:textColor="?attr/colorOnSurface"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/opensans_regular"
-        android:text="Any unsaved changes will be deleted.\nAre your sure?"
+        android:text="@string/dialog_revert_confirmation_text"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceBody1"
         android:textColor="?attr/colorOnSurface"

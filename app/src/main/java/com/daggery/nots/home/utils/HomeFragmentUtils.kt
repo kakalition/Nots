@@ -52,7 +52,7 @@ class HomeFragmentUtils(
 
     fun bindsToolbar() {
         fragment.viewBinding.toolbarBinding.apply {
-            toolbarTitle.text = "Nots"
+            toolbarTitle.text = fragment.resources.getString(R.string.app_name)
             toolbar.inflateMenu(R.menu.menu_home_fragment)
             toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
         }

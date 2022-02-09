@@ -17,11 +17,10 @@ import com.daggery.nots.utils.ThemeEnum
 import com.daggery.nots.utils.ThemeEnum.*
 import com.google.android.material.color.MaterialColors
 
-// TODO: REFACTOR
 class PreviewThemeFragment : Fragment() {
 
     private var _viewBinding: FragmentPreviewThemeBinding? = null
-    private val viewBinding get() = _viewBinding!!
+    internal val viewBinding get() = _viewBinding!!
 
     private var _fragmentUtils: PreviewThemeUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
@@ -44,21 +43,16 @@ class PreviewThemeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _fragmentUtils = PreviewThemeUtils(this, args)
+        _fragmentUtils = PreviewThemeUtils(this)
 
-        viewBinding.previewBinding.toolbarBinding.apply {
-            toolbarTitle.text = "Preview"
-            toolbar.setNavigationIcon(R.drawable.ic_back)
-            toolbar.setNavigationOnClickListener {
-                findNavController().navigateUp()
-            }
-        }
+        fragmentUtils.bindsToolbar()
+
         viewBinding.previewBinding.previewOne.bind(fragmentUtils, "One")
         viewBinding.previewBinding.previewTwo.bind(fragmentUtils, "Two")
         viewBinding.previewBinding.previewThree.bind(fragmentUtils, "Three")
         viewBinding.previewBinding.previewFour.bind(fragmentUtils, "Four")
 
-        viewBinding.previewBinding.applyThemeButton.setOnClickListener { _ ->
+        viewBinding.previewBinding.applyThemeButton.setOnClickListener {
             fragmentUtils.applyTheme()
             findNavController().navigateUp()
         }

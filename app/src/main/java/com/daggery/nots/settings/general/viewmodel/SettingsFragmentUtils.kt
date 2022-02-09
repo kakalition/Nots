@@ -21,16 +21,9 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
     fun bindsLanguageSettings() {
         fragment.viewBinding.languageSettingsBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_earth)
-            settingsItemTitle.text = "Language"
+            settingsItemTitle.text = fragment.requireContext()
+                .getString(R.string.fragment_settings_language)
             settingsItemBody.text = "English"
-        }
-    }
-
-    fun bindsShowTimeSettings() {
-        fragment.viewBinding.showTimeBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_clock)
-            settingsItemTitle.text = "Show Time"
-            settingsItemBody.text = "Disabled"
         }
     }
 
@@ -42,9 +35,27 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
         }
         fragment.viewBinding.themeSettingsBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_theme)
-            settingsItemTitle.text = "Theme"
+            settingsItemTitle.text = fragment.requireContext()
+                .getString(R.string.fragment_settings_theme)
             settingsItemBody.text = fragment.viewModel.getThemeName()
         }
     }
 
+    fun bindsLayoutSettings() {
+        fragment.viewBinding.layoutSettingsBinding.apply {
+            settingsItemIcon.setImageResource(R.drawable.ic_earth)
+            settingsItemTitle.text = fragment.requireContext()
+                .getString(R.string.fragment_settings_note_layout)
+            settingsItemBody.text = "Split"
+        }
+    }
+
+    fun bindsShowTimeSettings() {
+        fragment.viewBinding.showTimeBinding.apply {
+            settingsItemIcon.setImageResource(R.drawable.ic_clock)
+            settingsItemTitle.text = fragment.requireContext()
+                .getString(R.string.fragment_settings_show_time)
+            settingsItemBody.text = "Disabled"
+        }
+    }
 }

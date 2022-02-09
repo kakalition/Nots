@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addViewNoteFragment"
-        android:name="com.daggery.nots.home.view.AddViewNoteFragment"
+        android:name="com.daggery.nots.addviewnote.view.AddViewNoteFragment"
         android:label="fragment_add_view_note"
         tools:layout="@layout/fragment_add_view_note">
         <argument

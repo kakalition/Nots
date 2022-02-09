@@ -56,7 +56,7 @@ class ThemeSettingsFragment : Fragment() {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
             root.background.setTint(resources.getColor(R.color.white_surface, null))
             themeTitle.setTextColor(resources.getColor(R.color.black, null))
-            themeTitle.text = "Default White"
+            themeTitle.text = getString(R.string.theme_steel_blue)
         }
 
         viewBinding.nord.bind(this, nordTile.copy {
@@ -67,14 +67,14 @@ class ThemeSettingsFragment : Fragment() {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
             root.background.setTint(resources.getColor(R.color.pale_blue, null))
             themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = "Pale Blue"
+            themeTitle.text = getString(R.string.theme_royal_lavender)
         }
 
         viewBinding.jungleMist.apply {
             root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
             root.background.setTint(resources.getColor(R.color.jungle_mist, null))
             themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = "Jungle Mist"
+            themeTitle.text = getString(R.string.theme_heather_berry)
         }
 
         viewBinding.azalea.bind(this, azaleaTile.copy {

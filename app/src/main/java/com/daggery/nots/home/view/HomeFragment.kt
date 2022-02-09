@@ -16,7 +16,6 @@ import com.daggery.nots.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
-// TODO: Load list when splash screen is shown
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {

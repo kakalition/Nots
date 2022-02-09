@@ -1,29 +1,42 @@
 package com.daggery.nots.settings.theme.utils
 
-import android.content.Context
+import androidx.navigation.fragment.findNavController
 import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.ListItemNoteBinding
 import com.daggery.nots.settings.theme.view.PreviewThemeFragment
-import com.daggery.nots.settings.theme.view.PreviewThemeFragmentArgs
 import com.daggery.nots.utils.ThemeEnum
-import com.google.android.material.color.MaterialColors
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun ListItemNoteBinding.bind(fragmentUtils: PreviewThemeUtils, number: String) {
-    noteTitle.text = "Preview $number"
-    noteBody.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
-        .plus("tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis ")
-        .plus("nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
-    noteDate.text = fragmentUtils.getCurrentDate()
+    with(fragmentUtils) {
+        noteTitle.text = getPreviewTitleStringRes(number)
+        noteBody.text = getPreviewBodyStringRes()
+        noteDate.text = getCurrentDate()
+    }
     listItemLayout.setBackgroundResource(R.drawable.bg_note_item)
 }
 
-class PreviewThemeUtils(
-    private val fragment: PreviewThemeFragment,
-    private val args: PreviewThemeFragmentArgs
-) {
+class PreviewThemeUtils(private val fragment: PreviewThemeFragment) {
+
+    fun getPreviewTitleStringRes(number: String): String {
+        return fragment.resources.getString(R.string.fragment_preview_theme_note_title, number)
+    }
+
+    fun getPreviewBodyStringRes(): String {
+        return fragment.resources.getString(R.string.lorem_ipsum)
+    }
+
+    fun bindsToolbar() {
+        fragment.viewBinding.previewBinding.toolbarBinding.apply {
+            toolbarTitle.text = fragment.getString(R.string.fragment_preview_theme_preview_text)
+            toolbar.setNavigationIcon(R.drawable.ic_back)
+            toolbar.setNavigationOnClickListener {
+                fragment.findNavController().navigateUp()
+            }
+        }
+    }
 
     internal fun getCurrentDate(): String {
         val date = Calendar.getInstance().time
@@ -42,4 +55,5 @@ class PreviewThemeUtils(
             (requireActivity() as MainActivity).updateTheme(themeKey)
         }
     }
+
 }

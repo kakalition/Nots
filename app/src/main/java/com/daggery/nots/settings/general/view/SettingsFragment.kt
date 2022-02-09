@@ -6,10 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.daggery.nots.MainActivity
 import com.daggery.nots.MainViewModel
-import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentSettingsBinding
 import com.daggery.nots.settings.general.viewmodel.SettingsFragmentUtils
 
@@ -40,6 +37,7 @@ class SettingsFragment : Fragment() {
             bindsToolbar()
             bindsLanguageSettings()
             bindsThemeSettings()
+            bindsLayoutSettings()
             bindsShowTimeSettings()
         }
     }

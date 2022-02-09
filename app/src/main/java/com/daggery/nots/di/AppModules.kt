@@ -1,8 +1,6 @@
 package com.daggery.nots.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import com.daggery.nots.data.NoteDao
 import com.daggery.nots.data.NotsDatabase
 import com.daggery.nots.datastore.DataStoreManager

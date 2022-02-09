@@ -1,16 +1,10 @@
 package com.daggery.nots.home.viewmodel
 
-import androidx.annotation.StyleRes
 import androidx.lifecycle.*
-import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.data.NotsDatabase
-import com.daggery.nots.datastore.DataStoreManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
