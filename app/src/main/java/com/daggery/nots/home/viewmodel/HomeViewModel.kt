@@ -16,19 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val database: NotsDatabase,
-    private val dataStore: DataStoreManager
 ) : ViewModel() {
-
-    val themePref: LiveData<Int> = dataStore.themePreference.asLiveData()
-
-    var _themeKey: Int = 0;
-    val themeKey get() = _themeKey
-    fun applyTheme(@StyleRes themeRes: Int) {
-        _themeKey = themeRes
-        viewModelScope.launch {
-            dataStore.changeThemePreference(themeRes)
-        }
-    }
 
     // Get note dao
     private val noteDao = database.noteDao()

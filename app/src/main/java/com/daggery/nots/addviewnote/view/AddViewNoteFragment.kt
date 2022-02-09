@@ -83,8 +83,8 @@ class AddViewNoteFragment : Fragment() {
         fragmentUtils.populateField(args.uuid)
         when {
             isNewNote == true -> { fragmentUtils.addEnvironment() }
-            isEditing -> { fragmentUtils.viewEnvironment() }
-            else -> { fragmentUtils.editEnvironment() }
+            isEditing -> { fragmentUtils.editEnvironment() }
+            else -> { fragmentUtils.viewEnvironment() }
         }
     }
 
