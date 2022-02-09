@@ -20,7 +20,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.Exception
 
 // TODO: Check Observer
 // TODO: Design This Fragment Layout, Maybe Add Options Menu
@@ -46,9 +45,7 @@ class AddViewNoteFragment : Fragment() {
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            if(!isViewing) {
-                fragmentUtils.showOnRevertConfirmation(originalNote)
-            }
+            if(!isViewing) { fragmentUtils.showOnRevertConfirmation(originalNote) }
             else {
                 this.isEnabled = false
                 requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -58,12 +55,7 @@ class AddViewNoteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 700
-            scrimColor = Color.TRANSPARENT
-            setAllContainerColors(requireContext().getColor(R.color.black_surface))
-            drawingViewId = R.id.fragment_container_view
-        }
+        sharedElementEnterTransition = getMaterialTransformTransition()
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
@@ -78,44 +70,42 @@ class AddViewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /* Checking UUID Received is Valid or Not
-         * If valid, it's existing note, if not it's new note
-         */
-        try {
-            isNewNote = args.uuid.isBlank()
-        } catch (e: Exception) {
-            Log.d("Exception", e.toString())
-        }
-
-        // Instantiating Fragment Utils Class
         fragmentUtils = AddViewNoteFragmentUtils(this, args)
+        isNewNote = args.uuid.isBlank()
 
         // Prepare Toolbar
-        viewBinding.toolbarBinding.toolbar.apply {
-            inflateMenu(R.menu.menu_add_view_fragment)
-            setNavigationIcon(R.drawable.ic_back)
-            setNavigationOnClickListener(fragmentUtils.navigationClickListener)
-            setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
-        }
+        bindsToolbar()
 
         // Setting Fragment Environment
         fragmentUtils.populateField(args.uuid)
         when {
-            isNewNote == true -> {
-                fragmentUtils.addEnvironment()
-            }
-            isViewing -> {
-                fragmentUtils.viewEnvironment()
-            }
-            else -> {
-                fragmentUtils.editEnvironment()
-            }
+            isNewNote == true -> { fragmentUtils.addEnvironment() }
+            isViewing -> { fragmentUtils.viewEnvironment() }
+            else -> { fragmentUtils.editEnvironment() }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
+    }
+
+    private fun bindsToolbar() {
+        viewBinding.toolbarBinding.toolbar.apply {
+            inflateMenu(R.menu.menu_add_view_fragment)
+            setNavigationIcon(R.drawable.ic_back)
+            setNavigationOnClickListener(fragmentUtils.navigationClickListener)
+            setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
+        }
+    }
+
+    private fun getMaterialTransformTransition(): MaterialContainerTransform {
+        return MaterialContainerTransform().apply {
+            duration = 700
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(requireContext().getColor(R.color.black_surface))
+            drawingViewId = R.id.fragment_container_view
+        }
     }
 }
 
@@ -151,33 +141,33 @@ class AddViewNoteFragmentUtils(
         val isNoteValid = noteTitle.isBlank() && noteBody.isBlank()
         val isUuidBlank = args.uuid.isNotBlank()
 
-        if (isNoteValid) {
-            showFailToAddSnackBar()
-        } else if (isUuidBlank) {
-            val noteLiveData = fragment.viewModel.getNote(args.uuid)
-            noteLiveData.observeOnce(fragment) {
-                val note = it?.copy(noteTitle = noteTitle, noteBody = noteBody)
-                Log.d("LOL: note", note?.toString() ?: "null")
-                note?.let {
-                    fragment.viewModel.updateNote(it)
-                    viewEnvironment()
+        when {
+            isNoteValid -> { showFailToAddSnackBar() }
+            isUuidBlank -> {
+                val noteLiveData = fragment.viewModel.getNote(args.uuid)
+                noteLiveData.observeOnce(fragment) {
+                    val note = it?.copy(noteTitle = noteTitle, noteBody = noteBody)
+                    Log.d("LOL: note", note?.toString() ?: "null")
+                    note?.let {
+                        fragment.viewModel.updateNote(it)
+                        viewEnvironment()
+                    }
                 }
             }
-        } else {
-            fragment.viewModel.addNote(noteTitle, noteBody)
-            fragment.findNavController().navigateUp()
+            else -> {
+                fragment.viewModel.addNote(noteTitle, noteBody)
+                fragment.findNavController().navigateUp()
+            }
         }
     }
 
-    // TODO: Refactor
-    // TODO: Hide Keyboard When Confirm is Tapped
     val onEditTapped = {
         val noteBody = fragment.viewBinding.noteBody
         fragment.isViewing = false
         editEnvironment()
 
         // Show Keyboard with Pointer at The End of Text
-        fragment.viewBinding.noteBody.requestFocus()
+        noteBody.requestFocus()
         noteBody.setSelection(noteBody.text?.length ?: 0)
         showKeyboard(noteBody)
     }
@@ -207,7 +197,7 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun showKeyboard(view: View ) {
+    private fun showKeyboard(view: View ) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(view, 0)
@@ -236,7 +226,7 @@ class AddViewNoteFragmentUtils(
         menuEditEnvironment()
     }
 
-    internal fun menuAddEnvironment() {
+    private fun menuAddEnvironment() {
         fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
             findItem(R.id.confirm_button).isVisible = true
             findItem(R.id.edit_button).isVisible = false
@@ -244,7 +234,7 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun menuViewEnvironment() {
+    private fun menuViewEnvironment() {
         fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
             findItem(R.id.confirm_button).isVisible = false
             findItem(R.id.edit_button).isVisible = true
@@ -252,7 +242,7 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun menuEditEnvironment() {
+    private fun menuEditEnvironment() {
         fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
             findItem(R.id.confirm_button).isVisible = true
             findItem(R.id.edit_button).isVisible = false
@@ -260,7 +250,7 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun revertChanges(originalNote: OriginalNote) {
+    private fun revertChanges(originalNote: OriginalNote) {
         fragment.viewBinding.apply {
             noteTitle.text = Editable.Factory.getInstance().newEditable(originalNote.noteTitle)
             noteBody.text = Editable.Factory.getInstance().newEditable(originalNote.noteBody)

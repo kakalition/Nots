@@ -12,7 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _viewBinding: ActivityMainBinding? = null
-    private val viewBinding = _viewBinding!!
+    private val viewBinding get() = _viewBinding!!
+
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -20,7 +20,6 @@ import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
 import com.google.android.material.color.MaterialColors
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
@@ -34,11 +33,17 @@ class HomeFragment : Fragment() {
     internal val viewBinding get() = _viewBinding!!
 
     internal val viewModel: HomeViewModel by activityViewModels()
-    private lateinit var fragmentUtils: HomeFragmentUtils
+    private var _fragmentUtils: HomeFragmentUtils? = null
+    private val fragmentUtils get() = _fragmentUtils!!
 
-    internal lateinit var noteLinearLayoutManager: NoteLinearLayoutManager
+    internal var notesLinearLayoutManager: NoteLinearLayoutManager? = null
+    private var notesAdapter: NoteListItemAdapter? = null
 
     private lateinit var notesLiveData: LiveData<List<Note>>
+    private val notesObserver: (List<Note>) -> Unit = { noteList ->
+        notesAdapter?.submitList(noteList)
+        fragmentUtils.changeHomeState(noteList.isEmpty())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,36 +56,40 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Instantiate Fragment Utils Class
-        fragmentUtils = HomeFragmentUtils(this, findNavController())
-        noteLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
+        _fragmentUtils = HomeFragmentUtils(this, findNavController())
+        notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
+        notesAdapter = NoteListItemAdapter(fragmentUtils)
 
-        // Binds Toolbar
-        viewBinding.toolbarBinding.apply {
-            toolbarTitle.text = "Nots"
-            toolbar.inflateMenu(R.menu.menu_home_fragment)
-            toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
-        }
+        bindsToolbar()
+        bindsRecyclerView()
 
-        // Binds RecyclerView
-        val notesAdapter = NoteListItemAdapter(fragmentUtils)
-        notesLiveData = viewModel.notes
-        notesLiveData.observe(viewLifecycleOwner) {
-            notesAdapter.submitList(it)
-            fragmentUtils.changeHomeState(it.isEmpty())
-        }
-        viewBinding.notesRecyclerview.apply {
-            layoutManager = noteLinearLayoutManager
-            adapter = notesAdapter
-        }
-
-        // OnClickListener
         viewBinding.fab.setOnClickListener(fragmentUtils.fabOnClickListener)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
+        _fragmentUtils = null
+        notesLinearLayoutManager = null
+        notesAdapter = null
+        notesLiveData.removeObserver(notesObserver)
+    }
+
+    private fun bindsToolbar() {
+        viewBinding.toolbarBinding.apply {
+            toolbarTitle.text = "Nots"
+            toolbar.inflateMenu(R.menu.menu_home_fragment)
+            toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
+        }
+    }
+
+    private fun bindsRecyclerView() {
+        notesLiveData = viewModel.notes
+        notesLiveData.observe(viewLifecycleOwner, notesObserver)
+        viewBinding.notesRecyclerview.apply {
+            layoutManager = notesLinearLayoutManager
+            adapter = notesAdapter
+        }
     }
 }
 
@@ -106,7 +115,7 @@ class HomeFragmentUtils(
     val notsVibrator = NotsVibrator(fragment.requireActivity())
 
     val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
-        fragment.noteLinearLayoutManager.changeScrollState(state)
+        fragment.notesLinearLayoutManager?.changeScrollState(state)
     }
 
     val noteClickListener: (Note) -> Unit = { note ->
