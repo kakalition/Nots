@@ -1,6 +1,7 @@
 package com.daggery.nots
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -47,12 +48,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun statusBarColorSetter() {
+    fun statusBarColorSetter() {
         window.statusBarColor = MaterialColors.getColor(
             this,
             com.google.android.material.R.attr.colorSurface,
             resources.getColor(R.color.transparent, null)
         )
+        Log.d("LOL", "colorSetter called")
     }
 
     fun updateTheme(themeRes: Int) {

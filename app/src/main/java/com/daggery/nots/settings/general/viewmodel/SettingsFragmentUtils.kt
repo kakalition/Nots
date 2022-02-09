@@ -7,8 +7,15 @@ import com.daggery.nots.home.view.SettingsFragment
 import com.daggery.nots.home.view.SettingsFragmentDirections
 
 class SettingsFragmentUtils(private val fragment: SettingsFragment) {
-    val navigationClickListener: (View) -> Unit = { view: View ->
+    private val navigationClickListener: (View) -> Unit = { view: View ->
         fragment.findNavController().navigateUp()
+    }
+
+    fun bindsToolbar() {
+        fragment.viewBinding.toolbarBinding.apply {
+            toolbar.setNavigationIcon(R.drawable.ic_back)
+            toolbar.setNavigationOnClickListener(navigationClickListener)
+        }
     }
 
     fun bindsLanguageSettings() {

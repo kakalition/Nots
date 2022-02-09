@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.daggery.nots.MainActivity
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentSettingsBinding
@@ -19,7 +20,8 @@ class SettingsFragment : Fragment() {
 
     val viewModel: MainViewModel by activityViewModels()
 
-    private lateinit var fragmentUtils: SettingsFragmentUtils
+    private var _fragmentUtils: SettingsFragmentUtils? = null
+    private val fragmentUtils get() = _fragmentUtils!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,25 +34,19 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Instantiate Fragment Utils Class
-        fragmentUtils = SettingsFragmentUtils(this)
-
-        // Prepare Toolbar
-        viewBinding.toolbarBinding.apply {
-            toolbar.setNavigationIcon(R.drawable.ic_back)
-            toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
-        }
+        _fragmentUtils = SettingsFragmentUtils(this)
 
         with(fragmentUtils) {
+            bindsToolbar()
             bindsLanguageSettings()
             bindsThemeSettings()
             bindsShowTimeSettings()
         }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
+        _fragmentUtils = null
     }
 }

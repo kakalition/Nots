@@ -17,17 +17,15 @@ import com.daggery.nots.databinding.ListItemNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.GeneralUtils
 import com.daggery.nots.utils.ThemeEnum.*
+import com.google.android.material.color.MaterialColors
 import java.text.SimpleDateFormat
 import java.util.*
 
 // TODO: REFACTOR
 class PreviewThemeFragment : Fragment() {
 
-    private val generalUtils = GeneralUtils()
     private var _viewBinding: FragmentPreviewThemeBinding? = null
     private val viewBinding get() = _viewBinding!!
-
-    private val viewModel: HomeViewModel by activityViewModels()
 
     private var themeKey: Int = 0
     private val args: PreviewThemeFragmentArgs by navArgs()
@@ -51,7 +49,7 @@ class PreviewThemeFragment : Fragment() {
             inflater.cloneInContext(context)
         }
         _viewBinding = FragmentPreviewThemeBinding.inflate(localInflater, container, false)
-        prepareStatusBar(context)
+        statusBarColorSetter(context)
         return viewBinding.root
     }
 
@@ -81,8 +79,12 @@ class PreviewThemeFragment : Fragment() {
         _viewBinding = null
     }
 
-    private fun prepareStatusBar(context: Context) {
-        generalUtils.prepareStatusBar(requireActivity(), context, themeKey)
+    private fun statusBarColorSetter(context: Context) {
+        requireActivity().window.statusBarColor = MaterialColors.getColor(
+            context,
+            com.google.android.material.R.attr.colorSurface,
+            resources.getColor(R.color.transparent, null)
+        )
     }
 
     private fun getCurrentDate(): String {

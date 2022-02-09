@@ -12,76 +12,30 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import com.daggery.nots.MainActivity
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.databinding.TileThemeCardBinding
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.azaleaTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.defaultDarkTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
+import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
+import com.daggery.nots.settings.theme.utils.TileThemeData
+import com.daggery.nots.settings.theme.utils.bind
 import com.daggery.nots.utils.ThemeEnum
-
-data class TileThemeData(
-    val title: String,
-    @ColorRes val primaryColorRes: Int,
-    @ColorRes val secondaryColorRes: Int,
-    @ColorRes val surfaceColorRes: Int,
-    @DrawableRes val themePortraitRes: Int,
-    val onClickListener: ((View) -> Unit)?
-)
-
-fun TileThemeCardBinding.bind(
-    fragment: Fragment,
-    tileThemeData: TileThemeData
-) {
-    primaryColor.background = ResourcesCompat.getDrawable(fragment.resources, R.drawable.bg_theme_color, null)
-    primaryColor.background.setTint(fragment.resources.getColor(tileThemeData.primaryColorRes, null))
-    secondaryColor.background = ResourcesCompat.getDrawable(fragment.resources, R.drawable.bg_theme_color, null)
-    secondaryColor.background.setTint(fragment.resources.getColor(tileThemeData.secondaryColorRes, null))
-    surfaceColor.background = ResourcesCompat.getDrawable(fragment.resources, R.drawable.bg_theme_color, null)
-    surfaceColor.background.setTint(fragment.resources.getColor(tileThemeData.surfaceColorRes, null))
-    themePortrait.setImageResource(tileThemeData.themePortraitRes)
-    themePortrait.setColorFilter(Color.parseColor("#33000000"))
-    themeTitle.setTextColor(fragment.resources.getColor(R.color.white, null))
-    themeTitle.text = tileThemeData.title
-    root.setOnClickListener(tileThemeData.onClickListener)
-}
 
 // TODO: Unify Theme Settings, add or remove theme should be easy and in one place only
 
 class ThemeSettingsFragment : Fragment() {
 
-    companion object {
-        private val defaultDarkTile = TileThemeData(
-            title = "Default Dark",
-            primaryColorRes = R.color.default_dark_primary,
-            secondaryColorRes = R.color.default_dark_secondary,
-            surfaceColorRes = R.color.default_dark_surface,
-            themePortraitRes = R.drawable.default_black_portrait,
-            onClickListener = null
-        )
-
-        private val nordTile = TileThemeData(
-            title = "Nord",
-            primaryColorRes = R.color.nord_primary,
-            secondaryColorRes = R.color.nord_secondary,
-            surfaceColorRes = R.color.nord_surface,
-            themePortraitRes = R.drawable.nord_portrait,
-            onClickListener = null
-        )
-
-        private val azaleaTile = TileThemeData(
-            title = "Azalea",
-            primaryColorRes = R.color.azalea_primary,
-            secondaryColorRes = R.color.azalea_secondary,
-            surfaceColorRes = R.color.azalea_surface,
-            themePortraitRes = R.drawable.azalea_portrait,
-            onClickListener = null
-        )
-    }
-
-
     private var _viewBinding: FragmentThemeSettingsBinding? = null
     val viewBinding get() = _viewBinding!!
 
     val viewModel: MainViewModel by activityViewModels()
+
+    private var _fragmentUtils: ThemeSettingsUtil? = null
+    val fragmentUtils get() = _fragmentUtils!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,23 +48,16 @@ class ThemeSettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Prepare Toolbar
-        viewBinding.toolbarBinding.apply {
-            toolbar.setNavigationIcon(R.drawable.ic_back)
-            toolbar.setNavigationOnClickListener(navigationClickListener)
-        }
+        _fragmentUtils = ThemeSettingsUtil(this)
 
-        // Current Theme Layout Binding
-        viewModel.themeKey.let {
-            when(it) {
-                R.style.AzaleaTheme -> viewBinding.currentTheme.bind(this, azaleaTile)
-                R.style.NordTheme -> viewBinding.currentTheme.bind(this, nordTile)
-                else -> viewBinding.currentTheme.bind(this, defaultDarkTile)
-            }
+        with(fragmentUtils) {
+            revertStatusBarColor()
+            bindsToolbar()
+            bindsCurrentTheme()
         }
 
         viewBinding.defaultDark.bind(this, defaultDarkTile.copy {
-            navigateToPreview(ThemeEnum.DEFAULT_DARK)
+            fragmentUtils.navigateToPreview(ThemeEnum.DEFAULT_DARK)
         })
 
         viewBinding.defaultWhite.apply {
@@ -121,7 +68,7 @@ class ThemeSettingsFragment : Fragment() {
         }
 
         viewBinding.nord.bind(this, nordTile.copy {
-            navigateToPreview(ThemeEnum.NORD)
+            fragmentUtils.navigateToPreview(ThemeEnum.NORD)
         })
 
         viewBinding.paleBlue.apply {
@@ -139,26 +86,14 @@ class ThemeSettingsFragment : Fragment() {
         }
 
         viewBinding.azalea.bind(this, azaleaTile.copy {
-            navigateToPreview(ThemeEnum.AZALEA)
+            fragmentUtils.navigateToPreview(ThemeEnum.AZALEA)
         })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
-    }
-
-    private val navigationClickListener: (View) -> Unit = { view: View ->
-        findNavController().navigateUp()
-    }
-
-    private fun getNavigationDirection(themeEnum: ThemeEnum): NavDirections {
-        return ThemeSettingsFragmentDirections
-            .actionThemeSettingsFragmentToViewThemeFragment(themeEnum)
-    }
-
-    private fun navigateToPreview(themeEnum: ThemeEnum) {
-        findNavController().navigate(getNavigationDirection(themeEnum))
+        _fragmentUtils = null
     }
 
 }
