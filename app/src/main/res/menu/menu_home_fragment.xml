@@ -6,6 +6,10 @@
         app:showAsAction="never"
         android:title="Reorder Notes"/>
     <item
+        android:id="@+id/delete_all_notes_button"
+        app:showAsAction="never"
+        android:title="Delete All Notes"/>
+    <item
         android:id="@+id/settings_button"
         app:showAsAction="never"
         android:title="Settings"/>
