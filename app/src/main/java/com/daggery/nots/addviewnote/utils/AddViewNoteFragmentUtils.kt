@@ -1,6 +1,7 @@
 package com.daggery.nots.addviewnote.utils
 
 import android.app.Activity
+import android.graphics.Color
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -12,31 +13,12 @@ import com.daggery.nots.home.view.UneditedNote
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
     private val args: AddViewNoteFragmentArgs
 ) {
-    internal fun showOnRevertConfirmation(uneditedNote: UneditedNote) {
-        val isNoteTitleSame = fragment.viewBinding.noteTitle.text.toString() == uneditedNote.noteTitle
-        val isNoteBodySame = fragment.viewBinding.noteBody.text.toString() == uneditedNote.noteBody
-        if(isNoteTitleSame && isNoteBodySame) {
-            viewEnvironment()
-        } else {
-            MaterialAlertDialogBuilder(
-                fragment.requireContext(),
-                R.style.NotsAlertDialog
-            )
-                .setView(R.layout.dialog_revert_confirmation)
-                .setPositiveButton("Revert") { _, _ ->
-                    revertChanges(uneditedNote)
-                }
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
-        }
-    }
 
     val onConfirmTapped = {
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
@@ -75,14 +57,14 @@ class AddViewNoteFragmentUtils(
         showKeyboard(noteBody)
     }
 
-    val navigationClickListener: (View) -> Unit = {
+    private val navigationClickListener: (View) -> Unit = {
         if(fragment.isEditing) {
             showOnRevertConfirmation(fragment.uneditedNote)
         }
         else fragment.findNavController().navigateUp()
     }
 
-    val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
+    private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
             R.id.confirm_button -> {
                 onConfirmTapped()
@@ -97,6 +79,68 @@ class AddViewNoteFragmentUtils(
                 true
             }
             else -> false
+        }
+    }
+
+    internal fun showOnRevertConfirmation(uneditedNote: UneditedNote) {
+        val isNoteTitleSame = fragment.viewBinding.noteTitle.text.toString() == uneditedNote.noteTitle
+        val isNoteBodySame = fragment.viewBinding.noteBody.text.toString() == uneditedNote.noteBody
+        if(isNoteTitleSame && isNoteBodySame) {
+            viewEnvironment()
+        } else {
+            MaterialAlertDialogBuilder(
+                fragment.requireContext(),
+                R.style.NotsAlertDialog
+            )
+                .setView(R.layout.dialog_revert_confirmation)
+                .setPositiveButton("Revert") { _, _ ->
+                    revertChanges(uneditedNote)
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
+
+    private fun showFailToAddSnackBar() {
+        val snackbar = Snackbar.make(
+            fragment.viewBinding.addViewNoteRoot,
+            "Failed to add note. Fields cannot be blank.",
+            2000
+        )
+        snackbar.show()
+    }
+
+    internal fun bindsToolbar() {
+        fragment.viewBinding.toolbarBinding.toolbar.apply {
+            inflateMenu(R.menu.menu_add_view_fragment)
+            setNavigationIcon(R.drawable.ic_back)
+            setNavigationOnClickListener(navigationClickListener)
+            setOnMenuItemClickListener(onMenuItemClickListener)
+        }
+    }
+
+    internal fun bindsFields(uuid: String) {
+        if(uuid.isBlank()) {
+            val note = fragment.viewModel.getNewNote()
+            fragment.viewBinding.apply {
+                noteTitle.text = fragment.editableFactory.newEditable(note.noteTitle)
+                noteDate.text = fragment.editableFactory.newEditable(note.noteDate)
+                noteBody.text = fragment.editableFactory.newEditable(note.noteBody)
+            }
+        } else {
+            val noteLiveData = fragment.viewModel.getNote(uuid)
+            noteLiveData.observeOnce(fragment.viewLifecycleOwner) {
+                it?.let {
+                    fragment.uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
+                    fragment.viewBinding.apply {
+                        noteTitle.text = fragment.editableFactory.newEditable(it.noteTitle)
+                        noteDate.text = fragment.editableFactory.newEditable(it.noteDate)
+                        noteBody.text = fragment.editableFactory.newEditable(it.noteBody)
+                    }
+                }
+            }
         }
     }
 
@@ -163,35 +207,4 @@ class AddViewNoteFragmentUtils(
         viewEnvironment()
     }
 
-    private fun showFailToAddSnackBar() {
-        val snackbar = Snackbar.make(
-            fragment.viewBinding.addViewNoteRoot,
-            "Failed to add note. Fields cannot be blank.",
-            2000
-        )
-        snackbar.show()
-    }
-
-    internal fun populateField(uuid: String) {
-        if(uuid.isBlank()) {
-            val note = fragment.viewModel.getNewNote()
-            fragment.viewBinding.apply {
-                noteTitle.text = fragment.editableFactory.newEditable(note.noteTitle)
-                noteDate.text = fragment.editableFactory.newEditable(note.noteDate)
-                noteBody.text = fragment.editableFactory.newEditable(note.noteBody)
-            }
-        } else {
-            val noteLiveData = fragment.viewModel.getNote(uuid)
-            noteLiveData.observeOnce(fragment.viewLifecycleOwner) {
-                it?.let {
-                    fragment.uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
-                    fragment.viewBinding.apply {
-                        noteTitle.text = fragment.editableFactory.newEditable(it.noteTitle)
-                        noteDate.text = fragment.editableFactory.newEditable(it.noteDate)
-                        noteBody.text = fragment.editableFactory.newEditable(it.noteBody)
-                    }
-                }
-            }
-        }
-    }
 }

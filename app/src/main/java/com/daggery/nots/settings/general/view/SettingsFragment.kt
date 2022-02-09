@@ -10,11 +10,12 @@ import androidx.navigation.fragment.findNavController
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentSettingsBinding
+import com.daggery.nots.settings.general.viewmodel.SettingsFragmentUtils
 
 class SettingsFragment : Fragment() {
 
     private var _viewBinding: FragmentSettingsBinding? = null
-    private val viewBinding get() = _viewBinding!!
+    internal val viewBinding get() = _viewBinding!!
 
     val viewModel: MainViewModel by activityViewModels()
 
@@ -23,7 +24,7 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _viewBinding = FragmentSettingsBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
@@ -40,49 +41,16 @@ class SettingsFragment : Fragment() {
             toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
         }
 
-        bindsLanguageSettings()
-        bindsThemeSettings()
-        bindsShowTimeSettings()
-    }
+        with(fragmentUtils) {
+            bindsLanguageSettings()
+            bindsThemeSettings()
+            bindsShowTimeSettings()
+        }
 
-    private fun bindsLanguageSettings() {
-        viewBinding.languageSettingsBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_earth)
-            settingsItemTitle.text = "Language"
-            settingsItemBody.text = "English"
-        }
-    }
-
-    private fun bindsShowTimeSettings() {
-        viewBinding.showTimeBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_clock)
-            settingsItemTitle.text = "Show Time"
-            settingsItemBody.text = "Disabled"
-        }
-    }
-
-    private fun bindsThemeSettings() {
-        viewBinding.themeSettingsFrame.setOnClickListener {
-            findNavController().navigate(
-                SettingsFragmentDirections.actionSettingsFragmentToThemeSettingsFragment()
-            )
-        }
-        viewBinding.themeSettingsBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_theme)
-            settingsItemTitle.text = "Theme"
-            settingsItemBody.text = viewModel.getThemeName()
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
     }
-}
-
-private class SettingsFragmentUtils(private val fragment: SettingsFragment) {
-    val navigationClickListener: (View) -> Unit = { view: View ->
-        fragment.findNavController().navigateUp()
-    }
-
 }

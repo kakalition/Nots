@@ -37,10 +37,10 @@ class HomeFragment : Fragment() {
     private val fragmentUtils get() = _fragmentUtils!!
 
     internal var notesLinearLayoutManager: NoteLinearLayoutManager? = null
-    private var notesAdapter: NoteListItemAdapter? = null
+    internal var notesAdapter: NoteListItemAdapter? = null
 
-    private lateinit var notesLiveData: LiveData<List<Note>>
-    private val notesObserver: (List<Note>) -> Unit = { noteList ->
+    internal lateinit var notesLiveData: LiveData<List<Note>>
+    internal val notesObserver: (List<Note>) -> Unit = { noteList ->
         notesAdapter?.submitList(noteList)
         fragmentUtils.changeHomeState(noteList.isEmpty())
     }
@@ -60,10 +60,11 @@ class HomeFragment : Fragment() {
         notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
         notesAdapter = NoteListItemAdapter(fragmentUtils)
 
-        bindsToolbar()
-        bindsRecyclerView()
-
-        viewBinding.fab.setOnClickListener(fragmentUtils.fabOnClickListener)
+        with(fragmentUtils) {
+            bindsToolbar()
+            bindsFab()
+            bindsRecyclerView()
+        }
     }
 
     override fun onDestroyView() {
@@ -74,26 +75,9 @@ class HomeFragment : Fragment() {
         notesAdapter = null
         notesLiveData.removeObserver(notesObserver)
     }
-
-    private fun bindsToolbar() {
-        viewBinding.toolbarBinding.apply {
-            toolbarTitle.text = "Nots"
-            toolbar.inflateMenu(R.menu.menu_home_fragment)
-            toolbar.setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
-        }
-    }
-
-    private fun bindsRecyclerView() {
-        notesLiveData = viewModel.notes
-        notesLiveData.observe(viewLifecycleOwner, notesObserver)
-        viewBinding.notesRecyclerview.apply {
-            layoutManager = notesLinearLayoutManager
-            adapter = notesAdapter
-        }
-    }
 }
 
-internal class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(
+class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(
     context,
     VERTICAL,
     false

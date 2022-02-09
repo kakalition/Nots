@@ -12,7 +12,6 @@ import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
 import com.daggery.nots.addviewnote.viewmodel.AddViewNoteViewModel
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
-import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,15 +77,17 @@ class AddViewNoteFragment : Fragment() {
         _editableFactory = Editable.Factory()
         isNewNote = args.uuid.isBlank()
 
-        bindsToolbar()
+        with(fragmentUtils) {
+            bindsToolbar()
+            bindsFields(args.uuid)
 
-        // Setting Fragment Environment
-        fragmentUtils.populateField(args.uuid)
-        when {
-            isNewNote == true -> { fragmentUtils.addEnvironment() }
-            isEditing -> { fragmentUtils.editEnvironment() }
-            else -> { fragmentUtils.viewEnvironment() }
+            when {
+                isNewNote == true -> { addEnvironment() }
+                isEditing -> { editEnvironment() }
+                else -> { viewEnvironment() }
+            }
         }
+
     }
 
     override fun onDestroyView() {
@@ -94,15 +95,6 @@ class AddViewNoteFragment : Fragment() {
         _viewBinding = null
         _fragmentUtils = null
         _editableFactory = null
-    }
-
-    private fun bindsToolbar() {
-        viewBinding.toolbarBinding.toolbar.apply {
-            inflateMenu(R.menu.menu_add_view_fragment)
-            setNavigationIcon(R.drawable.ic_back)
-            setNavigationOnClickListener(fragmentUtils.navigationClickListener)
-            setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
-        }
     }
 
     private fun getMaterialTransformTransition(): MaterialContainerTransform {
@@ -113,4 +105,5 @@ class AddViewNoteFragment : Fragment() {
             drawingViewId = R.id.fragment_container_view
         }
     }
+
 }
