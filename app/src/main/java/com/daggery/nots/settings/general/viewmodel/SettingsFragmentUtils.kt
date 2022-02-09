@@ -3,8 +3,8 @@ package com.daggery.nots.settings.general.viewmodel
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
-import com.daggery.nots.home.view.SettingsFragment
-import com.daggery.nots.home.view.SettingsFragmentDirections
+import com.daggery.nots.settings.general.view.SettingsFragment
+import com.daggery.nots.settings.general.view.SettingsFragmentDirections
 
 class SettingsFragmentUtils(private val fragment: SettingsFragment) {
     private val navigationClickListener: (View) -> Unit = { view: View ->

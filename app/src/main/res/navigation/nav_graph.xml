@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.daggery.nots.home.view.SettingsFragment"
+        android:name="com.daggery.nots.settings.general.view.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/themeSettingsFragment"
-        android:name="com.daggery.nots.settings.view.ThemeSettingsFragment"
+        android:name="com.daggery.nots.settings.theme.view.ThemeSettingsFragment"
         android:label="ThemeSettingsFragment" >
         <action
             android:id="@+id/action_themeSettingsFragment_to_viewThemeFragment"

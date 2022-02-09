@@ -1,27 +1,19 @@
-package com.daggery.nots.settings.view
+package com.daggery.nots.settings.theme.view
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
-import com.daggery.nots.MainActivity
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
-import com.daggery.nots.databinding.TileThemeCardBinding
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.azaleaTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.defaultDarkTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
 import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
-import com.daggery.nots.settings.theme.utils.TileThemeData
 import com.daggery.nots.settings.theme.utils.bind
 import com.daggery.nots.utils.ThemeEnum
 

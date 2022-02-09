@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
             com.google.android.material.R.attr.colorSurface,
             resources.getColor(R.color.transparent, null)
         )
-        Log.d("LOL", "colorSetter called")
     }
 
     fun updateTheme(themeRes: Int) {

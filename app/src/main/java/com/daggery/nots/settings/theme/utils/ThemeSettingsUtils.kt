@@ -14,8 +14,8 @@ import com.daggery.nots.databinding.TileThemeCardBinding
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.azaleaTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.defaultDarkTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
-import com.daggery.nots.settings.view.ThemeSettingsFragment
-import com.daggery.nots.settings.view.ThemeSettingsFragmentDirections
+import com.daggery.nots.settings.theme.view.ThemeSettingsFragment
+import com.daggery.nots.settings.theme.view.ThemeSettingsFragmentDirections
 import com.daggery.nots.utils.ThemeEnum
 
 data class TileThemeData(

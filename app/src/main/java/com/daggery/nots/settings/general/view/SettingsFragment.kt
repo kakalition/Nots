@@ -1,4 +1,4 @@
-package com.daggery.nots.home.view
+package com.daggery.nots.settings.general.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
