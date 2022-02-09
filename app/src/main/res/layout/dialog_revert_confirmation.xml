@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="24dp"
-    android:paddingHorizontal="24dp">
+    android:paddingHorizontal="24dp"
+    android:paddingTop="24dp">
 
     <ImageView
-        android:id="@+id/delete_icon"
+        android:id="@+id/revert_icon"
         android:layout_width="0dp"
         android:layout_height="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,35 +15,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0"
-        app:srcCompat="@drawable/ic_delete"
-        tools:srcCompat="@drawable/ic_delete"
-        android:contentDescription="@string/dialog_delete_icon_description" />
+        app:srcCompat="@drawable/ic_edit"
+        android:contentDescription="@string/dialog_revert_confirmation_icon_description" />
 
     <TextView
-        android:id="@+id/delete_dialog_title"
+        android:id="@+id/revert_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog_delete_header"
-        android:textColor="?attr/colorOnSurface"
         android:fontFamily="@font/opensans_bold"
+        android:text="@string/dialog_revert_confirmation_header"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
-        app:layout_constraintTop_toBottomOf="@id/delete_icon"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/revert_icon" />
 
     <TextView
-        android:id="@+id/delete_dialog_body"
-        android:layout_marginTop="16dp"
+        android:id="@+id/revert_dialog_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="?attr/colorOnSurface"
-        android:text="@string/dialog_delete_text"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/opensans_regular"
+        android:text="@string/dialog_revert_confirmation_text"
+        android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintTop_toBottomOf="@id/delete_dialog_title"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/revert_dialog_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

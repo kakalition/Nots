@@ -15,21 +15,22 @@
         android:id="@+id/theme_portrait"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:shapeAppearanceOverlay="@style/roundedCorners"
-        tools:src="@drawable/azalea_portrait"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedCorners"
+        tools:src="@drawable/azalea_portrait" />
 
     <ImageView
         android:id="@+id/primary_color"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bg_theme_color"
+        android:contentDescription="@string/layout_theme_tile_primary_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:backgroundTint="@color/azalea_primary" />
@@ -38,9 +39,10 @@
         android:id="@+id/secondary_color"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/bg_theme_color"
+        android:contentDescription="@string/layout_theme_tile_secondary_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/primary_color"
         tools:backgroundTint="@color/azalea_secondary" />
@@ -51,9 +53,10 @@
         android:layout_height="30dp"
         android:layout_marginStart="10dp"
         android:background="@drawable/bg_theme_color"
-        app:layout_constraintTop_toTopOf="@id/secondary_color"
-        app:layout_constraintStart_toEndOf="@+id/secondary_color"
+        android:contentDescription="@string/layout_theme_tile_surface_color"
         app:layout_constraintBottom_toBottomOf="@id/secondary_color"
+        app:layout_constraintStart_toEndOf="@+id/secondary_color"
+        app:layout_constraintTop_toTopOf="@id/secondary_color"
         tools:backgroundTint="@color/azalea_surface" />
 
     <TextView

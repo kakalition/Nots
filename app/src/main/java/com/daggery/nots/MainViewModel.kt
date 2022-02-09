@@ -2,13 +2,35 @@ package com.daggery.nots
 
 import androidx.annotation.StyleRes
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.daggery.nots.datastore.DataStoreManager
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor()
-    : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val dataStore: DataStoreManager
+) : ViewModel() {
 
-    @StyleRes private val _themeKey = MutableLiveData<Int>(0)
-    @StyleRes val themeKey: LiveData<Int> = _themeKey
+    val themeDataStore: LiveData<Int> = dataStore.themePreference.asLiveData()
+    var themeKey: Int = 0
+
+    fun getThemeName(): String {
+        return when(themeKey) {
+            R.style.DefaultDarkTheme -> "Dark Theme"
+            R.style.NordTheme -> "Nord Theme"
+            R.style.AzaleaTheme -> "Azalea Theme"
+            else -> "Unspecified"
+        }
+    }
+
+    fun applyTheme(@StyleRes themeRes: Int) {
+        viewModelScope.launch {
+            dataStore.changeThemePreference(themeRes)
+        }
+        themeKey = themeRes
+    }
 }

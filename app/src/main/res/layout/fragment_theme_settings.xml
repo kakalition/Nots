@@ -2,15 +2,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/colorSurface"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".settings.view.ThemeSettingsFragment">
+        tools:context=".settings.theme.view.ThemeSettingsFragment">
 
         <FrameLayout
             android:id="@+id/app_bar_frame"
@@ -19,6 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <include
                 android:id="@+id/toolbar_binding"
                 layout="@layout/appbar_title" />
@@ -31,7 +32,7 @@
             android:layout_marginTop="40dp"
             android:fontFamily="@font/inter_bold"
             android:padding="22dp"
-            android:text="Theme"
+            android:text="@string/fragment_theme_settings_theme_header"
             android:textAppearance="?attr/textAppearanceDisplayMedium"
             android:textColor="?attr/colorOnSurface" />
 
@@ -43,10 +44,9 @@
             android:paddingHorizontal="22dp"
             android:paddingTop="22dp"
             android:paddingBottom="11dp"
-            android:text="Current Theme"
+            android:text="@string/fragment_theme_settings_current_theme"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSurface"
-             />
+            android:textColor="?attr/colorOnSurface" />
 
         <include
             android:id="@+id/current_theme"
@@ -60,10 +60,9 @@
             android:paddingHorizontal="22dp"
             android:paddingTop="22dp"
             android:paddingBottom="11dp"
-            android:text="Available Theme"
+            android:text="@string/fragment_available_theme_available_theme"
             android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSurface"
-             />
+            android:textColor="?attr/colorOnSurface" />
 
         <include
             android:id="@+id/default_white"

@@ -1,39 +1,58 @@
 package com.daggery.nots
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
-import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.daggery.nots.databinding.ActivityMainBinding
-import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.utils.GeneralUtils
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: Check NavGraph package name
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val generalUtils = GeneralUtils()
-    lateinit var viewBinding: ActivityMainBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private var _viewBinding: ActivityMainBinding? = null
+    private val viewBinding get() = _viewBinding!!
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Show SplashScreen until ThemeKey is Loaded
         installSplashScreen().setKeepOnScreenCondition { viewModel.themeKey == 0 }
+
+        // Theme Setting
+        setThemeOnInitialStart()
         setTheme(viewModel.themeKey)
-        generalUtils.prepareStatusBar(activity = this, themeKey = viewModel.themeKey)
+        statusBarColorSetter()
 
         // Binder
-        viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        _viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _viewBinding = null
+    }
+
+    private fun setThemeOnInitialStart() {
+        if(viewModel.themeKey == 0){
+            viewModel.themeDataStore.observeOnce(this) {
+                viewModel.themeKey = it
+                updateTheme(it)
+            }
+        }
+    }
+
+    fun statusBarColorSetter() {
+        window.statusBarColor = MaterialColors.getColor(
+            this,
+            com.google.android.material.R.attr.colorSurface,
+            resources.getColor(R.color.transparent, null)
+        )
     }
 
     fun updateTheme(themeRes: Int) {

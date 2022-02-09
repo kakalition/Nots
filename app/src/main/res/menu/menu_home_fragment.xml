@@ -4,9 +4,13 @@
     <item
         android:id="@+id/reorder_button"
         app:showAsAction="never"
-        android:title="Reorder Notes"/>
+        android:title="@string/menu_home_fragment_reorder_notes"/>
+    <item
+        android:id="@+id/delete_all_notes_button"
+        app:showAsAction="never"
+        android:title="@string/menu_home_fragment_delete_all_notes"/>
     <item
         android:id="@+id/settings_button"
         app:showAsAction="never"
-        android:title="Settings"/>
+        android:title="@string/menu_home_fragment_settings"/>
 </menu>

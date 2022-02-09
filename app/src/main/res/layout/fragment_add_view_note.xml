@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:transitionName="from_fab_to_add"
-    android:background="?attr/colorSurface"
     android:id="@+id/add_view_note_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.view.AddViewNoteFragment">
+    android:background="?attr/colorSurface"
+    android:transitionName="from_fab_to_add"
+    tools:context=".addviewnote.view.AddViewNoteFragment">
 
     <FrameLayout
         android:id="@+id/app_bar_frame"
@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <include
             android:id="@+id/toolbar_binding"
             layout="@layout/appbar_title" />
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="22dp"
         android:background="@drawable/bg_note_item"
-        android:hint=" "
+        android:hint="@string/fragment_add_view_note_empty_hint"
         app:boxBackgroundMode="none"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false"
@@ -40,14 +41,15 @@
             android:id="@+id/note_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnSecondary"
             android:fontFamily="@font/opensans_bold"
-            android:hint="Title"
-            android:textColorHint="?attr/colorOnSecondary"
+            android:hint="@string/fragment_add_view_note_title_hint"
             android:inputType="textMultiLine"
             android:maxLines="2"
             android:paddingStart="22dp"
-            android:textAppearance="?attr/textAppearanceHeadline6" />
+            android:paddingEnd="22dp"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="?attr/colorOnSecondary"
+            android:textColorHint="?attr/colorOnSecondary" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,10 +68,10 @@
             android:id="@+id/note_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnSecondary"
             android:fontFamily="@font/opensans_light"
             android:paddingTop="22dp"
             android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:textColor="?attr/colorOnSecondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="January 29, 2021" />
@@ -78,7 +80,7 @@
             android:id="@+id/note_body_input_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:hint=" "
+            android:hint="@string/fragment_add_view_note_empty_hint"
             android:paddingTop="22dp"
             app:boxBackgroundMode="none"
             app:hintAnimationEnabled="false"
@@ -92,15 +94,16 @@
                 android:id="@+id/note_body"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="?attr/colorOnSecondary"
                 android:fontFamily="@font/opensans_regular"
                 android:gravity="top"
-                android:textColorHint="?attr/colorOnSecondary"
-                android:hint="Body"
+                android:hint="@string/fragment_add_view_note_body_hint"
                 android:inputType="textMultiLine"
                 android:paddingStart="0dp"
                 android:paddingTop="0dp"
-                android:textAppearance="?attr/textAppearanceBody1" />
+                android:paddingEnd="0dp"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondary"
+                android:textColorHint="?attr/colorOnSecondary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

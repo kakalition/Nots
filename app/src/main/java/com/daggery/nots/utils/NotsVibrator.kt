@@ -5,7 +5,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.fragment.app.FragmentActivity
 
-class NotsVibrator(private val activity: FragmentActivity) {
+class NotsVibrator(activity: FragmentActivity) {
     private var shouldVibrate = true
     private val vibrator = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 

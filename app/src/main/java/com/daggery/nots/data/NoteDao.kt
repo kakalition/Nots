@@ -15,9 +15,6 @@ interface NoteDao {
     @Update
     suspend fun rearrangeNoteOrder(notes: List<Note>)
 
-    @Query("SELECT * FROM notes WHERE note_order BETWEEN :from AND :to")
-    suspend fun getNotesInRange(from: Int, to: Int): List<Note>
-
     @Insert
     suspend fun addNote(note: Note)
 
