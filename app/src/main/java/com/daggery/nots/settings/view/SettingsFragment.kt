@@ -40,7 +40,27 @@ class SettingsFragment : Fragment() {
             toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
         }
 
-        // Set Theme Settings Item Layout
+        bindsThemeSettings()
+        bindsShowTimeSettings()
+    }
+
+    private fun bindsLanguageSettings() {
+        viewBinding.languageSettingsBinding.apply {
+            settingsItemIcon.setImageResource(R.drawable.ic_earth)
+            settingsItemTitle.text = "Language"
+            settingsItemBody.text = "English"
+        }
+    }
+
+    private fun bindsShowTimeSettings() {
+        viewBinding.showTimeBinding.apply {
+            settingsItemIcon.setImageResource(R.drawable.ic_clock)
+            settingsItemTitle.text = "Show Time"
+            settingsItemBody.text = "Disabled"
+        }
+    }
+
+    private fun bindsThemeSettings() {
         viewBinding.themeSettingsFrame.setOnClickListener {
             findNavController().navigate(
                 SettingsFragmentDirections.actionSettingsFragmentToThemeSettingsFragment()
@@ -50,20 +70,6 @@ class SettingsFragment : Fragment() {
             settingsItemIcon.setImageResource(R.drawable.ic_theme)
             settingsItemTitle.text = "Theme"
             settingsItemBody.text = viewModel.getThemeName()
-        }
-
-        // Set DateFormat Settings Item Layout
-        viewBinding.dateFormatBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_calendar)
-            settingsItemTitle.text = "Date Format"
-            settingsItemBody.text = "Current: Sunday, 01 January 2022"
-        }
-
-        // Set ShowTime Settings Item Layout
-        viewBinding.showTimeBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_clock)
-            settingsItemTitle.text = "Show Time"
-            settingsItemBody.text = "Disabled"
         }
     }
 

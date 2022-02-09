@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <FrameLayout
-        android:id="@+id/theme_settings_frame"
+        android:id="@+id/language_settings_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
@@ -42,20 +42,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <include layout="@layout/tile_settings"
-            android:id="@+id/theme_settings_binding"/>
+            android:id="@+id/language_settings_binding"/>
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/date_format_frame"
+        android:id="@+id/theme_settings_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        app:layout_constraintTop_toBottomOf="@id/theme_settings_frame"
+        app:layout_constraintTop_toBottomOf="@id/language_settings_frame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <include layout="@layout/tile_settings"
-            android:id="@+id/date_format_binding"/>
+            android:id="@+id/theme_settings_binding"/>
     </FrameLayout>
 
     <FrameLayout
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        app:layout_constraintTop_toBottomOf="@id/date_format_frame"
+        app:layout_constraintTop_toBottomOf="@id/theme_settings_frame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <include layout="@layout/tile_settings"

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.ListItemNoteBinding
-import com.daggery.nots.home.view.HomeFragmentUtils
+import com.daggery.nots.home.utils.HomeFragmentUtils
 
 class NoteListItemAdapter(
     private val homeFragmentUtils: HomeFragmentUtils
