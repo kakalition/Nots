@@ -22,35 +22,13 @@ import com.daggery.nots.utils.ThemeEnum.*
 class PreviewThemeFragment : Fragment() {
 
     private val generalUtils = GeneralUtils()
-    private lateinit var _viewBinding: FragmentPreviewThemeBinding
-    private val viewBinding get() = _viewBinding
+    private var _viewBinding: FragmentPreviewThemeBinding? = null
+    private val viewBinding get() = _viewBinding!!
 
     private val viewModel: HomeViewModel by activityViewModels()
 
     private var themeKey: Int = 0
     private val args: PreviewThemeFragmentArgs by navArgs()
-
-    private fun prepareStatusBar(context: Context) {
-        generalUtils.prepareStatusBar(requireActivity(), context, themeKey)
-    }
-
-    private fun ListItemNoteBinding.bind(number: String) {
-        noteTitle.text = "Preview $number"
-        noteBody.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
-            .plus("tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis ")
-            .plus("nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
-        noteDate.text = viewModel.getCurrentDate()
-        listItemLayout.setBackgroundResource(R.drawable.bg_note_item)
-    }
-
-    private fun applyTheme() {
-        val themeKey = when(args.themeEnum) {
-            DEFAULT_DARK -> R.style.DefaultDarkTheme
-            NORD -> R.style.NordTheme
-            AZALEA -> R.style.AzaleaTheme
-        }
-        (requireActivity() as MainActivity).updateTheme(themeKey)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,5 +72,32 @@ class PreviewThemeFragment : Fragment() {
             applyTheme()
             findNavController().navigateUp()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
+
+    private fun prepareStatusBar(context: Context) {
+        generalUtils.prepareStatusBar(requireActivity(), context, themeKey)
+    }
+
+    private fun ListItemNoteBinding.bind(number: String) {
+        noteTitle.text = "Preview $number"
+        noteBody.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
+            .plus("tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis ")
+            .plus("nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
+        noteDate.text = viewModel.getCurrentDate()
+        listItemLayout.setBackgroundResource(R.drawable.bg_note_item)
+    }
+
+    private fun applyTheme() {
+        val themeKey = when(args.themeEnum) {
+            DEFAULT_DARK -> R.style.DefaultDarkTheme
+            NORD -> R.style.NordTheme
+            AZALEA -> R.style.AzaleaTheme
+        }
+        (requireActivity() as MainActivity).updateTheme(themeKey)
     }
 }

@@ -77,6 +77,11 @@ class HomeFragment : Fragment() {
         // OnClickListener
         viewBinding.fab.setOnClickListener(fragmentUtils.fabOnClickListener)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
 }
 
 internal class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(

@@ -11,8 +11,30 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewBinding: ActivityMainBinding
+    private var _viewBinding: ActivityMainBinding? = null
+    private val viewBinding = _viewBinding!!
     private val viewModel: MainViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Show SplashScreen until ThemeKey is Loaded
+        installSplashScreen().setKeepOnScreenCondition { viewModel.themeKey == 0 }
+
+        // Theme Setting
+        setThemeOnInitialStart()
+        setTheme(viewModel.themeKey)
+        statusBarColorSetter()
+
+        // Binder
+        _viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _viewBinding = null
+    }
 
     private fun setThemeOnInitialStart() {
         if(viewModel.themeKey == 0){
@@ -29,22 +51,6 @@ class MainActivity : AppCompatActivity() {
             com.google.android.material.R.attr.colorSurface,
             resources.getColor(R.color.transparent, null)
         )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Show SplashScreen until ThemeKey is Loaded
-        installSplashScreen().setKeepOnScreenCondition { viewModel.themeKey == 0 }
-
-        // Theme Setting
-        setThemeOnInitialStart()
-        setTheme(viewModel.themeKey)
-        statusBarColorSetter()
-
-        // Binder
-        viewBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
     }
 
     fun updateTheme(themeRes: Int) {

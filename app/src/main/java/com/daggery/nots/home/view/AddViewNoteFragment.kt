@@ -113,6 +113,10 @@ class AddViewNoteFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
 }
 
 class AddViewNoteFragmentUtils(

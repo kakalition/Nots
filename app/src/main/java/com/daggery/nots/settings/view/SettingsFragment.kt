@@ -13,8 +13,8 @@ import com.daggery.nots.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
 
-    private lateinit var _binding: FragmentSettingsBinding
-    val binding get() = _binding
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
 
     val viewModel: MainViewModel by activityViewModels()
 
