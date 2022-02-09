@@ -1,32 +1,22 @@
 package com.daggery.nots.settings.view
 
-import android.animation.ArgbEvaluator
-import android.animation.TimeInterpolator
-import android.animation.ValueAnimator
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
-import android.view.animation.Interpolator
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.daggery.nots.MainActivity
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.databinding.TileThemeCardBinding
-import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.utils.GeneralUtils
 import com.daggery.nots.utils.ThemeEnum
-import com.google.android.material.color.MaterialColors
 
 data class TileThemeData(
     val title: String,
@@ -88,10 +78,75 @@ class ThemeSettingsFragment : Fragment() {
     }
 
 
-    private lateinit var _binding: FragmentThemeSettingsBinding
-    val binding get() = _binding
+    private var _viewBinding: FragmentThemeSettingsBinding? = null
+    val viewBinding get() = _viewBinding!!
 
     val viewModel: MainViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _viewBinding = FragmentThemeSettingsBinding.inflate(inflater, container, false)
+        return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Prepare Toolbar
+        viewBinding.toolbarBinding.apply {
+            toolbar.setNavigationIcon(R.drawable.ic_back)
+            toolbar.setNavigationOnClickListener(navigationClickListener)
+        }
+
+        // Current Theme Layout Binding
+        viewModel.themeKey.let {
+            when(it) {
+                R.style.AzaleaTheme -> viewBinding.currentTheme.bind(this, azaleaTile)
+                R.style.NordTheme -> viewBinding.currentTheme.bind(this, nordTile)
+                else -> viewBinding.currentTheme.bind(this, defaultDarkTile)
+            }
+        }
+
+        viewBinding.defaultDark.bind(this, defaultDarkTile.copy {
+            navigateToPreview(ThemeEnum.DEFAULT_DARK)
+        })
+
+        viewBinding.defaultWhite.apply {
+            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
+            root.background.setTint(resources.getColor(R.color.white_surface, null))
+            themeTitle.setTextColor(resources.getColor(R.color.black, null))
+            themeTitle.text = "Default White"
+        }
+
+        viewBinding.nord.bind(this, nordTile.copy {
+            navigateToPreview(ThemeEnum.NORD)
+        })
+
+        viewBinding.paleBlue.apply {
+            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
+            root.background.setTint(resources.getColor(R.color.pale_blue, null))
+            themeTitle.setTextColor(resources.getColor(R.color.white, null))
+            themeTitle.text = "Pale Blue"
+        }
+
+        viewBinding.jungleMist.apply {
+            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
+            root.background.setTint(resources.getColor(R.color.jungle_mist, null))
+            themeTitle.setTextColor(resources.getColor(R.color.white, null))
+            themeTitle.text = "Jungle Mist"
+        }
+
+        viewBinding.azalea.bind(this, azaleaTile.copy {
+            navigateToPreview(ThemeEnum.AZALEA)
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
 
     private val navigationClickListener: (View) -> Unit = { view: View ->
         findNavController().navigateUp()
@@ -106,63 +161,4 @@ class ThemeSettingsFragment : Fragment() {
         findNavController().navigate(getNavigationDirection(themeEnum))
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentThemeSettingsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Prepare Toolbar
-        binding.toolbarBinding.apply {
-            toolbar.setNavigationIcon(R.drawable.ic_back)
-            toolbar.setNavigationOnClickListener(navigationClickListener)
-        }
-
-        // Current Theme Layout Binding
-        viewModel.themeKey.let {
-            when(it) {
-                R.style.AzaleaTheme -> binding.currentTheme.bind(this, azaleaTile)
-                R.style.NordTheme -> binding.currentTheme.bind(this, nordTile)
-                else -> binding.currentTheme.bind(this, defaultDarkTile)
-            }
-        }
-
-        binding.defaultDark.bind(this, defaultDarkTile.copy {
-            navigateToPreview(ThemeEnum.DEFAULT_DARK)
-        })
-
-        binding.defaultWhite.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.white_surface, null))
-            themeTitle.setTextColor(resources.getColor(R.color.black, null))
-            themeTitle.text = "Default White"
-        }
-
-        binding.nord.bind(this, nordTile.copy {
-            navigateToPreview(ThemeEnum.NORD)
-        })
-
-        binding.paleBlue.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.pale_blue, null))
-            themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = "Pale Blue"
-        }
-
-        binding.jungleMist.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.jungle_mist, null))
-            themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = "Jungle Mist"
-        }
-
-        binding.azalea.bind(this, azaleaTile.copy {
-            navigateToPreview(ThemeEnum.AZALEA)
-        })
-    }
 }

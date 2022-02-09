@@ -17,6 +17,8 @@ import com.daggery.nots.databinding.ListItemNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.GeneralUtils
 import com.daggery.nots.utils.ThemeEnum.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO: REFACTOR
 class PreviewThemeFragment : Fragment() {
@@ -83,12 +85,18 @@ class PreviewThemeFragment : Fragment() {
         generalUtils.prepareStatusBar(requireActivity(), context, themeKey)
     }
 
+    private fun getCurrentDate(): String {
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat.getDateInstance()
+        return formatter.format(date)
+    }
+
     private fun ListItemNoteBinding.bind(number: String) {
         noteTitle.text = "Preview $number"
         noteBody.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
             .plus("tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis ")
             .plus("nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
-        noteDate.text = viewModel.getCurrentDate()
+        noteDate.text = getCurrentDate()
         listItemLayout.setBackgroundResource(R.drawable.bg_note_item)
     }
 

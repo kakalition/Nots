@@ -15,40 +15,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val database: NotsDatabase,
+    private val database: NotsDatabase
 ) : ViewModel() {
 
     // Get note dao
     private val noteDao = database.noteDao()
     // Get all notes
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
-
-    fun getCurrentDate(): String {
-        val date = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("MMMM dd, yyyy")
-        val formattedDate = formatter.format(date)
-        return formattedDate
-    }
-
-    fun getNewNote(): Note {
-        return Note(
-            UUID.randomUUID().toString(),
-            0,
-            notes.value?.size ?: 0,
-            "",
-            "",
-            getCurrentDate()
-        )
-    }
-
-    fun isPrioritized(note: Note): Boolean {
-        return note.priority == 1
-    }
-
-    // Get note with given uuid
-    fun getNote(uuid: String): LiveData<Note?> {
-        return database.noteDao().getNote(uuid).asLiveData()
-    }
 
     // Change note order of corresponding note
     fun rearrangeNoteOrder(currentNote: Note, targetNote: Note) {
@@ -74,32 +47,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addNote(
-        title: String,
-        body: String) {
-        val note = Note(
-            uuid = UUID.randomUUID().toString(),
-            priority = 0,
-            noteOrder = notes.value?.size ?: 0,
-            noteTitle = title,
-            noteBody = body,
-            noteDate = getCurrentDate()
-        )
-        addNoteToDatabase(note)
-    }
-
-    private fun addNoteToDatabase(note: Note) {
-        viewModelScope.launch {
-            database.noteDao().addNote(note)
-        }
-    }
-
-    fun updateNote(note: Note) {
-        viewModelScope.launch {
-            database.noteDao().updateNote(note)
-        }
-    }
-
     fun deleteNote(note: Note) {
         viewModelScope.launch {
             database.noteDao().deleteNote(note)
@@ -112,14 +59,3 @@ class HomeViewModel @Inject constructor(
         }
     }
 }
-/*
-
-class HomeViewModelFactory(private val database: NotsDatabase) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(database) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel")
-    }
-}*/

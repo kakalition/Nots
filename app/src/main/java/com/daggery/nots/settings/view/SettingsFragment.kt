@@ -13,8 +13,8 @@ import com.daggery.nots.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
 
-    private var _binding: FragmentSettingsBinding? = null
-    private val binding get() = _binding!!
+    private var _viewBinding: FragmentSettingsBinding? = null
+    private val viewBinding get() = _viewBinding!!
 
     val viewModel: MainViewModel by activityViewModels()
 
@@ -24,8 +24,8 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        return binding.root
+        _viewBinding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,36 +35,41 @@ class SettingsFragment : Fragment() {
         fragmentUtils = SettingsFragmentUtils(this)
 
         // Prepare Toolbar
-        binding.toolbarBinding.apply {
+        viewBinding.toolbarBinding.apply {
             toolbar.setNavigationIcon(R.drawable.ic_back)
             toolbar.setNavigationOnClickListener(fragmentUtils.navigationClickListener)
         }
 
         // Set Theme Settings Item Layout
-        binding.themeSettingsFrame.setOnClickListener {
+        viewBinding.themeSettingsFrame.setOnClickListener {
             findNavController().navigate(
                 SettingsFragmentDirections.actionSettingsFragmentToThemeSettingsFragment()
             )
         }
-        binding.themeSettingsBinding.apply {
+        viewBinding.themeSettingsBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_theme)
             settingsItemTitle.text = "Theme"
             settingsItemBody.text = viewModel.getThemeName()
         }
 
         // Set DateFormat Settings Item Layout
-        binding.dateFormatBinding.apply {
+        viewBinding.dateFormatBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_calendar)
             settingsItemTitle.text = "Date Format"
             settingsItemBody.text = "Current: Sunday, 01 January 2022"
         }
 
         // Set ShowTime Settings Item Layout
-        binding.showTimeBinding.apply {
+        viewBinding.showTimeBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_clock)
             settingsItemTitle.text = "Show Time"
             settingsItemBody.text = "Disabled"
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
     }
 }
 

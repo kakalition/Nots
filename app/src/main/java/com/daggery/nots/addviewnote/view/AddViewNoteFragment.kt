@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
+import com.daggery.nots.addviewnote.viewmodel.AddViewNoteViewModel
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.google.android.material.transition.MaterialContainerTransform
@@ -31,7 +32,7 @@ class AddViewNoteFragment : Fragment() {
     private var _viewBinding: FragmentAddViewNoteBinding? = null
     internal val viewBinding get() = _viewBinding!!
 
-    internal val viewModel: HomeViewModel by activityViewModels()
+    internal val viewModel: AddViewNoteViewModel by activityViewModels()
 
     private val args: AddViewNoteFragmentArgs by navArgs()
 

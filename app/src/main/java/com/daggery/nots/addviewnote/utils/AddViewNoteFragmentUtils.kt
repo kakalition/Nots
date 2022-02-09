@@ -49,8 +49,8 @@ class AddViewNoteFragmentUtils(
             isNoteInvalid -> { showFailToAddSnackBar() }
             isUuidValid -> {
                 val noteLiveData = fragment.viewModel.getNote(args.uuid)
-                noteLiveData.observeOnce(fragment) {
-                    val note = it?.copy(noteTitle = noteTitle, noteBody = noteBody)
+                noteLiveData.observeOnce(fragment) { observedNote ->
+                    val note = observedNote?.copy(noteTitle = noteTitle, noteBody = noteBody)
                     note?.let {
                         fragment.viewModel.updateNote(it)
                         viewEnvironment()
@@ -172,7 +172,6 @@ class AddViewNoteFragmentUtils(
         snackbar.show()
     }
 
-    // TODO: Can Be Optimized
     internal fun populateField(uuid: String) {
         if(uuid.isBlank()) {
             val note = fragment.viewModel.getNewNote()
