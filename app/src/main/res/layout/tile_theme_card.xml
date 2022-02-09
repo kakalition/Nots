@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedCorners"
-        tools:src="@drawable/azalea_portrait" />
+        tools:src="@color/azalea_surface" />
 
     <ImageView
         android:id="@+id/primary_color"

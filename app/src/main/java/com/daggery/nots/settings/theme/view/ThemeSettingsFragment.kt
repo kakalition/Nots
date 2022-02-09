@@ -11,8 +11,11 @@ import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.azaleaTile
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.defaultDarkTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.darkThemeTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.heatherBerryTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.royalLavenderTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.steelBlueTile
 import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
 import com.daggery.nots.settings.theme.utils.bind
 import com.daggery.nots.utils.ThemeEnum
@@ -48,37 +51,24 @@ class ThemeSettingsFragment : Fragment() {
             bindsCurrentTheme()
         }
 
-        viewBinding.defaultDark.bind(this, defaultDarkTile.copy {
+        viewBinding.darkTheme.bind(this, darkThemeTile.copy {
             fragmentUtils.navigateToPreview(ThemeEnum.DEFAULT_DARK)
         })
-
-        viewBinding.defaultWhite.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.white_surface, null))
-            themeTitle.setTextColor(resources.getColor(R.color.black, null))
-            themeTitle.text = getString(R.string.theme_steel_blue)
-        }
 
         viewBinding.nord.bind(this, nordTile.copy {
             fragmentUtils.navigateToPreview(ThemeEnum.NORD)
         })
 
-        viewBinding.paleBlue.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.pale_blue, null))
-            themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = getString(R.string.theme_royal_lavender)
-        }
+        viewBinding.steelBlue.bind(this, steelBlueTile.copy {
+            fragmentUtils.navigateToPreview(ThemeEnum.STEEL_BLUE)
+        })
 
-        viewBinding.jungleMist.apply {
-            root.background = ResourcesCompat.getDrawable(resources, R.drawable.bg_theme_card, null)
-            root.background.setTint(resources.getColor(R.color.jungle_mist, null))
-            themeTitle.setTextColor(resources.getColor(R.color.white, null))
-            themeTitle.text = getString(R.string.theme_heather_berry)
-        }
+        viewBinding.royalLavender.bind(this, royalLavenderTile.copy {
+            fragmentUtils.navigateToPreview(ThemeEnum.ROYAL_LAVENDER)
+        })
 
-        viewBinding.azalea.bind(this, azaleaTile.copy {
-            fragmentUtils.navigateToPreview(ThemeEnum.AZALEA)
+        viewBinding.heatherBerry.bind(this, heatherBerryTile.copy {
+            fragmentUtils.navigateToPreview(ThemeEnum.HEATHER_BERRY)
         })
     }
 

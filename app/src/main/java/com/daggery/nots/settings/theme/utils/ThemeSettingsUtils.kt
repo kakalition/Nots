@@ -12,8 +12,11 @@ import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.TileThemeCardBinding
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.azaleaTile
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.defaultDarkTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.darkThemeTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.heatherBerryTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.royalLavenderTile
+import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.steelBlueTile
 import com.daggery.nots.settings.theme.view.ThemeSettingsFragment
 import com.daggery.nots.settings.theme.view.ThemeSettingsFragmentDirections
 import com.daggery.nots.utils.ThemeEnum
@@ -52,7 +55,7 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
 
     private fun getNavigationDirection(themeEnum: ThemeEnum): NavDirections {
         return ThemeSettingsFragmentDirections
-            .actionThemeSettingsFragmentToViewThemeFragment(themeEnum)
+            .actionThemeSettingsFragmentToPreviewThemeFragment(themeEnum)
     }
 
     internal fun navigateToPreview(themeEnum: ThemeEnum) {
@@ -71,15 +74,16 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
     }
 
     fun bindsCurrentTheme() {
-        with(fragment) {
-            viewModel.themeKey.let {
+        fragment.viewModel.themeKey.let {
+            with(fragment.viewBinding.currentTheme) {
                 when(it) {
-                    R.style.AzaleaTheme -> viewBinding.currentTheme.bind(this, azaleaTile)
-                    R.style.NordTheme -> viewBinding.currentTheme.bind(this, nordTile)
-                    else -> viewBinding.currentTheme.bind(this, defaultDarkTile)
+                    R.style.NordTheme -> bind(fragment, nordTile)
+                    R.style.SteelBlueTheme -> bind(fragment, steelBlueTile)
+                    R.style.RoyalLavenderTheme -> bind(fragment, royalLavenderTile)
+                    R.style.HeatherBerryTheme -> bind(fragment, heatherBerryTile)
+                    else -> bind(fragment, darkThemeTile)
                 }
             }
         }
     }
-
 }

@@ -65,11 +65,7 @@
             android:textColor="?attr/colorOnSurface" />
 
         <include
-            android:id="@+id/default_white"
-            layout="@layout/tile_theme_card" />
-
-        <include
-            android:id="@+id/default_dark"
+            android:id="@+id/dark_theme"
             layout="@layout/tile_theme_card" />
 
         <include
@@ -77,15 +73,15 @@
             layout="@layout/tile_theme_card" />
 
         <include
-            android:id="@+id/pale_blue"
+            android:id="@+id/steel_blue"
             layout="@layout/tile_theme_card" />
 
         <include
-            android:id="@+id/jungle_mist"
+            android:id="@+id/royal_lavender"
             layout="@layout/tile_theme_card" />
 
         <include
-            android:id="@+id/azalea"
+            android:id="@+id/heather_berry"
             layout="@layout/tile_theme_card" />
 
     </LinearLayout>

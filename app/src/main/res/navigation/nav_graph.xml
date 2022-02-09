@@ -40,7 +40,7 @@
         android:name="com.daggery.nots.settings.theme.view.ThemeSettingsFragment"
         android:label="ThemeSettingsFragment" >
         <action
-            android:id="@+id/action_themeSettingsFragment_to_viewThemeFragment"
+            android:id="@+id/action_themeSettingsFragment_to_previewThemeFragment"
             app:destination="@id/previewThemeFragment" />
     </fragment>
     <fragment

@@ -6,7 +6,7 @@ import com.daggery.nots.settings.theme.utils.TileThemeData
 class TileThemeDataSource {
 
     companion object {
-        val defaultDarkTile = TileThemeData(
+        val darkThemeTile = TileThemeData(
             title = "Default Dark",
             primaryColorRes = R.color.default_dark_primary,
             secondaryColorRes = R.color.default_dark_secondary,
@@ -20,6 +20,33 @@ class TileThemeDataSource {
             primaryColorRes = R.color.nord_primary,
             secondaryColorRes = R.color.nord_secondary,
             surfaceColorRes = R.color.nord_surface,
+            themePortraitRes = R.drawable.nord_portrait,
+            onClickListener = null
+        )
+
+        val steelBlueTile = TileThemeData(
+            title = "Steel Blue",
+            primaryColorRes = R.color.steel_blue_primary,
+            secondaryColorRes = R.color.steel_blue_secondary,
+            surfaceColorRes = R.color.steel_blue_surface,
+            themePortraitRes = R.drawable.nord_portrait,
+            onClickListener = null
+        )
+
+        val royalLavenderTile = TileThemeData(
+            title = "Royal Lavender",
+            primaryColorRes = R.color.royal_lavender_primary,
+            secondaryColorRes = R.color.royal_lavender_secondary,
+            surfaceColorRes = R.color.royal_lavender_surface,
+            themePortraitRes = R.drawable.nord_portrait,
+            onClickListener = null
+        )
+
+        val heatherBerryTile = TileThemeData(
+            title = "Heather Berry",
+            primaryColorRes = R.color.heather_berry_primary,
+            secondaryColorRes = R.color.heather_berry_secondary,
+            surfaceColorRes = R.color.heather_berry_surface,
             themePortraitRes = R.drawable.nord_portrait,
             onClickListener = null
         )

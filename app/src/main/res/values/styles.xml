@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="DefaultDarkTheme" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="DarkTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/default_dark_primary</item>
         <item name="colorOnPrimary">@color/default_dark_on_primary</item>
         <item name="colorSecondary">@color/default_dark_secondary</item>
@@ -29,6 +29,39 @@
         <item name="colorOnSecondary">@color/nord_on_secondary</item>
         <item name="colorSurface">@color/nord_surface</item>
         <item name="colorOnSurface">@color/nord_on_surface</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="SteelBlueTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/steel_blue_primary</item>
+        <item name="colorOnPrimary">@color/steel_blue_on_primary</item>
+        <item name="colorSecondary">@color/steel_blue_secondary</item>
+        <item name="colorOnSecondary">@color/steel_blue_on_secondary</item>
+        <item name="colorSurface">@color/steel_blue_surface</item>
+        <item name="colorOnSurface">@color/steel_blue_on_surface</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="RoyalLavenderTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/royal_lavender_primary</item>
+        <item name="colorOnPrimary">@color/royal_lavender_on_primary</item>
+        <item name="colorSecondary">@color/royal_lavender_secondary</item>
+        <item name="colorOnSecondary">@color/royal_lavender_on_secondary</item>
+        <item name="colorSurface">@color/royal_lavender_surface</item>
+        <item name="colorOnSurface">@color/royal_lavender_on_surface</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="HeatherBerryTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/heather_berry_primary</item>
+        <item name="colorOnPrimary">@color/heather_berry_on_primary</item>
+        <item name="colorSecondary">@color/heather_berry_secondary</item>
+        <item name="colorOnSecondary">@color/heather_berry_on_secondary</item>
+        <item name="colorSurface">@color/heather_berry_surface</item>
+        <item name="colorOnSurface">@color/heather_berry_on_surface</item>
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
