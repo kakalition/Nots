@@ -31,12 +31,12 @@ class HomeFragmentUtils(
         fragment.findNavController().navigate(action)
     }
 
-    val fabOnClickListener = { _ : View ->
+    private val fabOnClickListener = { _ : View ->
         val extras = FragmentNavigatorExtras(fragment.viewBinding.fab to "from_fab_to_add")
         navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = ""), extras)
     }
 
-    val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
+    private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
             R.id.reorder_button -> {
                 true
@@ -105,6 +105,15 @@ class HomeFragmentUtils(
             200
         )
     }
+
+    fun getDeleteBgColor(): Int {
+        return fragment.resources.getColor(R.color.red_pastel, null)
+    }
+
+    fun getPrioritizeColor(): Int {
+        return fragment.resources.getColor(R.color.blue_pastel, null)
+    }
+
     // Conditionally display empty illustration and notes list
     fun changeHomeState(isNotesEmpty: Boolean) {
         if(isNotesEmpty) {
