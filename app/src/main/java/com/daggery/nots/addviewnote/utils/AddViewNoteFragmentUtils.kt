@@ -1,120 +1,17 @@
-package com.daggery.nots.home.view
+package com.daggery.nots.addviewnote.utils
 
 import android.app.Activity
-import android.graphics.Color
-import android.os.Bundle
-import android.text.Editable
-import android.util.Log
-import android.view.*
+import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.daggery.nots.R
-import com.daggery.nots.databinding.FragmentAddViewNoteBinding
-import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.home.view.AddViewNoteFragment
+import com.daggery.nots.home.view.AddViewNoteFragmentArgs
+import com.daggery.nots.home.view.UneditedNote
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialContainerTransform
-import dagger.hilt.android.AndroidEntryPoint
-
-// TODO: Check Observer
-// TODO: Design This Fragment Layout, Maybe Add Options Menu
-// TODO: In That Options, Include Change Date to Present Time
-// TODO: Handle Long Text Body, possibly solved by using linear layout
-
-@AndroidEntryPoint
-class AddViewNoteFragment : Fragment() {
-
-    private var _viewBinding: FragmentAddViewNoteBinding? = null
-    internal val viewBinding get() = _viewBinding!!
-
-    internal val viewModel: HomeViewModel by activityViewModels()
-
-    private val args: AddViewNoteFragmentArgs by navArgs()
-
-    private var _fragmentUtils: AddViewNoteFragmentUtils? = null
-    private val fragmentUtils get() = _fragmentUtils!!
-
-    private var _editableFactory: Editable.Factory? = null
-    internal val editableFactory get() = _editableFactory!!
-
-    private var isNewNote: Boolean? = null
-    internal var isViewing: Boolean = true
-
-    internal lateinit var uneditedNote: UneditedNote
-
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            if(!isViewing) { fragmentUtils.showOnRevertConfirmation(uneditedNote) }
-            else {
-                this.isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = getMaterialTransformTransition()
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _viewBinding = FragmentAddViewNoteBinding.inflate(inflater, container, false)
-        return viewBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        _fragmentUtils = AddViewNoteFragmentUtils(this, args)
-        _editableFactory = Editable.Factory()
-        isNewNote = args.uuid.isBlank()
-
-        // Prepare Toolbar
-        bindsToolbar()
-
-        // Setting Fragment Environment
-        fragmentUtils.populateField(args.uuid)
-        when {
-            isNewNote == true -> { fragmentUtils.addEnvironment() }
-            isViewing -> { fragmentUtils.viewEnvironment() }
-            else -> { fragmentUtils.editEnvironment() }
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewBinding = null
-        _fragmentUtils = null
-        _editableFactory = null
-    }
-
-    private fun bindsToolbar() {
-        viewBinding.toolbarBinding.toolbar.apply {
-            inflateMenu(R.menu.menu_add_view_fragment)
-            setNavigationIcon(R.drawable.ic_back)
-            setNavigationOnClickListener(fragmentUtils.navigationClickListener)
-            setOnMenuItemClickListener(fragmentUtils.onMenuItemClickListener)
-        }
-    }
-
-    private fun getMaterialTransformTransition(): MaterialContainerTransform {
-        return MaterialContainerTransform().apply {
-            duration = 700
-            scrimColor = Color.TRANSPARENT
-            setAllContainerColors(requireContext().getColor(R.color.black_surface))
-            drawingViewId = R.id.fragment_container_view
-        }
-    }
-}
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
@@ -169,7 +66,7 @@ class AddViewNoteFragmentUtils(
 
     val onEditTapped = {
         val noteBody = fragment.viewBinding.noteBody
-        fragment.isViewing = false
+        fragment.isEditing = true
         editEnvironment()
 
         // Show Keyboard with Pointer at The End of Text
@@ -179,7 +76,7 @@ class AddViewNoteFragmentUtils(
     }
 
     val navigationClickListener: (View) -> Unit = {
-        if(!fragment.isViewing) {
+        if(fragment.isEditing) {
             showOnRevertConfirmation(fragment.uneditedNote)
         }
         else fragment.findNavController().navigateUp()
@@ -203,7 +100,7 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    private fun showKeyboard(view: View ) {
+    private fun showKeyboard(view: View) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(view, 0)
@@ -223,7 +120,7 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun viewEnvironment() {
-        fragment.isViewing = true
+        fragment.isEditing = false
         fragment.viewBinding.apply {
             toolbarBinding.toolbarTitle.text = "View"
             noteTitle.isEnabled = false
@@ -237,7 +134,7 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun editEnvironment() {
-        fragment.isViewing = false
+        fragment.isEditing = true
         fragment.viewBinding.apply {
             toolbarBinding.toolbarTitle.text = "Edit"
             noteTitle.isEnabled = true
@@ -299,8 +196,3 @@ class AddViewNoteFragmentUtils(
         }
     }
 }
-
-data class UneditedNote(
-    val noteTitle: String,
-    val noteBody: String
-)
