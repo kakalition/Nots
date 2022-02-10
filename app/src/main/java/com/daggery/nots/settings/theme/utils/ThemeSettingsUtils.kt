@@ -25,7 +25,8 @@ private fun TileActiveThemeBinding.bind(themeText: String) {
 }
 
 fun TileInactiveThemeBinding.bind(fragment: ThemeSettingsFragment, tileThemeData: TileThemeData) {
-    if(tileThemeData.title + " Theme" == fragment.fragmentUtils.getActiveThemeName()) {
+    val shouldShow = tileThemeData.title + " Theme" == fragment.fragmentUtils.getActiveThemeName()
+    if(shouldShow) {
         root.visibility = View.GONE
     } else {
         root.setOnClickListener(tileThemeData.onClickListener)
