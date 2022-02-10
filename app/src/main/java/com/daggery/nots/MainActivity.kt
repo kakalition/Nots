@@ -8,7 +8,7 @@ import com.daggery.nots.databinding.ActivityMainBinding
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Check NavGraph package name
+// TODO: Swipe Threshold to Disable Vertical Scroll
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

@@ -17,8 +17,6 @@ import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
 import com.daggery.nots.settings.theme.utils.bind
 import com.daggery.nots.utils.ThemeEnum
 
-// TODO: Unify Theme Settings, add or remove theme should be easy and in one place only
-
 class ThemeSettingsFragment : Fragment() {
 
     private var _viewBinding: FragmentThemeSettingsBinding? = null
