@@ -1,14 +1,18 @@
 package com.daggery.nots
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.daggery.nots.databinding.ActivityMainBinding
+import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Check NavGraph package name
+// TODO: Swipe Threshold to Disable Vertical Scroll
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +29,14 @@ class MainActivity : AppCompatActivity() {
 
         // Theme Setting
         setThemeOnInitialStart()
-        setTheme(viewModel.themeKey)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            viewModel.themeKey == R.style.MaterialYouTheme
+        ) {
+            DynamicColors.applyIfAvailable(this)
+            setTheme(viewModel.themeKey)
+        } else {
+            setTheme(viewModel.themeKey)
+        }
         statusBarColorSetter()
 
         // Binder

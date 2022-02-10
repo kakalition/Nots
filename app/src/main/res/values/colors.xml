@@ -10,6 +10,10 @@
     <color name="jungle_mist">#FFA1CDCE</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <color name="material_you_tile_start_color">#FF03001E</color>
+    <color name="material_you_tile_middle_color">#FF7303C0</color>
+    <color name="material_you_tile_end_color">#FFEC38BC</color>
 
     <color name="default_dark_primary">#FFFAFAFA</color>
     <color name="default_dark_on_primary">#FF212121</color>
@@ -18,19 +22,19 @@
     <color name="default_dark_surface">#FF1F1F1F</color>
     <color name="default_dark_on_surface">#FFFAFAFA</color>
 
-    <color name="azalea_primary">#FF90B7</color>
-    <color name="azalea_on_primary">#FF262626</color>
-    <color name="azalea_secondary">#FFCDE0</color>
-    <color name="azalea_on_secondary">#FF262626</color>
-    <color name="azalea_surface">#FFFFE7EF</color>
-    <color name="azalea_on_surface">#FF262626</color>
-
     <color name="nord_primary">#FFECEFF4</color>
     <color name="nord_on_primary">#FF2E3440</color>
     <color name="nord_secondary">#FF434C5E</color>
     <color name="nord_on_secondary">#FFECEFF4</color>
     <color name="nord_surface">#FF2E3440</color>
     <color name="nord_on_surface">#FFECEFF4</color>
+
+    <color name="steel_blue_primary">#FFFAFAFA</color>
+    <color name="steel_blue_on_primary">#FF212121</color>
+    <color name="steel_blue_secondary">#FF448EB4</color>
+    <color name="steel_blue_on_secondary">#FFFAFAFA</color>
+    <color name="steel_blue_surface">#FF1572A1</color>
+    <color name="steel_blue_on_surface">#FFFAFAFA</color>
 
     <color name="royal_lavender_primary">#FFF2EEF6</color>
     <color name="royal_lavender_on_primary">#FF212121</color>
@@ -39,11 +43,18 @@
     <color name="royal_lavender_surface">#FF604187</color>
     <color name="royal_lavender_on_surface">#FFD2EEF6</color>
 
-    <color name="steel_blue_primary">#FFFAFAFA</color>
-    <color name="steel_blue_on_primary">#FF212121</color>
-    <color name="steel_blue_secondary">#FF448EB4</color>
-    <color name="steel_blue_on_secondary">#FFFAFAFA</color>
-    <color name="steel_blue_surface">#FF1572A1</color>
-    <color name="steel_blue_on_surface">#FFFAFAFA</color>
+    <color name="heather_berry_primary">#FFFAFAFA</color>
+    <color name="heather_berry_on_primary">#FF212121</color>
+    <color name="heather_berry_secondary">#FFDF6287</color>
+    <color name="heather_berry_on_secondary">#FFFAFAFA</color>
+    <color name="heather_berry_surface">#FFD04C74</color>
+    <color name="heather_berry_on_surface">#FFFAFAFA</color>
+
+    <color name="azalea_primary">#FF90B7</color>
+    <color name="azalea_on_primary">#FF262626</color>
+    <color name="azalea_secondary">#FFCDE0</color>
+    <color name="azalea_on_secondary">#FF262626</color>
+    <color name="azalea_surface">#FFFFE7EF</color>
+    <color name="azalea_on_surface">#FF262626</color>
 
 </resources>

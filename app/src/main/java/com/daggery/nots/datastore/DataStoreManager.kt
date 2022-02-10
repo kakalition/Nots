@@ -33,6 +33,6 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val appCo
 
     val themePreference: Flow<Int> = dataStore.data
         .map { preferences ->
-            preferences[THEME_KEY] ?: R.style.DefaultDarkTheme
+            preferences[THEME_KEY] ?: R.style.DarkTheme
         }
 }

@@ -82,7 +82,7 @@
             android:paddingTop="2dp"
             android:paddingEnd="20dp"
             android:paddingBottom="15dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?attr/colorOnSecondary"
             tools:text="@string/lorem_ipsum" />
 

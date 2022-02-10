@@ -40,7 +40,7 @@
         android:name="com.daggery.nots.settings.theme.view.ThemeSettingsFragment"
         android:label="ThemeSettingsFragment" >
         <action
-            android:id="@+id/action_themeSettingsFragment_to_viewThemeFragment"
+            android:id="@+id/action_themeSettingsFragment_to_previewThemeFragment"
             app:destination="@id/previewThemeFragment" />
     </fragment>
     <fragment
@@ -51,6 +51,6 @@
         <argument
             android:name="themeEnum"
             app:argType="com.daggery.nots.utils.ThemeEnum"
-            android:defaultValue="DEFAULT_DARK" />
+            android:defaultValue="DARK_THEME" />
     </fragment>
 </navigation>

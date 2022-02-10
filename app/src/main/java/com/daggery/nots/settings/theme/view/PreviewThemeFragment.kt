@@ -47,15 +47,18 @@ class PreviewThemeFragment : Fragment() {
 
         fragmentUtils.bindsToolbar()
 
-        viewBinding.previewBinding.previewOne.bind(fragmentUtils, "One")
-        viewBinding.previewBinding.previewTwo.bind(fragmentUtils, "Two")
-        viewBinding.previewBinding.previewThree.bind(fragmentUtils, "Three")
-        viewBinding.previewBinding.previewFour.bind(fragmentUtils, "Four")
+        viewBinding.previewBinding.apply {
+            previewOne.bind(fragmentUtils, "One")
+            previewTwo.bind(fragmentUtils, "Two")
+            previewThree.bind(fragmentUtils, "Three")
+            previewFour.bind(fragmentUtils, "Four")
 
-        viewBinding.previewBinding.applyThemeButton.setOnClickListener {
-            fragmentUtils.applyTheme()
-            findNavController().navigateUp()
+            applyThemeButton.setOnClickListener {
+                fragmentUtils.applyTheme()
+                findNavController().navigateUp()
+            }
         }
+
     }
 
     override fun onDestroyView() {
@@ -66,9 +69,12 @@ class PreviewThemeFragment : Fragment() {
 
     private fun themeContextGetter(themeEnum: ThemeEnum): Context {
         return when(themeEnum) {
-            AZALEA -> { ContextThemeWrapper(activity, R.style.AzaleaTheme) }
+            MATERIAL_YOU -> { ContextThemeWrapper(activity, R.style.MaterialYouTheme) }
             NORD -> { ContextThemeWrapper(activity, R.style.NordTheme) }
-            else -> { ContextThemeWrapper(activity, R.style.DefaultDarkTheme) }
+            STEEL_BLUE -> { ContextThemeWrapper(activity, R.style.SteelBlueTheme) }
+            ROYAL_LAVENDER -> { ContextThemeWrapper(activity, R.style.RoyalLavenderTheme) }
+            HEATHER_BERRY -> { ContextThemeWrapper(activity, R.style.HeatherBerryTheme) }
+            else -> { ContextThemeWrapper(activity, R.style.DarkTheme) }
         }
     }
 

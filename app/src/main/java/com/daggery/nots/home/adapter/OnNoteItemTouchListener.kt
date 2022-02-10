@@ -56,9 +56,9 @@ class OnNoteItemTouchListener(
     }
 
     private fun onActionMoveState(view: View, event: MotionEvent) {
-        homeFragmentUtils.setVerticalScrollState(false)
         translationValue = event.rawX - viewAnchorX
         if(translationValue > 10 || translationValue < -10) {
+            homeFragmentUtils.setVerticalScrollState(false)
             isSwiping = true
         }
         view.translationX = translationValue * swipeWeight
