@@ -41,13 +41,27 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
         }
     }
 
-    fun bindsLayoutSettings() {
-        fragment.viewBinding.layoutSettingsFrame.setOnClickListener {
+    fun bindsHomeLayoutSettings() {
+        fragment.viewBinding.homeLayoutSettingsFrame.setOnClickListener {
             fragment.findNavController().navigate(
-                SettingsFragmentDirections.actionSettingsFragmentToLayoutSettingsFragment()
+                SettingsFragmentDirections.actionSettingsFragmentToHomeLayoutSettingsFragment()
             )
         }
-        fragment.viewBinding.layoutSettingsBinding.apply {
+        fragment.viewBinding.homeLayoutSettingsBinding.apply {
+            settingsItemIcon.setImageResource(R.drawable.ic_earth)
+            settingsItemTitle.text = fragment.requireContext()
+                .getString(R.string.fragment_settings_home_layout)
+            settingsItemBody.text = "Filled"
+        }
+    }
+
+    fun bindsNoteLayoutSettings() {
+        fragment.viewBinding.noteLayoutSettingsFrame.setOnClickListener {
+            fragment.findNavController().navigate(
+                SettingsFragmentDirections.actionSettingsFragmentToNoteLayoutSettingsFragment()
+            )
+        }
+        fragment.viewBinding.noteLayoutSettingsBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_earth)
             settingsItemTitle.text = fragment.requireContext()
                 .getString(R.string.fragment_settings_note_layout)

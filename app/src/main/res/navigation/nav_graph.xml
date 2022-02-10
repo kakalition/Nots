@@ -35,8 +35,11 @@
             android:id="@+id/action_settingsFragment_to_themeSettingsFragment"
             app:destination="@id/themeSettingsFragment" />
         <action
-            android:id="@+id/action_settingsFragment_to_layoutSettingsFragment"
-            app:destination="@id/layoutSettingsFragment" />
+            android:id="@+id/action_settingsFragment_to_noteLayoutSettingsFragment"
+            app:destination="@id/noteLayoutSettingsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_homeLayoutSettingsFragment"
+            app:destination="@id/homeLayoutSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/themeSettingsFragment"
@@ -57,7 +60,11 @@
             android:defaultValue="DARK_THEME" />
     </fragment>
     <fragment
-        android:id="@+id/layoutSettingsFragment"
-        android:name="com.daggery.nots.settings.layout.view.LayoutSettingsFragment"
+        android:id="@+id/noteLayoutSettingsFragment"
+        android:name="com.daggery.nots.settings.layout.view.NoteLayoutSettingsFragment"
         android:label="LayoutSettingsFragment" />
+    <fragment
+        android:id="@+id/homeLayoutSettingsFragment"
+        android:name="com.daggery.nots.settings.layout.view.HomeLayoutSettingsFragment"
+        android:label="HomeLayoutSettingsFragment" />
 </navigation>

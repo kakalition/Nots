@@ -7,20 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.daggery.nots.MainViewModel
-import com.daggery.nots.R
-import com.daggery.nots.databinding.FragmentLayoutSettingsBinding
-import com.daggery.nots.databinding.FragmentThemeSettingsBinding
-import com.daggery.nots.settings.layout.utils.LayoutSettingsUtils
-import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
+import com.daggery.nots.databinding.FragmentNoteLayoutSettingsBinding
+import com.daggery.nots.settings.layout.utils.NoteLayoutSettingsUtils
 
-class LayoutSettingsFragment : Fragment() {
+class NoteLayoutSettingsFragment : Fragment() {
 
-    private var _viewBinding: FragmentLayoutSettingsBinding? = null
+    private var _viewBinding: FragmentNoteLayoutSettingsBinding? = null
     val viewBinding get() = _viewBinding!!
 
     val viewModel: MainViewModel by activityViewModels()
 
-    private var _fragmentUtils: LayoutSettingsUtils? = null
+    private var _fragmentUtils: NoteLayoutSettingsUtils? = null
     val fragmentUtils get() = _fragmentUtils!!
 
 
@@ -28,14 +25,14 @@ class LayoutSettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _viewBinding = FragmentLayoutSettingsBinding.inflate(inflater, container, false)
+        _viewBinding = FragmentNoteLayoutSettingsBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _fragmentUtils = LayoutSettingsUtils(this)
+        _fragmentUtils = NoteLayoutSettingsUtils(this)
 
         with(fragmentUtils) {
             bindsToolbar()
