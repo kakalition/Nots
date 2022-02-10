@@ -51,6 +51,6 @@
         <argument
             android:name="themeEnum"
             app:argType="com.daggery.nots.utils.ThemeEnum"
-            android:defaultValue="DEFAULT_DARK" />
+            android:defaultValue="DARK_THEME" />
     </fragment>
 </navigation>

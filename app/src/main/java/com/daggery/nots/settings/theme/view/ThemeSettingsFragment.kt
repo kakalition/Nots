@@ -5,12 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import com.daggery.nots.MainViewModel
-import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.azaleaTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.darkThemeTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.heatherBerryTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
@@ -52,7 +49,7 @@ class ThemeSettingsFragment : Fragment() {
         }
 
         viewBinding.darkTheme.bind(this, darkThemeTile.copy {
-            fragmentUtils.navigateToPreview(ThemeEnum.DEFAULT_DARK)
+            fragmentUtils.navigateToPreview(ThemeEnum.DARK_THEME)
         })
 
         viewBinding.nord.bind(this, nordTile.copy {
@@ -77,5 +74,4 @@ class ThemeSettingsFragment : Fragment() {
         _viewBinding = null
         _fragmentUtils = null
     }
-
 }

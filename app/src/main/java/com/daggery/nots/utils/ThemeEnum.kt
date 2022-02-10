@@ -1,7 +1,7 @@
 package com.daggery.nots.utils
 
 enum class ThemeEnum {
-    DEFAULT_DARK,
+    DARK_THEME,
     NORD,
     STEEL_BLUE,
     ROYAL_LAVENDER,

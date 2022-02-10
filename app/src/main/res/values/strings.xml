@@ -44,4 +44,5 @@
     <string name="menu_add_view_fragment_confirm">Confirm</string>
     <string name="menu_add_view_fragment_edit">Edit</string>
     <string name="menu_add_view_fragment_delete">Delete</string>
+    <string name="circle">Circle</string>
 </resources>
