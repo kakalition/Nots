@@ -69,6 +69,7 @@ class PreviewThemeFragment : Fragment() {
 
     private fun themeContextGetter(themeEnum: ThemeEnum): Context {
         return when(themeEnum) {
+            MATERIAL_YOU -> { ContextThemeWrapper(activity, R.style.MaterialYouTheme) }
             NORD -> { ContextThemeWrapper(activity, R.style.NordTheme) }
             STEEL_BLUE -> { ContextThemeWrapper(activity, R.style.SteelBlueTheme) }
             ROYAL_LAVENDER -> { ContextThemeWrapper(activity, R.style.RoyalLavenderTheme) }

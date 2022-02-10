@@ -65,44 +65,52 @@
             android:textColor="?attr/colorOnSurface" />
 
         <include
+            android:id="@+id/material_you"
+            layout="@layout/tile_material_you_theme"
             android:layout_width="match_parent"
             android:layout_height="166dp"
             android:layout_marginHorizontal="22dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="22dp" />
+
+        <include
             android:id="@+id/dark_theme"
-            layout="@layout/tile_inactive_theme" />
-
-        <include
+            layout="@layout/tile_inactive_theme"
             android:layout_width="match_parent"
             android:layout_height="166dp"
             android:layout_marginHorizontal="22dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="22dp" />
+
+        <include
             android:id="@+id/nord"
-            layout="@layout/tile_inactive_theme" />
-
-        <include
+            layout="@layout/tile_inactive_theme"
             android:layout_width="match_parent"
             android:layout_height="166dp"
             android:layout_marginHorizontal="22dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="22dp" />
+
+        <include
             android:id="@+id/steel_blue"
-            layout="@layout/tile_inactive_theme" />
-
-        <include
+            layout="@layout/tile_inactive_theme"
             android:layout_width="match_parent"
             android:layout_height="166dp"
             android:layout_marginHorizontal="22dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="22dp" />
+
+        <include
             android:id="@+id/royal_lavender"
-            layout="@layout/tile_inactive_theme" />
-
-        <include
+            layout="@layout/tile_inactive_theme"
             android:layout_width="match_parent"
             android:layout_height="166dp"
             android:layout_marginHorizontal="22dp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="22dp" />
+
+        <include
             android:id="@+id/heather_berry"
-            layout="@layout/tile_inactive_theme" />
+            layout="@layout/tile_inactive_theme"
+            android:layout_width="match_parent"
+            android:layout_height="166dp"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginBottom="22dp" />
 
     </LinearLayout>
 

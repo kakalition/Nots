@@ -1,6 +1,8 @@
 package com.daggery.nots.settings.theme.view
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +46,15 @@ class ThemeSettingsFragment : Fragment() {
             revertStatusBarColor()
             bindsToolbar()
             bindsCurrentTheme()
+        }
+
+        // Hide Material You under Android S (SDK 31)
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            with(viewBinding.materialYou) { root.visibility = View.GONE }
+        }
+
+        viewBinding.materialYou.root.setOnClickListener {
+            fragmentUtils.navigateToPreview(ThemeEnum.MATERIAL_YOU)
         }
 
         viewBinding.darkTheme.bind(this, darkThemeTile.copy {

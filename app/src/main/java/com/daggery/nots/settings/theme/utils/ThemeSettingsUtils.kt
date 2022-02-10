@@ -25,7 +25,7 @@ private fun TileActiveThemeBinding.bind(themeText: String) {
 }
 
 fun TileInactiveThemeBinding.bind(fragment: ThemeSettingsFragment, tileThemeData: TileThemeData) {
-    val shouldShow = tileThemeData.title + " Theme" == fragment.fragmentUtils.getActiveThemeName()
+    val shouldShow = tileThemeData.title == fragment.fragmentUtils.getActiveThemeName()
     if(shouldShow) {
         root.visibility = View.GONE
     } else {
@@ -53,7 +53,6 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
     }
 
     internal fun navigateToPreview(themeEnum: ThemeEnum) {
-        Log.d("LOL", "clickednav")
         fragment.findNavController().navigate(getNavigationDirection(themeEnum))
     }
 
@@ -79,10 +78,11 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
     fun bindsCurrentTheme() {
         with(fragment.viewBinding.currentTheme) {
             when(getActiveThemeKey()) {
-                R.style.NordTheme -> bind("Nord")
-                R.style.SteelBlueTheme -> bind("Steel Blue")
-                R.style.RoyalLavenderTheme -> bind("Royal Lavender")
-                R.style.HeatherBerryTheme -> bind("Heather Berry")
+                R.style.MaterialYouTheme -> bind("Material You Theme")
+                R.style.NordTheme -> bind("Nord Theme")
+                R.style.SteelBlueTheme -> bind("Steel Blue Theme")
+                R.style.RoyalLavenderTheme -> bind("Royal Lavender Theme")
+                R.style.HeatherBerryTheme -> bind("Heather Berry Theme")
                 else -> bind("Dark Theme")
             }
         }

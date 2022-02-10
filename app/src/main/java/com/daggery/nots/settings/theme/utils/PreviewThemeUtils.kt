@@ -48,6 +48,7 @@ class PreviewThemeUtils(private val fragment: PreviewThemeFragment) {
     fun applyTheme() {
         with(fragment) {
             val themeKey = when(args.themeEnum) {
+                ThemeEnum.MATERIAL_YOU -> R.style.MaterialYouTheme
                 ThemeEnum.DARK_THEME -> R.style.DarkTheme
                 ThemeEnum.NORD -> R.style.NordTheme
                 ThemeEnum.STEEL_BLUE -> R.style.SteelBlueTheme

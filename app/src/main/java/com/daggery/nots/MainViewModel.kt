@@ -20,6 +20,7 @@ class MainViewModel @Inject constructor(
 
     fun getThemeName(): String {
         return when(themeKey) {
+            R.style.MaterialYouTheme -> "Material You"
             R.style.DarkTheme -> "Dark Theme"
             R.style.NordTheme -> "Nord Theme"
             R.style.SteelBlueTheme -> "Steel Blue Theme"

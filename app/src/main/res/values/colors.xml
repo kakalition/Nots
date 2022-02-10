@@ -10,6 +10,10 @@
     <color name="jungle_mist">#FFA1CDCE</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <color name="material_you_tile_start_color">#FF03001E</color>
+    <color name="material_you_tile_middle_color">#FF7303C0</color>
+    <color name="material_you_tile_end_color">#FFEC38BC</color>
 
     <color name="default_dark_primary">#FFFAFAFA</color>
     <color name="default_dark_on_primary">#FF212121</color>

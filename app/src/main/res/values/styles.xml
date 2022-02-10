@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <style name="MaterialYouTheme" parent="ThemeOverlay.Material3.DynamicColors.DayNight">
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+        <item name="actionMenuTextColor">?attr/colorOnSurface</item>
+    </style>
+
     <style name="DarkTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/default_dark_primary</item>
         <item name="colorOnPrimary">@color/default_dark_on_primary</item>

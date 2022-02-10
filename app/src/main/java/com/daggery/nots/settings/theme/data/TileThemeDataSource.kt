@@ -7,35 +7,35 @@ class TileThemeDataSource {
 
     companion object {
         val darkThemeTile = TileThemeData(
-            title = "Default Dark",
+            title = "Dark Theme",
             secondaryColorRes = R.color.default_dark_secondary,
             surfaceColorRes = R.color.default_dark_surface,
             onClickListener = null
         )
 
         val nordTile = TileThemeData(
-            title = "Nord",
+            title = "Nord Theme",
             secondaryColorRes = R.color.nord_secondary,
             surfaceColorRes = R.color.nord_surface,
             onClickListener = null
         )
 
         val steelBlueTile = TileThemeData(
-            title = "Steel Blue",
+            title = "Steel Blue Theme",
             secondaryColorRes = R.color.steel_blue_secondary,
             surfaceColorRes = R.color.steel_blue_surface,
             onClickListener = null
         )
 
         val royalLavenderTile = TileThemeData(
-            title = "Royal Lavender",
+            title = "Royal Lavender Theme",
             secondaryColorRes = R.color.royal_lavender_secondary,
             surfaceColorRes = R.color.royal_lavender_surface,
             onClickListener = null
         )
 
         val heatherBerryTile = TileThemeData(
-            title = "Heather Berry",
+            title = "Heather Berry Theme",
             secondaryColorRes = R.color.heather_berry_secondary,
             surfaceColorRes = R.color.heather_berry_surface,
             onClickListener = null
