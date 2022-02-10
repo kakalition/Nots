@@ -53,7 +53,7 @@ class ThemeSettingsFragment : Fragment() {
             with(viewBinding.materialYou) { root.visibility = View.GONE }
         }
 
-        viewBinding.materialYou.root.setOnClickListener {
+        viewBinding.materialYou.bind(this) {
             fragmentUtils.navigateToPreview(ThemeEnum.MATERIAL_YOU)
         }
 
