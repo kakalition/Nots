@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/bg_active_theme.xml" value="0.172" />
         <entry key="app/src/main/res/drawable/bg_inactive_theme.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_material_you_tile.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_merge_intersect.xml" value="0.169" />
         <entry key="app/src/main/res/drawable/bg_note_item.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_note_item_priority.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_note_item_swipe.xml" value="0.242" />
@@ -48,6 +49,7 @@
         <entry key="app/src/main/res/layout/fragment_azalea_preview.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_default_dark_preview.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4721030042918455" />
+        <entry key="app/src/main/res/layout/fragment_layout_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_preview_theme.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_theme_settings.xml" value="0.33" />

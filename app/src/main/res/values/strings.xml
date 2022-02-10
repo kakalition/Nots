@@ -46,4 +46,7 @@
     <string name="menu_add_view_fragment_delete">Delete</string>
     <string name="circle">Circle</string>
     <string name="material_you_text">Material You</string>
+    <string name="fragment_layout_settings_merge">Merge</string>
+    <string name="fragment_layout_settings_split">Split</string>
+    <string name="fragment_layout_settings_active">Active</string>
 </resources>

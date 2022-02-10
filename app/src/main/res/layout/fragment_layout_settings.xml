@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".settings.theme.view.ThemeSettingsFragment">
+
+    <FrameLayout
+        android:id="@+id/app_bar_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/toolbar_binding"
+            layout="@layout/appbar_title" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/inter_bold"
+        android:padding="22dp"
+        android:text="@string/fragment_settings_note_layout"
+        android:textAppearance="?attr/textAppearanceDisplayMedium"
+        android:textColor="?attr/colorOnSurface" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/merge_layout_tile"
+            android:layout_width="match_parent"
+            android:layout_height="166dp"
+            android:layout_margin="22dp"
+            android:background="@drawable/bg_note_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/merge_layout_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/fragment_layout_settings_merge"
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            app:layout_constraintBottom_toTopOf="@id/merge_layout_active"
+            app:layout_constraintStart_toStartOf="@id/merge_layout_tile" />
+
+        <TextView
+            android:id="@+id/merge_layout_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="22dp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/fragment_layout_settings_active"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintBottom_toBottomOf="@id/merge_layout_tile"
+            app:layout_constraintStart_toStartOf="@id/merge_layout_tile" />
+
+        <ImageView
+            android:id="@+id/split_layout_tile"
+            android:layout_width="match_parent"
+            android:layout_height="166dp"
+            android:layout_margin="22dp"
+            android:background="@drawable/bg_note_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/merge_layout_tile" />
+
+        <TextView
+            android:id="@+id/split_layout_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/inter_bold"
+            android:text="@string/fragment_layout_settings_split"
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            app:layout_constraintBottom_toTopOf="@id/split_layout_active"
+            app:layout_constraintStart_toStartOf="@id/split_layout_tile" />
+
+        <TextView
+            android:id="@+id/split_layout_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="22dp"
+            android:fontFamily="@font/opensans_regular"
+            android:text="@string/fragment_layout_settings_active"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintBottom_toBottomOf="@id/split_layout_tile"
+            app:layout_constraintStart_toStartOf="@id/split_layout_tile" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

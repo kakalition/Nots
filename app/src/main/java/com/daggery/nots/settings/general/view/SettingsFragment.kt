@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.databinding.FragmentSettingsBinding
-import com.daggery.nots.settings.general.viewmodel.SettingsFragmentUtils
+import com.daggery.nots.settings.general.utils.SettingsFragmentUtils
 
 class SettingsFragment : Fragment() {
 

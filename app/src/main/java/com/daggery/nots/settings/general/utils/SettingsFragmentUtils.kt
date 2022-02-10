@@ -1,4 +1,4 @@
-package com.daggery.nots.settings.general.viewmodel
+package com.daggery.nots.settings.general.utils
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -42,6 +42,11 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
     }
 
     fun bindsLayoutSettings() {
+        fragment.viewBinding.layoutSettingsFrame.setOnClickListener {
+            fragment.findNavController().navigate(
+                SettingsFragmentDirections.actionSettingsFragmentToLayoutSettingsFragment()
+            )
+        }
         fragment.viewBinding.layoutSettingsBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_earth)
             settingsItemTitle.text = fragment.requireContext()
