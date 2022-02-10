@@ -13,6 +13,7 @@ import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Create Theme Selection Tile to Grid
+// TODO: Create Home Layout (Outlined and Filled)
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
