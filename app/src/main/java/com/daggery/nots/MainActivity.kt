@@ -12,7 +12,7 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Swipe Threshold to Disable Vertical Scroll
+// TODO: Create Theme Selection Tile to Grid
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
