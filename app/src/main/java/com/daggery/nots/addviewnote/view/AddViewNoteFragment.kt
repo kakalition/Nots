@@ -98,6 +98,7 @@ class AddViewNoteFragment : Fragment() {
         }
 
         // TODO: Clean this things up
+        // TODO: Adjust noteBody minHeight
         // TODO: Maybe I can use invisible view that capture touch and focus on edit text
         var availHeight = 0f
         viewBinding.appBarFrame.post {

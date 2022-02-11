@@ -155,12 +155,23 @@ class AddViewNoteFragmentUtils(
                 .getString(R.string.toolbar_title_new_note)
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
+
+            // Focus on open
+            noteBody.setOnFocusChangeListener { view, hasFocus ->
+                if(hasFocus) {
+                    scrollview.scrollTo(0, 0)
+                }
+            }
+            noteBody.requestFocus()
+            noteBody.setSelection(noteBody.text?.length ?: 0)
+            showKeyboard(noteBody)
         }
         setMenuVisibility(
             confirmButton = true,
             editButton = false,
             deleteButton = false
         )
+
     }
 
     internal fun viewEnvironment() {
