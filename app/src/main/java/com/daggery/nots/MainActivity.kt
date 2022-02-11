@@ -16,10 +16,12 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Create Home Layout (Outlined and Filled)
 // TODO: Revamp AddViewNoteFragment Layout, delete filled surface to make design cleaner
 // TODO: Add Reorderable Feature
+// TODO: Add Delete All
 // TODO: Reorder to Chronological Order Feature
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Preview Note Binder Can Be Unified
 // TODO: Known Bug: When change note priority note, sometimes it will scroll to the bottom of list
+// TODO: Adjust outlined home layout color
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
