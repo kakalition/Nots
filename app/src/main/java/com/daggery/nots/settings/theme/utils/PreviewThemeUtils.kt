@@ -3,13 +3,13 @@ package com.daggery.nots.settings.theme.utils
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.MainActivity
 import com.daggery.nots.R
-import com.daggery.nots.databinding.ListItemNoteBinding
+import com.daggery.nots.databinding.TileFilledNoteItemBinding
 import com.daggery.nots.settings.theme.view.PreviewThemeFragment
 import com.daggery.nots.utils.ThemeEnum
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun ListItemNoteBinding.bind(fragmentUtils: PreviewThemeUtils, number: String) {
+fun TileFilledNoteItemBinding.bind(fragmentUtils: PreviewThemeUtils, number: String) {
     with(fragmentUtils) {
         noteTitle.text = getPreviewTitleStringRes(number)
         noteBody.text = getPreviewBodyStringRes()

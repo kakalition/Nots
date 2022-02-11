@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
-import com.daggery.nots.databinding.ListItemNoteBinding
+import com.daggery.nots.databinding.TileFilledNoteItemBinding
 import com.daggery.nots.home.utils.HomeFragmentUtils
 
 class NoteListAdapter(
@@ -27,7 +27,7 @@ class NoteListAdapter(
         }
     }
 
-    inner class NoteViewHolder(val binding: ListItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NoteViewHolder(val binding: TileFilledNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
             with(binding) {
                 (swipeBg.background as GradientDrawable).setColor(
@@ -49,7 +49,7 @@ class NoteListAdapter(
         parent: ViewGroup,
         viewType: Int
     ) : NoteViewHolder {
-        return NoteViewHolder(ListItemNoteBinding.inflate(
+        return NoteViewHolder(TileFilledNoteItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
