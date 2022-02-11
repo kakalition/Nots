@@ -59,5 +59,18 @@
     <fragment
         android:id="@+id/homeLayoutSettingsFragment"
         android:name="com.daggery.nots.settings.layout.view.HomeLayoutSettingsFragment"
-        android:label="HomeLayoutSettingsFragment" />
+        android:label="HomeLayoutSettingsFragment" >
+        <action
+            android:id="@+id/action_homeLayoutSettingsFragment_to_previewHomeLayoutFragment"
+            app:destination="@id/previewHomeLayoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previewHomeLayoutFragment"
+        android:name="com.daggery.nots.settings.layout.view.PreviewHomeLayoutFragment"
+        android:label="PreviewHomeLayoutFragment" >
+        <argument
+            android:name="homeLayoutKey"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

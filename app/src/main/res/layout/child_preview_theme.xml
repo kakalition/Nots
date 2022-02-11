@@ -34,28 +34,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <include layout="@layout/tile_filled_note_item"
+            <include layout="@layout/tile_note_item"
                 android:id="@+id/preview_one"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginBottom="22dp"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 
-            <include layout="@layout/tile_filled_note_item"
+            <include layout="@layout/tile_note_item"
                 android:id="@+id/preview_two"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginBottom="22dp"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 
-            <include layout="@layout/tile_filled_note_item"
+            <include layout="@layout/tile_note_item"
                 android:id="@+id/preview_three"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginBottom="22dp"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 
-            <include layout="@layout/tile_filled_note_item"
+            <include layout="@layout/tile_note_item"
                 android:id="@+id/preview_four"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginBottom="22dp"

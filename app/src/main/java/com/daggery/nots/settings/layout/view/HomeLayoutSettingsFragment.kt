@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.databinding.FragmentHomeLayoutSettingsBinding
 import com.daggery.nots.settings.layout.utils.HomeLayoutSettingsUtils
@@ -35,6 +36,11 @@ class HomeLayoutSettingsFragment : Fragment() {
 
         with(fragmentUtils) {
             bindsToolbar()
+        }
+
+        with(viewBinding) {
+            filledLayoutTile.setOnClickListener { fragmentUtils.navigateToPreview(0) }
+            outlinedLayoutTile.setOnClickListener { fragmentUtils.navigateToPreview(1) }
         }
     }
 }

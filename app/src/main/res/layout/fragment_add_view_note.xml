@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
-                android:background="@drawable/bg_note_item"
+                android:background="@drawable/bg_note_item_filled"
                 android:hint="@string/fragment_add_view_note_empty_hint"
                 app:boxBackgroundMode="none"
                 app:hintAnimationEnabled="false"
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/bg_note_item"
+                android:background="@drawable/bg_note_item_filled"
                 android:orientation="vertical"
                 android:paddingHorizontal="22dp">
 

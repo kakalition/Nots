@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Add Reorderable Feature
 // TODO: Reorder to Chronological Order Feature
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
+// TODO: Preview Note Binder Can Be Unified
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

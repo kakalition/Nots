@@ -55,4 +55,6 @@
     <string name="fragment__settings_home_layout_outlined_background_description">Outlined background</string>
     <string name="fragment__settings_home_layout_outlined_decoration_description">Outlined decoration</string>
     <string name="fragment__settings_home_layout_filled_decoration_description">Filled decoration</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
