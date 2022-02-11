@@ -1,6 +1,7 @@
 package com.daggery.nots.addviewnote.utils
 
 import android.app.Activity
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -22,7 +23,7 @@ class AddViewNoteFragmentUtils(
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
 
-        val isNoteInvalid = noteTitle.isBlank() && noteBody.isBlank()
+        val isNoteInvalid = noteTitle.isBlank() || noteBody.isBlank()
         val isUuidValid = args.uuid.isNotBlank()
 
         when {
