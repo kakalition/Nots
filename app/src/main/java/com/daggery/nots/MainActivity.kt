@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Create Home Layout (Outlined and Filled)
 // TODO: Revamp AddViewNoteFragment Layout, delete filled surface to make design cleaner
 // TODO: Add Reorderable Feature
-// TODO: Make PreviewThemeFragment Layout Root a ScrollView
 // TODO: Reorder to Chronological Order Feature
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 

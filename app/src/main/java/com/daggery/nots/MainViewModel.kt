@@ -15,8 +15,10 @@ class MainViewModel @Inject constructor(
     private val dataStore: DataStoreManager
 ) : ViewModel() {
 
-    val themeDataStore: LiveData<Int> = dataStore.themePreference.asLiveData()
+    val themeDataStore: LiveData<Int> get() = dataStore.themePreference.asLiveData()
     var themeKey: Int = 0
+
+    val homeLayoutDataStore: LiveData<Int> get() = dataStore.homeLayoutPreference.asLiveData()
 
     fun getThemeName(): String {
         return when(themeKey) {
