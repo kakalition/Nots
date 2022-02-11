@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_themeSettingsFragment"
             app:destination="@id/themeSettingsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_homeLayoutSettingsFragment"
+            app:destination="@id/homeLayoutSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/themeSettingsFragment"
@@ -52,5 +55,22 @@
             android:name="themeEnum"
             app:argType="com.daggery.nots.utils.ThemeEnum"
             android:defaultValue="DARK_THEME" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeLayoutSettingsFragment"
+        android:name="com.daggery.nots.settings.layout.view.HomeLayoutSettingsFragment"
+        android:label="HomeLayoutSettingsFragment" >
+        <action
+            android:id="@+id/action_homeLayoutSettingsFragment_to_previewHomeLayoutFragment"
+            app:destination="@id/previewHomeLayoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previewHomeLayoutFragment"
+        android:name="com.daggery.nots.settings.layout.view.PreviewHomeLayoutFragment"
+        android:label="PreviewHomeLayoutFragment" >
+        <argument
+            android:name="homeLayoutKey"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

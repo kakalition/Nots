@@ -17,8 +17,6 @@ import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Check Observer
-// TODO: Design This Fragment Layout, Maybe Add Options Menu
-// TODO: In That Options, Include Change Date to Present Time
 // TODO: Handle Long Text Body, possibly solved by using linear layout
 
 data class UneditedNote(

@@ -11,6 +11,7 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
+import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -19,6 +20,13 @@ class HomeFragmentUtils(
     private val fragment: HomeFragment,
     private val navController: NavController
 ) {
+
+    val outlinedTextColor = MaterialColors.getColor(
+        fragment.requireContext(),
+        com.google.android.material.R.attr.colorOnSurface,
+        fragment.resources.getColor(R.color.white, null)
+    )
+
     val notsVibrator = NotsVibrator(fragment.requireActivity())
 
     val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
@@ -50,9 +58,13 @@ class HomeFragmentUtils(
         }
     }
 
+    fun getHomeLayoutKey(): Int {
+        return fragment.mainViewModel.homeLayoutKey
+    }
+
     fun bindsToolbar() {
         fragment.viewBinding.toolbarBinding.apply {
-            toolbarTitle.text = fragment.resources.getString(R.string.app_name)
+            toolbarTitle.text = fragment.resources.getString(R.string.fragment_home_toolbar)
             toolbar.inflateMenu(R.menu.menu_home_fragment)
             toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
         }

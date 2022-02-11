@@ -1,6 +1,5 @@
 package com.daggery.nots.settings.theme.utils
 
-import android.util.Log
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.navigation.NavDirections
@@ -9,6 +8,7 @@ import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.TileActiveThemeBinding
 import com.daggery.nots.databinding.TileInactiveThemeBinding
+import com.daggery.nots.databinding.TileMaterialYouThemeBinding
 import com.daggery.nots.settings.theme.view.ThemeSettingsFragment
 import com.daggery.nots.settings.theme.view.ThemeSettingsFragmentDirections
 import com.daggery.nots.utils.ThemeEnum
@@ -25,8 +25,8 @@ private fun TileActiveThemeBinding.bind(themeText: String) {
 }
 
 fun TileInactiveThemeBinding.bind(fragment: ThemeSettingsFragment, tileThemeData: TileThemeData) {
-    val shouldShow = tileThemeData.title == fragment.fragmentUtils.getActiveThemeName()
-    if(shouldShow) {
+    val shouldHide = tileThemeData.title == fragment.fragmentUtils.getActiveThemeName()
+    if(shouldHide) {
         root.visibility = View.GONE
     } else {
         root.setOnClickListener(tileThemeData.onClickListener)
@@ -38,6 +38,14 @@ fun TileInactiveThemeBinding.bind(fragment: ThemeSettingsFragment, tileThemeData
         )
         themeTitle.text = tileThemeData.title
     }
+}
+
+fun TileMaterialYouThemeBinding.bind(fragment: ThemeSettingsFragment, onClickListener: ((View) -> Unit)) {
+    val shouldHide = fragment.fragmentUtils.getActiveThemeName() == "Material You Theme"
+    if (shouldHide) {
+        root.visibility = View.GONE
+    }
+    root.setOnClickListener(onClickListener)
 }
 
 

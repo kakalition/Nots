@@ -1,4 +1,4 @@
-package com.daggery.nots.settings.general.viewmodel
+package com.daggery.nots.settings.general.utils
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -41,12 +41,17 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
         }
     }
 
-    fun bindsLayoutSettings() {
-        fragment.viewBinding.layoutSettingsBinding.apply {
+    fun bindsHomeLayoutSettings() {
+        fragment.viewBinding.homeLayoutSettingsFrame.setOnClickListener {
+            fragment.findNavController().navigate(
+                SettingsFragmentDirections.actionSettingsFragmentToHomeLayoutSettingsFragment()
+            )
+        }
+        fragment.viewBinding.homeLayoutSettingsBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_earth)
             settingsItemTitle.text = fragment.requireContext()
-                .getString(R.string.fragment_settings_note_layout)
-            settingsItemBody.text = "Split"
+                .getString(R.string.fragment_settings_home_layout)
+            settingsItemBody.text = fragment.viewModel.getLayoutName()
         }
     }
 

@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.daggery.nots.R
+import com.daggery.nots.datastore.PreferencesKeys.HOME_LAYOUT_KEY
 import com.daggery.nots.datastore.PreferencesKeys.THEME_KEY
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,7 @@ private const val DATA_STORE_NAME = "nots_datastore"
 
 private object PreferencesKeys {
     val THEME_KEY = intPreferencesKey("theme_key")
+    val HOME_LAYOUT_KEY = intPreferencesKey("home_layout_key")
 }
 
 private val Context.dataStore by preferencesDataStore(DATA_STORE_NAME)
@@ -34,5 +36,16 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val appCo
     val themePreference: Flow<Int> = dataStore.data
         .map { preferences ->
             preferences[THEME_KEY] ?: R.style.DarkTheme
+        }
+
+    suspend fun changeHomeLayoutPreference(homeLayoutPref: Int) {
+        dataStore.edit { preferences ->
+            preferences[HOME_LAYOUT_KEY] = homeLayoutPref
+        }
+    }
+
+    val homeLayoutPreference: Flow<Int> = dataStore.data
+        .map { preferences ->
+            preferences[HOME_LAYOUT_KEY] ?: 0
         }
 }

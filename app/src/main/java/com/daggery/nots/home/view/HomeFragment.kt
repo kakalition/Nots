@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.daggery.nots.MainViewModel
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
@@ -24,6 +25,7 @@ class HomeFragment : Fragment() {
     internal val viewBinding get() = _viewBinding!!
 
     internal val viewModel: HomeViewModel by activityViewModels()
+    internal val mainViewModel: MainViewModel by activityViewModels()
     private var _fragmentUtils: HomeFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 

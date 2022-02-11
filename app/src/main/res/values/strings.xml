@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Nots</string>
+    <string name="fragment_home_toolbar">Notes</string>
     <string name="fragment_home_fab_description">Add new note</string>
     <string name="fragment_home_empty_notes_illustration_heading">Whoops!</string>
     <string name="fragment_home_empty_notes_illustration_text">You don\'t have any note, yet.\nTap the FAB to create one</string>
@@ -14,7 +15,8 @@
     <string name="fragment_theme_settings_theme_header">Theme</string>
     <string name="fragment_theme_settings_current_theme">Current Theme</string>
     <string name="fragment_available_theme_available_theme">Available Theme</string>
-    <string name="fragment_preview_apply_button">Apply Theme</string>
+    <string name="fragment_preview_apply_theme_button">Apply Theme</string>
+    <string name="fragment_preview_apply_layout_button">Apply Layout</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="dialog_delete_icon_description">Trash bin icon</string>
     <string name="dialog_delete_header">Delete Note</string>
@@ -34,6 +36,7 @@
     <string name="fragment_settings_language">Language</string>
     <string name="fragment_settings_show_time">Show Time</string>
     <string name="fragment_settings_theme">Theme</string>
+    <string name="fragment_settings_home_layout">Home Layout</string>
     <string name="fragment_settings_note_layout">Note Layout</string>
     <string name="theme_royal_lavender">Royal Lavender</string>
     <string name="theme_heather_berry">Heather Berry</string>
@@ -46,4 +49,13 @@
     <string name="menu_add_view_fragment_delete">Delete</string>
     <string name="circle">Circle</string>
     <string name="material_you_text">Material You</string>
+    <string name="fragment_layout_settings_filled">Filled</string>
+    <string name="fragment_layout_settings_outlined">Outlined</string>
+    <string name="fragment_layout_settings_active">Active</string>
+    <string name="fragment__settings_home_layout_filled_background_description">Filled background</string>
+    <string name="fragment__settings_home_layout_outlined_background_description">Outlined background</string>
+    <string name="fragment__settings_home_layout_outlined_decoration_description">Outlined decoration</string>
+    <string name="fragment__settings_home_layout_filled_decoration_description">Filled decoration</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

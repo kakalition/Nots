@@ -10,22 +10,36 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val LAYOUT_FILLED = 0
+private const val LAYOUT_OUTLINED = 1
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val dataStore: DataStoreManager
 ) : ViewModel() {
 
-    val themeDataStore: LiveData<Int> = dataStore.themePreference.asLiveData()
-    var themeKey: Int = 0
+    val themeDataStore: LiveData<Int> get() = dataStore.themePreference.asLiveData()
+    var themeKey: Int = -1
+
+    val homeLayoutDataStore: LiveData<Int> get() = dataStore.homeLayoutPreference.asLiveData()
+    var homeLayoutKey: Int = -1
 
     fun getThemeName(): String {
         return when(themeKey) {
-            R.style.MaterialYouTheme -> "Material You"
+            R.style.MaterialYouTheme -> "Material You Theme"
             R.style.DarkTheme -> "Dark Theme"
             R.style.NordTheme -> "Nord Theme"
             R.style.SteelBlueTheme -> "Steel Blue Theme"
             R.style.RoyalLavenderTheme -> "Royal Lavender Theme"
             R.style.HeatherBerryTheme -> "Heather Berry Theme"
+            else -> "Unspecified"
+        }
+    }
+
+    fun getLayoutName(): String {
+        return when(homeLayoutKey) {
+            0 -> "Filled"
+            1 -> "Outlined"
             else -> "Unspecified"
         }
     }
@@ -36,4 +50,12 @@ class MainViewModel @Inject constructor(
         }
         themeKey = themeRes
     }
+
+    fun applyLayout(layoutId: Int) {
+        viewModelScope.launch {
+            dataStore.changeHomeLayoutPreference(layoutId)
+        }
+        homeLayoutKey = layoutId
+    }
+
 }

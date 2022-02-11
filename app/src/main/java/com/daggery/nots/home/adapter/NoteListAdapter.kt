@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
-import com.daggery.nots.databinding.ListItemNoteBinding
+import com.daggery.nots.databinding.TileNoteItemBinding
 import com.daggery.nots.home.utils.HomeFragmentUtils
 
 class NoteListAdapter(
@@ -27,17 +27,38 @@ class NoteListAdapter(
         }
     }
 
-    inner class NoteViewHolder(val binding: ListItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
+            val homeLayoutKey = homeFragmentUtils.getHomeLayoutKey()
             with(binding) {
                 (swipeBg.background as GradientDrawable).setColor(
                     homeFragmentUtils.getSwipeBgColor()
                 )
-                if(note.priority == 1) {
-                    listItemLayout.setBackgroundResource(R.drawable.bg_note_item_priority)
-                } else {
-                    listItemLayout.setBackgroundResource(R.drawable.bg_note_item)
+                when {
+                    // Filled and Not Priority
+                    homeLayoutKey == 0 && note.priority == 0 -> {
+                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled)
+                    }
+                    // Filled and Priority
+                    homeLayoutKey == 0 && note.priority == 1 -> {
+                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled_priority)
+                    }
+                    // Outlined and Not Priority
+                    homeLayoutKey == 1 && note.priority == 0 -> {
+                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_outlined)
+                        noteTitle.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteBody.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteDate.setTextColor(homeFragmentUtils.outlinedTextColor)
+                    }
+                    // Outlined and Priority
+                    homeLayoutKey == 1 && note.priority == 1 -> {
+                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_outlined_priority)
+                        noteTitle.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteBody.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteDate.setTextColor(homeFragmentUtils.outlinedTextColor)
+                    }
                 }
+
                 noteTitle.text = note.noteTitle
                 noteBody.text = note.noteBody
                 noteDate.text = note.noteDate
@@ -49,7 +70,7 @@ class NoteListAdapter(
         parent: ViewGroup,
         viewType: Int
     ) : NoteViewHolder {
-        return NoteViewHolder(ListItemNoteBinding.inflate(
+        return NoteViewHolder(TileNoteItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false)
