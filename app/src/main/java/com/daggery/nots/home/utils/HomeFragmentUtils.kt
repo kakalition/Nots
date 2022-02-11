@@ -59,11 +59,7 @@ class HomeFragmentUtils(
     }
 
     fun getHomeLayoutKey(): Int {
-        var homeLayoutKey = 0
-        fragment.mainViewModel.homeLayoutDataStore.observeOnce(fragment.viewLifecycleOwner) {
-            homeLayoutKey = it
-        }
-        return homeLayoutKey
+        return fragment.mainViewModel.homeLayoutKey
     }
 
     fun bindsToolbar() {

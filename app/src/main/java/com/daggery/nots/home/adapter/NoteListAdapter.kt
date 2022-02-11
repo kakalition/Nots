@@ -47,11 +47,15 @@ class NoteListAdapter(
                     homeLayoutKey == 1 && note.priority == 0 -> {
                         listItemLayout.setBackgroundResource(R.drawable.bg_note_item_outlined)
                         noteTitle.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteBody.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteDate.setTextColor(homeFragmentUtils.outlinedTextColor)
                     }
                     // Outlined and Priority
                     homeLayoutKey == 1 && note.priority == 1 -> {
                         listItemLayout.setBackgroundResource(R.drawable.bg_note_item_outlined_priority)
                         noteTitle.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteBody.setTextColor(homeFragmentUtils.outlinedTextColor)
+                        noteDate.setTextColor(homeFragmentUtils.outlinedTextColor)
                     }
                 }
 

@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Reorder to Chronological Order Feature
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Preview Note Binder Can Be Unified
+// TODO: Known Bug: When change note priority note, sometimes it will scroll to the bottom of list
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private var _viewBinding: ActivityMainBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    private val viewModel: MainViewModel by viewModels()
+    internal val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 
         // Theme Setting
         setThemeOnInitialStart()
+        getHomeLayoutOnInitialStart()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             viewModel.themeKey == R.style.MaterialYouTheme
         ) {
@@ -57,10 +60,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setThemeOnInitialStart() {
-        if(viewModel.themeKey == 0){
+        if(viewModel.themeKey == -1){
             viewModel.themeDataStore.observeOnce(this) {
                 viewModel.themeKey = it
                 updateTheme(it)
+            }
+        }
+    }
+
+    private fun getHomeLayoutOnInitialStart() {
+        if(viewModel.homeLayoutKey == -1) {
+            viewModel.homeLayoutDataStore.observeOnce(this) {
+                viewModel.homeLayoutKey = it
             }
         }
     }

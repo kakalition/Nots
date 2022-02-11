@@ -15,7 +15,8 @@
     <string name="fragment_theme_settings_theme_header">Theme</string>
     <string name="fragment_theme_settings_current_theme">Current Theme</string>
     <string name="fragment_available_theme_available_theme">Available Theme</string>
-    <string name="fragment_preview_apply_button">Apply Theme</string>
+    <string name="fragment_preview_apply_theme_button">Apply Theme</string>
+    <string name="fragment_preview_apply_layout_button">Apply Layout</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="dialog_delete_icon_description">Trash bin icon</string>
     <string name="dialog_delete_header">Delete Note</string>

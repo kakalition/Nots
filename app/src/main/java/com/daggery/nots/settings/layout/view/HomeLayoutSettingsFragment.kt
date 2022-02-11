@@ -39,6 +39,17 @@ class HomeLayoutSettingsFragment : Fragment() {
         }
 
         with(viewBinding) {
+            when(fragmentUtils.getHomeLayoutKey()) {
+                0 -> {
+                    filledLayoutActive.visibility = View.VISIBLE
+                    outlinedLayoutActive.visibility = View.GONE
+                }
+                1 -> {
+                    filledLayoutActive.visibility = View.GONE
+                    outlinedLayoutActive.visibility = View.VISIBLE
+                }
+            }
+
             filledLayoutTile.setOnClickListener { fragmentUtils.navigateToPreview(0) }
             outlinedLayoutTile.setOnClickListener { fragmentUtils.navigateToPreview(1) }
         }

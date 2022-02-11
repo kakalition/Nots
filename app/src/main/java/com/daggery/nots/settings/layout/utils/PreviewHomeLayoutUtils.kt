@@ -3,6 +3,7 @@ package com.daggery.nots.settings.layout.utils
 import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.daggery.nots.MainActivity
 import com.daggery.nots.R
 import com.daggery.nots.databinding.TileNoteItemBinding
 import com.daggery.nots.settings.layout.view.PreviewHomeLayoutFragment
@@ -48,6 +49,14 @@ class PreviewHomeLayoutUtils(private val fragment: PreviewHomeLayoutFragment) {
         val date = Calendar.getInstance().time
         val formatter = SimpleDateFormat.getDateInstance()
         return formatter.format(date)
+    }
+
+    // TODO: Can be optimized
+    fun applyLayout(layoutId: Int) {
+        with(fragment) {
+            (requireActivity() as MainActivity).viewModel.applyLayout(layoutId)
+            findNavController().navigateUp()
+        }
     }
 
     fun bindsToolbar() {

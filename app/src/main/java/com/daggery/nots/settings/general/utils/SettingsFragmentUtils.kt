@@ -51,7 +51,7 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
             settingsItemIcon.setImageResource(R.drawable.ic_earth)
             settingsItemTitle.text = fragment.requireContext()
                 .getString(R.string.fragment_settings_home_layout)
-            settingsItemBody.text = "Filled"
+            settingsItemBody.text = fragment.viewModel.getLayoutName()
         }
     }
 

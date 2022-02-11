@@ -65,15 +65,14 @@ android:layout_height="match_parent">
 
 </ScrollView>
 
-
 <Button
-    android:id="@+id/apply_theme_button"
+    android:id="@+id/apply_layout_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
     android:layout_marginBottom="32dp"
-    android:text="@string/fragment_preview_apply_button"/>
+    android:text="@string/fragment_preview_apply_layout_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,10 @@ class HomeLayoutSettingsUtils(private val fragment: HomeLayoutSettingsFragment) 
         fragment.findNavController().navigateUp()
     }
 
+    fun getHomeLayoutKey(): Int {
+        return fragment.viewModel.homeLayoutKey
+    }
+
     fun bindsToolbar() {
         fragment.viewBinding.toolbarBinding.apply {
             toolbar.setNavigationIcon(R.drawable.ic_back)
