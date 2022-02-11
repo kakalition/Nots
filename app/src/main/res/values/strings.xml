@@ -48,9 +48,11 @@
     <string name="menu_add_view_fragment_delete">Delete</string>
     <string name="circle">Circle</string>
     <string name="material_you_text">Material You</string>
-    <string name="fragment_layout_settings_merge">Merge</string>
-    <string name="fragment_layout_settings_split">Split</string>
+    <string name="fragment_layout_settings_filled">Filled</string>
+    <string name="fragment_layout_settings_outlined">Outlined</string>
     <string name="fragment_layout_settings_active">Active</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment__settings_home_layout_filled_background_description">Filled background</string>
+    <string name="fragment__settings_home_layout_outlined_background_description">Outlined background</string>
+    <string name="fragment__settings_home_layout_outlined_decoration_description">Outlined decoration</string>
+    <string name="fragment__settings_home_layout_filled_decoration_description">Filled decoration</string>
 </resources>

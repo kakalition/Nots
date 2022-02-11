@@ -13,8 +13,11 @@ import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Create Theme Selection Tile to Grid
-// TODO: Create Corresponding Notes Layout
 // TODO: Create Home Layout (Outlined and Filled)
+// TODO: Revamp AddViewNoteFragment Layout, delete filled surface to make design cleaner
+// TODO: Add Reorderable Feature
+// TODO: Reorder to Chronological Order Feature
+// TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
