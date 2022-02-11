@@ -38,7 +38,6 @@ class SettingsFragment : Fragment() {
             bindsLanguageSettings()
             bindsThemeSettings()
             bindsHomeLayoutSettings()
-            bindsNoteLayoutSettings()
             bindsShowTimeSettings()
         }
     }

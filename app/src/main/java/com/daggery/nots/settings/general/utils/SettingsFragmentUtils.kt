@@ -55,20 +55,6 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
         }
     }
 
-    fun bindsNoteLayoutSettings() {
-        fragment.viewBinding.noteLayoutSettingsFrame.setOnClickListener {
-            fragment.findNavController().navigate(
-                SettingsFragmentDirections.actionSettingsFragmentToNoteLayoutSettingsFragment()
-            )
-        }
-        fragment.viewBinding.noteLayoutSettingsBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_earth)
-            settingsItemTitle.text = fragment.requireContext()
-                .getString(R.string.fragment_settings_note_layout)
-            settingsItemBody.text = "Split"
-        }
-    }
-
     fun bindsShowTimeSettings() {
         fragment.viewBinding.showTimeBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_clock)
