@@ -93,10 +93,8 @@ class HomeFragmentUtils(
         fragment.viewBinding.fab.setOnClickListener(fabOnClickListener)
     }
 
-    fun rearrangeNoteOrder(from: Note, to: Note) {
-        Log.d("LOL First Note", from.toString())
-        Log.d("LOL Second Note", to.toString())
-        fragment.viewModel.rearrangeNoteOrder(from, to)
+    fun rearrangeNoteOrder(notes: MutableList<Note>) {
+        fragment.viewModel.rearrangeNoteOrder(notes)
     }
 
     fun prioritize(note: Note) {

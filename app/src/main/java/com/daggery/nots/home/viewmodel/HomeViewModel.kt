@@ -19,14 +19,9 @@ class HomeViewModel @Inject constructor(
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
 
     // Change note order of corresponding note
-    fun rearrangeNoteOrder(currentNote: Note, targetNote: Note) {
+    // TODO: Could be optimized using upper and lower bound of index
+    fun rearrangeNoteOrder(notes: MutableList<Note>) {
         viewModelScope.launch {
-            val tempOrderOne = currentNote.noteOrder
-            val tempOrderTwo = targetNote.noteOrder
-
-            val notes = mutableListOf<Note>()
-            notes.add(currentNote.copy(noteOrder = tempOrderTwo))
-            notes.add(targetNote.copy(noteOrder = tempOrderOne))
             database.noteDao().rearrangeNoteOrder(notes)
         }
     }

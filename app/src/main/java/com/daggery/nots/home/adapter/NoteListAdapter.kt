@@ -15,12 +15,13 @@ import com.daggery.nots.utils.NoteDateUtils
 import java.util.*
 
 class NoteListAdapter(
-    private val notes: MutableList<Note>,
-    val homeFragmentUtils: HomeFragmentUtils,
+    val notes: MutableList<Note>,
+    private val homeFragmentUtils: HomeFragmentUtils,
     private val noteDateUtils: NoteDateUtils
 ) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
     private val diffCallback = NotesDiff(notes, listOf())
+    private val notesBatch = NotesBatch(notes)
 
     inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
@@ -96,11 +97,46 @@ class NoteListAdapter(
 
     fun onItemMoved(fromPos: Int, toPos: Int) {
         Collections.swap(notes, fromPos, toPos)
+        notesBatch.updateBatch(fromPos, toPos)
         notifyItemMoved(fromPos, toPos)
-        Log.d("LOL Movement", "from $fromPos to $toPos")
-        homeFragmentUtils.rearrangeNoteOrder(notes[fromPos], notes[toPos])
     }
 
+    fun updateDatabase() {
+        homeFragmentUtils.rearrangeNoteOrder(notesBatch.notesBatch.toMutableList())
+    }
+}
+
+class NotesBatch(private var _notesBatch: MutableList<Note>) {
+
+    fun initNotesBatch(newNotesBatch: MutableList<Note>) {
+        _notesBatch = newNotesBatch
+    }
+
+    val notesBatch get() = _notesBatch.toList()
+
+    fun updateBatch(firstIndex: Int, secondIndex: Int) {
+        val firstNote = notesBatch[firstIndex]
+        val secondNote = notesBatch[secondIndex]
+
+        val tempFirstNoteOrder = firstNote.noteOrder
+        val tempSecondNoteOrder = secondNote.noteOrder
+
+        val firstNoteIndex = _notesBatch.indexOf(firstNote)
+        val secondNoteIndex = _notesBatch.indexOf(secondNote)
+
+        _notesBatch[firstNoteIndex] = firstNote.copy(noteOrder = tempSecondNoteOrder)
+        _notesBatch[secondNoteIndex] = secondNote.copy(noteOrder = tempFirstNoteOrder)
+
+        notesBatch.forEachIndexed { index, note ->
+            Log.d("LOL $index", note.toString())
+        }
+    }
+
+    fun getNotesBatchAndReset(): List<Note> {
+        val temp = notesBatch
+        _notesBatch.clear()
+        return temp
+    }
 }
 
 class NotesDiff(var oldList: List<Note>, var newList: List<Note>) : DiffUtil.Callback() {
