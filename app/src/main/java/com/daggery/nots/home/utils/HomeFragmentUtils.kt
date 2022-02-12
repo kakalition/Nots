@@ -49,6 +49,10 @@ class HomeFragmentUtils(
             R.id.reorder_button -> {
                 true
             }
+            R.id.delete_all_notes_button -> {
+                fragment.viewModel.deleteAllNotes()
+                true
+            }
             R.id.settings_button -> {
                 val destination = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
                 fragment.findNavController().navigate(destination)
