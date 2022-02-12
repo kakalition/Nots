@@ -17,9 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Reorder to Chronological Order Feature
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Preview Note Binder Can Be Unified
-// TODO: Known Bug: New note not placed at the top of list
 // TODO: Adjust outlined home layout color
-// TODO: Create Filter
+// TODO: Create Notes Filter
+// TODO: Fix SettingsFragment scrolling
+
+// TODO: Known Bug: New note not placed at the top of list
+// TODO: Fix by manually using sql commands
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

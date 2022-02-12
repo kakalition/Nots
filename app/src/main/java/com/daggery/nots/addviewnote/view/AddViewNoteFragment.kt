@@ -2,13 +2,9 @@ package com.daggery.nots.addviewnote.view
 
 import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.*
-import android.widget.ResourceCursorAdapter
-import android.widget.ScrollView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -20,7 +16,6 @@ import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-import hilt_aggregated_deps._com_daggery_nots_addviewnote_viewmodel_AddViewNoteViewModel_HiltModules_BindsModule
 
 
 // TODO: Handle Long Text Body, possibly solved by using linear layout
@@ -94,6 +89,15 @@ class AddViewNoteFragment : Fragment() {
                 isNewNote == true -> { addEnvironment() }
                 isEditing -> { editEnvironment() }
                 else -> { viewEnvironment() }
+            }
+        }
+
+        with(viewBinding) {
+            noteTitle.setOnFocusChangeListener { _, hasFocus ->
+                fragmentUtils.titleHasFocus = hasFocus
+            }
+            noteBody.setOnFocusChangeListener { _, hasFocus ->
+                fragmentUtils.bodyHasFocus = hasFocus
             }
         }
 

@@ -19,6 +19,9 @@ class AddViewNoteFragmentUtils(
     private val args: AddViewNoteFragmentArgs
 ) {
 
+    var titleHasFocus = false
+    var bodyHasFocus = false
+
     val onConfirmTapped = {
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
@@ -57,10 +60,19 @@ class AddViewNoteFragmentUtils(
     }
 
     private val navigationClickListener: (View) -> Unit = {
-        if(fragment.isEditing) {
-            showOnRevertConfirmation(fragment.uneditedNote)
+        val isKeyboardShown = titleHasFocus || bodyHasFocus
+        with(fragment) {
+            when {
+                isEditing && isKeyboardShown -> {
+                    hideKeyboard(it)
+                    clearNoteTypingFocus()
+                }
+                isEditing && !isKeyboardShown -> {
+                    showOnRevertConfirmation(uneditedNote)
+                }
+                else -> findNavController().navigateUp()
+            }
         }
-        else fragment.findNavController().navigateUp()
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
@@ -147,6 +159,19 @@ class AddViewNoteFragmentUtils(
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(view, 0)
+    }
+
+    private fun hideKeyboard(view: View) {
+        val inputMethodManager = fragment.requireActivity()
+            .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
+    }
+
+    fun clearNoteTypingFocus() {
+        with(fragment.viewBinding) {
+            noteTitle.clearFocus()
+            noteBody.clearFocus()
+        }
     }
 
     internal fun addEnvironment() {
