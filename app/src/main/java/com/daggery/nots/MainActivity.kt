@@ -11,7 +11,6 @@ import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Create Theme Selection Tile to Grid
-// TODO: Revamp AddViewNoteFragment Layout, delete filled surface to make design cleaner TARGET
 // TODO: Add Reorderable Feature TARGET
 // TODO: Add Delete All TARGET
 // TODO: Reorder to Chronological Order Feature
