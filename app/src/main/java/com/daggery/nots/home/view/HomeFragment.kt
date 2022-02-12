@@ -2,6 +2,7 @@ package com.daggery.nots.home.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,6 +15,7 @@ import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NoteDateUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,9 +52,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var initialNotes: MutableList<Note> = mutableListOf()
+        viewModel.notes.observeOnce(viewLifecycleOwner) {
+            initialNotes = it.toMutableList()
+        }
+
         _fragmentUtils = HomeFragmentUtils(this, findNavController())
         notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
-        notesAdapter = NoteListAdapter(fragmentUtils, NoteDateUtils())
+        notesAdapter = NoteListAdapter(initialNotes, fragmentUtils, NoteDateUtils())
 
         with(fragmentUtils) {
             bindsToolbar()

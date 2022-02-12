@@ -44,7 +44,16 @@ class AddViewNoteFragmentUtils(
             }
             else -> {
                 fragment.viewModel.notes.observeOnce(fragment.viewLifecycleOwner) {
-                    fragment.viewModel.addNote(noteTitle, noteBody, it.size)
+                    var upperIndex = 0
+
+                    // Get upper index
+                    it.forEach { note ->
+                        if (note.noteOrder > upperIndex) {
+                            upperIndex = note.noteOrder + 1
+                        }
+                    }
+
+                    fragment.viewModel.addNote(noteTitle, noteBody, upperIndex)
                     fragment.findNavController().navigateUp()
                 }
             }
@@ -186,15 +195,9 @@ class AddViewNoteFragmentUtils(
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
 
-            // Focus on open
-            noteBody.setOnFocusChangeListener { view, hasFocus ->
-                if(hasFocus) {
-                    scrollview.scrollTo(0, 0)
-                }
-            }
-            noteBody.requestFocus()
-            noteBody.setSelection(noteBody.text?.length ?: 0)
-            showKeyboard(noteBody)
+            noteTitle.requestFocus()
+            // TODO: Add slight delay
+            showKeyboard(noteTitle)
         }
         setMenuVisibility(
             confirmButton = true,

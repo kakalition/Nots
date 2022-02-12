@@ -22,6 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Create Notes Filter
 
+// TODO: Press Enter on Title Field will move cursor to Body
+
 // TODO: Known Issue: MaterialYou text color is not clear
 
 @AndroidEntryPoint

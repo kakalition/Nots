@@ -1,6 +1,7 @@
 package com.daggery.nots.home.adapter
 
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,23 +12,16 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.TileNoteItemBinding
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.utils.NoteDateUtils
+import java.util.*
 
 class NoteListAdapter(
+    val notes: MutableList<Note>,
     private val homeFragmentUtils: HomeFragmentUtils,
     private val noteDateUtils: NoteDateUtils
-) : ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCallback) {
+) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
-    companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<Note>() {
-            override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-                return oldItem.uuid == newItem.uuid
-            }
-
-            override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
+    private val diffCallback = NotesDiff(notes, listOf())
+    private val notesBatch = NotesBatch(notes)
 
     inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
@@ -80,11 +74,90 @@ class NoteListAdapter(
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val current = getItem(position)
+        val current = notes[position]
         holder.binding.listItemLayout.apply {
             setOnClickListener{ homeFragmentUtils.noteClickListener(current) }
             setOnTouchListener(OnNoteItemTouchListener(homeFragmentUtils, holder, current))
         }
         holder.bind(current)
+    }
+
+    override fun getItemCount(): Int {
+        return notes.size
+    }
+
+    fun submitList(updatedList: List<Note>) {
+        diffCallback.newList = updatedList
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        notes.clear()
+        notes.addAll(updatedList)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun onItemMoved(fromPos: Int, toPos: Int) {
+        Collections.swap(notes, fromPos, toPos)
+        notesBatch.updateBatch(fromPos, toPos)
+        notifyItemMoved(fromPos, toPos)
+    }
+
+    fun updateDatabase() {
+        homeFragmentUtils.rearrangeNoteOrder(notesBatch.notesBatch.toMutableList())
+    }
+}
+
+class NotesBatch(private var _notesBatch: MutableList<Note>) {
+
+    fun initNotesBatch(newNotesBatch: MutableList<Note>) {
+        _notesBatch = newNotesBatch
+    }
+
+    val notesBatch get() = _notesBatch.toList()
+
+    fun updateBatch(firstIndex: Int, secondIndex: Int) {
+        val firstNote = notesBatch[firstIndex]
+        val secondNote = notesBatch[secondIndex]
+
+        val tempFirstNoteOrder = firstNote.noteOrder
+        val tempSecondNoteOrder = secondNote.noteOrder
+
+        val firstNoteIndex = _notesBatch.indexOf(firstNote)
+        val secondNoteIndex = _notesBatch.indexOf(secondNote)
+
+        _notesBatch[firstNoteIndex] = firstNote.copy(noteOrder = tempSecondNoteOrder)
+        _notesBatch[secondNoteIndex] = secondNote.copy(noteOrder = tempFirstNoteOrder)
+
+        notesBatch.forEachIndexed { index, note ->
+            Log.d("LOL $index", note.toString())
+        }
+    }
+
+    fun getNotesBatchAndReset(): List<Note> {
+        val temp = notesBatch
+        _notesBatch.clear()
+        return temp
+    }
+}
+
+class NotesDiff(var oldList: List<Note>, var newList: List<Note>) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return oldItem.uuid == newItem.uuid
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return oldItem == newItem
     }
 }
