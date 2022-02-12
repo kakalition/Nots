@@ -43,8 +43,10 @@ class AddViewNoteFragmentUtils(
                 }
             }
             else -> {
-                fragment.viewModel.addNote(noteTitle, noteBody)
-                fragment.findNavController().navigateUp()
+                fragment.viewModel.notes.observeOnce(fragment.viewLifecycleOwner) {
+                    fragment.viewModel.addNote(noteTitle, noteBody, it.size)
+                    fragment.findNavController().navigateUp()
+                }
             }
         }
     }
@@ -137,11 +139,10 @@ class AddViewNoteFragmentUtils(
     internal fun bindsFields(uuid: String) {
         with(fragment) {
             if(uuid.isBlank()) {
-                val note = viewModel.getNewNote()
                 viewBinding.apply {
-                    noteTitle.text = editableFactory.newEditable(note.noteTitle)
-                    noteDate.text = viewModel.noteDateUtils.getParsedDate(note.noteDate)
-                    noteBody.text = editableFactory.newEditable(note.noteBody)
+                    noteTitle.text = editableFactory.newEditable("")
+                    noteDate.text = viewModel.noteDateUtils.getParsedDate(viewModel.noteDateUtils.getRawCurrentDate())
+                    noteBody.text = editableFactory.newEditable("")
                 }
             } else {
                 viewModel.getNote(uuid).observeOnce(fragment.viewLifecycleOwner) {
