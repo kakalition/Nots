@@ -11,8 +11,8 @@ import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Upcoming Feature: Have bold italic underline feature
+// TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
 
-// TODO: Add Reorderable Feature
 // TODO: Reorder to Chronological Order Feature
 
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
@@ -23,6 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Create Notes Filter
 
 // TODO: Press Enter on Title Field will move cursor to Body
+
+// TODO: Remove Modal Mode
 
 // TODO: Known Issue: MaterialYou text color is not clear
 
