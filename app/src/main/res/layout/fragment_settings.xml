@@ -1,118 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/colorSurface"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:orientation="vertical"
+    tools:context=".settings.general.view.SettingsFragment">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/app_bar_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/toolbar_binding"
+            layout="@layout/appbar_title" />
+    </FrameLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".settings.general.view.SettingsFragment">
+        android:fillViewport="true">
 
-        <FrameLayout
-            android:id="@+id/app_bar_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include
-                android:id="@+id/toolbar_binding"
-                layout="@layout/appbar_title" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/settings_header"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/inter_bold"
-            android:padding="22dp"
-            android:text="@string/fragment_settings_header"
-            android:textAppearance="?attr/textAppearanceDisplayMedium"
-            android:textColor="?attr/colorOnSurface" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/language_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="22dp"
-            android:layout_marginVertical="11dp"
-            android:fontFamily="@font/opensans_regular"
-            android:text="Language"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSurface" />
+            <TextView
+                android:id="@+id/settings_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/inter_bold"
+                android:padding="22dp"
+                android:text="@string/fragment_settings_header"
+                android:textAppearance="?attr/textAppearanceDisplayMedium"
+                android:textColor="?attr/colorOnSurface" />
 
-        <FrameLayout
-            android:id="@+id/language_settings_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            <TextView
+                android:id="@+id/language_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginVertical="11dp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Language"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSurface" />
 
-            <include
-                android:id="@+id/language_settings_binding"
-                layout="@layout/tile_settings" />
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/language_settings_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
-        <TextView
-            android:id="@+id/theming_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="22dp"
-            android:layout_marginVertical="11dp"
-            android:fontFamily="@font/opensans_regular"
-            android:text="Theming"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSurface" />
+                <include
+                    android:id="@+id/language_settings_binding"
+                    layout="@layout/tile_settings" />
+            </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/theme_settings_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            <TextView
+                android:id="@+id/theming_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginVertical="11dp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Theming"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSurface" />
 
-            <include
-                android:id="@+id/theme_settings_binding"
-                layout="@layout/tile_settings" />
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/theme_settings_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
-        <FrameLayout
-            android:id="@+id/home_layout_settings_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+                <include
+                    android:id="@+id/theme_settings_binding"
+                    layout="@layout/tile_settings" />
+            </FrameLayout>
 
-            <include
-                android:id="@+id/home_layout_settings_binding"
-                layout="@layout/tile_settings" />
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/home_layout_settings_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
-        <TextView
-            android:id="@+id/preferences_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="22dp"
-            android:layout_marginVertical="11dp"
-            android:fontFamily="@font/opensans_regular"
-            android:text="Preferences"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSurface" />
+                <include
+                    android:id="@+id/home_layout_settings_binding"
+                    layout="@layout/tile_settings" />
+            </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/show_time_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            <TextView
+                android:id="@+id/preferences_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginVertical="11dp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Preferences"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSurface" />
 
-            <include
-                android:id="@+id/show_time_binding"
-                layout="@layout/tile_settings" />
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/show_time_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
-    </LinearLayout>
-</ScrollView>
+                <include
+                    android:id="@+id/show_time_binding"
+                    layout="@layout/tile_settings" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

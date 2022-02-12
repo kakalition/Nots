@@ -22,8 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Create Notes Filter
 
-// TODO: Fix SettingsFragment scrolling
-
 // TODO: Known Issue: MaterialYou text color is not clear
 
 @AndroidEntryPoint
