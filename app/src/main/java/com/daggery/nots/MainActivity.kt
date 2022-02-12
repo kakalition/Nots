@@ -14,14 +14,16 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Add Reorderable Feature
 // TODO: Reorder to Chronological Order Feature
+
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
-// TODO: Preview Note Binder Can Be Unified
 // TODO: Adjust outlined home layout color
+
+// TODO: Preview Note Binder Can Be Unified
+
 // TODO: Create Notes Filter
+
 // TODO: Fix SettingsFragment scrolling
 
-// TODO: Known Bug: New note not placed at the top of list TARGET
-// TODO: Fix by manually using sql commands
 // TODO: Known Issue: MaterialYou text color is not clear
 
 @AndroidEntryPoint

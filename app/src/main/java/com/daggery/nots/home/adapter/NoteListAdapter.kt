@@ -10,9 +10,11 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.TileNoteItemBinding
 import com.daggery.nots.home.utils.HomeFragmentUtils
+import com.daggery.nots.utils.NoteDateUtils
 
 class NoteListAdapter(
-    private val homeFragmentUtils: HomeFragmentUtils
+    private val homeFragmentUtils: HomeFragmentUtils,
+    private val noteDateUtils: NoteDateUtils
 ) : ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCallback) {
 
     companion object {
@@ -61,7 +63,7 @@ class NoteListAdapter(
 
                 noteTitle.text = note.noteTitle
                 noteBody.text = note.noteBody
-                noteDate.text = note.noteDate
+                noteDate.text = noteDateUtils.getParsedDate(note.noteDate)
             }
         }
     }

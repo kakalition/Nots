@@ -10,6 +10,7 @@ import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.addviewnote.view.AddViewNoteFragmentArgs
 import com.daggery.nots.addviewnote.view.UneditedNote
+import com.daggery.nots.data.Note
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -42,8 +43,10 @@ class AddViewNoteFragmentUtils(
                 }
             }
             else -> {
-                fragment.viewModel.addNote(noteTitle, noteBody)
-                fragment.findNavController().navigateUp()
+                fragment.viewModel.notes.observeOnce(fragment.viewLifecycleOwner) {
+                    fragment.viewModel.addNote(noteTitle, noteBody, it.size)
+                    fragment.findNavController().navigateUp()
+                }
             }
         }
     }
@@ -132,23 +135,25 @@ class AddViewNoteFragmentUtils(
         }
     }
 
+    // TODO: Could be optimized
     internal fun bindsFields(uuid: String) {
-        if(uuid.isBlank()) {
-            val note = fragment.viewModel.getNewNote()
-            fragment.viewBinding.apply {
-                noteTitle.text = fragment.editableFactory.newEditable(note.noteTitle)
-                noteDate.text = fragment.editableFactory.newEditable(note.noteDate)
-                noteBody.text = fragment.editableFactory.newEditable(note.noteBody)
-            }
-        } else {
-            val noteLiveData = fragment.viewModel.getNote(uuid)
-            noteLiveData.observeOnce(fragment.viewLifecycleOwner) {
-                it?.let {
-                    fragment.uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
-                    fragment.viewBinding.apply {
-                        noteTitle.text = fragment.editableFactory.newEditable(it.noteTitle)
-                        noteDate.text = fragment.editableFactory.newEditable(it.noteDate)
-                        noteBody.text = fragment.editableFactory.newEditable(it.noteBody)
+        with(fragment) {
+            if(uuid.isBlank()) {
+                viewBinding.apply {
+                    noteTitle.text = editableFactory.newEditable("")
+                    noteDate.text = viewModel.noteDateUtils.getParsedDate(viewModel.noteDateUtils.getRawCurrentDate())
+                    noteBody.text = editableFactory.newEditable("")
+                }
+            } else {
+                viewModel.getNote(uuid).observeOnce(fragment.viewLifecycleOwner) {
+                    it?.let {
+                        val note = it
+                        uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
+                        viewBinding.apply {
+                            noteTitle.text = editableFactory.newEditable(note.noteTitle)
+                            noteDate.text = viewModel.noteDateUtils.getParsedDate(note.noteDate)
+                            noteBody.text = editableFactory.newEditable(note.noteBody)
+                        }
                     }
                 }
             }
@@ -167,7 +172,7 @@ class AddViewNoteFragmentUtils(
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
-    fun clearNoteTypingFocus() {
+    private fun clearNoteTypingFocus() {
         with(fragment.viewBinding) {
             noteTitle.clearFocus()
             noteBody.clearFocus()
