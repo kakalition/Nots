@@ -15,6 +15,7 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
+import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -50,6 +51,7 @@ class HomeFragmentUtils(
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
             R.id.reorder_button -> {
+                showReorderChronologicallyDialog()
                 true
             }
             R.id.delete_all_notes_button -> {
@@ -62,6 +64,19 @@ class HomeFragmentUtils(
                 true
             }
             else -> false
+        }
+    }
+
+    private fun reorderChronologically() {
+        with(fragment.viewModel) {
+            notes.observeOnce(fragment.viewLifecycleOwner) {
+                val initialNotes = it.sortedBy { note -> note.noteDate }.toMutableList()
+                val mappedNotes = initialNotes.mapIndexed { index, note ->
+                    note.copy(noteOrder = index)
+                }
+
+                rearrangeNoteOrder(mappedNotes.toMutableList())
+            }
         }
     }
 
@@ -128,6 +143,21 @@ class HomeFragmentUtils(
             .setView(R.layout.dialog_delete_all_notes)
             .setPositiveButton("Delete") { _, _ ->
                 fragment.viewModel.deleteAllNotes()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    fun showReorderChronologicallyDialog() {
+        MaterialAlertDialogBuilder(
+            fragment.requireContext(),
+            R.style.NotsAlertDialog
+        )
+            .setView(R.layout.dialog_reorder_notes_chronologically)
+            .setPositiveButton("Reorder") { _, _ ->
+                reorderChronologically()
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
