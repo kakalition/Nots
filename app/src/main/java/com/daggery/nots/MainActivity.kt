@@ -10,6 +10,9 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: Known Bug: New note not placed at the top of list TARGET
+// TODO: Fix by manually using sql commands
+
 // TODO: Upcoming Feature: Have bold italic underline feature
 
 // TODO: Add Reorderable Feature
@@ -20,8 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Create Notes Filter
 // TODO: Fix SettingsFragment scrolling
 
-// TODO: Known Bug: New note not placed at the top of list TARGET
-// TODO: Fix by manually using sql commands
 // TODO: Known Issue: MaterialYou text color is not clear
 
 @AndroidEntryPoint

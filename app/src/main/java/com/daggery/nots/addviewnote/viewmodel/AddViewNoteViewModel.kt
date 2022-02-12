@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.daggery.nots.data.Note
 import com.daggery.nots.data.NotsDatabase
+import com.daggery.nots.utils.NoteDateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -17,21 +18,10 @@ class AddViewNoteViewModel @Inject constructor(
     private val database: NotsDatabase
 ) : ViewModel() {
 
+    val noteDateUtils = NoteDateUtils()
+
     private val noteDao = database.noteDao()
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
-
-    fun getRawCurrentDate(): Int {
-        val date = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("yyyymmdd")
-        return formatter.format(date).toInt()
-    }
-
-    fun getParsedDate(rawDate: Int): String {
-        val parser = SimpleDateFormat("yyyymmdd")
-        val parsedDate = parser.parse(rawDate.toString())
-        val formatter = SimpleDateFormat.getDateInstance()
-        return formatter.format(parsedDate!!)
-    }
 
     /**
      * Get note with given uuid
@@ -40,6 +30,8 @@ class AddViewNoteViewModel @Inject constructor(
         return database.noteDao().getNote(uuid).asLiveData()
     }
 
+    // TODO: Two functions below could be optimized
+
     fun getNewNote(): Note {
         return Note(
             uuid = UUID.randomUUID().toString(),
@@ -47,7 +39,7 @@ class AddViewNoteViewModel @Inject constructor(
             noteOrder = notes.value?.size ?: 0,
             noteTitle = "",
             noteBody = "",
-            noteDate = getRawCurrentDate()
+            noteDate = noteDateUtils.getRawCurrentDate()
         )
     }
 
@@ -58,7 +50,7 @@ class AddViewNoteViewModel @Inject constructor(
             noteOrder = notes.value?.size ?: 0,
             noteTitle = title,
             noteBody = body,
-            noteDate = getRawCurrentDate()
+            noteDate = noteDateUtils.getRawCurrentDate()
         )
 
         viewModelScope.launch {

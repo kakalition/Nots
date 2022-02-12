@@ -14,6 +14,7 @@ import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.utils.NoteDateUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
@@ -51,7 +52,7 @@ class HomeFragment : Fragment() {
 
         _fragmentUtils = HomeFragmentUtils(this, findNavController())
         notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
-        notesAdapter = NoteListAdapter(fragmentUtils)
+        notesAdapter = NoteListAdapter(fragmentUtils, NoteDateUtils())
 
         with(fragmentUtils) {
             bindsToolbar()
