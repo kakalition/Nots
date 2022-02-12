@@ -37,7 +37,6 @@
         android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textColor="?attr/colorOnSurface"
         android:text="@string/dialog_reorder_notes_text"
         android:fontFamily="@font/opensans_regular"
