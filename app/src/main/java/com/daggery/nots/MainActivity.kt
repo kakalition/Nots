@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Known Bug: New note not placed at the top of list
 // TODO: Fix by manually using sql commands
+// TODO: Known Issue: MaterialYou text color is not clear
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

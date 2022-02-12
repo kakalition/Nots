@@ -11,7 +11,6 @@ import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
-import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -50,7 +49,7 @@ class HomeFragmentUtils(
                 true
             }
             R.id.delete_all_notes_button -> {
-                fragment.viewModel.deleteAllNotes()
+                showDeleteAllDialog()
                 true
             }
             R.id.settings_button -> {
@@ -101,9 +100,24 @@ class HomeFragmentUtils(
             fragment.requireContext(),
             R.style.NotsAlertDialog
         )
-            .setView(R.layout.dialog_delete)
+            .setView(R.layout.dialog_delete_note)
             .setPositiveButton("Delete") { _, _ ->
                 fragment.viewModel.deleteNote(note)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun showDeleteAllDialog() {
+        MaterialAlertDialogBuilder(
+            fragment.requireContext(),
+            R.style.NotsAlertDialog
+        )
+            .setView(R.layout.dialog_delete_all_notes)
+            .setPositiveButton("Delete") { _, _ ->
+                fragment.viewModel.deleteAllNotes()
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
