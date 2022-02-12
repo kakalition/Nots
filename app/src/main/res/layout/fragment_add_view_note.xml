@@ -27,86 +27,59 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/note_title_input_layout"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
-                android:background="@drawable/bg_note_item_filled"
-                android:hint="@string/fragment_add_view_note_empty_hint"
-                app:boxBackgroundMode="none"
-                app:hintAnimationEnabled="false"
-                app:hintEnabled="false">
+                android:backgroundTint="?attr/colorSurface"
+                android:fontFamily="@font/opensans_bold"
+                android:hint="@string/fragment_add_view_note_title_hint"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:maxLines="2"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="11dp"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="?attr/colorOnSecondary"
+                android:textCursorDrawable="@null" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/note_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/opensans_bold"
-                    android:hint="@string/fragment_add_view_note_title_hint"
-                    android:inputType="textMultiLine"
-                    android:maxLines="2"
-                    android:paddingStart="22dp"
-                    android:paddingEnd="22dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textColorHint="?attr/colorOnSecondary" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/note_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:fontFamily="@font/opensans_light"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorOnSecondary"
+                tools:text="January 29, 2021" />
 
-            <LinearLayout
-                android:id="@+id/note_body_layout"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/bg_note_item_filled"
-                android:orientation="vertical"
-                android:paddingHorizontal="22dp">
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="33dp"
+                android:backgroundTint="?attr/colorSurface"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="top"
+                android:hint="@string/fragment_add_view_note_body_hint"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:paddingStart="0dp"
+                android:paddingTop="0dp"
+                android:paddingEnd="0dp"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?attr/colorOnSecondary"
+                android:textCursorDrawable="@null" />
 
-                <TextView
-                    android:id="@+id/note_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/opensans_light"
-                    android:paddingTop="22dp"
-                    android:textAppearance="?attr/textAppearanceSubtitle2"
-                    android:textColor="?attr/colorOnSecondary"
-                    tools:text="January 29, 2021" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/note_body_input_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/fragment_add_view_note_empty_hint"
-                    android:paddingTop="22dp"
-                    android:paddingBottom="22dp"
-                    app:boxBackgroundMode="none"
-                    app:hintAnimationEnabled="false"
-                    app:hintEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/note_body"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/opensans_regular"
-                        android:gravity="top"
-                        android:hint="@string/fragment_add_view_note_body_hint"
-                        android:inputType="textMultiLine"
-                        android:paddingStart="0dp"
-                        android:paddingTop="0dp"
-                        android:paddingEnd="0dp"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="?attr/colorOnSecondary"
-                        android:textColorHint="?attr/colorOnSecondary" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
