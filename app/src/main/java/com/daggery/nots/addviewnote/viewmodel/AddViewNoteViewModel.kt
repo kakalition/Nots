@@ -20,10 +20,17 @@ class AddViewNoteViewModel @Inject constructor(
     private val noteDao = database.noteDao()
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
 
-    private fun getCurrentDate(): String {
+    fun getRawCurrentDate(): Int {
         val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("yyyymmdd")
+        return formatter.format(date).toInt()
+    }
+
+    fun getParsedDate(rawDate: Int): String {
+        val parser = SimpleDateFormat("yyyymmdd")
+        val parsedDate = parser.parse(rawDate.toString())
         val formatter = SimpleDateFormat.getDateInstance()
-        return formatter.format(date)
+        return formatter.format(parsedDate!!)
     }
 
     /**
@@ -40,7 +47,7 @@ class AddViewNoteViewModel @Inject constructor(
             noteOrder = notes.value?.size ?: 0,
             noteTitle = "",
             noteBody = "",
-            noteDate = getCurrentDate()
+            noteDate = getRawCurrentDate()
         )
     }
 
@@ -51,7 +58,7 @@ class AddViewNoteViewModel @Inject constructor(
             noteOrder = notes.value?.size ?: 0,
             noteTitle = title,
             noteBody = body,
-            noteDate = getCurrentDate()
+            noteDate = getRawCurrentDate()
         )
 
         viewModelScope.launch {

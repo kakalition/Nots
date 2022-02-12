@@ -61,7 +61,7 @@ class NoteListAdapter(
 
                 noteTitle.text = note.noteTitle
                 noteBody.text = note.noteBody
-                noteDate.text = note.noteDate
+                noteDate.text = note.noteDate.toString()
             }
         }
     }

@@ -137,7 +137,7 @@ class AddViewNoteFragmentUtils(
             val note = fragment.viewModel.getNewNote()
             fragment.viewBinding.apply {
                 noteTitle.text = fragment.editableFactory.newEditable(note.noteTitle)
-                noteDate.text = fragment.editableFactory.newEditable(note.noteDate)
+                noteDate.text = fragment.viewModel.getParsedDate(note.noteDate)
                 noteBody.text = fragment.editableFactory.newEditable(note.noteBody)
             }
         } else {
@@ -147,7 +147,7 @@ class AddViewNoteFragmentUtils(
                     fragment.uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
                     fragment.viewBinding.apply {
                         noteTitle.text = fragment.editableFactory.newEditable(it.noteTitle)
-                        noteDate.text = fragment.editableFactory.newEditable(it.noteDate)
+                        noteDate.text = fragment.viewModel.getParsedDate(it.noteDate)
                         noteBody.text = fragment.editableFactory.newEditable(it.noteBody)
                     }
                 }
