@@ -1,6 +1,7 @@
 package com.daggery.nots.home.adapter
 
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,23 +12,15 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.TileNoteItemBinding
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.utils.NoteDateUtils
+import java.util.*
 
 class NoteListAdapter(
-    private val homeFragmentUtils: HomeFragmentUtils,
+    private val notes: MutableList<Note>,
+    val homeFragmentUtils: HomeFragmentUtils,
     private val noteDateUtils: NoteDateUtils
-) : ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCallback) {
+) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
-    companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<Note>() {
-            override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-                return oldItem.uuid == newItem.uuid
-            }
-
-            override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
+    private val diffCallback = NotesDiff(notes, listOf())
 
     inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
@@ -80,11 +73,55 @@ class NoteListAdapter(
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val current = getItem(position)
+        val current = notes[position]
         holder.binding.listItemLayout.apply {
             setOnClickListener{ homeFragmentUtils.noteClickListener(current) }
             setOnTouchListener(OnNoteItemTouchListener(homeFragmentUtils, holder, current))
         }
         holder.bind(current)
+    }
+
+    override fun getItemCount(): Int {
+        return notes.size
+    }
+
+    fun submitList(updatedList: List<Note>) {
+        diffCallback.newList = updatedList
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        notes.clear()
+        notes.addAll(updatedList)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun onItemMoved(fromPos: Int, toPos: Int) {
+        Collections.swap(notes, fromPos, toPos)
+        notifyItemMoved(fromPos, toPos)
+        Log.d("LOL Movement", "from $fromPos to $toPos")
+        homeFragmentUtils.rearrangeNoteOrder(notes[fromPos], notes[toPos])
+    }
+
+}
+
+class NotesDiff(var oldList: List<Note>, var newList: List<Note>) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return oldItem.uuid == newItem.uuid
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return oldItem == newItem
     }
 }

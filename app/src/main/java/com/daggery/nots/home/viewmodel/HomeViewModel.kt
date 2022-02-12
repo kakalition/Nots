@@ -1,5 +1,6 @@
 package com.daggery.nots.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.daggery.nots.data.Note
 import com.daggery.nots.data.NotsDatabase
@@ -20,9 +21,12 @@ class HomeViewModel @Inject constructor(
     // Change note order of corresponding note
     fun rearrangeNoteOrder(currentNote: Note, targetNote: Note) {
         viewModelScope.launch {
+            val tempOrderOne = currentNote.noteOrder
+            val tempOrderTwo = targetNote.noteOrder
+
             val notes = mutableListOf<Note>()
-            notes.add(currentNote.copy(noteOrder = targetNote.noteOrder))
-            notes.add(targetNote.copy(noteOrder = currentNote.noteOrder))
+            notes.add(currentNote.copy(noteOrder = tempOrderTwo))
+            notes.add(targetNote.copy(noteOrder = tempOrderOne))
             database.noteDao().rearrangeNoteOrder(notes)
         }
     }

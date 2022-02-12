@@ -1,14 +1,18 @@
 package com.daggery.nots.home.utils
 
 import android.graphics.Color
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.core.graphics.ColorUtils
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
+import com.daggery.nots.home.adapter.NotesItemTouchHelper
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
 import com.daggery.nots.utils.NotsVibrator
@@ -80,12 +84,20 @@ class HomeFragmentUtils(
             layoutManager = fragment.notesLinearLayoutManager
             adapter = fragment.notesAdapter
         }
+
+        val itemTouchHelper = ItemTouchHelper(NotesItemTouchHelper(fragment.notesAdapter!!))
+        itemTouchHelper.attachToRecyclerView(fragment.viewBinding.notesRecyclerview)
     }
 
     fun bindsFab() {
         fragment.viewBinding.fab.setOnClickListener(fabOnClickListener)
     }
 
+    fun rearrangeNoteOrder(from: Note, to: Note) {
+        Log.d("LOL First Note", from.toString())
+        Log.d("LOL Second Note", to.toString())
+        fragment.viewModel.rearrangeNoteOrder(from, to)
+    }
 
     fun prioritize(note: Note) {
         fragment.viewModel.prioritize(note)
