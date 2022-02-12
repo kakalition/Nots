@@ -12,8 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Upcoming Feature: Have bold italic underline feature
 
-// TODO: Add Reorderable Feature TARGET
-// TODO: Add Delete All TARGET
+// TODO: Add Reorderable Feature
 // TODO: Reorder to Chronological Order Feature
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Preview Note Binder Can Be Unified
@@ -21,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Create Notes Filter
 // TODO: Fix SettingsFragment scrolling
 
-// TODO: Known Bug: New note not placed at the top of list
+// TODO: Known Bug: New note not placed at the top of list TARGET
 // TODO: Fix by manually using sql commands
 // TODO: Known Issue: MaterialYou text color is not clear
 
