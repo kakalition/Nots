@@ -1,5 +1,6 @@
 package com.daggery.nots.settings.theme.utils
 
+import android.util.Log
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.navigation.NavDirections
@@ -27,7 +28,7 @@ private fun TileActiveThemeBinding.bind(themeText: String) {
 fun TileInactiveThemeBinding.bind(fragment: ThemeSettingsFragment, tileThemeData: TileThemeData) {
     val shouldHide = tileThemeData.title == fragment.fragmentUtils.getActiveThemeName()
     if(shouldHide) {
-        root.visibility = View.GONE
+        fragment.viewBinding.gridlayout.removeView(this.root)
     } else {
         root.setOnClickListener(tileThemeData.onClickListener)
         root.background.setTint(
