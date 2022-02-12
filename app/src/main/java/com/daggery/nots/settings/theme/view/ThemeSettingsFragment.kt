@@ -80,11 +80,17 @@ class ThemeSettingsFragment : Fragment() {
             fragmentUtils.navigateToPreview(ThemeEnum.HEATHER_BERRY)
         })
 
+        // Set margin according to its position
+        var maxIndexOfGridLayout = viewBinding.gridlayout.childCount - 1
         viewBinding.gridlayout[0].setMargin(resources, 0, 0, 11, 11)
         viewBinding.gridlayout[1].setMargin(resources, 11, 0, 0, 11)
         viewBinding.gridlayout[2].setMargin(resources, 0, 11, 11, 11)
         viewBinding.gridlayout[3].setMargin(resources, 11, 11, 0, 11)
-
+        // Whether to show last index if Material You is active
+        if(maxIndexOfGridLayout == 4) {
+            viewBinding.gridlayout[4]
+                .setMargin(resources, 0, 11, 11, 11)
+        }
     }
 
     override fun onDestroyView() {

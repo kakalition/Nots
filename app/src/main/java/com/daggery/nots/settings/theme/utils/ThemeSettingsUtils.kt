@@ -87,12 +87,12 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
     fun bindsCurrentTheme() {
         with(fragment.viewBinding.currentTheme) {
             when(getActiveThemeKey()) {
-                R.style.MaterialYouTheme -> bind("Material You Theme")
-                R.style.NordTheme -> bind("Nord Theme")
-                R.style.SteelBlueTheme -> bind("Steel Blue Theme")
-                R.style.RoyalLavenderTheme -> bind("Royal Lavender Theme")
-                R.style.HeatherBerryTheme -> bind("Heather Berry Theme")
-                else -> bind("Dark Theme")
+                R.style.MaterialYouTheme -> bind("Material You")
+                R.style.NordTheme -> bind("Nord")
+                R.style.SteelBlueTheme -> bind("Steel Blue")
+                R.style.RoyalLavenderTheme -> bind("Royal Lavender")
+                R.style.HeatherBerryTheme -> bind("Heather Berry")
+                else -> bind("Dark")
             }
         }
     }

@@ -10,9 +10,7 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Create Theme Selection Tile to Grid
-// TODO: Adjust Margin
-
+// TODO: Upcoming Feature: Have bold italic underline feature
 
 // TODO: Add Reorderable Feature TARGET
 // TODO: Add Delete All TARGET

@@ -37,7 +37,7 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
             settingsItemIcon.setImageResource(R.drawable.ic_theme)
             settingsItemTitle.text = fragment.requireContext()
                 .getString(R.string.fragment_settings_theme)
-            settingsItemBody.text = fragment.viewModel.getThemeName()
+            settingsItemBody.text = fragment.viewModel.getThemeName() + " Theme"
         }
     }
 
