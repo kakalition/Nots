@@ -26,12 +26,12 @@ class MainViewModel @Inject constructor(
 
     fun getThemeName(): String {
         return when(themeKey) {
-            R.style.MaterialYouTheme -> "Material You Theme"
-            R.style.DarkTheme -> "Dark Theme"
-            R.style.NordTheme -> "Nord Theme"
-            R.style.SteelBlueTheme -> "Steel Blue Theme"
-            R.style.RoyalLavenderTheme -> "Royal Lavender Theme"
-            R.style.HeatherBerryTheme -> "Heather Berry Theme"
+            R.style.MaterialYouTheme -> "Material You"
+            R.style.DarkTheme -> "Dark"
+            R.style.NordTheme -> "Nord"
+            R.style.SteelBlueTheme -> "Steel Blue"
+            R.style.RoyalLavenderTheme -> "Royal Lavender"
+            R.style.HeatherBerryTheme -> "Heather Berry"
             else -> "Unspecified"
         }
     }

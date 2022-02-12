@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
+import androidx.core.view.marginEnd
 import androidx.fragment.app.activityViewModels
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
+import com.daggery.nots.setMargin
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.darkThemeTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.heatherBerryTile
 import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
@@ -76,6 +79,18 @@ class ThemeSettingsFragment : Fragment() {
         viewBinding.heatherBerry.bind(this, heatherBerryTile.copy {
             fragmentUtils.navigateToPreview(ThemeEnum.HEATHER_BERRY)
         })
+
+        // Set margin according to its position
+        var maxIndexOfGridLayout = viewBinding.gridlayout.childCount - 1
+        viewBinding.gridlayout[0].setMargin(resources, 0, 0, 11, 11)
+        viewBinding.gridlayout[1].setMargin(resources, 11, 0, 0, 11)
+        viewBinding.gridlayout[2].setMargin(resources, 0, 11, 11, 11)
+        viewBinding.gridlayout[3].setMargin(resources, 11, 11, 0, 11)
+        // Whether to show last index if Material You is active
+        if(maxIndexOfGridLayout == 4) {
+            viewBinding.gridlayout[4]
+                .setMargin(resources, 0, 11, 11, 11)
+        }
     }
 
     override fun onDestroyView() {

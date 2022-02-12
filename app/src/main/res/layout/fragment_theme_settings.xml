@@ -78,45 +78,57 @@
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginBottom="22dp" />
 
-            <include
-                android:id="@+id/dark_theme"
-                layout="@layout/tile_inactive_theme"
+            <GridLayout
+                android:id="@+id/gridlayout"
                 android:layout_width="match_parent"
-                android:layout_height="166dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
-                android:layout_marginBottom="22dp" />
+                android:layout_marginBottom="22dp"
+                android:columnCount="2"
+                android:orientation="horizontal">
 
-            <include
-                android:id="@+id/nord"
-                layout="@layout/tile_inactive_theme"
-                android:layout_width="match_parent"
-                android:layout_height="166dp"
-                android:layout_marginHorizontal="22dp"
-                android:layout_marginBottom="22dp" />
+                <include
+                    android:id="@+id/dark_theme"
+                    layout="@layout/tile_inactive_theme"
+                    android:layout_width="0dp"
+                    android:layout_height="210dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill" />
 
-            <include
-                android:id="@+id/steel_blue"
-                layout="@layout/tile_inactive_theme"
-                android:layout_width="match_parent"
-                android:layout_height="166dp"
-                android:layout_marginHorizontal="22dp"
-                android:layout_marginBottom="22dp" />
+                <include
+                    android:id="@+id/nord"
+                    layout="@layout/tile_inactive_theme"
+                    android:layout_width="0dp"
+                    android:layout_height="210dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill" />
 
-            <include
-                android:id="@+id/royal_lavender"
-                layout="@layout/tile_inactive_theme"
-                android:layout_width="match_parent"
-                android:layout_height="166dp"
-                android:layout_marginHorizontal="22dp"
-                android:layout_marginBottom="22dp" />
+                <include
+                    android:id="@+id/steel_blue"
+                    layout="@layout/tile_inactive_theme"
+                    android:layout_width="0dp"
+                    android:layout_height="210dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill" />
 
-            <include
-                android:id="@+id/heather_berry"
-                layout="@layout/tile_inactive_theme"
-                android:layout_width="match_parent"
-                android:layout_height="166dp"
-                android:layout_marginHorizontal="22dp"
-                android:layout_marginBottom="22dp" />
+                <include
+                    android:id="@+id/royal_lavender"
+                    layout="@layout/tile_inactive_theme"
+                    android:layout_width="0dp"
+                    android:layout_height="210dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill" />
+
+                <include
+                    android:id="@+id/heather_berry"
+                    layout="@layout/tile_inactive_theme"
+                    android:layout_width="0dp"
+                    android:layout_height="210dp"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill" />
+
+            </GridLayout>
+
         </LinearLayout>
 
     </ScrollView>
