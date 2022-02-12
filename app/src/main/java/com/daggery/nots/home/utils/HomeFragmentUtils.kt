@@ -51,7 +51,7 @@ class HomeFragmentUtils(
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
             R.id.reorder_button -> {
-                reorderChronologically()
+                showReorderChronologicallyDialog()
                 true
             }
             R.id.delete_all_notes_button -> {
@@ -143,6 +143,21 @@ class HomeFragmentUtils(
             .setView(R.layout.dialog_delete_all_notes)
             .setPositiveButton("Delete") { _, _ ->
                 fragment.viewModel.deleteAllNotes()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    fun showReorderChronologicallyDialog() {
+        MaterialAlertDialogBuilder(
+            fragment.requireContext(),
+            R.style.NotsAlertDialog
+        )
+            .setView(R.layout.dialog_reorder_notes_chronologically)
+            .setPositiveButton("Reorder") { _, _ ->
+                reorderChronologically()
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()

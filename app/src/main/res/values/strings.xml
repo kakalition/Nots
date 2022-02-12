@@ -21,8 +21,10 @@
     <string name="dialog_delete_icon_description">Trash bin icon</string>
     <string name="dialog_delete_note_header">Delete Note</string>
     <string name="dialog_delete_all_notes_header">Delete All Note</string>
+    <string name="dialog_reorder_notes_header">Reorder Note</string>
     <string name="dialog_delete_note_text">Are you sure want to delete this note?\nThis action cannot be undone.</string>
     <string name="dialog_delete_all_notes_text">Are you sure want to delete all notes?\nThis action cannot be undone.</string>
+    <string name="dialog_reorder_notes_text">This action will reorder all notes according to chronological order, are you sure?</string>
     <string name="dialog_revert_confirmation_icon_description">Pencil icon</string>
     <string name="dialog_revert_confirmation_header">Revert Changes</string>
     <string name="dialog_revert_confirmation_text">Any unsaved changes will be deleted.\nAre your sure?</string>
