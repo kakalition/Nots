@@ -92,6 +92,11 @@ class NoteListAdapter(
 
         notes.clear()
         notes.addAll(updatedList)
+
+        // TODO: Check If Yield Intended Result
+        notesBatch.initNotesBatch(updatedList.toMutableList())
+        // Here
+
         diffResult.dispatchUpdatesTo(this)
     }
 

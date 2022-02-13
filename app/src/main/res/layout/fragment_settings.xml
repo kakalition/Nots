@@ -116,7 +116,19 @@
 
                 <include
                     android:id="@+id/show_time_binding"
-                    layout="@layout/tile_settings" />
+                    layout="@layout/tile_settings_with_switch" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/show_last_edited_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <include
+                    android:id="@+id/show_last_edited_binding"
+                    layout="@layout/tile_settings_with_switch" />
             </FrameLayout>
 
         </LinearLayout>

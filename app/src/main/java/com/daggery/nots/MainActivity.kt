@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
 
-// TODO: Reorder to Chronological Order Feature
+// TODO: Known Issue: MaterialYou text color is not clear
 
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Adjust outlined home layout color
@@ -26,7 +26,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Remove Modal Mode
 
-// TODO: Known Issue: MaterialYou text color is not clear
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

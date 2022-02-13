@@ -48,7 +48,7 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
             )
         }
         fragment.viewBinding.homeLayoutSettingsBinding.apply {
-            settingsItemIcon.setImageResource(R.drawable.ic_earth)
+            settingsItemIcon.setImageResource(R.drawable.ic_list_alt)
             settingsItemTitle.text = fragment.requireContext()
                 .getString(R.string.fragment_settings_home_layout)
             settingsItemBody.text = fragment.viewModel.getLayoutName()
@@ -59,7 +59,16 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
         fragment.viewBinding.showTimeBinding.apply {
             settingsItemIcon.setImageResource(R.drawable.ic_clock)
             settingsItemTitle.text = fragment.requireContext()
-                .getString(R.string.fragment_settings_show_time)
+                .getString(R.string.fragment_settings_show_time_text)
+            settingsItemBody.text = "Disabled"
+        }
+    }
+
+    fun bindsShowLastEditedSettings() {
+        fragment.viewBinding.showLastEditedBinding.apply {
+            settingsItemIcon.setImageResource(R.drawable.ic_today_calendar)
+            settingsItemTitle.text = fragment.requireContext()
+                .getString(R.string.fragment_settings_show_last_edited_text)
             settingsItemBody.text = "Disabled"
         }
     }
