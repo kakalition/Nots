@@ -1,7 +1,6 @@
 package com.daggery.nots.settings.theme.data
 
 import com.daggery.nots.R
-import com.daggery.nots.settings.theme.utils.TileThemeData
 
 class TileThemeDataSource {
 
