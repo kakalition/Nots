@@ -37,6 +37,7 @@ class AddViewNoteFragment : Fragment() {
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
+
     private var _editableFactory: Editable.Factory? = null
     internal val editableFactory get() = _editableFactory!!
 
@@ -85,7 +86,6 @@ class AddViewNoteFragment : Fragment() {
             when {
                 isNewNote == true -> { addEnvironment() }
                 isEditing -> { editEnvironment() }
-                else -> { viewEnvironment() }
             }
         }
 

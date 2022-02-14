@@ -15,6 +15,8 @@ import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
+// TODO: Last Worked: Removing Modal
+
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
     private val args: AddViewNoteFragmentArgs
@@ -38,7 +40,6 @@ class AddViewNoteFragmentUtils(
                     val note = observedNote?.copy(noteTitle = noteTitle, noteBody = noteBody)
                     note?.let {
                         fragment.viewModel.updateNote(it)
-                        viewEnvironment()
                     }
                 }
             }
@@ -61,17 +62,6 @@ class AddViewNoteFragmentUtils(
                 }
             }
         }
-    }
-
-    val onEditTapped = {
-        val noteBody = fragment.viewBinding.noteBody
-        fragment.isEditing = true
-        editEnvironment()
-
-        // Show Keyboard with Pointer at The End of Text
-        noteBody.requestFocus()
-        noteBody.setSelection(noteBody.text?.length ?: 0)
-        showKeyboard(noteBody)
     }
 
     private val navigationClickListener: (View) -> Unit = {
@@ -113,24 +103,21 @@ class AddViewNoteFragmentUtils(
     }
 
     internal fun showOnRevertConfirmation(uneditedNote: UneditedNote) {
-        val isNoteTitleSame = fragment.viewBinding.noteTitle.text.toString() == uneditedNote.noteTitle
+        val isNoteTitleSame =
+            fragment.viewBinding.noteTitle.text.toString() == uneditedNote.noteTitle
         val isNoteBodySame = fragment.viewBinding.noteBody.text.toString() == uneditedNote.noteBody
-        if(isNoteTitleSame && isNoteBodySame) {
-            viewEnvironment()
-        } else {
-            MaterialAlertDialogBuilder(
-                fragment.requireContext(),
-                R.style.NotsAlertDialog
-            )
-                .setView(R.layout.dialog_revert_confirmation)
-                .setPositiveButton("Revert") { _, _ ->
-                    revertChanges(uneditedNote)
-                }
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
-        }
+        MaterialAlertDialogBuilder(
+            fragment.requireContext(),
+            R.style.NotsAlertDialog
+        )
+            .setView(R.layout.dialog_revert_confirmation)
+            .setPositiveButton("Revert") { _, _ ->
+                revertChanges(uneditedNote)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun showFailToAddSnackBar() {
@@ -214,21 +201,6 @@ class AddViewNoteFragmentUtils(
 
     }
 
-    internal fun viewEnvironment() {
-        fragment.isEditing = false
-        fragment.viewBinding.apply {
-/*            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_view)*/
-            noteTitle.isEnabled = false
-            noteBody.isEnabled = false
-        }
-        setMenuVisibility(
-            confirmButton = false,
-            editButton = true,
-            deleteButton = true
-        )
-    }
-
     internal fun editEnvironment() {
         fragment.isEditing = true
         fragment.viewBinding.apply {
@@ -260,7 +232,6 @@ class AddViewNoteFragmentUtils(
             noteTitle.text = fragment.editableFactory.newEditable(uneditedNote.noteTitle)
             noteBody.text = fragment.editableFactory.newEditable(uneditedNote.noteBody)
         }
-        viewEnvironment()
     }
 
 }
