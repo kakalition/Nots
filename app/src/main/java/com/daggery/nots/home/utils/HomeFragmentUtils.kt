@@ -81,7 +81,7 @@ class HomeFragmentUtils(
     }
 
     fun getHomeLayoutKey(): Int {
-        return fragment.mainViewModel.homeLayoutKey
+        return fragment.mainViewModel.themeManager.homeLayoutKey
     }
 
     fun bindsToolbar() {

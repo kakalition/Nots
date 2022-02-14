@@ -17,11 +17,12 @@ import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NoteDateUtils
+import com.daggery.nots.utils.theme.ThemeManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
 
-@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _viewBinding: FragmentHomeBinding? = null
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
 
     internal val viewModel: HomeViewModel by activityViewModels()
     internal val mainViewModel: MainViewModel by activityViewModels()
+
     private var _fragmentUtils: HomeFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 

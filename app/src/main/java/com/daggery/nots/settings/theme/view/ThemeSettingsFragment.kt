@@ -1,27 +1,19 @@
 package com.daggery.nots.settings.theme.view
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.get
-import androidx.core.view.marginEnd
 import androidx.fragment.app.activityViewModels
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.setMargin
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.darkThemeTile
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.heatherBerryTile
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.nordTile
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.royalLavenderTile
-import com.daggery.nots.settings.theme.data.TileThemeDataSource.Companion.steelBlueTile
 import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
-import com.daggery.nots.settings.theme.utils.bind
-import com.daggery.nots.utils.ThemeEnum
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ThemeSettingsFragment : Fragment() {
 
     private var _viewBinding: FragmentThemeSettingsBinding? = null
@@ -49,47 +41,8 @@ class ThemeSettingsFragment : Fragment() {
             revertStatusBarColor()
             bindsToolbar()
             bindsCurrentTheme()
-        }
-
-        // Hide Material You under Android S (SDK 31)
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            with(viewBinding.materialYou) { root.visibility = View.GONE }
-        }
-
-        viewBinding.materialYou.bind(this) {
-            fragmentUtils.navigateToPreview(ThemeEnum.MATERIAL_YOU)
-        }
-
-        viewBinding.darkTheme.bind(this, darkThemeTile.copy {
-            fragmentUtils.navigateToPreview(ThemeEnum.DARK_THEME)
-        })
-
-        viewBinding.nord.bind(this, nordTile.copy {
-            fragmentUtils.navigateToPreview(ThemeEnum.NORD)
-        })
-
-        viewBinding.steelBlue.bind(this, steelBlueTile.copy {
-            fragmentUtils.navigateToPreview(ThemeEnum.STEEL_BLUE)
-        })
-
-        viewBinding.royalLavender.bind(this, royalLavenderTile.copy {
-            fragmentUtils.navigateToPreview(ThemeEnum.ROYAL_LAVENDER)
-        })
-
-        viewBinding.heatherBerry.bind(this, heatherBerryTile.copy {
-            fragmentUtils.navigateToPreview(ThemeEnum.HEATHER_BERRY)
-        })
-
-        // Set margin according to its position
-        var maxIndexOfGridLayout = viewBinding.gridlayout.childCount - 1
-        viewBinding.gridlayout[0].setMargin(resources, 0, 0, 11, 11)
-        viewBinding.gridlayout[1].setMargin(resources, 11, 0, 0, 11)
-        viewBinding.gridlayout[2].setMargin(resources, 0, 11, 11, 11)
-        viewBinding.gridlayout[3].setMargin(resources, 11, 11, 0, 11)
-        // Whether to show last index if Material You is active
-        if(maxIndexOfGridLayout == 4) {
-            viewBinding.gridlayout[4]
-                .setMargin(resources, 0, 11, 11, 11)
+            bindsMaterialYouIfAvailable()
+            bindsAvailableTheme()
         }
     }
 
