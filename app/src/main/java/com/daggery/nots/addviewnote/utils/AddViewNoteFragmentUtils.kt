@@ -159,31 +159,6 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    // TODO: Could be optimized
-    internal fun bindsFields(uuid: String) {
-        with(fragment) {
-            if(uuid.isBlank()) {
-                viewBinding.apply {
-                    noteTitle.text = editableFactory.newEditable("")
-                    noteDate.text = viewModel.noteDateUtils.getParsedDate(viewModel.noteDateUtils.getRawCurrentDate())
-                    noteBody.text = editableFactory.newEditable("")
-                }
-            } else {
-                viewModel.getNote(uuid).observeOnce(fragment.viewLifecycleOwner) {
-                    it?.let {
-                        val note = it
-                        // uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
-                        viewBinding.apply {
-                            noteTitle.text = editableFactory.newEditable(note.noteTitle)
-                            noteDate.text = viewModel.noteDateUtils.getParsedDate(note.noteDate)
-                            noteBody.text = editableFactory.newEditable(note.noteBody)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     fun showKeyboard(view: View) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

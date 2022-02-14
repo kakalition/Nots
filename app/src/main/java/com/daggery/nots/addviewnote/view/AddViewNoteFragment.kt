@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
+import com.daggery.nots.addviewnote.utils.NoteUtils
 import com.daggery.nots.addviewnote.viewmodel.AddViewNoteViewModel
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.google.android.material.color.MaterialColors
@@ -39,8 +40,8 @@ class AddViewNoteFragment : Fragment() {
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
-    private var _editableFactory: Editable.Factory? = null
-    internal val editableFactory get() = _editableFactory!!
+    private var _noteUtils: NoteUtils? = null
+    private val noteUtils get() = _noteUtils!!
 
     var isNewNote: Boolean? = null
 
@@ -77,13 +78,13 @@ class AddViewNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         _fragmentUtils = AddViewNoteFragmentUtils(this, args)
-        _editableFactory = Editable.Factory()
+        _noteUtils = NoteUtils(this)
         isNewNote = args.uuid.isBlank()
+
+        noteUtils.bindsFields(args.uuid)
 
         with(fragmentUtils) {
             bindsToolbar()
-            bindsFields(args.uuid)
-
             if(isNewNote == true) addEnvironment() else editEnvironment()
         }
 
@@ -108,7 +109,7 @@ class AddViewNoteFragment : Fragment() {
         super.onDestroyView()
         _viewBinding = null
         _fragmentUtils = null
-        _editableFactory = null
+        _noteUtils = null
     }
 
     private fun getMaterialTransformTransition(): MaterialContainerTransform {
