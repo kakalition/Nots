@@ -186,7 +186,7 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    private fun showKeyboard(view: View) {
+    fun showKeyboard(view: View) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(view, 0)
