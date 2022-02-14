@@ -13,6 +13,9 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Remove Modal Mode (TARGET)
 // TODO: Press Enter on Title Field will move cursor to Body (NEXT TARGET)
 
+// TODO: Undo Redo Feature
+// TODO: Undo All Changes
+
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
 // tODO: Upcoming Feature: Tags

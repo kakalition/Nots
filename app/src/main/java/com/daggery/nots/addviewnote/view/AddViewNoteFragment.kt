@@ -17,9 +17,6 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 
-
-// TODO: Handle Long Text Body, possibly solved by using linear layout
-
 data class UneditedNote(
     val noteTitle: String,
     val noteBody: String

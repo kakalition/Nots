@@ -92,15 +92,19 @@ class AddViewNoteFragmentUtils(
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
+            R.id.undo_button -> {
+                true
+            }
+            R.id.redo_button -> {
+                true
+            }
+            R.id.undo_all_button -> {
+                true
+            }
             R.id.confirm_button -> {
                 onConfirmTapped()
                 true
             }
-            R.id.edit_button -> {
-                onEditTapped()
-                true
-            }
-            // TODO: Decide
             R.id.delete_button -> {
                 true
             }
@@ -240,10 +244,13 @@ class AddViewNoteFragmentUtils(
         )
     }
 
+    // TODO: Implement correct behavior
     private fun setMenuVisibility(confirmButton: Boolean, editButton: Boolean, deleteButton: Boolean) {
         fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
+            findItem(R.id.undo_button).isVisible = true
+            findItem(R.id.redo_button).isVisible = true
+            findItem(R.id.undo_all_button).isVisible = true
             findItem(R.id.confirm_button).isVisible = confirmButton
-            findItem(R.id.edit_button).isVisible = editButton
             findItem(R.id.delete_button).isVisible = deleteButton
         }
     }
