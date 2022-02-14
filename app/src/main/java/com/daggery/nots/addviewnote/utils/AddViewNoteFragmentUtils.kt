@@ -3,7 +3,6 @@ package com.daggery.nots.addviewnote.utils
 import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -11,8 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.addviewnote.view.AddViewNoteFragmentArgs
-import com.daggery.nots.addviewnote.view.UneditedNote
-import com.daggery.nots.data.Note
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -74,27 +71,11 @@ class AddViewNoteFragmentUtils(
     }
 
     private val navigationClickListener: (View) -> Unit = {
-        val isKeyboardShown = titleHasFocus || bodyHasFocus
         if(fragment.isNewNote == true) {
             onBackPressedWhenNewNote()
         } else {
             updateNoteNavigateUp()
         }
-/*
-        with(fragment) {
-            when {
-                isKeyboardShown -> {
-                    hideKeyboard(it)
-                    clearNoteTypingFocus()
-                }
-                !isKeyboardShown -> {
-                    // showOnRevertConfirmation(uneditedNote)
-                    findNavController().navigateUp()
-                }
-                else -> findNavController().navigateUp()
-            }
-        }
-*/
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
@@ -119,17 +100,14 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun showOnRevertConfirmation(uneditedNote: UneditedNote) {
-        val isNoteTitleSame =
-            fragment.viewBinding.noteTitle.text.toString() == uneditedNote.noteTitle
-        val isNoteBodySame = fragment.viewBinding.noteBody.text.toString() == uneditedNote.noteBody
+    private fun showUnsavedConfirmationDialog() {
         MaterialAlertDialogBuilder(
             fragment.requireContext(),
             R.style.NotsAlertDialog
         )
-            .setView(R.layout.dialog_revert_confirmation)
-            .setPositiveButton("Revert") { _, _ ->
-                revertChanges(uneditedNote)
+            .setView(R.layout.dialog_unsaved_confirmation)
+            .setPositiveButton("Sure") { _, _ ->
+                fragment.findNavController().navigateUp()
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
@@ -153,11 +131,11 @@ class AddViewNoteFragmentUtils(
         if(isNewNoteInvalid()) {
             fragment.findNavController().navigateUp()
         } else {
-            showOnRevertConfirmation(UneditedNote("A", "N"))
+            showUnsavedConfirmationDialog()
         }
     }
 
-    fun isNewNoteInvalid(): Boolean {
+    private fun isNewNoteInvalid(): Boolean {
         with(fragment.viewBinding) {
             return fragment.isNewNote == true && noteTitle.text.isNullOrBlank() && noteBody.text.isNullOrBlank()
         }
@@ -218,17 +196,17 @@ class AddViewNoteFragmentUtils(
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
+/*
     internal fun clearNoteTypingFocus() {
         with(fragment.viewBinding) {
             noteTitle.clearFocus()
             noteBody.clearFocus()
         }
     }
+*/
 
     internal fun addEnvironment() {
         fragment.viewBinding.apply {
-/*            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_new_note)*/
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
 
@@ -246,8 +224,6 @@ class AddViewNoteFragmentUtils(
 
     internal fun editEnvironment() {
         fragment.viewBinding.apply {
-/*            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_edit)*/
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
         }
@@ -266,13 +242,6 @@ class AddViewNoteFragmentUtils(
             findItem(R.id.undo_all_button).isVisible = true
             findItem(R.id.confirm_button).isVisible = confirmButton
             findItem(R.id.delete_button).isVisible = deleteButton
-        }
-    }
-
-    private fun revertChanges(uneditedNote: UneditedNote) {
-        fragment.viewBinding.apply {
-            noteTitle.text = fragment.editableFactory.newEditable(uneditedNote.noteTitle)
-            noteBody.text = fragment.editableFactory.newEditable(uneditedNote.noteBody)
         }
     }
 

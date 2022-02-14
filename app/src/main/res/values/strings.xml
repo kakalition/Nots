@@ -25,9 +25,9 @@
     <string name="dialog_delete_note_text">Are you sure want to delete this note?\nThis action cannot be undone.</string>
     <string name="dialog_delete_all_notes_text">Are you sure want to delete all notes?\nThis action cannot be undone.</string>
     <string name="dialog_reorder_notes_text">This action will reorder all notes according to chronological order.\nAre you sure?</string>
-    <string name="dialog_revert_confirmation_icon_description">Pencil icon</string>
-    <string name="dialog_revert_confirmation_header">Revert Changes</string>
-    <string name="dialog_revert_confirmation_text">Any unsaved changes will be deleted.\nAre your sure?</string>
+    <string name="dialog_unsaved_confirmation_icon_description">Pencil icon</string>
+    <string name="dialog_unsaved_confirmation_header">Unsaved Note</string>
+    <string name="dialog_unsaved_confirmation_text">Any unsaved note will be deleted.\nAre your sure?</string>
     <string name="layout_item_note_swipe_description">Swipe background</string>
     <string name="layout_item_note_bookmark_icon_description">Bookmark</string>
     <string name="layout_item_note_delete_icon_description">Delete</string>
