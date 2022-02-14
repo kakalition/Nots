@@ -37,7 +37,7 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
             settingsItemIcon.setImageResource(R.drawable.ic_theme)
             settingsItemTitle.text = fragment.requireContext()
                 .getString(R.string.fragment_settings_theme)
-            settingsItemBody.text = fragment.viewModel.getThemeName() + " Theme"
+            settingsItemBody.text = fragment.viewModel.themeManager.getThemeName() + " Theme"
         }
     }
 
@@ -51,7 +51,7 @@ class SettingsFragmentUtils(private val fragment: SettingsFragment) {
             settingsItemIcon.setImageResource(R.drawable.ic_earth)
             settingsItemTitle.text = fragment.requireContext()
                 .getString(R.string.fragment_settings_home_layout)
-            settingsItemBody.text = fragment.viewModel.getLayoutName()
+            settingsItemBody.text = fragment.viewModel.themeManager.getLayoutName()
         }
     }
 

@@ -14,7 +14,7 @@ class HomeLayoutSettingsUtils(private val fragment: HomeLayoutSettingsFragment) 
     }
 
     fun getHomeLayoutKey(): Int {
-        return fragment.viewModel.homeLayoutKey
+        return fragment.themeManager.homeLayoutKey
     }
 
     fun bindsToolbar() {
