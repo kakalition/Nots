@@ -14,6 +14,8 @@ import javax.inject.Inject
 
 // TODO: Theme Manager Should be Injected
 
+// TODO NEXT: Check NoteListAdapter: 97
+
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
 

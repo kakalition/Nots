@@ -38,7 +38,8 @@
     <string name="fragment_preview_theme_preview_text">Preview</string>
     <string name="fragment_preview_theme_note_title">Preview %1$s</string>
     <string name="fragment_settings_language">Language</string>
-    <string name="fragment_settings_show_time">Show Time</string>
+    <string name="fragment_settings_show_time_text">Show Time</string>
+    <string name="fragment_settings_show_last_edited_text">Show Last Edited</string>
     <string name="fragment_settings_theme">Theme</string>
     <string name="fragment_settings_home_layout">Home Layout</string>
     <string name="fragment_settings_note_layout">Note Layout</string>

@@ -39,6 +39,7 @@ class SettingsFragment : Fragment() {
             bindsThemeSettings()
             bindsHomeLayoutSettings()
             bindsShowTimeSettings()
+            bindsShowLastEditedSettings()
         }
     }
 
