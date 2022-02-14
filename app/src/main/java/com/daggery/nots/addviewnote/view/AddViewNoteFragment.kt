@@ -4,9 +4,11 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -33,8 +35,6 @@ class AddViewNoteFragment : Fragment() {
     internal val viewModel: AddViewNoteViewModel by activityViewModels()
 
     private val args: AddViewNoteFragmentArgs by navArgs()
-
-    private var screenHeight: Int = 0
 
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
@@ -76,8 +76,6 @@ class AddViewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        screenHeight = Resources.getSystem().displayMetrics.heightPixels
-
         _fragmentUtils = AddViewNoteFragmentUtils(this, args)
         _editableFactory = Editable.Factory()
         isNewNote = args.uuid.isBlank()
@@ -93,6 +91,8 @@ class AddViewNoteFragment : Fragment() {
             noteTitle.setOnFocusChangeListener { _, hasFocus ->
                 fragmentUtils.titleHasFocus = hasFocus
             }
+            noteTitle.addTextChangedListener(fragmentUtils.titleTextWatcher)
+
             noteBody.setOnFocusChangeListener { _, hasFocus ->
                 fragmentUtils.bodyHasFocus = hasFocus
             }
@@ -125,5 +125,4 @@ class AddViewNoteFragment : Fragment() {
             drawingViewId = R.id.fragment_container_view
         }
     }
-
 }

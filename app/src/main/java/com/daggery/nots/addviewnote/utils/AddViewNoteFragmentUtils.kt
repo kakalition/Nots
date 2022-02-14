@@ -1,6 +1,8 @@
 package com.daggery.nots.addviewnote.utils
 
 import android.app.Activity
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +26,24 @@ class AddViewNoteFragmentUtils(
 
     var titleHasFocus = false
     var bodyHasFocus = false
+
+    val titleTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        // Focus to note body when pressing enter while text line is two
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (s?.count { it == '\n' } == 1) {
+                fragment.viewBinding.noteBody.requestFocus()
+            }
+        }
+
+        // Remove last blank newline
+        override fun afterTextChanged(s: Editable?) {
+            if (s?.count { it == '\n' } == 1) {
+                s.delete(s.lastIndexOf('\n'), s.length)
+            }
+        }
+    }
 
     val onConfirmTapped = {
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
