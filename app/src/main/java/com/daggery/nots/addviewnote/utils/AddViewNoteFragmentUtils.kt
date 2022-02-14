@@ -30,19 +30,9 @@ class AddViewNoteFragmentUtils(
         val noteBody = fragment.viewBinding.noteBody.text.toString()
 
         val isNoteInvalid = noteTitle.isBlank() || noteBody.isBlank()
-        val isUuidValid = args.uuid.isNotBlank()
 
         when {
             isNoteInvalid -> { showFailToAddSnackBar() }
-            isUuidValid -> {
-                val noteLiveData = fragment.viewModel.getNote(args.uuid)
-                noteLiveData.observeOnce(fragment) { observedNote ->
-                    val note = observedNote?.copy(noteTitle = noteTitle, noteBody = noteBody)
-                    note?.let {
-                        fragment.viewModel.updateNote(it)
-                    }
-                }
-            }
             else -> {
                 fragment.viewModel.notes.observeOnce(fragment.viewLifecycleOwner) {
                     var upperIndex = -1
@@ -56,7 +46,6 @@ class AddViewNoteFragmentUtils(
                             }
                         }
                     }
-
                     fragment.viewModel.addNote(noteTitle, noteBody, upperIndex)
                     fragment.findNavController().navigateUp()
                 }
@@ -68,12 +57,13 @@ class AddViewNoteFragmentUtils(
         val isKeyboardShown = titleHasFocus || bodyHasFocus
         with(fragment) {
             when {
-                isEditing && isKeyboardShown -> {
+                isKeyboardShown -> {
                     hideKeyboard(it)
                     clearNoteTypingFocus()
                 }
-                isEditing && !isKeyboardShown -> {
-                    showOnRevertConfirmation(uneditedNote)
+                !isKeyboardShown -> {
+                    // showOnRevertConfirmation(uneditedNote)
+                    findNavController().navigateUp()
                 }
                 else -> findNavController().navigateUp()
             }
@@ -120,6 +110,12 @@ class AddViewNoteFragmentUtils(
             .show()
     }
 
+    fun isNewNoteInvalid(): Boolean {
+        with(fragment.viewBinding) {
+            return fragment.isNewNote == true && noteTitle.text.isNullOrBlank() && noteBody.text.isNullOrBlank()
+        }
+    }
+
     private fun showFailToAddSnackBar() {
         val snackBar = Snackbar.make(
             fragment.viewBinding.addViewNoteRoot,
@@ -151,7 +147,7 @@ class AddViewNoteFragmentUtils(
                 viewModel.getNote(uuid).observeOnce(fragment.viewLifecycleOwner) {
                     it?.let {
                         val note = it
-                        uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
+                        // uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
                         viewBinding.apply {
                             noteTitle.text = editableFactory.newEditable(note.noteTitle)
                             noteDate.text = viewModel.noteDateUtils.getParsedDate(note.noteDate)
@@ -196,13 +192,12 @@ class AddViewNoteFragmentUtils(
         setMenuVisibility(
             confirmButton = true,
             editButton = false,
-            deleteButton = false
+            deleteButton = true
         )
 
     }
 
     internal fun editEnvironment() {
-        fragment.isEditing = true
         fragment.viewBinding.apply {
 /*            toolbarBinding.toolbarTitle.text = fragment.requireContext()
                 .getString(R.string.toolbar_title_edit)*/
@@ -210,9 +205,9 @@ class AddViewNoteFragmentUtils(
             noteBody.isEnabled = true
         }
         setMenuVisibility(
-            confirmButton = true,
+            confirmButton = false,
             editButton = false,
-            deleteButton = false
+            deleteButton = true
         )
     }
 

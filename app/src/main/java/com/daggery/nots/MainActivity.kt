@@ -12,6 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Remove Modal Mode (TARGET)
 // TODO: Press Enter on Title Field will move cursor to Body (NEXT TARGET)
+// TODO: Change List Item Text Weight, match it with addviewfragment
+
+// TODO: Migrate to Kotlin Flow
 
 // TODO: Undo Redo Feature
 // TODO: Undo All Changes

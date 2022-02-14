@@ -41,14 +41,15 @@ class AddViewNoteFragment : Fragment() {
     private var _editableFactory: Editable.Factory? = null
     internal val editableFactory get() = _editableFactory!!
 
-    private var isNewNote: Boolean? = null
-    internal var isEditing: Boolean = false
-
-    internal lateinit var uneditedNote: UneditedNote
+    var isNewNote: Boolean? = null
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            if(isEditing) { fragmentUtils.showOnRevertConfirmation(uneditedNote) }
+            if(fragmentUtils.isNewNoteInvalid()) {
+                // fragmentUtils.showOnRevertConfirmation(uneditedNote)
+                this.isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
             else {
                 this.isEnabled = false
                 requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -83,10 +84,7 @@ class AddViewNoteFragment : Fragment() {
             bindsToolbar()
             bindsFields(args.uuid)
 
-            when {
-                isNewNote == true -> { addEnvironment() }
-                isEditing -> { editEnvironment() }
-            }
+            if(isNewNote == true) addEnvironment() else editEnvironment()
         }
 
         with(viewBinding) {
