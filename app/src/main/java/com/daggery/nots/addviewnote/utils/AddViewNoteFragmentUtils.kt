@@ -197,8 +197,8 @@ class AddViewNoteFragmentUtils(
 
     internal fun addEnvironment() {
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_new_note)
+/*            toolbarBinding.toolbarTitle.text = fragment.requireContext()
+                .getString(R.string.toolbar_title_new_note)*/
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
 
@@ -217,8 +217,8 @@ class AddViewNoteFragmentUtils(
     internal fun viewEnvironment() {
         fragment.isEditing = false
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_view)
+/*            toolbarBinding.toolbarTitle.text = fragment.requireContext()
+                .getString(R.string.toolbar_title_view)*/
             noteTitle.isEnabled = false
             noteBody.isEnabled = false
         }
@@ -232,8 +232,8 @@ class AddViewNoteFragmentUtils(
     internal fun editEnvironment() {
         fragment.isEditing = true
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_edit)
+/*            toolbarBinding.toolbarTitle.text = fragment.requireContext()
+                .getString(R.string.toolbar_title_edit)*/
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
         }

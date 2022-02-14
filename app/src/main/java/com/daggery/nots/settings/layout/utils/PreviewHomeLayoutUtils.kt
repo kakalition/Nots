@@ -61,7 +61,9 @@ class PreviewHomeLayoutUtils(private val fragment: PreviewHomeLayoutFragment) {
 
     fun bindsToolbar() {
         fragment.viewBinding.toolbarBinding.apply {
+/*
             toolbarTitle.text = "Preview"
+*/
             toolbar.setNavigationIcon(R.drawable.ic_back)
             toolbar.setNavigationOnClickListener(navigationClickListener)
         }

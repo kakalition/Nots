@@ -5,30 +5,30 @@
         android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_undo"
         android:id="@+id/undo_button"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:icon="@drawable/ic_undo"/>
     <item
         android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_redo"
         android:id="@+id/redo_button"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:icon="@drawable/ic_redo"/>
     <item
         android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_undo_all"
         android:id="@+id/undo_all_button"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:icon="@drawable/ic_undo_all"/>
     <item
         android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_confirm"
         android:id="@+id/confirm_button"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:icon="@drawable/ic_check"/>
     <item
         android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_delete"
         android:id="@+id/delete_button"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:icon="@drawable/ic_delete"/>
 </menu>
