@@ -10,14 +10,11 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO NEXT: Check NoteListAdapter: 97
-
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
-// TODO: Known Bug: NoteOrder not incrementing
 
 // TODO: Reorder to Chronological Order Feature
 

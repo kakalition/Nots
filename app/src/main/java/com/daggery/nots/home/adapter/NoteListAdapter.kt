@@ -1,11 +1,9 @@
 package com.daggery.nots.home.adapter
 
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
@@ -93,9 +91,6 @@ class NoteListAdapter(
         notes.clear()
         notes.addAll(updatedList)
 
-        // TODO: Check If Yield Intended Result
-        //notesBatch.initNotesBatch(updatedList.toMutableList())
-
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -106,21 +101,17 @@ class NoteListAdapter(
     }
 
     fun updateDatabase() {
-        homeFragmentUtils.rearrangeNoteOrder(notesBatch.notesBatch.toMutableList())
+        homeFragmentUtils.rearrangeNoteOrder(notesBatch.batch.toMutableList())
     }
 }
 
 class NotesBatch(private var _notesBatch: MutableList<Note>) {
 
-    fun initNotesBatch(newNotesBatch: MutableList<Note>) {
-        _notesBatch = newNotesBatch
-    }
-
-    val notesBatch get() = _notesBatch.toList()
+    val batch get() = _notesBatch.toList()
 
     fun updateBatch(firstIndex: Int, secondIndex: Int) {
-        val firstNote = notesBatch[firstIndex]
-        val secondNote = notesBatch[secondIndex]
+        val firstNote = batch[firstIndex]
+        val secondNote = batch[secondIndex]
 
         val tempFirstNoteOrder = firstNote.noteOrder
         val tempSecondNoteOrder = secondNote.noteOrder
