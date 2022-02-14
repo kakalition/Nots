@@ -94,8 +94,7 @@ class NoteListAdapter(
         notes.addAll(updatedList)
 
         // TODO: Check If Yield Intended Result
-        notesBatch.initNotesBatch(updatedList.toMutableList())
-        // Here
+        //notesBatch.initNotesBatch(updatedList.toMutableList())
 
         diffResult.dispatchUpdatesTo(this)
     }
@@ -131,16 +130,6 @@ class NotesBatch(private var _notesBatch: MutableList<Note>) {
 
         _notesBatch[firstNoteIndex] = firstNote.copy(noteOrder = tempSecondNoteOrder)
         _notesBatch[secondNoteIndex] = secondNote.copy(noteOrder = tempFirstNoteOrder)
-
-        notesBatch.forEachIndexed { index, note ->
-            Log.d("LOL $index", note.toString())
-        }
-    }
-
-    fun getNotesBatchAndReset(): List<Note> {
-        val temp = notesBatch
-        _notesBatch.clear()
-        return temp
     }
 }
 

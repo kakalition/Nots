@@ -44,12 +44,15 @@ class AddViewNoteFragmentUtils(
             }
             else -> {
                 fragment.viewModel.notes.observeOnce(fragment.viewLifecycleOwner) {
-                    var upperIndex = 0
+                    var upperIndex = -1
 
                     // Get upper index
-                    it.forEach { note ->
-                        if (note.noteOrder > upperIndex) {
-                            upperIndex = note.noteOrder + 1
+                    if(it.isEmpty()) { upperIndex = 0 }
+                    else {
+                        it.forEach { note ->
+                            if (note.noteOrder >= upperIndex) {
+                                upperIndex = note.noteOrder + 1
+                            }
                         }
                     }
 
