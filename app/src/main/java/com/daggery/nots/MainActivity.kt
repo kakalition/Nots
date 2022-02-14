@@ -11,6 +11,7 @@ import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Remove Modal Mode (TARGET)
+// TODO: Press Enter on Title Field will move cursor to Body (NEXT TARGET)
 
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
@@ -24,11 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Adjust outlined home layout color
 
 // TODO: Preview Note Binder Can Be Unified
-
-
-// TODO: Press Enter on Title Field will move cursor to Body
-
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
