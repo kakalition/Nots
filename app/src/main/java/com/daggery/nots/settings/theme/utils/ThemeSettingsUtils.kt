@@ -46,7 +46,6 @@ fun TileMaterialYouThemeBinding.bind(fragment: ThemeSettingsFragment, onClickLis
     root.setOnClickListener(onClickListener)
 }
 
-
 class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
 
     private val navigationClickListener: (View) -> Unit = { _: View ->

@@ -11,7 +11,9 @@ import com.daggery.nots.MainViewModel
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
 import com.daggery.nots.setMargin
 import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ThemeSettingsFragment : Fragment() {
 
     private var _viewBinding: FragmentThemeSettingsBinding? = null

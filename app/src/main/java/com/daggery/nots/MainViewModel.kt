@@ -11,10 +11,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val dataStoreManager: DataStoreManager
+    private val dataStoreManager: DataStoreManager,
+    val themeManager: ThemeManager,
 ) : ViewModel() {
-
-    val themeManager = ThemeManager(dataStoreManager)
 
     fun applyTheme(@StyleRes themeRes: Int) {
         viewModelScope.launch {
@@ -29,5 +28,4 @@ class MainViewModel @Inject constructor(
         }
         themeManager.setHomeLayoutKey(layoutId)
     }
-
 }

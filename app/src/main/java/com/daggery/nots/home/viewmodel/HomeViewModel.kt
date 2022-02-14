@@ -15,6 +15,7 @@ class HomeViewModel @Inject constructor(
 
     // Get note dao
     private val noteDao = database.noteDao()
+
     // Get all notes
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
 
