@@ -55,6 +55,12 @@ class AddViewNoteFragmentUtils(
 
     private val navigationClickListener: (View) -> Unit = {
         val isKeyboardShown = titleHasFocus || bodyHasFocus
+        if(fragment.isNewNote == true) {
+            onBackPressedWhenNewNote()
+        } else {
+            updateNoteNavigateUp()
+        }
+/*
         with(fragment) {
             when {
                 isKeyboardShown -> {
@@ -68,6 +74,7 @@ class AddViewNoteFragmentUtils(
                 else -> findNavController().navigateUp()
             }
         }
+*/
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
@@ -108,6 +115,26 @@ class AddViewNoteFragmentUtils(
                 dialog.dismiss()
             }
             .show()
+    }
+
+    // TODO: Change to let scope resolution
+    fun updateNoteNavigateUp() {
+        fragment.viewModel.getNote(args.uuid).observeOnce(fragment.viewLifecycleOwner) {
+            val newNote = it!!.copy(
+                noteTitle = fragment.viewBinding.noteTitle.text.toString(),
+                noteBody = fragment.viewBinding.noteBody.text.toString()
+            )
+            fragment.viewModel.updateNote(newNote)
+            fragment.findNavController().navigateUp()
+        }
+    }
+
+    fun onBackPressedWhenNewNote() {
+        if(isNewNoteInvalid()) {
+            fragment.findNavController().navigateUp()
+        } else {
+            showOnRevertConfirmation(UneditedNote("A", "N"))
+        }
     }
 
     fun isNewNoteInvalid(): Boolean {
@@ -165,13 +192,13 @@ class AddViewNoteFragmentUtils(
         inputMethodManager.showSoftInput(view, 0)
     }
 
-    private fun hideKeyboard(view: View) {
+    internal fun hideKeyboard(view: View) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
-    private fun clearNoteTypingFocus() {
+    internal fun clearNoteTypingFocus() {
         with(fragment.viewBinding) {
             noteTitle.clearFocus()
             noteBody.clearFocus()
@@ -192,7 +219,7 @@ class AddViewNoteFragmentUtils(
         setMenuVisibility(
             confirmButton = true,
             editButton = false,
-            deleteButton = true
+            deleteButton = false
         )
 
     }

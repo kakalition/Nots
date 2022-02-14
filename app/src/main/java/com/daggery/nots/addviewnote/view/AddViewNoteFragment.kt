@@ -4,10 +4,12 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
@@ -37,7 +39,6 @@ class AddViewNoteFragment : Fragment() {
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
-
     private var _editableFactory: Editable.Factory? = null
     internal val editableFactory get() = _editableFactory!!
 
@@ -45,14 +46,15 @@ class AddViewNoteFragment : Fragment() {
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            if(fragmentUtils.isNewNoteInvalid()) {
-                // fragmentUtils.showOnRevertConfirmation(uneditedNote)
-                this.isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
-            else {
-                this.isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+            when (isNewNote) {
+                true -> { fragmentUtils.onBackPressedWhenNewNote() }
+                false -> {
+                    fragmentUtils.updateNoteNavigateUp()
+                }
+                else -> {
+                    this.isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
             }
         }
     }
