@@ -1,7 +1,8 @@
 package com.daggery.nots.addviewnote.utils
 
 import android.app.Activity
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -9,11 +10,11 @@ import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.addviewnote.view.AddViewNoteFragmentArgs
-import com.daggery.nots.addviewnote.view.UneditedNote
-import com.daggery.nots.data.Note
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+
+// TODO: Last Worked: Removing Modal
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
@@ -23,36 +24,45 @@ class AddViewNoteFragmentUtils(
     var titleHasFocus = false
     var bodyHasFocus = false
 
+    val titleTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        // Focus to note body when pressing enter while text line is two
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (s?.count { it == '\n' } == 1) {
+                fragment.viewBinding.noteBody.requestFocus()
+            }
+        }
+
+        // Remove last blank newline
+        override fun afterTextChanged(s: Editable?) {
+            if (s?.count { it == '\n' } == 1) {
+                s.delete(s.lastIndexOf('\n'), s.length)
+            }
+        }
+    }
+
     val onConfirmTapped = {
         val noteTitle = fragment.viewBinding.noteTitle.text.toString()
         val noteBody = fragment.viewBinding.noteBody.text.toString()
 
         val isNoteInvalid = noteTitle.isBlank() || noteBody.isBlank()
-        val isUuidValid = args.uuid.isNotBlank()
 
         when {
             isNoteInvalid -> { showFailToAddSnackBar() }
-            isUuidValid -> {
-                val noteLiveData = fragment.viewModel.getNote(args.uuid)
-                noteLiveData.observeOnce(fragment) { observedNote ->
-                    val note = observedNote?.copy(noteTitle = noteTitle, noteBody = noteBody)
-                    note?.let {
-                        fragment.viewModel.updateNote(it)
-                        viewEnvironment()
-                    }
-                }
-            }
             else -> {
                 fragment.viewModel.notes.observeOnce(fragment.viewLifecycleOwner) {
-                    var upperIndex = 0
+                    var upperIndex = -1
 
                     // Get upper index
-                    it.forEach { note ->
-                        if (note.noteOrder > upperIndex) {
-                            upperIndex = note.noteOrder + 1
+                    if(it.isEmpty()) { upperIndex = 0 }
+                    else {
+                        it.forEach { note ->
+                            if (note.noteOrder >= upperIndex) {
+                                upperIndex = note.noteOrder + 1
+                            }
                         }
                     }
-
                     fragment.viewModel.addNote(noteTitle, noteBody, upperIndex)
                     fragment.findNavController().navigateUp()
                 }
@@ -60,44 +70,29 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    val onEditTapped = {
-        val noteBody = fragment.viewBinding.noteBody
-        fragment.isEditing = true
-        editEnvironment()
-
-        // Show Keyboard with Pointer at The End of Text
-        noteBody.requestFocus()
-        noteBody.setSelection(noteBody.text?.length ?: 0)
-        showKeyboard(noteBody)
-    }
-
     private val navigationClickListener: (View) -> Unit = {
-        val isKeyboardShown = titleHasFocus || bodyHasFocus
-        with(fragment) {
-            when {
-                isEditing && isKeyboardShown -> {
-                    hideKeyboard(it)
-                    clearNoteTypingFocus()
-                }
-                isEditing && !isKeyboardShown -> {
-                    showOnRevertConfirmation(uneditedNote)
-                }
-                else -> findNavController().navigateUp()
-            }
+        if(fragment.isNewNote == true) {
+            onBackPressedWhenNewNote()
+        } else {
+            updateNoteNavigateUp()
         }
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
+            R.id.undo_button -> {
+                true
+            }
+            R.id.redo_button -> {
+                true
+            }
+            R.id.undo_all_button -> {
+                true
+            }
             R.id.confirm_button -> {
                 onConfirmTapped()
                 true
             }
-            R.id.edit_button -> {
-                onEditTapped()
-                true
-            }
-            // TODO: Decide
             R.id.delete_button -> {
                 true
             }
@@ -105,24 +100,44 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    internal fun showOnRevertConfirmation(uneditedNote: UneditedNote) {
-        val isNoteTitleSame = fragment.viewBinding.noteTitle.text.toString() == uneditedNote.noteTitle
-        val isNoteBodySame = fragment.viewBinding.noteBody.text.toString() == uneditedNote.noteBody
-        if(isNoteTitleSame && isNoteBodySame) {
-            viewEnvironment()
-        } else {
-            MaterialAlertDialogBuilder(
-                fragment.requireContext(),
-                R.style.NotsAlertDialog
+    private fun showUnsavedConfirmationDialog() {
+        MaterialAlertDialogBuilder(
+            fragment.requireContext(),
+            R.style.NotsAlertDialog
+        )
+            .setView(R.layout.dialog_unsaved_confirmation)
+            .setPositiveButton("Sure") { _, _ ->
+                fragment.findNavController().navigateUp()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    // TODO: Change to let scope resolution
+    fun updateNoteNavigateUp() {
+        fragment.viewModel.getNote(args.uuid).observeOnce(fragment.viewLifecycleOwner) {
+            val newNote = it!!.copy(
+                noteTitle = fragment.viewBinding.noteTitle.text.toString(),
+                noteBody = fragment.viewBinding.noteBody.text.toString()
             )
-                .setView(R.layout.dialog_revert_confirmation)
-                .setPositiveButton("Revert") { _, _ ->
-                    revertChanges(uneditedNote)
-                }
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+            fragment.viewModel.updateNote(newNote)
+            fragment.findNavController().navigateUp()
+        }
+    }
+
+    fun onBackPressedWhenNewNote() {
+        if(isNewNoteInvalid()) {
+            fragment.findNavController().navigateUp()
+        } else {
+            showUnsavedConfirmationDialog()
+        }
+    }
+
+    private fun isNewNoteInvalid(): Boolean {
+        with(fragment.viewBinding) {
+            return fragment.isNewNote == true && noteTitle.text.isNullOrBlank() && noteBody.text.isNullOrBlank()
         }
     }
 
@@ -144,54 +159,29 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    // TODO: Could be optimized
-    internal fun bindsFields(uuid: String) {
-        with(fragment) {
-            if(uuid.isBlank()) {
-                viewBinding.apply {
-                    noteTitle.text = editableFactory.newEditable("")
-                    noteDate.text = viewModel.noteDateUtils.getParsedDate(viewModel.noteDateUtils.getRawCurrentDate())
-                    noteBody.text = editableFactory.newEditable("")
-                }
-            } else {
-                viewModel.getNote(uuid).observeOnce(fragment.viewLifecycleOwner) {
-                    it?.let {
-                        val note = it
-                        uneditedNote = UneditedNote(it.noteTitle, it.noteBody)
-                        viewBinding.apply {
-                            noteTitle.text = editableFactory.newEditable(note.noteTitle)
-                            noteDate.text = viewModel.noteDateUtils.getParsedDate(note.noteDate)
-                            noteBody.text = editableFactory.newEditable(note.noteBody)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showKeyboard(view: View) {
+    fun showKeyboard(view: View) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(view, 0)
     }
 
-    private fun hideKeyboard(view: View) {
+    internal fun hideKeyboard(view: View) {
         val inputMethodManager = fragment.requireActivity()
             .getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
-    private fun clearNoteTypingFocus() {
+/*
+    internal fun clearNoteTypingFocus() {
         with(fragment.viewBinding) {
             noteTitle.clearFocus()
             noteBody.clearFocus()
         }
     }
+*/
 
     internal fun addEnvironment() {
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_new_note)
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
 
@@ -207,50 +197,27 @@ class AddViewNoteFragmentUtils(
 
     }
 
-    internal fun viewEnvironment() {
-        fragment.isEditing = false
-        fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_view)
-            noteTitle.isEnabled = false
-            noteBody.isEnabled = false
-        }
-        setMenuVisibility(
-            confirmButton = false,
-            editButton = true,
-            deleteButton = true
-        )
-    }
-
     internal fun editEnvironment() {
-        fragment.isEditing = true
         fragment.viewBinding.apply {
-            toolbarBinding.toolbarTitle.text = fragment.requireContext()
-                .getString(R.string.toolbar_title_edit)
             noteTitle.isEnabled = true
             noteBody.isEnabled = true
         }
         setMenuVisibility(
-            confirmButton = true,
+            confirmButton = false,
             editButton = false,
-            deleteButton = false
+            deleteButton = true
         )
     }
 
+    // TODO: Implement correct behavior
     private fun setMenuVisibility(confirmButton: Boolean, editButton: Boolean, deleteButton: Boolean) {
         fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
+            findItem(R.id.undo_button).isVisible = true
+            findItem(R.id.redo_button).isVisible = true
+            findItem(R.id.undo_all_button).isVisible = true
             findItem(R.id.confirm_button).isVisible = confirmButton
-            findItem(R.id.edit_button).isVisible = editButton
             findItem(R.id.delete_button).isVisible = deleteButton
         }
-    }
-
-    private fun revertChanges(uneditedNote: UneditedNote) {
-        fragment.viewBinding.apply {
-            noteTitle.text = fragment.editableFactory.newEditable(uneditedNote.noteTitle)
-            noteBody.text = fragment.editableFactory.newEditable(uneditedNote.noteBody)
-        }
-        viewEnvironment()
     }
 
 }

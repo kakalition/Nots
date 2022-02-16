@@ -30,7 +30,9 @@ class PreviewThemeUtils(private val fragment: PreviewThemeFragment) {
 
     fun bindsToolbar() {
         fragment.viewBinding.previewBinding.toolbarBinding.apply {
+/*
             toolbarTitle.text = fragment.getString(R.string.fragment_preview_theme_preview_text)
+*/
             toolbar.setNavigationIcon(R.drawable.ic_back)
             toolbar.setNavigationOnClickListener {
                 fragment.findNavController().navigateUp()

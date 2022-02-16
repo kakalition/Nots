@@ -63,8 +63,8 @@
             android:id="@+id/note_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/opensans_semi_bold"
-            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            android:fontFamily="@font/opensans_bold"
+            android:textAppearance="?attr/textAppearanceHeadline5"
             android:paddingStart="20dp"
             android:paddingTop="14dp"
             android:paddingEnd="20dp"
@@ -82,7 +82,7 @@
             android:paddingTop="2dp"
             android:paddingEnd="20dp"
             android:paddingBottom="15dp"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?attr/colorOnSecondary"
             tools:text="@string/lorem_ipsum" />
 

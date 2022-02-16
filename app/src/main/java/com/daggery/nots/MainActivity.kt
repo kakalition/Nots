@@ -6,35 +6,32 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.daggery.nots.databinding.ActivityMainBinding
-import com.daggery.nots.utils.theme.ThemeManager
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-// TODO: Theme Manager Should be Injected
+// TODO: Remove Modal Mode (TARGET)
+// TODO: Press Enter on Title Field will move cursor to Body (NEXT TARGET)
+// TODO: Change List Item Text Weight, match it with addviewfragment
+// TODO: Clear Focus on Back Pressed
 
-// TODO NEXT: Check NoteListAdapter: 97
+// TODO: Migrate to Kotlin Flow
+
+// TODO: Undo Redo Feature
+// TODO: Undo All Changes
 
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
+// tODO: Upcoming Feature: Tags
+// TODO: Upcoming Feature: Create Notes Filter
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
-
-// TODO: Reorder to Chronological Order Feature
 
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Adjust outlined home layout color
 
 // TODO: Preview Note Binder Can Be Unified
-
-// TODO: Create Notes Filter
-
-// TODO: Press Enter on Title Field will move cursor to Body
-
-// TODO: Remove Modal Mode
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

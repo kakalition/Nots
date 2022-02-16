@@ -4,21 +4,23 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
+import com.daggery.nots.addviewnote.utils.NoteUtils
 import com.daggery.nots.addviewnote.viewmodel.AddViewNoteViewModel
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-
-
-// TODO: Handle Long Text Body, possibly solved by using linear layout
 
 data class UneditedNote(
     val noteTitle: String,
@@ -35,25 +37,25 @@ class AddViewNoteFragment : Fragment() {
 
     private val args: AddViewNoteFragmentArgs by navArgs()
 
-    private var screenHeight: Int = 0
-
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
-    private var _editableFactory: Editable.Factory? = null
-    internal val editableFactory get() = _editableFactory!!
+    private var _noteUtils: NoteUtils? = null
+    private val noteUtils get() = _noteUtils!!
 
-    private var isNewNote: Boolean? = null
-    internal var isEditing: Boolean = false
-
-    internal lateinit var uneditedNote: UneditedNote
+    var isNewNote: Boolean? = null
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            if(isEditing) { fragmentUtils.showOnRevertConfirmation(uneditedNote) }
-            else {
-                this.isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+            when (isNewNote) {
+                true -> { fragmentUtils.onBackPressedWhenNewNote() }
+                false -> {
+                    fragmentUtils.updateNoteNavigateUp()
+                }
+                else -> {
+                    this.isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
             }
         }
     }
@@ -75,43 +77,31 @@ class AddViewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        screenHeight = Resources.getSystem().displayMetrics.heightPixels
-
         _fragmentUtils = AddViewNoteFragmentUtils(this, args)
-        _editableFactory = Editable.Factory()
+        _noteUtils = NoteUtils(this)
         isNewNote = args.uuid.isBlank()
+
+        noteUtils.bindsFields(args.uuid)
 
         with(fragmentUtils) {
             bindsToolbar()
-            bindsFields(args.uuid)
-
-            when {
-                isNewNote == true -> { addEnvironment() }
-                isEditing -> { editEnvironment() }
-                else -> { viewEnvironment() }
-            }
+            if(isNewNote == true) addEnvironment() else editEnvironment()
         }
 
         with(viewBinding) {
             noteTitle.setOnFocusChangeListener { _, hasFocus ->
                 fragmentUtils.titleHasFocus = hasFocus
             }
+            noteTitle.addTextChangedListener(fragmentUtils.titleTextWatcher)
+
             noteBody.setOnFocusChangeListener { _, hasFocus ->
                 fragmentUtils.bodyHasFocus = hasFocus
             }
         }
 
-        // TODO: Clean this things up
-        // TODO: Adjust noteBody minHeight
-        // TODO: Maybe I can use invisible view that capture touch and focus on edit text
-        var availHeight = 0f
-        viewBinding.appBarFrame.post {
-            availHeight += viewBinding.noteBody.y
-        }
-
-        viewBinding.noteBody.post {
-            availHeight += viewBinding.noteBody.y
-            viewBinding.noteBody.minHeight = (screenHeight - availHeight).toInt()
+        viewBinding.emptySpace.setOnClickListener {
+            viewBinding.noteBody.requestFocus()
+            fragmentUtils.showKeyboard(viewBinding.noteBody)
         }
     }
 
@@ -119,7 +109,7 @@ class AddViewNoteFragment : Fragment() {
         super.onDestroyView()
         _viewBinding = null
         _fragmentUtils = null
-        _editableFactory = null
+        _noteUtils = null
     }
 
     private fun getMaterialTransformTransition(): MaterialContainerTransform {
@@ -136,5 +126,4 @@ class AddViewNoteFragment : Fragment() {
             drawingViewId = R.id.fragment_container_view
         }
     }
-
 }
