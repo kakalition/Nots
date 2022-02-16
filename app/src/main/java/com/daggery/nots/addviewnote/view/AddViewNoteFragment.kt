@@ -101,6 +101,7 @@ class AddViewNoteFragment : Fragment() {
 
         viewBinding.emptySpace.setOnClickListener {
             viewBinding.noteBody.requestFocus()
+            viewBinding.noteBody.setSelection(viewBinding.noteBody.length())
             fragmentUtils.showKeyboard(viewBinding.noteBody)
         }
     }
