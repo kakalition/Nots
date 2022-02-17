@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Note::class, Tag::class], version = 1)
+@Database(entities = [Note::class, NoteTag::class], version = 1)
 @TypeConverters(TypeConverter::class)
 abstract class NotsDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
-    abstract fun tagDao(): TagDao
+    abstract fun tagDao(): NoteTagDao
 
     companion object {
         @Volatile

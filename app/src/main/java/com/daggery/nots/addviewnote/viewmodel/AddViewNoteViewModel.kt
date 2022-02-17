@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.daggery.nots.data.Note
+import com.daggery.nots.data.NoteDao
 import com.daggery.nots.data.NotsDatabase
 import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NoteDateUtils
@@ -16,19 +17,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddViewNoteViewModel @Inject constructor(
-    private val database: NotsDatabase
+    private val noteDao: NoteDao
 ) : ViewModel() {
 
     val noteDateUtils = NoteDateUtils()
-
-    private val noteDao = database.noteDao()
     val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
 
     /**
      * Get note with given uuid
      */
     fun getNote(uuid: String): LiveData<Note?> {
-        return database.noteDao().getNote(uuid).asLiveData()
+        return noteDao.getNote(uuid).asLiveData()
     }
 
     fun addNote(title: String, body: String, order: Int) {
@@ -43,13 +42,13 @@ class AddViewNoteViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
-            database.noteDao().addNote(note)
+            noteDao.addNote(note)
         }
     }
 
     fun updateNote(note: Note) {
         viewModelScope.launch {
-            database.noteDao().updateNote(note)
+            noteDao.updateNote(note)
         }
     }
 

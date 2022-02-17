@@ -6,15 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentFilterBinding
 import com.daggery.nots.home.utils.FilterFragmentUtils
+import com.daggery.nots.home.viewmodel.FilterViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FilterFragment : Fragment() {
 
     private var _viewBinding: FragmentFilterBinding? = null
     internal val viewBinding get() = _viewBinding!!
+
+    private val viewModel: FilterViewModel by activityViewModels()
 
     private var _fragmentUtils: FilterFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!

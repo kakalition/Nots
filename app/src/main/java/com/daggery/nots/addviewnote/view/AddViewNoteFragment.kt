@@ -78,8 +78,8 @@ class AddViewNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         _fragmentUtils = AddViewNoteFragmentUtils(this, args)
-        _noteUtils = NoteUtils(this)
         isNewNote = args.uuid.isBlank()
+        _noteUtils = NoteUtils(this)
 
         viewBinding.customLinearLayout.setFragmentUtils(fragmentUtils)
         noteUtils.bindsFields(args.uuid)

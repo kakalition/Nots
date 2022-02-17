@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
-// tODO: Upcoming Feature: Tag
+// tODO: Upcoming Feature: NoteTag
 // TODO: Upcoming Feature: Create Notes Filter
 
 // TODO: Known Issue: MaterialYou text color is not clear
