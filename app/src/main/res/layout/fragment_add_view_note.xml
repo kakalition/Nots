@@ -30,7 +30,8 @@
         android:fillViewport="true"
         android:scrollbars="none">
 
-        <LinearLayout
+        <com.daggery.nots.addviewnote.view.AddViewLinearLayout
+            android:id="@+id/custom_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -87,6 +88,6 @@
                 android:layout_marginHorizontal="22dp"
                 android:layout_weight="1" />
 
-        </LinearLayout>
+        </com.daggery.nots.addviewnote.view.AddViewLinearLayout>
     </ScrollView>
 </LinearLayout>

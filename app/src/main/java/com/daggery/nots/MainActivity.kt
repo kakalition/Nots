@@ -2,6 +2,7 @@ package com.daggery.nots
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -10,15 +11,9 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Remove Modal Mode (TARGET)
-// TODO: Press Enter on Title Field will move cursor to Body (NEXT TARGET)
-// TODO: Change List Item Text Weight, match it with addviewfragment
 // TODO: Clear Focus on Back Pressed
 
 // TODO: Migrate to Kotlin Flow
-
-// TODO: Undo Redo Feature
-// TODO: Undo All Changes
 
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
@@ -64,6 +59,11 @@ class MainActivity : AppCompatActivity() {
         // Binder
         _viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.d("LOL", "backpress")
     }
 
     override fun onDestroy() {

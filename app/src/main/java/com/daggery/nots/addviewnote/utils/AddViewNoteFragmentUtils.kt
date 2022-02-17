@@ -14,8 +14,6 @@ import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
-// TODO: Last Worked: Removing Modal
-
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
     private val args: AddViewNoteFragmentArgs
@@ -30,6 +28,7 @@ class AddViewNoteFragmentUtils(
         // Focus to note body when pressing enter while text line is two
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             if (s?.count { it == '\n' } == 1) {
+                fragment.viewBinding.noteBody.setSelection(fragment.viewBinding.noteBody.length())
                 fragment.viewBinding.noteBody.requestFocus()
             }
         }
@@ -80,15 +79,6 @@ class AddViewNoteFragmentUtils(
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
-            R.id.undo_button -> {
-                true
-            }
-            R.id.redo_button -> {
-                true
-            }
-            R.id.undo_all_button -> {
-                true
-            }
             R.id.confirm_button -> {
                 onConfirmTapped()
                 true
@@ -171,14 +161,12 @@ class AddViewNoteFragmentUtils(
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
-/*
     internal fun clearNoteTypingFocus() {
         with(fragment.viewBinding) {
             noteTitle.clearFocus()
             noteBody.clearFocus()
         }
     }
-*/
 
     internal fun addEnvironment() {
         fragment.viewBinding.apply {
@@ -212,9 +200,6 @@ class AddViewNoteFragmentUtils(
     // TODO: Implement correct behavior
     private fun setMenuVisibility(confirmButton: Boolean, editButton: Boolean, deleteButton: Boolean) {
         fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
-            findItem(R.id.undo_button).isVisible = true
-            findItem(R.id.redo_button).isVisible = true
-            findItem(R.id.undo_all_button).isVisible = true
             findItem(R.id.confirm_button).isVisible = confirmButton
             findItem(R.id.delete_button).isVisible = deleteButton
         }

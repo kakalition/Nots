@@ -81,6 +81,7 @@ class AddViewNoteFragment : Fragment() {
         _noteUtils = NoteUtils(this)
         isNewNote = args.uuid.isBlank()
 
+        viewBinding.customLinearLayout.setFragmentUtils(fragmentUtils)
         noteUtils.bindsFields(args.uuid)
 
         with(fragmentUtils) {
@@ -100,6 +101,7 @@ class AddViewNoteFragment : Fragment() {
         }
 
         viewBinding.emptySpace.setOnClickListener {
+            viewBinding.noteBody.setSelection(viewBinding.noteBody.length())
             viewBinding.noteBody.requestFocus()
             fragmentUtils.showKeyboard(viewBinding.noteBody)
         }
