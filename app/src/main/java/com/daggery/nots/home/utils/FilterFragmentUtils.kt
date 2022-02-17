@@ -26,7 +26,7 @@ class FilterFragmentUtils(private val fragment: FilterFragment) {
                 )
             )
             setOnMenuItemClickListener(menuItemClickListener)
-            title = "Tags Filter"
+            title = "Tag Filter"
         }
     }
 
