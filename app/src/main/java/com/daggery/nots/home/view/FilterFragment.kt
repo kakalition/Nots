@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentFilterBinding
 import com.daggery.nots.home.utils.FilterFragmentUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class FilterFragment : Fragment() {
 
@@ -16,6 +17,8 @@ class FilterFragment : Fragment() {
 
     private var _fragmentUtils: FilterFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
+
+    val newTagsDialog = NewTagsDialogFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -29,5 +32,10 @@ class FilterFragment : Fragment() {
         _fragmentUtils = FilterFragmentUtils(this)
 
         fragmentUtils.bindsToolbar()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
     }
 }

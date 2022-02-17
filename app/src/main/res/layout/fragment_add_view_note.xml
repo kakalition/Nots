@@ -45,7 +45,7 @@
                 android:fontFamily="@font/opensans_bold"
                 android:hint="@string/fragment_add_view_note_title_hint"
                 android:inputType="textMultiLine|textNoSuggestions"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="11dp"

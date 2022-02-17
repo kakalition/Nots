@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="?attr/colorSurface"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/new_tag_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="22dp"
+        android:paddingVertical="22dp"
+        android:hint="New Tag"
+        android:backgroundTint="?attr/colorSurface">
+    </com.google.android.material.textfield.TextInputEditText>
+
+</LinearLayout>
