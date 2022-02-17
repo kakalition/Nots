@@ -10,7 +10,7 @@
     android:transitionName="from_fab_to_add"
     tools:context=".addviewnote.view.AddViewNoteFragment">
 
-    <FrameLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         <include
             android:id="@+id/toolbar_binding"
             layout="@layout/appbar_title" />
-    </FrameLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:id="@+id/scrollview"

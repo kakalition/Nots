@@ -61,11 +61,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d("LOL", "backpress")
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _viewBinding = null
