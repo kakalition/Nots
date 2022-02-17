@@ -161,14 +161,12 @@ class AddViewNoteFragmentUtils(
         inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
     }
 
-/*
     internal fun clearNoteTypingFocus() {
         with(fragment.viewBinding) {
             noteTitle.clearFocus()
             noteBody.clearFocus()
         }
     }
-*/
 
     internal fun addEnvironment() {
         fragment.viewBinding.apply {
