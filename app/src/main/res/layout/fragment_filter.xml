@@ -3,39 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?attr/colorSurface"
+    android:orientation="vertical"
     tools:context=".home.view.FilterFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_frame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include
-            layout="@layout/appbar_title"
-            android:id="@+id/toolbar_binding"/>
-    </com.google.android.material.appbar.AppBarLayout>
+    <include
+        android:id="@+id/toolbar_binding"
+        layout="@layout/appbar_title" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group"
-                android:layout_marginHorizontal="22dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp">
 
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:checked="false"
-                    android:text="Dream Journal"/>
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Dream Journal" />
 
-            </com.google.android.material.chip.ChipGroup>
+        </com.google.android.material.chip.ChipGroup>
 
     </ScrollView>
 
