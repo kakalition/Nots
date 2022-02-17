@@ -38,7 +38,8 @@ class AddViewNoteViewModel @Inject constructor(
             noteOrder = order,
             noteTitle = title,
             noteBody = body,
-            noteDate = noteDateUtils.getRawCurrentDate()
+            noteDate = noteDateUtils.getRawCurrentDate(),
+            noteTags = listOf()
         )
 
         viewModelScope.launch {

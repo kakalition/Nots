@@ -12,4 +12,5 @@ data class Note(
     @ColumnInfo(name = "note_title") val noteTitle: String,
     @ColumnInfo(name = "note_body") val noteBody: String,
     @ColumnInfo(name = "note_date") val noteDate: Long,
+    @ColumnInfo(name = "note_tags") val noteTags: List<String>,
 )
