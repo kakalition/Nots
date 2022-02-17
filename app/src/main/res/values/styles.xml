@@ -81,4 +81,9 @@
         <item name="android:background">?attr/colorSurface</item>
     </style>
 
+    <style name="AppBarTitle" parent="android:TextAppearance.Material.Widget.Toolbar.Title">
+        <item name="fontFamily">@font/raleway_medium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
 </resources>

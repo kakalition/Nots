@@ -9,9 +9,8 @@ class FilterFragmentUtils(private val fragment: FilterFragment) {
     internal fun bindsToolbar() {
         with(fragment.viewBinding.toolbarBinding.toolbar) {
             setNavigationIcon(R.drawable.ic_back)
-            setNavigationOnClickListener {
-                fragment.findNavController().navigateUp()
-            }
+            setNavigationOnClickListener { fragment.findNavController().navigateUp() }
+            title = "Tags Filter"
         }
 
     }
