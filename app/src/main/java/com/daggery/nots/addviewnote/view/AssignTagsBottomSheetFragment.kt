@@ -1,5 +1,6 @@
 package com.daggery.nots.addviewnote.view
 
+import android.content.DialogInterface
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
@@ -24,11 +25,16 @@ class AssignTagsBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "assignTagsBottomSheetFragment"
     }
-
     private var _viewBinding: FragmentAssignTagsBottomSheetBinding? = null
     private val viewBinding get() = _viewBinding!!
 
     private val viewModel: FilterViewModel by activityViewModels()
+
+    private var tagNameList: List<String> = listOf()
+
+    fun assignTagNameList(value: List<String>) {
+        tagNameList = value
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,13 +49,15 @@ class AssignTagsBottomSheetFragment : BottomSheetDialogFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // TODO: Maybe can use DiffUtil
                 viewModel.tagList.collect {
-                    // Clear all children when list is updated
-                    viewBinding.chipGroup.removeAllViews()
+                    val tagListTagName = it.map { noteTag -> noteTag.tagName }
+                    val tagNameIntersection: List<String> = tagNameList.intersect(tagListTagName).toList()
+
                     it.forEach { noteTag ->
                         val chip = layoutInflater.inflate(R.layout.chip_filter, viewBinding.chipGroup, false) as Chip
                         chip.text = noteTag.tagName
-                        chip.isChecked = noteTag.checked
+                        chip.isChecked = tagNameIntersection.contains(noteTag.tagName)
                         // TODO: Check this behavior
                         // TODO: Ensure when checking, chipgroup layout doesn't change
                         // chip.ensureAccessibleTouchTarget(48)
@@ -60,12 +68,15 @@ class AssignTagsBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+        val idList = viewBinding.chipGroup.checkedChipIds
+
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
     }
 }
-/*
-viewModel.tagList.collect {
-}
-*/

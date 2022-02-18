@@ -18,14 +18,10 @@ import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
 import com.daggery.nots.addviewnote.utils.NoteUtils
 import com.daggery.nots.addviewnote.viewmodel.AddViewNoteViewModel
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
+import com.daggery.nots.observeOnce
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-
-data class UneditedNote(
-    val noteTitle: String,
-    val noteBody: String
-)
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -83,7 +79,11 @@ class AddViewNoteFragment : Fragment() {
         _fragmentUtils = AddViewNoteFragmentUtils(this, args)
         isNewNote = args.uuid.isBlank()
         _noteUtils = NoteUtils(this)
+
         _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment()
+        viewModel.getNote(args.uuid).observeOnce(viewLifecycleOwner) {
+            assignTagsBottomSheetFragment.assignTagNameList(it?.noteTags ?: listOf())
+        }
 
         viewBinding.customLinearLayout.setFragmentUtils(fragmentUtils)
         noteUtils.bindsFields(args.uuid)
