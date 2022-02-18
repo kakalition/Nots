@@ -1,13 +1,11 @@
 package com.daggery.nots.home.view
 
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
+import android.view.ActionMode
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,13 +14,14 @@ import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentFilterBinding
 import com.daggery.nots.home.utils.FilterFragmentUtils
 import com.daggery.nots.home.viewmodel.FilterViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
+
+// TODO: Add Frequently Used Tags and All Tags Section
+// TODO: Refactor this fragment into ManageTagsFragment
+// TODO: When filter menu button in home fragment is clicked, show modal bottom sheet that shows all filters that user have
 
 @AndroidEntryPoint
 class FilterFragment : Fragment() {
@@ -36,6 +35,7 @@ class FilterFragment : Fragment() {
     private val fragmentUtils get() = _fragmentUtils!!
 
     val newTagsDialog = NewTagsDialogFragment()
+    var actionMode: ActionMode? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -62,12 +62,21 @@ class FilterFragment : Fragment() {
                         // TODO: Check this behavior
                         // TODO: Ensure when checking, chipgroup layout doesn't change
                         chip.ensureAccessibleTouchTarget(48)
+                        chip.setOnLongClickListener {
+                            when(actionMode) {
+                                null -> {
+                                    actionMode = requireActivity().startActionMode(fragmentUtils.actionModeCallback)
+                                    view.isSelected = true
+                                    true
+                                }
+                                else -> false
+                            }
+                        }
                         viewBinding.chipGroup.addView(chip)
                     }
                 }
             }
         }
-
     }
 
     override fun onDestroyView() {
