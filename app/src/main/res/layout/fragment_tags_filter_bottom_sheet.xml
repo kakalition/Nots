@@ -13,7 +13,7 @@
         android:fontFamily="@font/raleway_medium"
         android:textColor="?attr/colorOnSurface"
         android:layout_marginBottom="11dp"
-        android:textAppearance="?attr/textAppearanceHeadline6"/>
+        android:textAppearance="?attr/textAppearanceHeadline5"/>
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
