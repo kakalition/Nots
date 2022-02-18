@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContentProviderCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.daggery.nots.data.NoteTag
 import com.daggery.nots.databinding.FragmentNewTagsDialogBinding
+import com.daggery.nots.home.viewmodel.FilterViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,6 +26,8 @@ class NewTagsDialogFragment : BottomSheetDialogFragment() {
 
     private var _viewBinding: FragmentNewTagsDialogBinding? = null
     val viewBinding get() = _viewBinding!!
+
+    private val viewModel: FilterViewModel by activityViewModels()
 
     private fun showKeyboard(view: View) {
         val inputMethodManager = requireActivity()
@@ -38,10 +43,6 @@ class NewTagsDialogFragment : BottomSheetDialogFragment() {
         return viewBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -49,6 +50,14 @@ class NewTagsDialogFragment : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             delay(300)
             showKeyboard(viewBinding.newTagInput)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val tag = viewBinding.newTagInput.text.toString()
+        if(tag.isNotBlank()) {
+            viewModel.addTag(NoteTag(tagName = tag, checked = false))
         }
     }
 

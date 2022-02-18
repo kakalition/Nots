@@ -2,6 +2,7 @@ package com.daggery.nots.home.view
 
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +49,21 @@ class FilterFragment : Fragment() {
         _fragmentUtils = FilterFragmentUtils(this)
 
         fragmentUtils.bindsToolbar()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.tagList.collect {
+                    // Clear all children when list is updated
+                    viewBinding.chipGroup.removeAllViews()
+                    it.forEach { noteTag ->
+                        val chip = layoutInflater.inflate(R.layout.chip_filter, viewBinding.chipGroup, false) as Chip
+                        chip.text = noteTag.tagName
+                        chip.isChecked = noteTag.checked
+                        viewBinding.chipGroup.addView(chip)
+                    }
+                }
+            }
+        }
 
     }
 

@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteTagDao {
 
-    @Query("SELECT tag FROM tags ORDER BY tag DESC")
-    fun getTags(): Flow<List<String>>
+    @Query("SELECT * FROM tags ORDER BY tag_name DESC")
+    fun getTags(): Flow<List<NoteTag>>
 
-    @Query("SELECT * FROM tags WHERE tag = :tagName")
+    @Query("SELECT * FROM tags WHERE tag_name = :tagName")
     fun getTag(tagName: String): NoteTag
 
     @Insert

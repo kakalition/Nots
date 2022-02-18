@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FilterViewModel @Inject constructor(private val noteTagDao: NoteTagDao) : ViewModel() {
 
-    private val tagList = noteTagDao.getTags()
+    val tagList = noteTagDao.getTags()
 
     fun getTag(tagName: String) {
         viewModelScope.launch {
