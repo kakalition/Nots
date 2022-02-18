@@ -40,6 +40,9 @@ class AddViewNoteFragment : Fragment() {
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
+    private var _assignTagsBottomSheetFragment: AssignTagsBottomSheetFragment? = null
+    internal val assignTagsBottomSheetFragment get() = _assignTagsBottomSheetFragment!!
+
     private var _noteUtils: NoteUtils? = null
     private val noteUtils get() = _noteUtils!!
 
@@ -80,6 +83,7 @@ class AddViewNoteFragment : Fragment() {
         _fragmentUtils = AddViewNoteFragmentUtils(this, args)
         isNewNote = args.uuid.isBlank()
         _noteUtils = NoteUtils(this)
+        _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment()
 
         viewBinding.customLinearLayout.setFragmentUtils(fragmentUtils)
         noteUtils.bindsFields(args.uuid)

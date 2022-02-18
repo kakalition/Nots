@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.addviewnote.view.AddViewNoteFragmentArgs
+import com.daggery.nots.addviewnote.view.AssignTagsBottomSheetFragment
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -84,6 +85,10 @@ class AddViewNoteFragmentUtils(
                 true
             }
             R.id.delete_button -> {
+                true
+            }
+            R.id.assign_tags -> {
+                fragment.assignTagsBottomSheetFragment.show(fragment.parentFragmentManager, AssignTagsBottomSheetFragment.TAG)
                 true
             }
             else -> false

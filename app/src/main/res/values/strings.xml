@@ -69,4 +69,6 @@
     <string name="menu_filter_fragment_add_tags">Add Tags</string>
     <string name="menu_filter_fragment_delete">Delete Button</string>
     <string name="menu_filter_fragment_edit">Edit Button</string>
+    <string name="menu_add_view_fragment_bookmark">Bookmark</string>
+    <string name="menu_add_view_assign_tags">Assign Tags</string>
 </resources>

@@ -3,14 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:iconTint="?attr/colorOnSurface"
+        android:title="@string/menu_add_view_fragment_bookmark"
+        android:id="@+id/bookmark_button"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_bookmark"/>
+    <item
+        android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_confirm"
         android:id="@+id/confirm_button"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_check"/>
     <item
         android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_delete"
         android:id="@+id/delete_button"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_delete"/>
+    <item
+        android:iconTint="?attr/colorOnSurface"
+        android:title="@string/menu_add_view_assign_tags"
+        android:id="@+id/assign_tags"
+        app:showAsAction="withText" />
 </menu>
