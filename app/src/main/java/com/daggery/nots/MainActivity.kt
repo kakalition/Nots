@@ -8,19 +8,26 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.daggery.nots.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Clear Focus on Back Pressed
+// TODO: Upcoming Feature: NoteTag(TARGET)
+// TODO: Implement Add Tag
+// TODO: Implement Context AppBar when long clicking chip
+// TODO: Implement Note layout with Tag
+// TODO: Move Action Menu to Designated Position in Figma
 
 // TODO: Migrate to Kotlin Flow
 
 // TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
-// tODO: Upcoming Feature: NoteTag
 // TODO: Upcoming Feature: Create Notes Filter
 
 // TODO: Known Issue: MaterialYou text color is not clear

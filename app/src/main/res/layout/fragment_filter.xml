@@ -22,14 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="22dp">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/test_chip"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="Dream Journal" />
-
         </com.google.android.material.chip.ChipGroup>
 
     </ScrollView>
