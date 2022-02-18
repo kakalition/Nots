@@ -3,30 +3,27 @@ package com.daggery.nots.home.view
 import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContentProviderCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.daggery.nots.data.NoteTag
-import com.daggery.nots.databinding.FragmentNewTagsDialogBinding
+import com.daggery.nots.databinding.FragmentNewTagsBottomSheetBinding
 import com.daggery.nots.home.viewmodel.FilterViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class NewTagsDialogFragment : BottomSheetDialogFragment() {
-
+@AndroidEntryPoint
+class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "NewTagsDialog"
     }
 
-    private var _viewBinding: FragmentNewTagsDialogBinding? = null
+    private var _viewBinding: FragmentNewTagsBottomSheetBinding? = null
     val viewBinding get() = _viewBinding!!
 
     private val viewModel: FilterViewModel by activityViewModels()
@@ -41,7 +38,7 @@ class NewTagsDialogFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _viewBinding = FragmentNewTagsDialogBinding.inflate(inflater, container, false)
+        _viewBinding = FragmentNewTagsBottomSheetBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 

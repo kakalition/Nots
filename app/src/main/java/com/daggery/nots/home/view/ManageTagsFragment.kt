@@ -1,7 +1,6 @@
 package com.daggery.nots.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.ActionMode
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,12 +10,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentManageTagsBinding
 import com.daggery.nots.home.adapter.TagListAdapter
 import com.daggery.nots.home.utils.ManageTagsFragmentUtils
 import com.daggery.nots.home.viewmodel.FilterViewModel
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -36,7 +33,7 @@ class ManageTagsFragment : Fragment() {
     private var _fragmentUtils: ManageTagsFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
-    val newTagsDialog = NewTagsDialogFragment()
+    val newTagsDialog = NewTagBottomSheetFragment()
     var actionMode: ActionMode? = null
 
     private var _tagListAdapter: TagListAdapter? = null
@@ -76,31 +73,3 @@ class ManageTagsFragment : Fragment() {
         _tagListAdapter = null
     }
 }
-
-// TODO: For Chips
-
-/*
-                viewModel.tagList.collect {
-                    // Clear all children when list is updated
-                    viewBinding.chipGroup.removeAllViews()
-                    it.forEach { noteTag ->
-                        val chip = layoutInflater.inflate(R.layout.chip_filter, viewBinding.chipGroup, false) as Chip
-                        chip.text = noteTag.tagName
-                        chip.isChecked = noteTag.checked
-                        // TODO: Check this behavior
-                        // TODO: Ensure when checking, chipgroup layout doesn't change
-                        chip.ensureAccessibleTouchTarget(48)
-                        chip.setOnLongClickListener {
-                            when(actionMode) {
-                                null -> {
-                                    actionMode = requireActivity().startActionMode(fragmentUtils.actionModeCallback)
-                                    view.isSelected = true
-                                    true
-                                }
-                                else -> false
-                            }
-                        }
-                        viewBinding.chipGroup.addView(chip)
-                    }
-                }
-*/

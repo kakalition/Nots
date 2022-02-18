@@ -1,7 +1,6 @@
 package com.daggery.nots.home.utils
 
 import android.graphics.Color
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.core.graphics.ColorUtils
@@ -9,15 +8,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
+import com.daggery.nots.home.view.NewTagBottomSheetFragment
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
+import com.daggery.nots.home.view.TagsFilterBottomSheetFragment
 import com.daggery.nots.observeOnce
-import com.daggery.nots.settings.layout.view.HomeLayoutSettingsFragmentDirections
-import com.daggery.nots.settings.layout.view.PreviewHomeLayoutFragmentArgs
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -53,7 +51,7 @@ class HomeFragmentUtils(
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
             R.id.filter_button -> {
-                fragment.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFilterFragment())
+                fragment.filterBottomSheet.show(fragment.parentFragmentManager, TagsFilterBottomSheetFragment.TAG)
                 true
             }
             R.id.reorder_button -> {

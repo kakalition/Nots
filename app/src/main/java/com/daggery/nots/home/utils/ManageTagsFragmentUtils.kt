@@ -7,7 +7,7 @@ import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.home.view.ManageTagsFragment
-import com.daggery.nots.home.view.NewTagsDialogFragment
+import com.daggery.nots.home.view.NewTagBottomSheetFragment
 import com.google.android.material.color.MaterialColors
 
 class ManageTagsFragmentUtils(private val fragment: ManageTagsFragment) {
@@ -17,7 +17,7 @@ class ManageTagsFragmentUtils(private val fragment: ManageTagsFragment) {
             R.id.add_tags_button -> {
                 fragment.newTagsDialog.show(
                     fragment.requireActivity().supportFragmentManager,
-                    NewTagsDialogFragment.TAG
+                    NewTagBottomSheetFragment.TAG
                 )
                 true
             }
