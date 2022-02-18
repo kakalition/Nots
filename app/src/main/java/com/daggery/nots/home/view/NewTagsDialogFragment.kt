@@ -1,7 +1,9 @@
 package com.daggery.nots.home.view
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
@@ -43,6 +45,20 @@ class NewTagsDialogFragment : BottomSheetDialogFragment() {
         return viewBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Log.d("LOL bundle view created", savedInstanceState.toString())
+
+        viewBinding.confirmButton.setOnClickListener {
+            val tag = viewBinding.newTagInput.text.toString()
+            if(tag.isNotBlank()) {
+                viewModel.addTag(NoteTag(tagName = tag, checked = false))
+                this.dismiss()
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -53,16 +69,9 @@ class NewTagsDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        val tag = viewBinding.newTagInput.text.toString()
-        if(tag.isNotBlank()) {
-            viewModel.addTag(NoteTag(tagName = tag, checked = false))
-        }
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        viewBinding.newTagInput.text?.clear()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewBinding = null
-    }
 }

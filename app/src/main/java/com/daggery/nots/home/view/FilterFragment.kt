@@ -59,6 +59,9 @@ class FilterFragment : Fragment() {
                         val chip = layoutInflater.inflate(R.layout.chip_filter, viewBinding.chipGroup, false) as Chip
                         chip.text = noteTag.tagName
                         chip.isChecked = noteTag.checked
+                        // TODO: Check this behavior
+                        // TODO: Ensure when checking, chipgroup layout doesn't change
+                        chip.ensureAccessibleTouchTarget(48)
                         viewBinding.chipGroup.addView(chip)
                     }
                 }
