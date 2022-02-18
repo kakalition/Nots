@@ -6,11 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
-import com.daggery.nots.home.view.FilterFragment
+import com.daggery.nots.home.view.ManageTagsFragment
 import com.daggery.nots.home.view.NewTagsDialogFragment
 import com.google.android.material.color.MaterialColors
 
-class FilterFragmentUtils(private val fragment: FilterFragment) {
+class ManageTagsFragmentUtils(private val fragment: ManageTagsFragment) {
 
     private val menuItemClickListener = { item: MenuItem ->
         when(item.itemId) {
@@ -62,9 +62,7 @@ class FilterFragmentUtils(private val fragment: FilterFragment) {
                 )
             )
             setOnMenuItemClickListener(menuItemClickListener)
-            title = "NoteTag Filter"
+            title = "Manage Tags"
         }
     }
-
-
 }

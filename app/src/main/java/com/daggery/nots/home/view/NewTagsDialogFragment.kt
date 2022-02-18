@@ -48,8 +48,6 @@ class NewTagsDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("LOL bundle view created", savedInstanceState.toString())
-
         viewBinding.confirmButton.setOnClickListener {
             val tag = viewBinding.newTagInput.text.toString()
             if(tag.isNotBlank()) {
