@@ -18,17 +18,9 @@ import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-// TODO: Upcoming Feature: NoteTag(TARGET)
 // TODO: Implement Add Tag
 // TODO: Implement Context AppBar when long clicking chip
-// TODO: Implement Note layout with Tag
 // TODO: Move Action Menu to Designated Position in Figma
-
-// TODO: Migrate to Kotlin Flow
-
-// TODO: Upcoming Feature: Have bold italic underline feature
-// TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
-// TODO: Upcoming Feature: Create Notes Filter
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
@@ -37,6 +29,13 @@ import kotlinx.coroutines.launch
 // TODO: Adjust outlined home layout color
 
 // TODO: Preview Note Binder Can Be Unified
+// TODO: Simplify NoteListAdapter
+// TODO: Migrate to Kotlin Flow
+
+// TODO: Upcoming Feature: Have bold italic underline feature
+// TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
+// TODO: Upcoming Feature: Create Notes Filter
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

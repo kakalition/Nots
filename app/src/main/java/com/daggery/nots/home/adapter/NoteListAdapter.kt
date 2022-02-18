@@ -10,6 +10,7 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.TileNoteItemBinding
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.utils.NoteDateUtils
+import com.google.android.material.chip.Chip
 import java.util.*
 
 class NoteListAdapter(
@@ -56,6 +57,11 @@ class NoteListAdapter(
                 noteTitle.text = note.noteTitle
                 noteBody.text = note.noteBody
                 noteDate.text = noteDateUtils.getParsedDate(note.noteDate)
+                note.noteTags.forEach {
+                    val chip = LayoutInflater.from(chipGroup.context).inflate(R.layout.chip_filter,chipGroup, false) as Chip
+                    chip.text = it
+                    chipGroup.addView(chip)
+                }
             }
         }
     }
