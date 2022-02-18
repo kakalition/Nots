@@ -71,6 +71,7 @@ class AssignTagsBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 
+        // TODO: Save note tags changes in note
         val idList = viewBinding.chipGroup.checkedChipIds
 
     }
