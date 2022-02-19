@@ -65,6 +65,10 @@ class HomeFragmentUtils(
                 showDeleteAllDialog()
                 true
             }
+            R.id.manage_tags_button -> {
+                fragment.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToManageTagsFragment())
+                true
+            }
             R.id.settings_button -> {
                 val destination = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
                 fragment.findNavController().navigate(destination)

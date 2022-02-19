@@ -71,4 +71,5 @@
     <string name="menu_filter_fragment_edit">Edit Button</string>
     <string name="menu_add_view_fragment_bookmark">Bookmark</string>
     <string name="menu_add_view_assign_tags">Assign Tags</string>
+    <string name="menu_home_fragment_manage_tags">Manage Tags</string>
 </resources>
