@@ -32,6 +32,7 @@ class AddViewNoteViewModel @Inject constructor(
             noteBody = body ?: noteCache!!.noteBody,
             noteTags = tags ?: noteCache!!.noteTags
         )
+        Log.d("LOL update cache", noteCache.toString())
     }
     fun saveNoteCache(note: Note) { _noteCache = note }
     fun deleteNoteCache() { _noteCache = null }

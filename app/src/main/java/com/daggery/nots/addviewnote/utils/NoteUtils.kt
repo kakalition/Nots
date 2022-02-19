@@ -13,21 +13,27 @@ class NoteUtils(private val fragment: AddViewNoteFragment) {
     private val editableFactory = Editable.Factory()
 
     internal fun bindsChips(chipsName: List<String>) {
-        fragment.viewBinding.chipGroup.removeAllViews()
-        chipsName.forEach { noteTag ->
-            val chip = fragment.layoutInflater.inflate(R.layout.chip_note_item, fragment.viewBinding.chipGroup, false) as Chip
-            chip.text = noteTag
-            chip.isCheckable = false
-            chip.isClickable = false
-            chip.isFocusable = false
-            // TODO: Check this behavior
-            // TODO: Ensure when checking, chipgroup layout doesn't change
-            // chip.ensureAccessibleTouchTarget(48)
-            fragment.viewBinding.chipGroup.addView(chip)
+        if(chipsName.isEmpty()) {
+            fragment.viewBinding.chipGroup.visibility = View.GONE
+        } else {
+            fragment.viewBinding.chipGroup.visibility = View.VISIBLE
+            fragment.viewBinding.chipGroup.removeAllViews()
+            chipsName.forEach { noteTag ->
+                val chip = fragment.layoutInflater.inflate(R.layout.chip_note_item, fragment.viewBinding.chipGroup, false) as Chip
+                chip.text = noteTag
+                chip.isCheckable = false
+                chip.isClickable = false
+                chip.isFocusable = false
+                // TODO: Check this behavior
+                // TODO: Ensure when checking, chipgroup layout doesn't change
+                // chip.ensureAccessibleTouchTarget(48)
+                fragment.viewBinding.chipGroup.addView(chip)
+            }
         }
     }
 
-    internal fun bindsFields(note: Note?) {
+    internal fun bindsFields(note: Note?, from: String) {
+        Log.d("LOL binds from $from", note.toString())
         with(fragment.viewBinding) {
             noteTitle.text = editableFactory.newEditable(note?.noteTitle ?: "")
             noteDate.text = editableFactory.newEditable(
@@ -36,12 +42,7 @@ class NoteUtils(private val fragment: AddViewNoteFragment) {
                 )
             )
             noteBody.text = editableFactory.newEditable(note?.noteBody ?: "")
-            if(note?.noteTags.isNullOrEmpty()) {
-                chipGroup.visibility = View.GONE
-            } else {
-                chipGroup.visibility = View.VISIBLE
-                bindsChips(note?.noteTags ?: listOf())
-            }
+            bindsChips(note?.noteTags ?: listOf())
         }
     }
 }

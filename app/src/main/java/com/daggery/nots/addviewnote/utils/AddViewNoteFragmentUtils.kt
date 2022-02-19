@@ -7,25 +7,15 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
-import com.daggery.nots.addviewnote.view.AddViewNoteFragmentArgs
 import com.daggery.nots.addviewnote.view.AssignTagsBottomSheetFragment
 import com.daggery.nots.data.Note
-import com.daggery.nots.observeOnce
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
-    private val args: AddViewNoteFragmentArgs
 ) {
 
     var titleHasFocus = false
@@ -51,7 +41,7 @@ class AddViewNoteFragmentUtils(
     }
 
     private val navigationClickListener: (View) -> Unit = {
-        updateNoteNavigateUp()
+        saveNote()
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
@@ -84,8 +74,7 @@ class AddViewNoteFragmentUtils(
         Snackbar.make(fragment.viewBinding.root, text, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun assertNoteValidityThenAdd(note: Note): Boolean {
-        Log.d("LOL note", note.toString())
+    private fun assertNoteValidityThenAddNote(note: Note): Boolean {
         val titleNotBlank = note.noteTitle.isNotBlank()
         val bodyNotBlank = note.noteBody.isNotBlank()
         return when {
@@ -106,7 +95,7 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    fun updateNoteNavigateUp() {
+    fun saveNote() {
         val newNote = fragment.viewModel.noteCache?.copy(
             noteTitle = fragment.viewBinding.noteTitle.text.toString(),
             noteBody = fragment.viewBinding.noteBody.text.toString()
@@ -116,10 +105,11 @@ class AddViewNoteFragmentUtils(
                 fragment.viewModel.updateNote(it)
                 fragment.findNavController().navigateUp()
             } else {
-                val value = assertNoteValidityThenAdd(newNote)
-                Log.d("LOL assert", value.toString())
-                when(value) {
-                    true -> fragment.findNavController().navigateUp()
+                when(assertNoteValidityThenAddNote(newNote)) {
+                    true -> {
+                        fragment.viewModel.deleteNoteCache()
+                        fragment.findNavController().navigateUp()
+                    }
                     else -> {}
                 }
             }

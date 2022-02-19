@@ -1,6 +1,5 @@
 package com.daggery.nots.addviewnote.view
 
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -16,21 +15,12 @@ import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
 import com.daggery.nots.addviewnote.utils.NoteUtils
 import com.daggery.nots.addviewnote.viewmodel.AddViewNoteViewModel
-import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
-import com.daggery.nots.observeOnce
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-
-// TODO: Assign Tags in new note not applied
-// TODO: Presumably because changes send to database while there is corresponding data yet, possibly solved by caching changes
-
-// TODO: Hide chipgroup when there's no tag
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -53,11 +43,12 @@ class AddViewNoteFragment : Fragment() {
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            fragmentUtils.updateNoteNavigateUp()
+            fragmentUtils.saveNote()
         }
     }
 
     private val updateTagsCallback: (newTags: List<String>) -> Unit = {
+        Log.d("LOL updateTags", it.toString())
         viewModel.updateCache(tags = it)
         noteUtils.bindsChips(it)
     }
@@ -79,7 +70,7 @@ class AddViewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _fragmentUtils = AddViewNoteFragmentUtils(this, args)
+        _fragmentUtils = AddViewNoteFragmentUtils(this)
         _noteUtils = NoteUtils(this)
 
         _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment(updateTagsCallback)
@@ -91,16 +82,16 @@ class AddViewNoteFragment : Fragment() {
                        if (args.uuid.isNotBlank()) {
                             getNote(args.uuid).collect {
                                 saveNoteCache(it)
-                                noteUtils.bindsFields(it)
+                                noteUtils.bindsFields(noteCache, "args")
                             }
                         } else {
                             getBlankNote().collect {
                                 saveNoteCache(it)
-                                noteUtils.bindsFields(it)
+                                noteUtils.bindsFields(noteCache, "empty")
                             }
                         }
                     } else {
-                        noteUtils.bindsFields(noteCache)
+                        noteUtils.bindsFields(noteCache, "cache")
                     }
                 }
             }
@@ -142,7 +133,6 @@ class AddViewNoteFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.deleteNoteCache()
         _viewBinding = null
         _fragmentUtils = null
         _noteUtils = null
