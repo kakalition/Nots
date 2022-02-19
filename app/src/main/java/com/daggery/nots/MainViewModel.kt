@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.annotation.StyleRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.daggery.nots.data.NoteDao
 import com.daggery.nots.data.NoteTag
 import com.daggery.nots.data.NoteTagDao
 import com.daggery.nots.datastore.DataStoreManager
@@ -23,7 +22,7 @@ class MainViewModel @Inject constructor(
     private val noteTagDao: NoteTagDao
 ) : ViewModel() {
 
-    val tagList = noteTagDao.getTags()
+    val noteTagList = noteTagDao.getTags()
 
     fun applyTheme(@StyleRes themeRes: Int) {
         viewModelScope.launch {
@@ -57,12 +56,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun updateTagByTagName(noteTagName: List<String>) {
-        Log.d("LOL noteTagName", noteTagName.toString())
         viewModelScope.launch {
             var updated = false
             var updatedTagList = listOf<NoteTag>()
             async {
-                tagList.collect { tagList ->
+                noteTagList.collect { tagList ->
                     updatedTagList = tagList.map {
                         return@map if(noteTagName.contains(it.tagName)) {
                             it.copy(checked = true)
@@ -76,7 +74,6 @@ class MainViewModel @Inject constructor(
                 delay(50)
             }
 
-            Log.d("LOL", updatedTagList.toString())
             noteTagDao.updateTags(updatedTagList)
         }
     }

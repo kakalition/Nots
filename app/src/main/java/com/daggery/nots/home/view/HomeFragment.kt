@@ -17,7 +17,6 @@ import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
-import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NoteDateUtils
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -38,7 +37,20 @@ class HomeFragment : Fragment() {
     internal var notesLinearLayoutManager: NoteLinearLayoutManager? = null
     internal var notesAdapter: NoteListAdapter? = null
 
+    private var localNotes: List<Note> = listOf()
+    private var checkedTagsName: List<String> = listOf()
+
     internal val filterBottomSheet = TagsFilterBottomSheetFragment()
+
+    fun filterListWithTags(notes: List<Note>, tagNameList: List<String>): List<Note> {
+        return  if (tagNameList.isEmpty()) { notes }
+        else { notes.filter { tagNameList.intersect(it.noteTags).isNotEmpty() } }
+    }
+
+    fun invalidateHomeLayout(notes: List<Note>) {
+        notesAdapter?.submitList(notes)
+        fragmentUtils.changeHomeState(notes.isEmpty())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,10 +76,23 @@ class HomeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.notes.collect {
-                    notesAdapter?.submitList(it)
-                    fragmentUtils.changeHomeState(it.isEmpty())
+            launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    mainViewModel.noteTagList.collect { list ->
+                        checkedTagsName = list
+                            .filter { noteTag -> noteTag.checked }
+                            .map { noteTag -> noteTag.tagName }
+
+                        invalidateHomeLayout(filterListWithTags(localNotes, checkedTagsName))
+                    }
+                }
+            }
+            launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.notes.collect { list ->
+                        localNotes = list
+                        invalidateHomeLayout(filterListWithTags(list, checkedTagsName))
+                    }
                 }
             }
         }
@@ -81,6 +106,7 @@ class HomeFragment : Fragment() {
         notesAdapter = null
     }
 }
+
 
 class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(
     context,

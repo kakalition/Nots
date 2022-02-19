@@ -13,8 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentAssignTagsBottomSheetBinding
-import com.daggery.nots.databinding.FragmentTagsFilterBottomSheetBinding
-import com.daggery.nots.home.viewmodel.FilterViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -51,7 +49,7 @@ class AssignTagsBottomSheetFragment(private val updateTagsCallback: (List<String
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.tagList.collect {
+                viewModel.noteTagList.collect {
                     val tagListTagName = it.map { noteTag -> noteTag.tagName }
                     val tagNameIntersection: List<String> = tagNameList.intersect(tagListTagName).toList()
 

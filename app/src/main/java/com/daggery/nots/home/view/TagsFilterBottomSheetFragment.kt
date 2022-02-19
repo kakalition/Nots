@@ -2,7 +2,6 @@ package com.daggery.nots.home.view
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentTagsFilterBottomSheetBinding
-import com.daggery.nots.home.viewmodel.FilterViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -45,7 +43,7 @@ class TagsFilterBottomSheetFragment : BottomSheetDialogFragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.tagList.collect {
+                viewModel.noteTagList.collect {
                     // Clear all children when list is updated
                     viewBinding.chipGroup.removeAllViews()
                     it.forEach { noteTag ->
@@ -71,7 +69,6 @@ class TagsFilterBottomSheetFragment : BottomSheetDialogFragment() {
             checkedTagsFromChipGroup.add(view?.findViewById<Chip>(i)?.text.toString())
         }
 
-        // TODO: This one is culprit
         viewModel.updateTagByTagName(checkedTagsFromChipGroup)
     }
 
