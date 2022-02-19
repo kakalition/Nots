@@ -13,11 +13,13 @@ class FilterViewModel @Inject constructor(private val noteTagDao: NoteTagDao) : 
 
     val tagList = noteTagDao.getTags()
 
+/*
     fun getTag(tagName: String) {
         viewModelScope.launch {
             noteTagDao.getTag(tagName)
         }
     }
+*/
 
     fun addTag(noteTag: NoteTag) {
         viewModelScope.launch {

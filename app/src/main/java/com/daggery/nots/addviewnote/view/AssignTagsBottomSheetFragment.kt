@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentAssignTagsBottomSheetBinding
 import com.daggery.nots.databinding.FragmentTagsFilterBottomSheetBinding
@@ -29,7 +30,7 @@ class AssignTagsBottomSheetFragment(private val updateTagsCallback: (List<String
     private var _viewBinding: FragmentAssignTagsBottomSheetBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    private val viewModel: FilterViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     private var tagNameList: List<String> = listOf()
 
@@ -50,7 +51,6 @@ class AssignTagsBottomSheetFragment(private val updateTagsCallback: (List<String
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                // TODO: Maybe can use DiffUtil
                 viewModel.tagList.collect {
                     val tagListTagName = it.map { noteTag -> noteTag.tagName }
                     val tagNameIntersection: List<String> = tagNameList.intersect(tagListTagName).toList()

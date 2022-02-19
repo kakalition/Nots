@@ -10,13 +10,16 @@ interface NoteTagDao {
     fun getTags(): Flow<List<NoteTag>>
 
     @Query("SELECT * FROM tags WHERE tag_name = :tagName")
-    fun getTag(tagName: String): NoteTag
+    suspend fun getTagByTagName(tagName: String): NoteTag
 
     @Insert
     suspend fun addTag(noteTag: NoteTag)
 
     @Update
     suspend fun editTag(noteTag: NoteTag)
+
+    @Update
+    suspend fun updateTags(noteTags: List<NoteTag>)
 
     @Delete
     suspend fun deleteTag(noteTag: NoteTag)

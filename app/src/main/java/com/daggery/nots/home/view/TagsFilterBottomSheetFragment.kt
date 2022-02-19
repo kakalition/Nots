@@ -1,6 +1,8 @@
 package com.daggery.nots.home.view
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentTagsFilterBottomSheetBinding
 import com.daggery.nots.home.viewmodel.FilterViewModel
@@ -27,7 +30,7 @@ class TagsFilterBottomSheetFragment : BottomSheetDialogFragment() {
     private var _viewBinding: FragmentTagsFilterBottomSheetBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    private val viewModel: FilterViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,12 +62,21 @@ class TagsFilterBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+        val checkedTagsFromChipGroup = mutableListOf<String>()
+        val idList = viewBinding.chipGroup.checkedChipIds
+        for(i in idList) {
+            checkedTagsFromChipGroup.add(view?.findViewById<Chip>(i)?.text.toString())
+        }
+
+        // TODO: This one is culprit
+        viewModel.updateTagByTagName(checkedTagsFromChipGroup)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
     }
 }
-/*
-viewModel.tagList.collect {
-}
-*/
