@@ -12,6 +12,9 @@ interface NoteDao {
     @Query("SELECT * from notes WHERE uuid = :uuid")
     fun getNote(uuid: String): Flow<Note>
 
+    @Query("SELECT * from notes WHERE uuid = :uuid")
+    fun getStaticNote(uuid: String): Note
+
     @Update
     suspend fun rearrangeNoteOrder(notes: List<Note>)
 

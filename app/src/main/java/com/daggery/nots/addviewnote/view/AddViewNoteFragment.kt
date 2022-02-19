@@ -1,27 +1,28 @@
 package com.daggery.nots.addviewnote.view
 
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
 import com.daggery.nots.addviewnote.utils.NoteUtils
 import com.daggery.nots.addviewnote.viewmodel.AddViewNoteViewModel
+import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.daggery.nots.observeOnce
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -32,6 +33,8 @@ class AddViewNoteFragment : Fragment() {
     internal val viewModel: AddViewNoteViewModel by activityViewModels()
 
     private val args: AddViewNoteFragmentArgs by navArgs()
+
+    internal lateinit var note: Note
 
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
@@ -47,7 +50,9 @@ class AddViewNoteFragment : Fragment() {
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             when (isNewNote) {
-                true -> { fragmentUtils.onBackPressedWhenNewNote() }
+                true -> {
+                    fragmentUtils.onBackPressedWhenNewNote()
+                }
                 false -> {
                     fragmentUtils.updateNoteNavigateUp()
                 }
@@ -81,16 +86,31 @@ class AddViewNoteFragment : Fragment() {
         _noteUtils = NoteUtils(this)
 
         _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment()
-        viewModel.getNote(args.uuid).observeOnce(viewLifecycleOwner) {
-            assignTagsBottomSheetFragment.assignTagNameList(it?.noteTags ?: listOf())
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                if (args.uuid.isNotBlank()) {
+                    viewModel.getNote(args.uuid).collect {
+                        note = it
+                        noteUtils.bindsFields(it)
+                        assignTagsBottomSheetFragment.assignTagNameList(it.noteTags)
+                    }
+                } else {
+                    viewModel.getBlankNote().collect {
+                        Log.d("LOL blank", it.toString())
+                        note = it
+                        noteUtils.bindsFields(it)
+                        assignTagsBottomSheetFragment.assignTagNameList(it.noteTags)
+                    }
+                }
+            }
         }
 
         viewBinding.customLinearLayout.setFragmentUtils(fragmentUtils)
-        noteUtils.bindsFields(args.uuid)
 
         with(fragmentUtils) {
             bindsToolbar()
-            if(isNewNote == true) addEnvironment() else editEnvironment()
+            if (isNewNote == true) addEnvironment() else editEnvironment()
         }
 
         with(viewBinding) {

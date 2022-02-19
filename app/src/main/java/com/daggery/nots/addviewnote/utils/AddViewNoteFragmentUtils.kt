@@ -3,9 +3,12 @@ package com.daggery.nots.addviewnote.utils
 import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
@@ -14,6 +17,9 @@ import com.daggery.nots.addviewnote.view.AssignTagsBottomSheetFragment
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.launch
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
@@ -49,29 +55,22 @@ class AddViewNoteFragmentUtils(
         val isNoteInvalid = noteTitle.isBlank() || noteBody.isBlank()
 
         when {
-            isNoteInvalid -> { showFailToAddSnackBar() }
+            isNoteInvalid -> {
+                showFailToAddSnackBar()
+            }
             else -> {
-                fragment.viewModel.notes.observeOnce(fragment.viewLifecycleOwner) {
-                    var upperIndex = -1
-
-                    // Get upper index
-                    if(it.isEmpty()) { upperIndex = 0 }
-                    else {
-                        it.forEach { note ->
-                            if (note.noteOrder >= upperIndex) {
-                                upperIndex = note.noteOrder + 1
-                            }
-                        }
-                    }
-                    fragment.viewModel.addNote(noteTitle, noteBody, upperIndex)
-                    fragment.findNavController().navigateUp()
-                }
+                val newNote = fragment.note.copy(
+                    noteTitle = fragment.viewBinding.noteTitle.text.toString(),
+                    noteBody = fragment.viewBinding.noteBody.text.toString()
+                )
+                fragment.viewModel.addNote(newNote)
+                fragment.findNavController().navigateUp()
             }
         }
     }
 
     private val navigationClickListener: (View) -> Unit = {
-        if(fragment.isNewNote == true) {
+        if (fragment.isNewNote == true) {
             onBackPressedWhenNewNote()
         } else {
             updateNoteNavigateUp()
@@ -79,7 +78,7 @@ class AddViewNoteFragmentUtils(
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.confirm_button -> {
                 onConfirmTapped()
                 true
@@ -88,7 +87,10 @@ class AddViewNoteFragmentUtils(
                 true
             }
             R.id.assign_tags -> {
-                fragment.assignTagsBottomSheetFragment.show(fragment.parentFragmentManager, AssignTagsBottomSheetFragment.TAG)
+                fragment.assignTagsBottomSheetFragment.show(
+                    fragment.parentFragmentManager,
+                    AssignTagsBottomSheetFragment.TAG
+                )
                 true
             }
             else -> false
@@ -110,20 +112,17 @@ class AddViewNoteFragmentUtils(
             .show()
     }
 
-    // TODO: Change to let scope resolution
     fun updateNoteNavigateUp() {
-        fragment.viewModel.getNote(args.uuid).observeOnce(fragment.viewLifecycleOwner) {
-            val newNote = it!!.copy(
-                noteTitle = fragment.viewBinding.noteTitle.text.toString(),
-                noteBody = fragment.viewBinding.noteBody.text.toString()
-            )
-            fragment.viewModel.updateNote(newNote)
-            fragment.findNavController().navigateUp()
-        }
+        val newNote = fragment.note.copy(
+            noteTitle = fragment.viewBinding.noteTitle.text.toString(),
+            noteBody = fragment.viewBinding.noteBody.text.toString()
+        )
+        fragment.viewModel.updateNote(newNote)
+        fragment.findNavController().navigateUp()
     }
 
     fun onBackPressedWhenNewNote() {
-        if(isNewNoteInvalid()) {
+        if (isNewNoteInvalid()) {
             fragment.findNavController().navigateUp()
         } else {
             showUnsavedConfirmationDialog()
@@ -203,11 +202,15 @@ class AddViewNoteFragmentUtils(
     }
 
     // TODO: Implement correct behavior
-    private fun setMenuVisibility(confirmButton: Boolean, editButton: Boolean, deleteButton: Boolean) {
+    private fun setMenuVisibility(
+        confirmButton: Boolean,
+        editButton: Boolean,
+        deleteButton: Boolean
+    ) {
         fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
             findItem(R.id.confirm_button).isVisible = confirmButton
             findItem(R.id.delete_button).isVisible = deleteButton
         }
     }
-
 }
+
