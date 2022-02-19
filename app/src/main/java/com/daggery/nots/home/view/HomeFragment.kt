@@ -66,7 +66,6 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.notes.collect {
-                    Log.d("LOL update", it.toString())
                     notesAdapter?.submitList(it)
                     fragmentUtils.changeHomeState(it.isEmpty())
                 }

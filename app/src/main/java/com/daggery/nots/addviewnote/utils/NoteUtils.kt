@@ -1,6 +1,8 @@
 package com.daggery.nots.addviewnote.utils
 
 import android.text.Editable
+import android.util.Log
+import android.view.View
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.data.Note
@@ -10,7 +12,8 @@ class NoteUtils(private val fragment: AddViewNoteFragment) {
 
     private val editableFactory = Editable.Factory()
 
-    private fun bindsChips(chipsName: List<String>) {
+    internal fun bindsChips(chipsName: List<String>) {
+        fragment.viewBinding.chipGroup.removeAllViews()
         chipsName.forEach { noteTag ->
             val chip = fragment.layoutInflater.inflate(R.layout.chip_note_item, fragment.viewBinding.chipGroup, false) as Chip
             chip.text = noteTag
@@ -33,7 +36,12 @@ class NoteUtils(private val fragment: AddViewNoteFragment) {
                 )
             )
             noteBody.text = editableFactory.newEditable(note?.noteBody ?: "")
-            bindsChips(note?.noteTags ?: listOf())
+            if(note?.noteTags.isNullOrEmpty()) {
+                chipGroup.visibility = View.GONE
+            } else {
+                chipGroup.visibility = View.VISIBLE
+                bindsChips(note?.noteTags ?: listOf())
+            }
         }
     }
 }

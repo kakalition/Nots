@@ -14,12 +14,14 @@ import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.addviewnote.view.AddViewNoteFragmentArgs
 import com.daggery.nots.addviewnote.view.AssignTagsBottomSheetFragment
+import com.daggery.nots.data.Note
 import com.daggery.nots.observeOnce
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
@@ -48,45 +50,26 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    val onConfirmTapped = {
-        val noteTitle = fragment.viewBinding.noteTitle.text.toString()
-        val noteBody = fragment.viewBinding.noteBody.text.toString()
-
-        val isNoteInvalid = noteTitle.isBlank() || noteBody.isBlank()
-
-        when {
-            isNoteInvalid -> {
-                showFailToAddSnackBar()
-            }
-            else -> {
-                val newNote = fragment.note.copy(
-                    noteTitle = fragment.viewBinding.noteTitle.text.toString(),
-                    noteBody = fragment.viewBinding.noteBody.text.toString()
-                )
-                fragment.viewModel.addNote(newNote)
-                fragment.findNavController().navigateUp()
-            }
-        }
-    }
-
     private val navigationClickListener: (View) -> Unit = {
-        if (fragment.isNewNote == true) {
-            onBackPressedWhenNewNote()
-        } else {
-            updateNoteNavigateUp()
-        }
+        updateNoteNavigateUp()
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when (item.itemId) {
-            R.id.confirm_button -> {
-                onConfirmTapped()
-                true
-            }
             R.id.delete_button -> {
+                if(fragment.args.uuid.isBlank()) {
+                    fragment.findNavController().navigateUp()
+                } else {
+                    // TODO: FINISH THIS
+                    fragment.viewModel.noteCache?.let {
+                        fragment.viewModel.deleteNote(it)
+                    }
+                    fragment.findNavController().navigateUp()
+                }
                 true
             }
             R.id.assign_tags -> {
+                fragment.assignTagsBottomSheetFragment.assignTagNameList(fragment.viewModel.noteCache?.noteTags ?: listOf())
                 fragment.assignTagsBottomSheetFragment.show(
                     fragment.parentFragmentManager,
                     AssignTagsBottomSheetFragment.TAG
@@ -97,51 +80,50 @@ class AddViewNoteFragmentUtils(
         }
     }
 
-    private fun showUnsavedConfirmationDialog() {
-        MaterialAlertDialogBuilder(
-            fragment.requireContext(),
-            R.style.NotsAlertDialog
-        )
-            .setView(R.layout.dialog_unsaved_confirmation)
-            .setPositiveButton("Sure") { _, _ ->
-                fragment.findNavController().navigateUp()
+    private fun showSnackBar(text: String) {
+        Snackbar.make(fragment.viewBinding.root, text, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun assertNoteValidityThenAdd(note: Note): Boolean {
+        Log.d("LOL note", note.toString())
+        val titleNotBlank = note.noteTitle.isNotBlank()
+        val bodyNotBlank = note.noteBody.isNotBlank()
+        return when {
+            !titleNotBlank && !bodyNotBlank -> true
+            !titleNotBlank -> {
+                showSnackBar("Title is empty")
+                false
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
+            !bodyNotBlank -> {
+                showSnackBar("Body is empty")
+                false
             }
-            .show()
+            titleNotBlank && bodyNotBlank -> {
+                fragment.viewModel.addNote(note)
+                true
+            }
+            else -> true
+        }
     }
 
     fun updateNoteNavigateUp() {
-        val newNote = fragment.note.copy(
+        val newNote = fragment.viewModel.noteCache?.copy(
             noteTitle = fragment.viewBinding.noteTitle.text.toString(),
             noteBody = fragment.viewBinding.noteBody.text.toString()
         )
-        fragment.viewModel.updateNote(newNote)
-        fragment.findNavController().navigateUp()
-    }
-
-    fun onBackPressedWhenNewNote() {
-        if (isNewNoteInvalid()) {
-            fragment.findNavController().navigateUp()
-        } else {
-            showUnsavedConfirmationDialog()
+        newNote?.let {
+            if(fragment.args.uuid.isNotBlank()) {
+                fragment.viewModel.updateNote(it)
+                fragment.findNavController().navigateUp()
+            } else {
+                val value = assertNoteValidityThenAdd(newNote)
+                Log.d("LOL assert", value.toString())
+                when(value) {
+                    true -> fragment.findNavController().navigateUp()
+                    else -> {}
+                }
+            }
         }
-    }
-
-    private fun isNewNoteInvalid(): Boolean {
-        with(fragment.viewBinding) {
-            return fragment.isNewNote == true && noteTitle.text.isNullOrBlank() && noteBody.text.isNullOrBlank()
-        }
-    }
-
-    private fun showFailToAddSnackBar() {
-        val snackBar = Snackbar.make(
-            fragment.viewBinding.addViewNoteRoot,
-            "Failed to add note. Fields cannot be blank.",
-            2000
-        )
-        snackBar.show()
     }
 
     internal fun bindsToolbar() {
@@ -174,42 +156,9 @@ class AddViewNoteFragmentUtils(
 
     internal fun addEnvironment() {
         fragment.viewBinding.apply {
-            noteTitle.isEnabled = true
-            noteBody.isEnabled = true
-
             noteTitle.requestFocus()
             // TODO: Add slight delay
             showKeyboard(noteTitle)
-        }
-        setMenuVisibility(
-            confirmButton = true,
-            editButton = false,
-            deleteButton = false
-        )
-
-    }
-
-    internal fun editEnvironment() {
-        fragment.viewBinding.apply {
-            noteTitle.isEnabled = true
-            noteBody.isEnabled = true
-        }
-        setMenuVisibility(
-            confirmButton = false,
-            editButton = false,
-            deleteButton = true
-        )
-    }
-
-    // TODO: Implement correct behavior
-    private fun setMenuVisibility(
-        confirmButton: Boolean,
-        editButton: Boolean,
-        deleteButton: Boolean
-    ) {
-        fragment.viewBinding.toolbarBinding.toolbar.menu.apply {
-            findItem(R.id.confirm_button).isVisible = confirmButton
-            findItem(R.id.delete_button).isVisible = deleteButton
         }
     }
 }

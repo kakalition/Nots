@@ -9,12 +9,6 @@
         android:icon="@drawable/ic_bookmark"/>
     <item
         android:iconTint="?attr/colorOnSurface"
-        android:title="@string/menu_add_view_fragment_confirm"
-        android:id="@+id/confirm_button"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_check"/>
-    <item
-        android:iconTint="?attr/colorOnSurface"
         android:title="@string/menu_add_view_fragment_delete"
         android:id="@+id/delete_button"
         app:showAsAction="ifRoom"

@@ -24,6 +24,18 @@ class AddViewNoteViewModel @Inject constructor(
     private val noteDao: NoteDao
 ) : ViewModel() {
 
+    private var _noteCache: Note? = null
+    val noteCache get() = _noteCache
+    fun updateCache(title: String? = null, body: String? = null, tags: List<String>? = null) {
+        _noteCache = _noteCache?.copy(
+            noteTitle = title ?: noteCache!!.noteTitle,
+            noteBody = body ?: noteCache!!.noteBody,
+            noteTags = tags ?: noteCache!!.noteTags
+        )
+    }
+    fun saveNoteCache(note: Note) { _noteCache = note }
+    fun deleteNoteCache() { _noteCache = null }
+
     val noteDateUtils = NoteDateUtils()
     val notes: Flow<List<Note>> = noteDao.getNotes()
 
@@ -89,6 +101,12 @@ class AddViewNoteViewModel @Inject constructor(
     fun updateNote(note: Note) {
         viewModelScope.launch {
             noteDao.updateNote(note)
+        }
+    }
+
+    fun deleteNote(note: Note) {
+        viewModelScope.launch {
+            noteDao.deleteNote(note)
         }
     }
 

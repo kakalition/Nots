@@ -1,5 +1,6 @@
 package com.daggery.nots.addviewnote.view
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -21,8 +22,15 @@ import com.daggery.nots.observeOnce
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+
+// TODO: Assign Tags in new note not applied
+// TODO: Presumably because changes send to database while there is corresponding data yet, possibly solved by caching changes
+
+// TODO: Hide chipgroup when there's no tag
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -32,9 +40,7 @@ class AddViewNoteFragment : Fragment() {
 
     internal val viewModel: AddViewNoteViewModel by activityViewModels()
 
-    private val args: AddViewNoteFragmentArgs by navArgs()
-
-    internal lateinit var note: Note
+    internal val args: AddViewNoteFragmentArgs by navArgs()
 
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
@@ -45,27 +51,15 @@ class AddViewNoteFragment : Fragment() {
     private var _noteUtils: NoteUtils? = null
     private val noteUtils get() = _noteUtils!!
 
-    var isNewNote: Boolean? = null
-
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            when (isNewNote) {
-                true -> {
-                    fragmentUtils.onBackPressedWhenNewNote()
-                }
-                false -> {
-                    fragmentUtils.updateNoteNavigateUp()
-                }
-                else -> {
-                    this.isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-            }
+            fragmentUtils.updateNoteNavigateUp()
         }
     }
 
-    val updateTagsCallback: (newTags: List<String>) -> Unit = {
-        viewModel.updateNote(note.copy(noteTags = it))
+    private val updateTagsCallback: (newTags: List<String>) -> Unit = {
+        viewModel.updateCache(tags = it)
+        noteUtils.bindsChips(it)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,24 +80,27 @@ class AddViewNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         _fragmentUtils = AddViewNoteFragmentUtils(this, args)
-        isNewNote = args.uuid.isBlank()
         _noteUtils = NoteUtils(this)
 
         _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment(updateTagsCallback)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (args.uuid.isNotBlank()) {
-                    viewModel.getNote(args.uuid).collect {
-                        note = it
-                        noteUtils.bindsFields(it)
-                        assignTagsBottomSheetFragment.assignTagNameList(it.noteTags)
-                    }
-                } else {
-                    viewModel.getBlankNote().collect {
-                        note = it
-                        noteUtils.bindsFields(it)
-                        assignTagsBottomSheetFragment.assignTagNameList(it.noteTags)
+                with(viewModel) {
+                    if (noteCache == null) {
+                       if (args.uuid.isNotBlank()) {
+                            getNote(args.uuid).collect {
+                                saveNoteCache(it)
+                                noteUtils.bindsFields(it)
+                            }
+                        } else {
+                            getBlankNote().collect {
+                                saveNoteCache(it)
+                                noteUtils.bindsFields(it)
+                            }
+                        }
+                    } else {
+                        noteUtils.bindsFields(noteCache)
                     }
                 }
             }
@@ -113,7 +110,7 @@ class AddViewNoteFragment : Fragment() {
 
         with(fragmentUtils) {
             bindsToolbar()
-            if (isNewNote == true) addEnvironment() else editEnvironment()
+            if (args.uuid.isBlank()) addEnvironment()
         }
 
         with(viewBinding) {
@@ -134,8 +131,18 @@ class AddViewNoteFragment : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        viewModel.updateCache(
+            title = viewBinding.noteTitle.text.toString(),
+            body = viewBinding.noteBody.text.toString(),
+        )
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.deleteNoteCache()
         _viewBinding = null
         _fragmentUtils = null
         _noteUtils = null
