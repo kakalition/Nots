@@ -20,11 +20,12 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AssignTagsBottomSheetFragment : BottomSheetDialogFragment() {
+class AssignTagsBottomSheetFragment(private val updateTagsCallback: (List<String>) -> Unit) : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "assignTagsBottomSheetFragment"
     }
+
     private var _viewBinding: FragmentAssignTagsBottomSheetBinding? = null
     private val viewBinding get() = _viewBinding!!
 
@@ -68,12 +69,16 @@ class AssignTagsBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    // TODO: Implement correct behaviour
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-
-        // TODO: Save note tags changes in note
+        val checkedTagsFromChipGroup = mutableListOf<String>()
         val idList = viewBinding.chipGroup.checkedChipIds
+        for(i in idList) {
+            checkedTagsFromChipGroup.add(view?.findViewById<Chip>(i)?.text.toString())
+        }
 
+        updateTagsCallback(checkedTagsFromChipGroup)
     }
 
     override fun onDestroyView() {

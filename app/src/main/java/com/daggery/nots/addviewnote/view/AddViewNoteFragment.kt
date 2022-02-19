@@ -64,6 +64,10 @@ class AddViewNoteFragment : Fragment() {
         }
     }
 
+    val updateTagsCallback: (newTags: List<String>) -> Unit = {
+        viewModel.updateNote(note.copy(noteTags = it))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = getMaterialTransformTransition()
@@ -85,7 +89,7 @@ class AddViewNoteFragment : Fragment() {
         isNewNote = args.uuid.isBlank()
         _noteUtils = NoteUtils(this)
 
-        _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment()
+        _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment(updateTagsCallback)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
