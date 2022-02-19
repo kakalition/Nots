@@ -1,27 +1,21 @@
 package com.daggery.nots
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.daggery.nots.databinding.ActivityMainBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+
+// TODO: TARGET: Modify layout
+// TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment
 
 // TODO: Implement Add Tag
 // TODO: Implement Context AppBar when long clicking chip
 // TODO: Move Action Menu to Designated Position in Figma
-// TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority

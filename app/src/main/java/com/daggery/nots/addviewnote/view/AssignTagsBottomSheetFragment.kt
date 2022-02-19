@@ -69,7 +69,6 @@ class AssignTagsBottomSheetFragment(private val updateTagsCallback: (List<String
         }
     }
 
-    // TODO: Implement correct behaviour
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         val checkedTagsFromChipGroup = mutableListOf<String>()

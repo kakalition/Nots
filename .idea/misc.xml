@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/drawable/bg_note_item_outlined_priority.xml" value="0.166" />
         <entry key="app/src/main/res/drawable/bg_note_item_priority.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_note_item_swipe.xml" value="0.242" />
+        <entry key="app/src/main/res/drawable/bg_tag.xml" value="0.13" />
         <entry key="app/src/main/res/drawable/bg_theme_card.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_theme_card_selected.xml" value="0.173" />
         <entry key="app/src/main/res/drawable/bg_theme_color.xml" value="0.173" />
@@ -51,6 +52,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/appbar_title.xml" value="0.45314109165808447" />
         <entry key="app/src/main/res/layout/child_preview_theme.xml" value="0.2821718683197948" />
+        <entry key="app/src/main/res/layout/chip__note_item.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/chip_filter.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/dialog_delete.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dialog_delete_all_notes.xml" value="0.2821718683197948" />
