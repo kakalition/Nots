@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.MenuItem
 import android.view.View
 import androidx.core.graphics.ColorUtils
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,8 @@ import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class HomeFragmentUtils(
     private val fragment: HomeFragment,
@@ -73,13 +76,15 @@ class HomeFragmentUtils(
 
     private fun reorderChronologically() {
         with(fragment.viewModel) {
-            notes.observeOnce(fragment.viewLifecycleOwner) {
-                val initialNotes = it.sortedBy { note -> note.noteDate }.toMutableList()
-                val mappedNotes = initialNotes.mapIndexed { index, note ->
-                    note.copy(noteOrder = index)
-                }
+            viewModelScope.launch {
+                notes.collect {
+                    val initialNotes = it.sortedBy { note -> note.noteDate }.toMutableList()
+                    val mappedNotes = initialNotes.mapIndexed { index, note ->
+                        note.copy(noteOrder = index)
+                    }
 
-                rearrangeNoteOrder(mappedNotes.toMutableList())
+                    rearrangeNoteOrder(mappedNotes.toMutableList())
+                }
             }
         }
     }
@@ -99,8 +104,6 @@ class HomeFragmentUtils(
     }
 
     fun bindsRecyclerView() {
-        fragment.notesLiveData = fragment.viewModel.notes
-        fragment.notesLiveData.observe(fragment.viewLifecycleOwner, fragment.notesObserver)
         fragment.viewBinding.notesRecyclerview.apply {
             layoutManager = fragment.notesLinearLayoutManager
             adapter = fragment.notesAdapter

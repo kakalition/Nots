@@ -97,7 +97,6 @@ class AddViewNoteFragment : Fragment() {
                     }
                 } else {
                     viewModel.getBlankNote().collect {
-                        Log.d("LOL blank", it.toString())
                         note = it
                         noteUtils.bindsFields(it)
                         assignTagsBottomSheetFragment.assignTagNameList(it.noteTags)

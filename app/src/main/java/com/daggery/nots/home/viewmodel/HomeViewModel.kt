@@ -6,6 +6,7 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.data.NoteDao
 import com.daggery.nots.data.NotsDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Get all notes
-    val notes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
+    val notes: Flow<List<Note>> = noteDao.getNotes()
 
     // Change note order of corresponding note
     // TODO: Could be optimized using upper and lower bound of index

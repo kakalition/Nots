@@ -2,10 +2,13 @@ package com.daggery.nots.home.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daggery.nots.MainViewModel
@@ -16,6 +19,8 @@ import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NoteDateUtils
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 // TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
 
@@ -33,12 +38,6 @@ class HomeFragment : Fragment() {
     internal var notesLinearLayoutManager: NoteLinearLayoutManager? = null
     internal var notesAdapter: NoteListAdapter? = null
 
-    internal lateinit var notesLiveData: LiveData<List<Note>>
-    internal val notesObserver: (List<Note>) -> Unit = { noteList ->
-        notesAdapter?.submitList(noteList)
-        fragmentUtils.changeHomeState(noteList.isEmpty())
-    }
-
     internal val filterBottomSheet = TagsFilterBottomSheetFragment()
 
     override fun onCreateView(
@@ -52,12 +51,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var initialNotes: MutableList<Note> = mutableListOf()
-        viewModel.notes.observeOnce(viewLifecycleOwner) {
-            initialNotes = it.toMutableList()
-        }
-
         _fragmentUtils = HomeFragmentUtils(this, findNavController())
+
+        val initialNotes: MutableList<Note> = mutableListOf()
         notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
         notesAdapter = NoteListAdapter(initialNotes, fragmentUtils, NoteDateUtils())
 
@@ -65,6 +61,16 @@ class HomeFragment : Fragment() {
             bindsToolbar()
             bindsFab()
             bindsRecyclerView()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.notes.collect {
+                    Log.d("LOL update", it.toString())
+                    notesAdapter?.submitList(it)
+                    fragmentUtils.changeHomeState(it.isEmpty())
+                }
+            }
         }
     }
 
@@ -74,7 +80,6 @@ class HomeFragment : Fragment() {
         _fragmentUtils = null
         notesLinearLayoutManager = null
         notesAdapter = null
-        notesLiveData.removeObserver(notesObserver)
     }
 }
 

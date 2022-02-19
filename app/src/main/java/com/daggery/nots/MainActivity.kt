@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 // TODO: Implement Add Tag
 // TODO: Implement Context AppBar when long clicking chip
 // TODO: Move Action Menu to Designated Position in Figma
+// TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
