@@ -12,11 +12,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
-import com.daggery.nots.home.view.NewTagBottomSheetFragment
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
 import com.daggery.nots.home.view.TagsFilterBottomSheetFragment
-import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

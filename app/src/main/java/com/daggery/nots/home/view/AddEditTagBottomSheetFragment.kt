@@ -13,12 +13,16 @@ import androidx.lifecycle.lifecycleScope
 import com.daggery.nots.data.NoteTag
 import com.daggery.nots.databinding.FragmentNewTagsBottomSheetBinding
 import com.daggery.nots.home.viewmodel.FilterViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+// TODO: Implement Edit Tag
+
 @AndroidEntryPoint
-class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
+class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
+
     companion object {
         const val TAG = "NewTagsDialog"
     }
@@ -27,6 +31,11 @@ class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
     val viewBinding get() = _viewBinding!!
 
     private val viewModel: FilterViewModel by activityViewModels()
+
+    private var existingNoteTag: NoteTag? = null
+    fun sendNoteTag(value: NoteTag) {
+        existingNoteTag = value
+    }
 
     private fun showKeyboard(view: View) {
         val inputMethodManager = requireActivity()
@@ -46,10 +55,18 @@ class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.confirmButton.setOnClickListener {
-            val tag = viewBinding.newTagInput.text.toString()
-            if(tag.isNotBlank()) {
-                viewModel.addTag(NoteTag(tagName = tag, checked = false))
-                this.dismiss()
+            if(existingNoteTag == null) {
+                val tag = viewBinding.newTagInput.text.toString()
+                if(tag.isNotBlank()) {
+                    viewModel.addTag(NoteTag(tagName = tag, checked = false))
+                    this.dismiss()
+                } else {
+                    Snackbar.make(viewBinding.root, "Tag is empty", Snackbar.LENGTH_SHORT)
+                        .setAnchorView(viewBinding.newTagInput)
+                        .show()
+                }
+            } else {
+
             }
         }
     }

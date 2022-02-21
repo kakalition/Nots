@@ -1,13 +1,11 @@
 package com.daggery.nots.home.utils
 
 import android.graphics.Color
-import android.view.ActionMode
-import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.home.view.ManageTagsFragment
-import com.daggery.nots.home.view.NewTagBottomSheetFragment
+import com.daggery.nots.home.view.AddEditTagBottomSheetFragment
 import com.google.android.material.color.MaterialColors
 
 // TODO: Implements RecyclerView.Selection
@@ -18,7 +16,7 @@ class ManageTagsFragmentUtils(private val fragment: ManageTagsFragment) {
             R.id.add_tags_button -> {
                 fragment.newTagsDialog.show(
                     fragment.requireActivity().supportFragmentManager,
-                    NewTagBottomSheetFragment.TAG
+                    AddEditTagBottomSheetFragment.TAG
                 )
                 true
             }

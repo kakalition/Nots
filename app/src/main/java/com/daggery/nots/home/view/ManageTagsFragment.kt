@@ -29,7 +29,7 @@ class ManageTagsFragment : Fragment() {
     private var _fragmentUtils: ManageTagsFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
-    val newTagsDialog = NewTagBottomSheetFragment()
+    val newTagsDialog = AddEditTagBottomSheetFragment()
     var actionMode: ActionMode? = null
     private val tagsActionModeCallback = TagsActionModeCallback(this)
 

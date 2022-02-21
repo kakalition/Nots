@@ -59,6 +59,12 @@ class ManageTagsViewModel @Inject constructor(
         }
     }
 
+    fun editTag(noteTag: NoteTag) {
+        viewModelScope.launch {
+            dao.editTag(noteTag)
+        }
+    }
+
     fun deleteTags() {
         viewModelScope.launch {
             val noteTag = mutableListOf<Deferred<NoteTag>>()
