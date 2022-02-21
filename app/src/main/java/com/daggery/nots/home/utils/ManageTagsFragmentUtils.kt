@@ -10,6 +10,7 @@ import com.daggery.nots.home.view.ManageTagsFragment
 import com.daggery.nots.home.view.NewTagBottomSheetFragment
 import com.google.android.material.color.MaterialColors
 
+// TODO: Implements RecyclerView.Selection
 class ManageTagsFragmentUtils(private val fragment: ManageTagsFragment) {
 
     private val menuItemClickListener = { item: MenuItem ->

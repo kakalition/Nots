@@ -10,12 +10,15 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: TARGET: Modify layout
-// TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment
+// TODO: TARGET: Refactor
+// TODO: create repository
+// TODO: implement correct data flow
 
 // TODO: Implement Add Tag
 // TODO: Implement Context AppBar when long clicking chip
-// TODO: Move Action Menu to Designated Position in Figma
+// TODO: Modify bookmarked note layout as in Figma
+
+// TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment (Emulator)
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
@@ -27,9 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Simplify NoteListAdapter
 // TODO: Migrate to Kotlin Flow
 
-// TODO: Upcoming Feature: Have bold italic underline feature
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
-// TODO: Upcoming Feature: Create Notes Filter
 
 
 @AndroidEntryPoint
