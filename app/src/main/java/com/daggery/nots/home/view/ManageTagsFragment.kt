@@ -1,5 +1,6 @@
 package com.daggery.nots.home.view
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.daggery.nots.databinding.FragmentManageTagsBinding
 import com.daggery.nots.home.adapter.TagListAdapter
 import com.daggery.nots.home.utils.ManageTagsFragmentUtils
 import com.daggery.nots.home.viewmodel.ManageTagsViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -88,6 +90,18 @@ class ManageTagsFragment : Fragment() {
         _fragmentUtils = null
         _tagListAdapter = null
     }
+
+    fun showDeleteDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setView(R.layout.dialog_delete_tags)
+            .setPositiveButton("Delete Tags") { _, _ ->
+                viewModel.deleteTags()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
 }
 
 class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionMode.Callback {
@@ -122,6 +136,7 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
                     fragment.requireActivity().supportFragmentManager,
                     AddEditTagBottomSheetFragment.TAG
                 )
+                // Disable this item temporarily to avoid exception
                 fragment.viewLifecycleOwner.lifecycleScope.launch {
                     item.isEnabled = false
                     delay(500)
@@ -130,7 +145,7 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
                 true
             }
             R.id.delete_button -> {
-                fragment.viewModel.deleteTags()
+                fragment.showDeleteDialog()
                 true
             }
             else -> { false }
@@ -140,5 +155,6 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     override fun onDestroyActionMode(mode: ActionMode?) {
         fragment.actionMode = null
     }
+
 }
 
