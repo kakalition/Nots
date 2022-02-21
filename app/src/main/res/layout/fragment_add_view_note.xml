@@ -10,7 +10,7 @@
     android:transitionName="from_fab_to_add"
     tools:context=".addviewnote.view.AddViewNoteFragment">
 
-    <FrameLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         <include
             android:id="@+id/toolbar_binding"
             layout="@layout/appbar_title" />
-    </FrameLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:id="@+id/scrollview"
@@ -45,7 +45,7 @@
                 android:fontFamily="@font/opensans_bold"
                 android:hint="@string/fragment_add_view_note_title_hint"
                 android:inputType="textMultiLine|textNoSuggestions"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="11dp"
@@ -59,16 +59,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
                 android:fontFamily="@font/opensans_light"
+                android:layout_marginBottom="22dp"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
                 android:textColor="?attr/colorOnSecondary"
                 tools:text="January 29, 2021" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_marginHorizontal="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="11dp"
+                app:lineSpacing="12dp"
+                app:itemSpacing="12dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
-                android:layout_marginTop="33dp"
                 android:backgroundTint="?attr/colorSurface"
                 android:fontFamily="@font/opensans_regular"
                 android:gravity="top"

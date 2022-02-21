@@ -1,6 +1,9 @@
 <resources>
     <style name="Theme.Nots" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/black_surface</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen.IconBackground">

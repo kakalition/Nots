@@ -1,6 +1,5 @@
 package com.daggery.nots.home.adapter
 
-import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +9,7 @@ import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.TileNoteItemBinding
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.utils.NoteDateUtils
+import com.google.android.material.chip.Chip
 import java.util.*
 
 class NoteListAdapter(
@@ -25,9 +25,6 @@ class NoteListAdapter(
         fun bind(note: Note) {
             val homeLayoutKey = homeFragmentUtils.getHomeLayoutKey()
             with(binding) {
-                (swipeBg.background as GradientDrawable).setColor(
-                    homeFragmentUtils.getSwipeBgColor()
-                )
                 when {
                     // Filled and Not Priority
                     homeLayoutKey == 0 && note.priority == 0 -> {
@@ -55,7 +52,15 @@ class NoteListAdapter(
 
                 noteTitle.text = note.noteTitle
                 noteBody.text = note.noteBody
-                noteDate.text = noteDateUtils.getParsedDate(note.noteDate)
+                noteDate.text = "Date: " + noteDateUtils.getParsedDate(note.noteDate)
+                note.noteTags.forEach {
+                    val chip = LayoutInflater.from(chipGroup.context).inflate(R.layout.chip_note_item, chipGroup, false) as Chip
+                    chip.text = it
+                    chip.isCheckable = false
+                    chip.isClickable = false
+                    chip.isFocusable = false
+                    chipGroup.addView(chip)
+                }
             }
         }
     }
@@ -75,7 +80,6 @@ class NoteListAdapter(
         val current = notes[position]
         holder.binding.listItemLayout.apply {
             setOnClickListener{ homeFragmentUtils.noteClickListener(current) }
-            setOnTouchListener(OnNoteItemTouchListener(homeFragmentUtils, holder, current))
         }
         holder.bind(current)
     }

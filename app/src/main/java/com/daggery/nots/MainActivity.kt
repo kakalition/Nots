@@ -2,7 +2,6 @@ package com.daggery.nots
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -11,14 +10,15 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Clear Focus on Back Pressed
+// TODO: TARGET: Refactor
+// TODO: create repository
+// TODO: implement correct data flow
 
-// TODO: Migrate to Kotlin Flow
+// TODO: Implement Add Tag
+// TODO: Implement Context AppBar when long clicking chip
+// TODO: Modify bookmarked note layout as in Figma
 
-// TODO: Upcoming Feature: Have bold italic underline feature
-// TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
-// tODO: Upcoming Feature: Tags
-// TODO: Upcoming Feature: Create Notes Filter
+// TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment (Emulator)
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
@@ -27,6 +27,11 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO: Adjust outlined home layout color
 
 // TODO: Preview Note Binder Can Be Unified
+// TODO: Simplify NoteListAdapter
+// TODO: Migrate to Kotlin Flow
+
+// TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -59,11 +64,6 @@ class MainActivity : AppCompatActivity() {
         // Binder
         _viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d("LOL", "backpress")
     }
 
     override fun onDestroy() {

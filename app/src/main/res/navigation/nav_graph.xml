@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_manageTagsFragment"
+            app:destination="@id/manageTagsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addViewNoteFragment"
@@ -73,4 +76,9 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/manageTagsFragment"
+        android:name="com.daggery.nots.home.view.ManageTagsFragment"
+        android:label="fragment_manage_tags"
+        tools:layout="@layout/fragment_manage_tags" />
 </navigation>

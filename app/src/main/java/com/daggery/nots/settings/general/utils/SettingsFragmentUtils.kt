@@ -7,7 +7,7 @@ import com.daggery.nots.settings.general.view.SettingsFragment
 import com.daggery.nots.settings.general.view.SettingsFragmentDirections
 
 class SettingsFragmentUtils(private val fragment: SettingsFragment) {
-    private val navigationClickListener: (View) -> Unit = { view: View ->
+    private val navigationClickListener: (View) -> Unit = { _: View ->
         fragment.findNavController().navigateUp()
     }
 

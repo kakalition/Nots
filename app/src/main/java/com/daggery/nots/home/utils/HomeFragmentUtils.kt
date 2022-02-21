@@ -1,24 +1,27 @@
 package com.daggery.nots.home.utils
 
 import android.graphics.Color
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.core.graphics.ColorUtils
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
+import com.daggery.nots.home.view.NewTagBottomSheetFragment
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
+import com.daggery.nots.home.view.TagsFilterBottomSheetFragment
 import com.daggery.nots.observeOnce
 import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class HomeFragmentUtils(
     private val fragment: HomeFragment,
@@ -50,12 +53,20 @@ class HomeFragmentUtils(
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
         when(item.itemId) {
+            R.id.filter_button -> {
+                fragment.filterBottomSheet.show(fragment.parentFragmentManager, TagsFilterBottomSheetFragment.TAG)
+                true
+            }
             R.id.reorder_button -> {
                 showReorderChronologicallyDialog()
                 true
             }
             R.id.delete_all_notes_button -> {
                 showDeleteAllDialog()
+                true
+            }
+            R.id.manage_tags_button -> {
+                fragment.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToManageTagsFragment())
                 true
             }
             R.id.settings_button -> {
@@ -69,13 +80,15 @@ class HomeFragmentUtils(
 
     private fun reorderChronologically() {
         with(fragment.viewModel) {
-            notes.observeOnce(fragment.viewLifecycleOwner) {
-                val initialNotes = it.sortedBy { note -> note.noteDate }.toMutableList()
-                val mappedNotes = initialNotes.mapIndexed { index, note ->
-                    note.copy(noteOrder = index)
-                }
+            viewModelScope.launch {
+                notes.collect {
+                    val initialNotes = it.sortedBy { note -> note.noteDate }.toMutableList()
+                    val mappedNotes = initialNotes.mapIndexed { index, note ->
+                        note.copy(noteOrder = index)
+                    }
 
-                rearrangeNoteOrder(mappedNotes.toMutableList())
+                    rearrangeNoteOrder(mappedNotes.toMutableList())
+                }
             }
         }
     }
@@ -95,8 +108,6 @@ class HomeFragmentUtils(
     }
 
     fun bindsRecyclerView() {
-        fragment.notesLiveData = fragment.viewModel.notes
-        fragment.notesLiveData.observe(fragment.viewLifecycleOwner, fragment.notesObserver)
         fragment.viewBinding.notesRecyclerview.apply {
             layoutManager = fragment.notesLinearLayoutManager
             adapter = fragment.notesAdapter

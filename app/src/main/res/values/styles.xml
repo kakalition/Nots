@@ -4,6 +4,7 @@
     <style name="MaterialYouTheme" parent="ThemeOverlay.Material3.DynamicColors.DayNight">
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
         <item name="actionMenuTextColor">?attr/colorOnSurface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -15,6 +16,7 @@
         <item name="colorOnSurface">@color/default_dark_on_surface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
         <item name="actionMenuTextColor">?attr/colorOnSurface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="AzaleaTheme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -26,6 +28,7 @@
         <item name="colorOnSurface">@color/azalea_on_surface</item>
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="NordTheme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -37,6 +40,7 @@
         <item name="colorOnSurface">@color/nord_on_surface</item>
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="SteelBlueTheme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -48,6 +52,7 @@
         <item name="colorOnSurface">@color/steel_blue_on_surface</item>
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="RoyalLavenderTheme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -59,6 +64,7 @@
         <item name="colorOnSurface">@color/royal_lavender_on_surface</item>
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="HeatherBerryTheme" parent="Theme.Material3.DayNight.NoActionBar">
@@ -70,6 +76,7 @@
         <item name="colorOnSurface">@color/heather_berry_on_surface</item>
         <item name="android:textColorPrimary">?attr/colorOnSurface</item>
         <item name="android:textColorSecondary">?attr/colorOnSurface</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
     </style>
 
     <style name="roundedCorners">
@@ -79,6 +86,11 @@
 
     <style name="NotsAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
         <item name="android:background">?attr/colorSurface</item>
+    </style>
+
+    <style name="AppBarTitle" parent="android:TextAppearance.Material.Widget.Toolbar.Title">
+        <item name="fontFamily">@font/raleway_medium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
 </resources>

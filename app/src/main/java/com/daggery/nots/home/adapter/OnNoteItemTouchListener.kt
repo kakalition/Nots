@@ -7,6 +7,7 @@ import android.view.animation.DecelerateInterpolator
 import com.daggery.nots.data.Note
 import com.daggery.nots.home.utils.HomeFragmentUtils
 
+/*
 class OnNoteItemTouchListener(
     private val homeFragmentUtils: HomeFragmentUtils,
     private val holder: NoteListAdapter.NoteViewHolder,
@@ -135,3 +136,4 @@ class OnNoteItemTouchListener(
             .start()
     }
 }
+*/

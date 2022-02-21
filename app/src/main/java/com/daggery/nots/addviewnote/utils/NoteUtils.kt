@@ -1,65 +1,48 @@
 package com.daggery.nots.addviewnote.utils
 
 import android.text.Editable
-import com.daggery.nots.addviewnote.data.NoteMemento
+import android.util.Log
+import android.view.View
+import com.daggery.nots.R
 import com.daggery.nots.addviewnote.view.AddViewNoteFragment
-import com.daggery.nots.observeOnce
-
-// TODO: Create Empty Note getter
+import com.daggery.nots.data.Note
+import com.google.android.material.chip.Chip
 
 class NoteUtils(private val fragment: AddViewNoteFragment) {
 
     private val editableFactory = Editable.Factory()
 
-    private var pointer = 0
-    var noteTitle: String = ""
-    var noteBody: String = ""
-    var cursorPosition = 0
-
-    var noteDate: String = ""
-
-    val changeList = mutableListOf<NoteMemento>()
-
-    fun addMemento(memento: NoteMemento) {
-        changeList[pointer] = memento
-        pointer++
-    }
-
-    fun undo() {
-        pointer--
-    }
-
-    fun redo() {
-        pointer++
-    }
-
-    fun createMemento(): NoteMemento {
-        return NoteMemento(noteTitle, noteBody, cursorPosition)
-    }
-
-    fun setMemento(memento: NoteMemento) {
-        noteTitle = memento.noteTitle
-        noteBody = memento.noteBody
-        cursorPosition = memento.cursorPosition
-    }
-
-    internal fun bindsFields(uuid: String) {
-        // Initial Fields
-        with(fragment) {
-            viewModel.getNote(uuid).observeOnce(viewLifecycleOwner) {
-                noteTitle = it?.noteTitle ?: ""
-                noteBody = it?.noteBody ?: ""
-                noteDate = viewModel.noteDateUtils.getParsedDate(
-                    it?.noteDate ?: viewModel.noteDateUtils.getRawCurrentDate()
-                )
-                cursorPosition = it?.noteBody?.length ?: 0
-
-                viewBinding.noteTitle.text = editableFactory.newEditable(noteTitle)
-                viewBinding.noteDate.text = editableFactory.newEditable(noteDate)
-                viewBinding.noteBody.text = editableFactory.newEditable(noteBody)
+    internal fun bindsChips(chipsName: List<String>) {
+        if(chipsName.isEmpty()) {
+            fragment.viewBinding.chipGroup.visibility = View.GONE
+        } else {
+            fragment.viewBinding.chipGroup.visibility = View.VISIBLE
+            fragment.viewBinding.chipGroup.removeAllViews()
+            chipsName.forEach { noteTag ->
+                val chip = fragment.layoutInflater.inflate(R.layout.chip_note_item, fragment.viewBinding.chipGroup, false) as Chip
+                chip.text = noteTag
+                chip.isCheckable = false
+                chip.isClickable = false
+                chip.isFocusable = false
+                // TODO: Check this behavior
+                // TODO: Ensure when checking, chipgroup layout doesn't change
+                // chip.ensureAccessibleTouchTarget(48)
+                fragment.viewBinding.chipGroup.addView(chip)
             }
         }
-
     }
 
+    internal fun bindsFields(note: Note?, from: String) {
+        Log.d("LOL binds from $from", note.toString())
+        with(fragment.viewBinding) {
+            noteTitle.text = editableFactory.newEditable(note?.noteTitle ?: "")
+            noteDate.text = editableFactory.newEditable(
+                fragment.viewModel.noteDateUtils.getParsedDate(
+                    note?.noteDate ?: fragment.viewModel.noteDateUtils.getRawCurrentDate()
+                )
+            )
+            noteBody.text = editableFactory.newEditable(note?.noteBody ?: "")
+            bindsChips(note?.noteTags ?: listOf())
+        }
+    }
 }

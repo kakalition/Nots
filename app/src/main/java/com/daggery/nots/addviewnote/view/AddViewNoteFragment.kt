@@ -1,17 +1,15 @@
 package com.daggery.nots.addviewnote.view
 
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.activity.OnBackPressedCallback
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.daggery.nots.R
 import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
@@ -21,11 +19,8 @@ import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
-
-data class UneditedNote(
-    val noteTitle: String,
-    val noteBody: String
-)
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -35,29 +30,27 @@ class AddViewNoteFragment : Fragment() {
 
     internal val viewModel: AddViewNoteViewModel by activityViewModels()
 
-    private val args: AddViewNoteFragmentArgs by navArgs()
+    internal val args: AddViewNoteFragmentArgs by navArgs()
 
     private var _fragmentUtils: AddViewNoteFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
+    private var _assignTagsBottomSheetFragment: AssignTagsBottomSheetFragment? = null
+    internal val assignTagsBottomSheetFragment get() = _assignTagsBottomSheetFragment!!
+
     private var _noteUtils: NoteUtils? = null
     private val noteUtils get() = _noteUtils!!
 
-    var isNewNote: Boolean? = null
-
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            when (isNewNote) {
-                true -> { fragmentUtils.onBackPressedWhenNewNote() }
-                false -> {
-                    fragmentUtils.updateNoteNavigateUp()
-                }
-                else -> {
-                    this.isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-            }
+            fragmentUtils.saveNote()
         }
+    }
+
+    private val updateTagsCallback: (newTags: List<String>) -> Unit = {
+        Log.d("LOL updateTags", it.toString())
+        viewModel.updateCache(tags = it)
+        noteUtils.bindsChips(it)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,16 +70,38 @@ class AddViewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _fragmentUtils = AddViewNoteFragmentUtils(this, args)
+        _fragmentUtils = AddViewNoteFragmentUtils(this)
         _noteUtils = NoteUtils(this)
-        isNewNote = args.uuid.isBlank()
+
+        _assignTagsBottomSheetFragment = AssignTagsBottomSheetFragment(updateTagsCallback)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                with(viewModel) {
+                    if (noteCache == null) {
+                       if (args.uuid.isNotBlank()) {
+                            getNote(args.uuid).collect {
+                                saveNoteCache(it)
+                                noteUtils.bindsFields(noteCache, "args")
+                            }
+                        } else {
+                            getBlankNote().collect {
+                                saveNoteCache(it)
+                                noteUtils.bindsFields(noteCache, "empty")
+                            }
+                        }
+                    } else {
+                        noteUtils.bindsFields(noteCache, "cache")
+                    }
+                }
+            }
+        }
 
         viewBinding.customLinearLayout.setFragmentUtils(fragmentUtils)
-        noteUtils.bindsFields(args.uuid)
 
         with(fragmentUtils) {
             bindsToolbar()
-            if(isNewNote == true) addEnvironment() else editEnvironment()
+            if (args.uuid.isBlank()) addEnvironment()
         }
 
         with(viewBinding) {
@@ -105,6 +120,15 @@ class AddViewNoteFragment : Fragment() {
             viewBinding.noteBody.requestFocus()
             fragmentUtils.showKeyboard(viewBinding.noteBody)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        viewModel.updateCache(
+            title = viewBinding.noteTitle.text.toString(),
+            body = viewBinding.noteBody.text.toString(),
+        )
     }
 
     override fun onDestroyView() {
