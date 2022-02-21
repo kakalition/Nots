@@ -3,7 +3,6 @@ package com.daggery.nots.home.view
 import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
@@ -14,14 +13,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.daggery.nots.data.NoteTag
 import com.daggery.nots.databinding.FragmentNewTagsBottomSheetBinding
-import com.daggery.nots.home.viewmodel.FilterViewModel
 import com.daggery.nots.home.viewmodel.ManageTagsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 // TODO: Implement Edit Tag
 
@@ -54,10 +50,6 @@ class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.checkedTags.value.single().tagName.let {
-            viewBinding.newTagInput.setText(it)
-        }
-
         viewBinding.confirmButton.setOnClickListener {
             if(!viewModel.isEditingTag()) {
                 val tag = viewBinding.newTagInput.text.toString()
@@ -84,6 +76,14 @@ class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
                         .show()
                 }
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.checkedTagList.value.single().tagName.let {
+            viewBinding.newTagInput.setText(it)
         }
     }
 

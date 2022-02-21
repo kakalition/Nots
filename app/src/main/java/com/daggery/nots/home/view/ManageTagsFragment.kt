@@ -1,7 +1,6 @@
 package com.daggery.nots.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,7 +14,6 @@ import com.daggery.nots.home.utils.ManageTagsFragmentUtils
 import com.daggery.nots.home.viewmodel.ManageTagsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -60,14 +58,14 @@ class ManageTagsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.checkedTags.collect {
+                viewModel.checkedTagList.collect {
                     if(actionMode == null && it.isNotEmpty()) {
                         actionMode = requireActivity().startActionMode(tagsActionModeCallback)
                     } else if(it.isEmpty()) {
                         actionMode?.finish()
                     }
                     tagsActionModeCallback.setCheckedCount(it.size)
-                    actionMode?.title = "${viewModel.checkedTags.value.size} selected"
+                    actionMode?.title = "${viewModel.checkedTagList.value.size} selected"
                     actionMode?.invalidate()
                 }
             }

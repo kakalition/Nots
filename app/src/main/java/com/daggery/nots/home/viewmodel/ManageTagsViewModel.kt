@@ -26,7 +26,7 @@ class ManageTagsViewModel @Inject constructor(
     val manageTagsList get() = _manageTagsList.asStateFlow()
 
     private var _checkedTagsList = MutableStateFlow<List<ManageTagsNoteTag>>(listOf())
-    val checkedTags get() = _checkedTagsList.asStateFlow()
+    val checkedTagList get() = _checkedTagsList.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -44,18 +44,21 @@ class ManageTagsViewModel @Inject constructor(
                     _checkedTagsList.emit(list.filter { it.isSelected })
                 }
             }
+            launch {
+                checkedTagList.collect { list ->
+                    Log.d("LOL Checked", list.toString())
+                }
+            }
         }
     }
 
-    fun isEditingTag() = checkedTags.value.size == 1
+    fun isEditingTag() = checkedTagList.value.size == 1
 
-    fun getEditTag() = checkedTags.value.single()
+    fun getEditTag() = checkedTagList.value.single()
 
-    // TODO: New Bug: Randomly index will be -1
     fun select(list: MutableList<ManageTagsNoteTag>, noteTag: ManageTagsNoteTag) {
         viewModelScope.launch {
             val index = list.indexOfFirst { it.id == noteTag.id }
-            Log.d("LOL index", index.toString())
             list[index] = noteTag.copy(isSelected = !noteTag.isSelected)
             _manageTagsList.emit(list)
         }
@@ -78,7 +81,7 @@ class ManageTagsViewModel @Inject constructor(
         viewModelScope.launch {
             val noteTag = mutableListOf<Deferred<NoteTag>>()
 
-            for(checkedTag in checkedTags.value) {
+            for(checkedTag in checkedTagList.value) {
                 noteTag.add(async { dao.getTagByTagName(checkedTag.tagName) })
             }
             dao.deleteTags(noteTag.awaitAll())
