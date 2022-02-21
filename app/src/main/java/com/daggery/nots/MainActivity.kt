@@ -10,12 +10,12 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: TARGET: Refactor with clean architecture
+// TODO: Implement Context AppBar when long clicking chip (TARGET)
+
+// TODO: Refactor with clean architecture
 // TODO: create repository
 // TODO: implement correct data flow
 
-// TODO: Implement Add Tag
-// TODO: Implement Context AppBar when long clicking chip
 // TODO: Modify bookmarked note layout as in Figma
 
 // TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment (Emulator)
