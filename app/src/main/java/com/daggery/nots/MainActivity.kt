@@ -10,7 +10,7 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: TARGET: Refactor
+// TODO: TARGET: Refactor with clean architecture
 // TODO: create repository
 // TODO: implement correct data flow
 
@@ -22,13 +22,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
+// TODO: Known Bug: Theme not loaded on time
 
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Adjust outlined home layout color
 
 // TODO: Preview Note Binder Can Be Unified
 // TODO: Simplify NoteListAdapter
-// TODO: Migrate to Kotlin Flow
 
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
 
