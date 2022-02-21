@@ -59,11 +59,12 @@ class ManageTagsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.checkedTags.collect {
-                    if(it) {
+                    if(actionMode == null && it.isNotEmpty()) {
                         actionMode = requireActivity().startActionMode(fragmentUtils.actionModeCallback)
-                    } else {
+                    } else if(it.isEmpty()) {
                         actionMode?.finish()
                     }
+                    actionMode?.title = "${viewModel.checkedTags.value.size} selected"
                 }
             }
         }

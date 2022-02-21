@@ -25,9 +25,8 @@ class ManageTagsViewModel @Inject constructor(
     private var _manageTagsList = MutableStateFlow<List<ManageTagsNoteTag>>(listOf())
     val manageTagsList get() = _manageTagsList.asStateFlow()
 
-    private var _isCheckedTagsEmpty = MutableStateFlow(true)
-    val checkedTags get() = _isCheckedTagsEmpty.asStateFlow()
-
+    private var _checkedTagsList = MutableStateFlow<List<ManageTagsNoteTag>>(listOf())
+    val checkedTags get() = _checkedTagsList.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -42,9 +41,7 @@ class ManageTagsViewModel @Inject constructor(
             }
             launch {
                 manageTagsList.collect { list ->
-                    _isCheckedTagsEmpty.emit(list.map { manageTagsNoteTag -> manageTagsNoteTag.isSelected }
-                        .any { it }
-                    )
+                    _checkedTagsList.emit(list.filter { it.isSelected })
                 }
             }
         }
