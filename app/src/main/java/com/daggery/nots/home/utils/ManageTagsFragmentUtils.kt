@@ -26,30 +26,6 @@ class ManageTagsFragmentUtils(private val fragment: ManageTagsFragment) {
         }
     }
 
-    val actionModeCallback = object : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            mode?.menuInflater?.inflate(R.menu.menu_filter_fragment_action_mode, menu)
-            return true
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-            return false
-        }
-
-        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-            return when(item?.itemId) {
-                R.id.edit_button -> { true }
-                R.id.delete_button -> { true }
-                else -> { false }
-            }
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode?) {
-            fragment.actionMode = null
-        }
-
-    }
-
     internal fun bindsToolbar() {
         with(fragment.viewBinding.toolbarBinding.toolbar) {
             setNavigationIcon(R.drawable.ic_back)

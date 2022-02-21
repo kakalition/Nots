@@ -1,19 +1,16 @@
 package com.daggery.nots.home.view
 
 import android.os.Bundle
-import android.view.ActionMode
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentManageTagsBinding
 import com.daggery.nots.home.adapter.TagListAdapter
 import com.daggery.nots.home.utils.ManageTagsFragmentUtils
-import com.daggery.nots.home.viewmodel.FilterViewModel
 import com.daggery.nots.home.viewmodel.ManageTagsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -34,6 +31,7 @@ class ManageTagsFragment : Fragment() {
 
     val newTagsDialog = NewTagBottomSheetFragment()
     var actionMode: ActionMode? = null
+    private val tagsActionModeCallback = TagsActionModeCallback(this)
 
     private var _tagListAdapter: TagListAdapter? = null
     private val tagListAdapter get() = _tagListAdapter!!
@@ -60,11 +58,13 @@ class ManageTagsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.checkedTags.collect {
                     if(actionMode == null && it.isNotEmpty()) {
-                        actionMode = requireActivity().startActionMode(fragmentUtils.actionModeCallback)
+                        actionMode = requireActivity().startActionMode(tagsActionModeCallback)
                     } else if(it.isEmpty()) {
                         actionMode?.finish()
                     }
+                    tagsActionModeCallback.setCheckedCount(it.size)
                     actionMode?.title = "${viewModel.checkedTags.value.size} selected"
+                    actionMode?.invalidate()
                 }
             }
         }
@@ -85,3 +85,38 @@ class ManageTagsFragment : Fragment() {
         _tagListAdapter = null
     }
 }
+
+class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionMode.Callback {
+    private var checkedCount: Int = 0
+    fun setCheckedCount(value: Int) { checkedCount = value }
+
+    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        mode?.menuInflater?.inflate(R.menu.menu_filter_fragment_action_mode, menu)
+        return true
+    }
+
+    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        return if(checkedCount == 1) {
+            menu?.findItem(R.id.edit_button)?.isVisible = true
+            menu?.findItem(R.id.delete_button)?.isVisible = true
+            true
+        } else if(checkedCount > 1) {
+            menu?.findItem(R.id.edit_button)?.isVisible = false
+            menu?.findItem(R.id.delete_button)?.isVisible = true
+            true
+        } else { false }
+    }
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        return when(item?.itemId) {
+            R.id.edit_button -> { true }
+            R.id.delete_button -> { true }
+            else -> { false }
+        }
+    }
+
+    override fun onDestroyActionMode(mode: ActionMode?) {
+        fragment.actionMode = null
+    }
+}
+
