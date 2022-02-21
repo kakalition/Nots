@@ -1,6 +1,7 @@
 package com.daggery.nots.home.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,7 +15,9 @@ import com.daggery.nots.home.utils.ManageTagsFragmentUtils
 import com.daggery.nots.home.viewmodel.ManageTagsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 // TODO: Show Context Action Mode when Any of list is selected
 
@@ -38,6 +41,7 @@ class ManageTagsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        Timber.plant(Timber.DebugTree())
         _viewBinding = FragmentManageTagsBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
@@ -114,6 +118,10 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         return when(item?.itemId) {
             R.id.edit_button -> {
+                fragment.newTagsDialog.show(
+                    fragment.requireActivity().supportFragmentManager,
+                    AddEditTagBottomSheetFragment.TAG
+                )
                 true
             }
             R.id.delete_button -> {

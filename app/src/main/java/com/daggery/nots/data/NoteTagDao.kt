@@ -12,6 +12,9 @@ interface NoteTagDao {
     @Query("SELECT * FROM tags WHERE tag_name = :tagName")
     suspend fun getTagByTagName(tagName: String): NoteTag
 
+    @Query("SELECT * FROM tags WHERE id = :id")
+    suspend fun getTagById(id: Int): NoteTag
+
     @Insert
     suspend fun addTag(noteTag: NoteTag)
 
@@ -23,6 +26,9 @@ interface NoteTagDao {
 
     @Delete
     suspend fun deleteTag(noteTag: NoteTag)
+
+    @Query("DELETE FROM tags WHERE id = :id")
+    suspend fun deleteTagById(id: Int)
 
     @Delete
     suspend fun deleteTags(noteTag: List<NoteTag>)

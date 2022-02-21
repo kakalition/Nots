@@ -1,18 +1,13 @@
 package com.daggery.nots.home.viewmodel
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.daggery.nots.data.NoteTag
 import com.daggery.nots.data.NoteTagDao
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.serialization.internal.throwArrayMissingFieldException
 import javax.inject.Inject
 
 data class ManageTagsNoteTag(
@@ -52,16 +47,30 @@ class ManageTagsViewModel @Inject constructor(
         }
     }
 
+    fun isEditingTag() = checkedTags.value.size == 1
+
+    fun getEditTag() = checkedTags.value.single()
+
+    // TODO: New Bug: Randomly index will be -1
     fun select(list: MutableList<ManageTagsNoteTag>, noteTag: ManageTagsNoteTag) {
         viewModelScope.launch {
-            list[list.indexOf(noteTag)] = noteTag.copy(isSelected = !noteTag.isSelected)
+            val index = list.indexOfFirst { it.id == noteTag.id }
+            Log.d("LOL index", index.toString())
+            list[index] = noteTag.copy(isSelected = !noteTag.isSelected)
             _manageTagsList.emit(list)
         }
     }
 
-    fun editTag(noteTag: NoteTag) {
+    fun addTag(noteTag: NoteTag) {
         viewModelScope.launch {
-            dao.editTag(noteTag)
+            dao.addTag(noteTag)
+        }
+    }
+
+    fun editTag(value: ManageTagsNoteTag) {
+        viewModelScope.launch {
+            val noteTag = dao.getTagById(value.id)
+            dao.editTag(noteTag.copy(tagName = value.tagName))
         }
     }
 
