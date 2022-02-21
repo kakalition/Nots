@@ -21,11 +21,6 @@ class FilterViewModel @Inject constructor(private val noteTagDao: NoteTagDao) : 
     }
 */
 
-    fun addTag(noteTag: NoteTag) {
-        viewModelScope.launch {
-            noteTagDao.addTag(noteTag)
-        }
-    }
 
     fun deleteTag(noteTag: NoteTag) {
         viewModelScope.launch {

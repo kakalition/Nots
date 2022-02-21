@@ -3,6 +3,7 @@ package com.daggery.nots.home.view
 import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.daggery.nots.data.NoteTag
 import com.daggery.nots.databinding.FragmentNewTagsBottomSheetBinding
-import com.daggery.nots.home.viewmodel.FilterViewModel
+import com.daggery.nots.home.viewmodel.ManageTagsViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+// TODO: Implement Edit Tag
+
 @AndroidEntryPoint
-class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
+class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
+
     companion object {
         const val TAG = "NewTagsDialog"
     }
@@ -26,7 +31,7 @@ class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
     private var _viewBinding: FragmentNewTagsBottomSheetBinding? = null
     val viewBinding get() = _viewBinding!!
 
-    private val viewModel: FilterViewModel by activityViewModels()
+    private val viewModel: ManageTagsViewModel by activityViewModels()
 
     private fun showKeyboard(view: View) {
         val inputMethodManager = requireActivity()
@@ -46,10 +51,39 @@ class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.confirmButton.setOnClickListener {
-            val tag = viewBinding.newTagInput.text.toString()
-            if(tag.isNotBlank()) {
-                viewModel.addTag(NoteTag(tagName = tag, checked = false))
-                this.dismiss()
+            if(!viewModel.isEditingTag()) {
+                val tag = viewBinding.newTagInput.text.toString()
+                if(tag.isNotBlank()) {
+                    viewModel.addTag(NoteTag(tagName = tag, checked = false))
+                    this.dismiss()
+                } else {
+                    Snackbar.make(viewBinding.root, "Tag is empty", Snackbar.LENGTH_SHORT)
+                        .setAnchorView(viewBinding.newTagInput)
+                        .show()
+                }
+            } else {
+                // TODO: Handle existing note
+                val tag = viewBinding.newTagInput.text.toString()
+                Log.d("LOL tagname", tag.toString())
+                if(tag.isNotBlank()) {
+                    viewModel.getEditTag().let {
+                        viewModel.editTag(it.copy(tagName = tag))
+                        this.dismiss()
+                    }
+                } else {
+                    Snackbar.make(viewBinding.root, "Tag is empty", Snackbar.LENGTH_SHORT)
+                        .setAnchorView(viewBinding.newTagInput)
+                        .show()
+                }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(viewModel.checkedTagList.value.isNotEmpty()) {
+            viewModel.checkedTagList.value.single().tagName.let {
+                viewBinding.newTagInput.setText(it)
             }
         }
     }
@@ -68,5 +102,4 @@ class NewTagBottomSheetFragment : BottomSheetDialogFragment() {
         super.onDismiss(dialog)
         viewBinding.newTagInput.text?.clear()
     }
-
 }
