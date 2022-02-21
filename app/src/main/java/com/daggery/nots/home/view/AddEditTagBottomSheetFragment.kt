@@ -81,9 +81,10 @@ class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-
-        viewModel.checkedTagList.value.single().tagName.let {
-            viewBinding.newTagInput.setText(it)
+        if(viewModel.checkedTagList.value.isNotEmpty()) {
+            viewModel.checkedTagList.value.single().tagName.let {
+                viewBinding.newTagInput.setText(it)
+            }
         }
     }
 

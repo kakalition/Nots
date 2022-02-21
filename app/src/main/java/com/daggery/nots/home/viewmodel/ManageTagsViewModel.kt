@@ -44,11 +44,6 @@ class ManageTagsViewModel @Inject constructor(
                     _checkedTagsList.emit(list.filter { it.isSelected })
                 }
             }
-            launch {
-                checkedTagList.collect { list ->
-                    Log.d("LOL Checked", list.toString())
-                }
-            }
         }
     }
 
