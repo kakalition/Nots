@@ -14,13 +14,12 @@ import com.daggery.nots.databinding.FragmentManageTagsBinding
 import com.daggery.nots.home.adapter.TagListAdapter
 import com.daggery.nots.home.utils.ManageTagsFragmentUtils
 import com.daggery.nots.home.viewmodel.FilterViewModel
+import com.daggery.nots.home.viewmodel.ManageTagsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO: Add Frequently Used Tags and All Tags Section
-// TODO: Refactor this fragment into ManageTagsFragment
-// TODO: When filter menu button in home fragment is clicked, show modal bottom sheet that shows all filters that user have
+// TODO: Show Context Action Mode when Any of list is selected
 
 @AndroidEntryPoint
 class ManageTagsFragment : Fragment() {
@@ -28,7 +27,7 @@ class ManageTagsFragment : Fragment() {
     private var _viewBinding: FragmentManageTagsBinding? = null
     internal val viewBinding get() = _viewBinding!!
 
-    private val viewModel: FilterViewModel by activityViewModels()
+    private val viewModel: ManageTagsViewModel by activityViewModels()
 
     private var _fragmentUtils: ManageTagsFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
@@ -59,7 +58,19 @@ class ManageTagsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.tagList.collect {
+                viewModel.checkedTags.collect {
+                    if(it) {
+                        actionMode = requireActivity().startActionMode(fragmentUtils.actionModeCallback)
+                    } else {
+                        actionMode?.finish()
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.manageTagsList.collect {
                     tagListAdapter.submitList(it)
                 }
             }
