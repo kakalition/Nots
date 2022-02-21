@@ -10,25 +10,25 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: TARGET: Refactor
+// TODO: Implement Context AppBar when long clicking chip (TARGET)
+
+// TODO: Refactor with clean architecture
 // TODO: create repository
 // TODO: implement correct data flow
 
-// TODO: Implement Add Tag
-// TODO: Implement Context AppBar when long clicking chip
 // TODO: Modify bookmarked note layout as in Figma
 
 // TODO: Known Bug: Keyboard automatically closing when typing in AddViewNoteFragment (Emulator)
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Bug: Strange behaviour when reordering from priority to non-priority
+// TODO: Known Bug: Theme not loaded on time
 
 // TODO: Maybe surface color references should be changed to surface color variant to make surface looks brighter
 // TODO: Adjust outlined home layout color
 
 // TODO: Preview Note Binder Can Be Unified
 // TODO: Simplify NoteListAdapter
-// TODO: Migrate to Kotlin Flow
 
 // TODO: Upcoming Feature: Create different note layout. Maybe one page have 4 grid
 
