@@ -10,6 +10,8 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: Known Bug: AddViewNote fields not resetted after saving
+
 // TODO: Implement Context AppBar when long clicking chip (TARGET)
 
 // TODO: Refactor with clean architecture

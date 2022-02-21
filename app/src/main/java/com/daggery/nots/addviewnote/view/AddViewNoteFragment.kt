@@ -21,6 +21,7 @@ import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -55,6 +56,7 @@ class AddViewNoteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Timber.plant(Timber.DebugTree())
         sharedElementEnterTransition = getMaterialTransformTransition()
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
@@ -69,6 +71,9 @@ class AddViewNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Timber.d(viewModel.noteCache.toString())
+        Timber.d(args.uuid.toString())
+        Log.d("LOL", args.uuid)
 
         _fragmentUtils = AddViewNoteFragmentUtils(this)
         _noteUtils = NoteUtils(this)

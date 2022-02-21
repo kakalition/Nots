@@ -15,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -32,8 +33,8 @@ class AddViewNoteViewModel @Inject constructor(
             noteBody = body ?: noteCache!!.noteBody,
             noteTags = tags ?: noteCache!!.noteTags
         )
-        Log.d("LOL update cache", noteCache.toString())
     }
+
     fun saveNoteCache(note: Note) { _noteCache = note }
     fun deleteNoteCache() { _noteCache = null }
 

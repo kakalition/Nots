@@ -13,6 +13,7 @@ import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.addviewnote.view.AssignTagsBottomSheetFragment
 import com.daggery.nots.data.Note
 import com.google.android.material.snackbar.Snackbar
+import timber.log.Timber
 
 class AddViewNoteFragmentUtils(
     private val fragment: AddViewNoteFragment,
@@ -103,6 +104,7 @@ class AddViewNoteFragmentUtils(
         newNote?.let {
             if(fragment.args.uuid.isNotBlank()) {
                 fragment.viewModel.updateNote(it)
+                fragment.viewModel.deleteNoteCache()
                 fragment.findNavController().navigateUp()
             } else {
                 when(assertNoteValidityThenAddNote(newNote)) {
