@@ -1,10 +1,15 @@
 package com.daggery.nots.home.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daggery.nots.data.NoteTag
 import com.daggery.nots.data.NoteTagDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.internal.throwArrayMissingFieldException
@@ -19,7 +24,7 @@ data class ManageTagsNoteTag(
 
 @HiltViewModel
 class ManageTagsViewModel @Inject constructor(
-    dao: NoteTagDao
+    private val dao: NoteTagDao
 ) : ViewModel() {
 
     private var _manageTagsList = MutableStateFlow<List<ManageTagsNoteTag>>(listOf())
@@ -51,6 +56,17 @@ class ManageTagsViewModel @Inject constructor(
         viewModelScope.launch {
             list[list.indexOf(noteTag)] = noteTag.copy(isSelected = !noteTag.isSelected)
             _manageTagsList.emit(list)
+        }
+    }
+
+    fun deleteTags() {
+        viewModelScope.launch {
+            val noteTag = mutableListOf<Deferred<NoteTag>>()
+
+            for(checkedTag in checkedTags.value) {
+                noteTag.add(async { dao.getTagByTagName(checkedTag.tagName) })
+            }
+            dao.deleteTags(noteTag.awaitAll())
         }
     }
 }

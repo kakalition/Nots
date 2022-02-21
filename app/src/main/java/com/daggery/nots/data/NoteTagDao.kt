@@ -23,4 +23,7 @@ interface NoteTagDao {
 
     @Delete
     suspend fun deleteTag(noteTag: NoteTag)
+
+    @Delete
+    suspend fun deleteTags(noteTag: List<NoteTag>)
 }

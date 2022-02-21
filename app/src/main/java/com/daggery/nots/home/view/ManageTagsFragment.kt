@@ -24,7 +24,7 @@ class ManageTagsFragment : Fragment() {
     private var _viewBinding: FragmentManageTagsBinding? = null
     internal val viewBinding get() = _viewBinding!!
 
-    private val viewModel: ManageTagsViewModel by activityViewModels()
+    val viewModel: ManageTagsViewModel by activityViewModels()
 
     private var _fragmentUtils: ManageTagsFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
@@ -96,21 +96,30 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     }
 
     override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-        return if(checkedCount == 1) {
-            menu?.findItem(R.id.edit_button)?.isVisible = true
-            menu?.findItem(R.id.delete_button)?.isVisible = true
-            true
-        } else if(checkedCount > 1) {
-            menu?.findItem(R.id.edit_button)?.isVisible = false
-            menu?.findItem(R.id.delete_button)?.isVisible = true
-            true
-        } else { false }
+        return when {
+            checkedCount == 1 -> {
+                menu?.findItem(R.id.edit_button)?.isVisible = true
+                menu?.findItem(R.id.delete_button)?.isVisible = true
+                true
+            }
+            checkedCount > 1 -> {
+                menu?.findItem(R.id.edit_button)?.isVisible = false
+                menu?.findItem(R.id.delete_button)?.isVisible = true
+                true
+            }
+            else -> { false }
+        }
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         return when(item?.itemId) {
-            R.id.edit_button -> { true }
-            R.id.delete_button -> { true }
+            R.id.edit_button -> {
+                true
+            }
+            R.id.delete_button -> {
+                fragment.viewModel.deleteTags()
+                true
+            }
             else -> { false }
         }
     }
