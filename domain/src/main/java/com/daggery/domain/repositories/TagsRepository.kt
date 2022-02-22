@@ -1,0 +1,27 @@
+package com.daggery.domain.repositories
+
+import com.daggery.domain.entities.NoteTag
+import kotlinx.coroutines.flow.Flow
+
+interface TagsRepository {
+
+    suspend fun getTags(): Flow<List<NoteTag>>
+
+    suspend fun getTagByTagName(tagName: String): NoteTag
+
+    suspend fun getTagById(id: Int): NoteTag
+
+    suspend fun addTag(noteTag: NoteTag)
+
+    suspend fun editTag(noteTag: NoteTag)
+
+    suspend fun updateTag(noteTags: NoteTag)
+
+    suspend fun updateTags(noteTags: List<NoteTag>)
+
+    suspend fun deleteTag(noteTag: NoteTag)
+
+    suspend fun deleteTagById(id: Int)
+
+    suspend fun deleteTags(noteTag: List<NoteTag>)
+}
