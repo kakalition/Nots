@@ -7,13 +7,9 @@ interface TagsRepository {
 
     suspend fun getTags(): Flow<List<NoteTag>>
 
-    suspend fun getTagByTagName(tagName: String): NoteTag
-
     suspend fun getTagById(id: Int): NoteTag
 
     suspend fun addTag(noteTag: NoteTag)
-
-    suspend fun editTag(noteTag: NoteTag)
 
     suspend fun updateTag(noteTags: NoteTag)
 

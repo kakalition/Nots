@@ -7,9 +7,9 @@ interface NotesRepository {
 
     suspend fun getNotes(): Flow<List<NoteData>>
 
-    suspend fun getNote(): NoteData
+    suspend fun getNoteById(id: String): NoteData
 
-    suspend fun rearrangeNotesOrder()
+    suspend fun rearrangeNotesOrder(modifiedList: List<NoteData>)
 
     suspend fun addNote(noteData: NoteData)
 
