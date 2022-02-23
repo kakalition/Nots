@@ -8,7 +8,11 @@ import kotlinx.coroutines.flow.Flow
 internal interface NoteDao {
 
     @Query("SELECT * FROM notes ORDER BY priority DESC, note_order DESC")
-    fun getNotes(): Flow<List<NoteDataEntity>>
+    fun getNotesFlow(): Flow<List<NoteDataEntity>>
+
+    // TODO: Implement This Use Case
+    @Query("SELECT * FROM notes ORDER BY priority DESC, note_order DESC")
+    fun getNotes(): List<NoteDataEntity>
 
     @Query("SELECT * from notes WHERE uuid = :uuid")
     fun getNoteById(uuid: String): NoteDataEntity

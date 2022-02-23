@@ -6,6 +6,8 @@ import com.daggery.data.mappers.NoteDataEntityMapper
 import com.daggery.domain.entities.NoteData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -16,9 +18,15 @@ internal class NotesLocalDataSourceImpl @Inject constructor(
     private val noteDataEntityMapper: NoteDataEntityMapper
 ) : NotesLocalDataSource {
 
-    override suspend fun getNotes(): Flow<List<NoteData>> {
-        return noteDao.getNotes().map {
+    override suspend fun getNotesFlow(): Flow<List<NoteData>> {
+        return noteDao.getNotesFlow().map {
             it.map { noteDataEntity -> noteDataEntityMapper.toNoteData(noteDataEntity) }
+        }
+    }
+
+    override suspend fun getNotes(): List<NoteData> {
+        return noteDao.getNotes().map {
+            noteDataEntityMapper.toNoteData(it)
         }
     }
 
@@ -36,6 +44,18 @@ internal class NotesLocalDataSourceImpl @Inject constructor(
                 }
             )
         }
+
+    override suspend fun reorderChronologically() {
+        withContext(coroutineDispatcher) {
+            val notes = getNotes()
+            val initialNotes = notes.sortedBy { noteData -> noteData.noteDate }
+            val mappedNotes = initialNotes.mapIndexed { index, note ->
+                note.copy(noteOrder = index)
+            }
+
+            rearrangeNotesOrder(mappedNotes)
+        }
+    }
 
     override suspend fun addNote(noteData: NoteData) = withContext(coroutineDispatcher) {
         noteDao.addNote(

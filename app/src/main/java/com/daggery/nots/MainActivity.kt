@@ -46,9 +46,12 @@ class MainActivity : AppCompatActivity() {
         // Show SplashScreen until ThemeKey is Loaded
         installSplashScreen().setKeepOnScreenCondition { viewModel.themeManager.themeKey == 0 }
 
+/*
         // Theme Setting
         setThemeOnInitialStart()
         getHomeLayoutOnInitialStart()
+
+*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             viewModel.themeManager.themeKey == R.style.MaterialYouTheme

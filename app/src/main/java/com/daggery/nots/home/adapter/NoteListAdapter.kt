@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.daggery.domain.entities.NoteData
 import com.daggery.nots.R
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.TileNoteItemBinding
@@ -23,7 +24,7 @@ class NoteListAdapter(
     private val notesBatch = NotesBatch(notes)
 
     inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: ContactsContract.CommonDataKinds.Note) {
+        fun bind(note: NoteData) {
             val homeLayoutKey = homeFragmentUtils.getHomeLayoutKey()
             with(binding) {
                 when {
@@ -110,7 +111,7 @@ class NoteListAdapter(
     }
 }
 
-class NotesBatch(private var _notesBatch: MutableList<ContactsContract.CommonDataKinds.Note>) {
+class NotesBatch(private var _notesBatch: MutableList<NoteData>) {
 
     val batch get() = _notesBatch.toList()
 
@@ -129,7 +130,7 @@ class NotesBatch(private var _notesBatch: MutableList<ContactsContract.CommonDat
     }
 }
 
-class NotesDiff(var oldList: List<ContactsContract.CommonDataKinds.Note>, var newList: List<Note>) : DiffUtil.Callback() {
+class NotesDiff(var oldList: List<NoteData>, var newList: List<NoteData>) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldList.size

@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Get all notes
-    val _allNotes = MutableStateFlow<DbNoteResult>(DbNoteResult.Loading)
+    private val _allNotes = MutableStateFlow<DbNoteResult>(DbNoteResult.Loading)
     val allNotes = _allNotes.asStateFlow()
 
     init {

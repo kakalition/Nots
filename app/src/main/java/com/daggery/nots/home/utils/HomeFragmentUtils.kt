@@ -1,26 +1,21 @@
 package com.daggery.nots.home.utils
 
 import android.graphics.Color
-import android.provider.ContactsContract
 import android.view.MenuItem
 import android.view.View
 import androidx.core.graphics.ColorUtils
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.daggery.domain.entities.NoteData
 import com.daggery.nots.R
-import com.daggery.nots.data.Note
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
 import com.daggery.nots.home.view.HomeFragment
 import com.daggery.nots.home.view.HomeFragmentDirections
 import com.daggery.nots.home.view.TagsFilterBottomSheetFragment
-import com.daggery.nots.utils.NotsVibrator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class HomeFragmentUtils(
     private val fragment: HomeFragment,
@@ -33,13 +28,7 @@ class HomeFragmentUtils(
         fragment.resources.getColor(R.color.white, null)
     )
 
-    val notsVibrator = NotsVibrator(fragment.requireActivity())
-
-    val setVerticalScrollState: (state: Boolean) -> Unit = { state ->
-        fragment.notesLinearLayoutManager?.changeScrollState(state)
-    }
-
-    val noteClickListener: (ContactsContract.CommonDataKinds.Note) -> Unit = { note ->
+    val noteClickListener: (NoteData) -> Unit = { note ->
         val uuid = note.uuid
         val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
         fragment.findNavController().navigate(action)
@@ -77,21 +66,6 @@ class HomeFragmentUtils(
         }
     }
 
-    private fun reorderChronologically() {
-        with(fragment.viewModel) {
-            viewModelScope.launch {
-                notes.collect {
-                    val initialNotes = it.sortedBy { note -> note.noteDate }.toMutableList()
-                    val mappedNotes = initialNotes.mapIndexed { index, note ->
-                        note.copy(noteOrder = index)
-                    }
-
-                    rearrangeNoteOrder(mappedNotes.toMutableList())
-                }
-            }
-        }
-    }
-
     fun getHomeLayoutKey(): Int {
         return fragment.mainViewModel.themeManager.homeLayoutKey
     }
@@ -118,19 +92,19 @@ class HomeFragmentUtils(
         fragment.viewBinding.fab.setOnClickListener(fabOnClickListener)
     }
 
-    fun rearrangeNoteOrder(notes: MutableList<ContactsContract.CommonDataKinds.Note>) {
+    fun rearrangeNoteOrder(notes: MutableList<NoteData>) {
         fragment.viewModel.rearrangeNoteOrder(notes)
     }
 
-    fun prioritize(note: ContactsContract.CommonDataKinds.Note) {
+    fun prioritize(note: NoteData) {
         fragment.viewModel.prioritize(note)
     }
 
-    fun unprioritize(note: ContactsContract.CommonDataKinds.Note) {
+    fun unprioritize(note: NoteData) {
         fragment.viewModel.unprioritize(note)
     }
 
-    fun showDeleteDialog(note: ContactsContract.CommonDataKinds.Note) {
+    fun showDeleteDialog(note: NoteData) {
         MaterialAlertDialogBuilder(
             fragment.requireContext(),
             R.style.NotsAlertDialog

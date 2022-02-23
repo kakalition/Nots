@@ -5,11 +5,15 @@ import kotlinx.coroutines.flow.Flow
 
 internal interface NotesLocalDataSource {
 
-    suspend fun getNotes(): Flow<List<NoteData>>
+    suspend fun getNotesFlow(): Flow<List<NoteData>>
+
+    suspend fun getNotes(): List<NoteData>
 
     suspend fun getNoteById(id: String): NoteData
 
     suspend fun rearrangeNotesOrder(modifiedList: List<NoteData>)
+
+    suspend fun reorderChronologically()
 
     suspend fun addNote(noteData: NoteData)
 

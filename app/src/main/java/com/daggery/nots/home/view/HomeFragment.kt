@@ -1,9 +1,7 @@
 package com.daggery.nots.home.view
 
-import android.content.Context
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -11,16 +9,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.daggery.data.entities.NoteDataEntity
 import com.daggery.nots.MainViewModel
-import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.NoteDateUtils
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -40,16 +35,6 @@ class HomeFragment : Fragment() {
     private var checkedTagsName: List<String> = listOf()
 
     internal val filterBottomSheet = TagsFilterBottomSheetFragment()
-
-    fun filterListWithTags(notes: List<ContactsContract.CommonDataKinds.Note>, tagNameList: List<String>): List<ContactsContract.CommonDataKinds.Note> {
-        return  if (tagNameList.isEmpty()) { notes }
-        else { notes.filter { tagNameList.intersect(it.noteTags).isNotEmpty() } }
-    }
-
-    fun invalidateHomeLayout(notes: List<ContactsContract.CommonDataKinds.Note>) {
-        notesAdapter?.submitList(notes)
-        changeHomeState(notes.isEmpty())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,6 +59,8 @@ class HomeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
+
+/*
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     mainViewModel.noteTagList.collect { list ->
@@ -85,9 +72,11 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+*/
+
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.notes.collect { list ->
+                    viewModel.allNotes.collect { list ->
                         localNotes = list
                         invalidateHomeLayout(filterListWithTags(list, checkedTagsName))
                     }
@@ -116,6 +105,16 @@ class HomeFragment : Fragment() {
                 notesRecyclerview.visibility = View.VISIBLE
             }
         }
+    }
+
+    fun filterListWithTags(notes: List<ContactsContract.CommonDataKinds.Note>, tagNameList: List<String>): List<ContactsContract.CommonDataKinds.Note> {
+        return  if (tagNameList.isEmpty()) { notes }
+        else { notes.filter { tagNameList.intersect(it.noteTags).isNotEmpty() } }
+    }
+
+    fun invalidateHomeLayout(notes: List<ContactsContract.CommonDataKinds.Note>) {
+        notesAdapter?.submitList(notes)
+        changeHomeState(notes.isEmpty())
     }
 
 }

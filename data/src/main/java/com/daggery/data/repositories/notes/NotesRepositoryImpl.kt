@@ -8,7 +8,11 @@ import javax.inject.Inject
 internal class NotesRepositoryImpl @Inject constructor(private val notesLocalDataSource: NotesLocalDataSource)
     : NotesRepository {
 
-    override suspend fun getNotes(): Flow<List<NoteData>> {
+    override suspend fun getNotesFlow(): Flow<List<NoteData>> {
+        return notesLocalDataSource.getNotesFlow()
+    }
+
+    override suspend fun getNotes(): List<NoteData> {
         return notesLocalDataSource.getNotes()
     }
 
