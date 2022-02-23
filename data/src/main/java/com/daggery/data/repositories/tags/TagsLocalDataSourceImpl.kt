@@ -7,8 +7,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TagsLocalDataSourceImpl(
+class TagsLocalDataSourceImpl @Inject constructor(
     private val tagDao: TagDao,
     private val coroutineDispatcher: CoroutineDispatcher,
     private val tagEntityMapper: NoteTagEntityMapper
@@ -19,11 +20,6 @@ class TagsLocalDataSourceImpl(
             it.map { noteTagEntity -> tagEntityMapper.toNoteTag(noteTagEntity) }
         }
     }
-
-    override suspend fun getTagByTagName(tagName: String): NoteTag =
-        withContext(coroutineDispatcher) {
-            return@withContext tagEntityMapper.toNoteTag(tagDao.getTagByTagName(tagName))
-        }
 
     override suspend fun getTagById(id: Int): NoteTag  =
         withContext(coroutineDispatcher) {

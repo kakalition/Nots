@@ -2,8 +2,9 @@ package com.daggery.data.mappers
 
 import com.daggery.data.entities.NoteTagEntity
 import com.daggery.domain.entities.NoteTag
+import javax.inject.Inject
 
-class NoteTagEntityMapper {
+class NoteTagEntityMapper @Inject constructor(){
     fun toNoteTagEntity(noteTag: NoteTag): NoteTagEntity {
         return NoteTagEntity(
             noteTag.id,

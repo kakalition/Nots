@@ -3,8 +3,9 @@ package com.daggery.data.repositories.notes
 import com.daggery.domain.entities.NoteData
 import com.daggery.domain.repositories.NotesRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NotesRepositoryImpl(private val notesLocalDataSource: NotesLocalDataSource)
+class NotesRepositoryImpl @Inject constructor(private val notesLocalDataSource: NotesLocalDataSource)
     : NotesRepository {
 
     override suspend fun getNotes(): Flow<List<NoteData>> {
