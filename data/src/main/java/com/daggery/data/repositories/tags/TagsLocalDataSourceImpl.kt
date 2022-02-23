@@ -1,17 +1,15 @@
 package com.daggery.data.repositories.tags
 
-import com.daggery.data.db.NoteTagDao
-import com.daggery.data.entities.NoteTagEntity
+import com.daggery.data.db.TagDao
 import com.daggery.data.mappers.NoteTagEntityMapper
 import com.daggery.domain.entities.NoteTag
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class TagsLocalDataSourceImpl(
-    private val tagDao: NoteTagDao,
+    private val tagDao: TagDao,
     private val coroutineDispatcher: CoroutineDispatcher,
     private val tagEntityMapper: NoteTagEntityMapper
 ) : TagsLocalDataSource {

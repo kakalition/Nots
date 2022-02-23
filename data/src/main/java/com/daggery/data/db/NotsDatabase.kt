@@ -13,7 +13,7 @@ import com.daggery.data.entities.NoteTagEntity
 abstract class NotsDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
-    abstract fun tagDao(): NoteTagDao
+    abstract fun tagDao(): TagDao
 
     companion object {
         @Volatile
