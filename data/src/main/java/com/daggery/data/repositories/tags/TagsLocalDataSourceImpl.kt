@@ -16,9 +16,15 @@ internal class TagsLocalDataSourceImpl @Inject constructor(
     private val tagEntityMapper: NoteTagEntityMapper
 ) : TagsLocalDataSource {
 
-    override suspend fun getTags(): Flow<List<NoteTag>> {
-        return tagDao.getTags().map {
+    override suspend fun getTagsFlow(): Flow<List<NoteTag>> {
+        return tagDao.getTagsFlow().map {
             it.map { noteTagEntity -> tagEntityMapper.toNoteTag(noteTagEntity) }
+        }
+    }
+
+    override suspend fun getTags(): List<NoteTag> {
+        return tagDao.getTags().map {
+            tagEntityMapper.toNoteTag(it)
         }
     }
 

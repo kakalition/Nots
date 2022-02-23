@@ -8,7 +8,10 @@ import kotlinx.coroutines.flow.Flow
 internal interface TagDao {
 
     @Query("SELECT * FROM tags ORDER BY tag_name ASC")
-    fun getTags(): Flow<List<NoteTagEntity>>
+    fun getTagsFlow(): Flow<List<NoteTagEntity>>
+
+    @Query("SELECT * FROM tags ORDER BY tag_name ASC")
+    fun getTags(): List<NoteTagEntity>
 
     @Query("SELECT * FROM tags WHERE tag_name = :tagName")
     suspend fun getTagByTagName(tagName: String): NoteTagEntity

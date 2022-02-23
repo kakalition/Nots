@@ -8,7 +8,11 @@ import javax.inject.Inject
 internal class TagsRepositoryImpl
     @Inject constructor(private val tagsLocalDataSource: TagsLocalDataSource) : TagsRepository {
 
-    override suspend fun getTags(): Flow<List<NoteTag>> {
+    override suspend fun getTagsFlow(): Flow<List<NoteTag>> {
+        return tagsLocalDataSource.getTagsFlow()
+    }
+
+    override suspend fun getTags(): List<NoteTag> {
         return tagsLocalDataSource.getTags()
     }
 

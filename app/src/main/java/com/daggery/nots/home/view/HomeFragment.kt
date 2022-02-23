@@ -11,7 +11,6 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.daggery.data.common.DbNoteResult
-import com.daggery.data.entities.NoteDataEntity
 import com.daggery.domain.entities.NoteData
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentHomeBinding
@@ -33,9 +32,6 @@ class HomeFragment : Fragment() {
     private val noteDateUtils get() = _noteDateUtils!!
 
     private var notesAdapter: NoteListAdapter? = null
-
-    private var localNotes: List<NoteDataEntity> = listOf()
-    private var checkedTagsName: List<String> = listOf()
 
     private val filterBottomSheet = TagsFilterBottomSheetFragment()
 
@@ -77,7 +73,7 @@ class HomeFragment : Fragment() {
         notesAdapter = null
     }
 
-    fun bindsToolbar() {
+    private fun bindsToolbar() {
         viewBinding.toolbarBinding.apply {
             toolbar.inflateMenu(R.menu.menu_home_fragment)
             toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
@@ -118,8 +114,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-
 
     private val onNoteClickListener: (NoteData) -> Unit = { note ->
         val uuid = note.uuid
@@ -174,6 +168,7 @@ class HomeFragment : Fragment() {
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
     }
+}
 
 /*
     fun filterListWithTags(notes: List<ContactsContract.CommonDataKinds.Note>, tagNameList: List<String>): List<ContactsContract.CommonDataKinds.Note> {
@@ -198,4 +193,8 @@ class HomeFragment : Fragment() {
 */
 
 
-}
+/*
+    private var localNotes: List<NoteDataEntity> = listOf()
+    private var checkedTagsName: List<String> = listOf()
+
+*/

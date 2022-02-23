@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 internal interface TagsLocalDataSource {
 
-    suspend fun getTags(): Flow<List<NoteTag>>
+    suspend fun getTagsFlow(): Flow<List<NoteTag>>
+
+    suspend fun getTags(): List<NoteTag>
 
     suspend fun getTagById(id: Int): NoteTag
 

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Show SplashScreen until ThemeKey is Loaded
-        installSplashScreen().setKeepOnScreenCondition { viewModel.themeManager.themeKey == 0 }
+        installSplashScreen()
 
 /*
         // Theme Setting

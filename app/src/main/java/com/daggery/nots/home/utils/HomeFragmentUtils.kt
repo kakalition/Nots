@@ -27,9 +27,11 @@ class HomeFragmentUtils(
         com.google.android.material.R.attr.colorOnSurface,
         fragment.resources.getColor(R.color.white, null)
     )
+/*
     fun getHomeLayoutKey(): Int {
         return fragment.mainViewModel.themeManager.homeLayoutKey
     }
+*/
 
     fun showDeleteDialog(note: NoteData) {
         MaterialAlertDialogBuilder(

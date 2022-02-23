@@ -5,6 +5,6 @@ import com.daggery.domain.repositories.NotesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetNotesUseCase @Inject constructor(private val notesRepository: NotesRepository) {
-    suspend operator fun invoke(): Flow<List<NoteData>> = notesRepository.getNotes()
+class GetNotesFlowUseCase @Inject constructor(private val notesRepository: NotesRepository) {
+    suspend operator fun invoke(): Flow<List<NoteData>> = notesRepository.getNotesFlow()
 }

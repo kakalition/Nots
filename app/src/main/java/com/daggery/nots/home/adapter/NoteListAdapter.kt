@@ -1,7 +1,6 @@
 package com.daggery.nots.home.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +29,7 @@ class NoteListAdapter(
 
                 noteTitle.text = note.noteTitle
                 noteBody.text = note.noteBody
-                noteDate.text = "Date: " + dateParser(note.noteDate)
+                noteDate.text = "Date: ${dateParser(note.noteDate)}"
                 note.noteTags.forEach {
                     val chip = LayoutInflater.from(chipGroup.context).inflate(R.layout.chip_note_item, chipGroup, false) as Chip
                     chip.text = it
