@@ -1,6 +1,5 @@
 package com.daggery.nots.home.view
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -9,15 +8,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.daggery.nots.R
-import com.daggery.nots.addviewnote.view.AddViewNoteFragment
 import com.daggery.nots.databinding.FragmentManageTagsBinding
 import com.daggery.nots.home.adapter.TagListAdapter
-import com.daggery.nots.home.utils.ManageTagsFragmentUtils
+import com.daggery.nots.managetags.utils.ManageTagsFragmentUtils
 import com.daggery.nots.home.viewmodel.ManageTagsViewModel
+import com.daggery.nots.managetags.view.AddEditTagBottomSheetFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

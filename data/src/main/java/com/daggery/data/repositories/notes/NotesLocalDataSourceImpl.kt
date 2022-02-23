@@ -13,7 +13,7 @@ class NotesLocalDataSourceImpl @Inject constructor(
     private val noteDao: NoteDao,
     private val coroutineDispatcher: CoroutineDispatcher,
     private val noteDataEntityMapper: NoteDataEntityMapper
-) : NotesLocalDataSource{
+) : NotesLocalDataSource {
 
     override suspend fun getNotes(): Flow<List<NoteData>> {
         return noteDao.getNotes().map {

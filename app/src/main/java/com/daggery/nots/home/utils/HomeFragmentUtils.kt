@@ -1,6 +1,7 @@
 package com.daggery.nots.home.utils
 
 import android.graphics.Color
+import android.provider.ContactsContract
 import android.view.MenuItem
 import android.view.View
 import androidx.core.graphics.ColorUtils
@@ -110,16 +111,13 @@ class HomeFragmentUtils(
             layoutManager = fragment.notesLinearLayoutManager
             adapter = fragment.notesAdapter
         }
-
-        val itemTouchHelper = ItemTouchHelper(NotesItemTouchHelper(fragment.notesAdapter!!))
-        itemTouchHelper.attachToRecyclerView(fragment.viewBinding.notesRecyclerview)
     }
 
     fun bindsFab() {
         fragment.viewBinding.fab.setOnClickListener(fabOnClickListener)
     }
 
-    fun rearrangeNoteOrder(notes: MutableList<Note>) {
+    fun rearrangeNoteOrder(notes: MutableList<ContactsContract.CommonDataKinds.Note>) {
         fragment.viewModel.rearrangeNoteOrder(notes)
     }
 

@@ -1,4 +1,4 @@
-package com.daggery.nots.home.view
+package com.daggery.nots.managetags.view
 
 import android.app.Activity
 import android.content.DialogInterface

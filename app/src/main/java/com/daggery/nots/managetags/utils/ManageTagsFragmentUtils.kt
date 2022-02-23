@@ -1,11 +1,11 @@
-package com.daggery.nots.home.utils
+package com.daggery.nots.managetags.utils
 
 import android.graphics.Color
 import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.home.view.ManageTagsFragment
-import com.daggery.nots.home.view.AddEditTagBottomSheetFragment
+import com.daggery.nots.managetags.view.AddEditTagBottomSheetFragment
 import com.google.android.material.color.MaterialColors
 
 // TODO: Implements RecyclerView.Selection
