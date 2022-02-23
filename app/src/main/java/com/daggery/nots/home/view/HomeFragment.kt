@@ -1,8 +1,6 @@
 package com.daggery.nots.home.view
 
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.transition.Visibility
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,12 +13,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.daggery.data.common.DbNoteResult
 import com.daggery.data.entities.NoteDataEntity
 import com.daggery.domain.entities.NoteData
-import com.daggery.nots.MainViewModel
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
-import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.NoteDateUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -32,7 +28,6 @@ class HomeFragment : Fragment() {
     internal val viewBinding get() = _viewBinding!!
 
     internal val viewModel: HomeViewModel by activityViewModels()
-    internal val mainViewModel: MainViewModel by activityViewModels()
 
     private var _noteDateUtils: NoteDateUtils? = null
     private val noteDateUtils get() = _noteDateUtils!!
@@ -57,35 +52,17 @@ class HomeFragment : Fragment() {
 
         _noteDateUtils = NoteDateUtils()
 
-        bindsToolbar()
-        bindsFab()
-        bindsRecyclerView()
-
-        val initialNotes: MutableList<NoteData> = mutableListOf()
-
         notesAdapter = NoteListAdapter(
-            notes = initialNotes,
             dateParser = { noteDateUtils.getParsedDate(it) },
             onNoteClickListener = { onNoteClickListener },
             reorderCallback = { viewModel.rearrangeNoteOrder(it) }
         )
 
+        bindsToolbar()
+        bindsFab()
+        bindsRecyclerView()
+
         viewLifecycleOwner.lifecycleScope.launch {
-
-/*
-            launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    mainViewModel.noteTagList.collect { list ->
-                        checkedTagsName = list
-                            .filter { noteTag -> noteTag.checked }
-                            .map { noteTag -> noteTag.tagName }
-
-                        invalidateHomeLayout(filterListWithTags(localNotes, checkedTagsName))
-                    }
-                }
-            }
-*/
-
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.allNotes.collect(onReceiveDbNoteResult)
@@ -142,15 +119,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-/*
-    fun filterListWithTags(notes: List<ContactsContract.CommonDataKinds.Note>, tagNameList: List<String>): List<ContactsContract.CommonDataKinds.Note> {
-        return  if (tagNameList.isEmpty()) { notes }
-        else { notes.filter { tagNameList.intersect(it.noteTags).isNotEmpty() } }
-    }
-*/
 
 
-    val onNoteClickListener: (NoteData) -> Unit = { note ->
+    private val onNoteClickListener: (NoteData) -> Unit = { note ->
         val uuid = note.uuid
         val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
         findNavController().navigate(action)
@@ -203,5 +174,28 @@ class HomeFragment : Fragment() {
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
     }
+
+/*
+    fun filterListWithTags(notes: List<ContactsContract.CommonDataKinds.Note>, tagNameList: List<String>): List<ContactsContract.CommonDataKinds.Note> {
+        return  if (tagNameList.isEmpty()) { notes }
+        else { notes.filter { tagNameList.intersect(it.noteTags).isNotEmpty() } }
+    }
+*/
+
+
+/*
+            launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    mainViewModel.noteTagList.collect { list ->
+                        checkedTagsName = list
+                            .filter { noteTag -> noteTag.checked }
+                            .map { noteTag -> noteTag.tagName }
+
+                        invalidateHomeLayout(filterListWithTags(localNotes, checkedTagsName))
+                    }
+                }
+            }
+*/
+
 
 }

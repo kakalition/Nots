@@ -12,14 +12,13 @@ import com.google.android.material.chip.Chip
 import java.util.*
 
 class NoteListAdapter(
-    private val notes: MutableList<NoteData>,
     private val dateParser: (Long) -> String,
     private val onNoteClickListener: (NoteData) -> Unit,
-    private val reorderCallback: (List<NoteData>) -> Unit,
-) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
+    private val reorderCallback: (List<NoteData>) -> Unit,) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
+    private val notes: MutableList<NoteData> = mutableListOf()
     private val diffCallback = NotesDiff(notes, listOf())
-    private val notesBatch = NotesBatch(notes)
+    private val notesBatch = NotesBatch(notes.toMutableList())
 
     inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: NoteData) {
