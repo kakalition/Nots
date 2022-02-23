@@ -11,7 +11,7 @@ interface TagsRepository {
 
     suspend fun addTag(noteTag: NoteTag)
 
-    suspend fun updateTag(noteTags: NoteTag)
+    suspend fun updateTag(noteTag: NoteTag)
 
     suspend fun updateTags(noteTags: List<NoteTag>)
 

@@ -7,8 +7,6 @@ interface TagsLocalDataSource {
 
     suspend fun getTags(): Flow<List<NoteTag>>
 
-    suspend fun getTagByTagName(tagName: String): NoteTag
-
     suspend fun getTagById(id: Int): NoteTag
 
     suspend fun addTag(noteTag: NoteTag)
