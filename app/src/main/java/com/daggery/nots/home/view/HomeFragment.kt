@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.daggery.data.entities.NoteDataEntity
 import com.daggery.nots.MainViewModel
 import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.FragmentHomeBinding
@@ -33,10 +34,9 @@ class HomeFragment : Fragment() {
     private var _fragmentUtils: HomeFragmentUtils? = null
     private val fragmentUtils get() = _fragmentUtils!!
 
-    internal var notesLinearLayoutManager: NoteLinearLayoutManager? = null
     internal var notesAdapter: NoteListAdapter? = null
 
-    private var localNotes: List<NoteData> = listOf()
+    private var localNotes: List<NoteDataEntity> = listOf()
     private var checkedTagsName: List<String> = listOf()
 
     internal val filterBottomSheet = TagsFilterBottomSheetFragment()
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
 
     fun invalidateHomeLayout(notes: List<ContactsContract.CommonDataKinds.Note>) {
         notesAdapter?.submitList(notes)
-        fragmentUtils.changeHomeState(notes.isEmpty())
+        changeHomeState(notes.isEmpty())
     }
 
     override fun onCreateView(
@@ -65,7 +65,6 @@ class HomeFragment : Fragment() {
         _fragmentUtils = HomeFragmentUtils(this, findNavController())
 
         val initialNotes: MutableList<ContactsContract.CommonDataKinds.Note> = mutableListOf()
-        notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
         notesAdapter = NoteListAdapter(initialNotes, fragmentUtils, NoteDateUtils())
 
         with(fragmentUtils) {
@@ -101,10 +100,27 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _viewBinding = null
         _fragmentUtils = null
-        notesLinearLayoutManager = null
         notesAdapter = null
     }
+
+    // Conditionally display empty illustration and notes list
+    fun changeHomeState(isNotesEmpty: Boolean) {
+        if(isNotesEmpty) {
+            viewBinding.apply {
+                emptyNotesLayout.visibility = View.VISIBLE
+                notesRecyclerview.visibility = View.GONE
+            }
+        } else {
+            viewBinding.apply {
+                emptyNotesLayout.visibility = View.GONE
+                notesRecyclerview.visibility = View.VISIBLE
+            }
+        }
+    }
+
 }
+
+/*
 
 
 class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(
@@ -121,3 +137,4 @@ class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(
         return canScrollVerticallyState && super.canScrollVertically()
     }
 }
+*/

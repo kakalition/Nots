@@ -2,6 +2,7 @@ package com.daggery.nots
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -69,6 +70,8 @@ class MainActivity : AppCompatActivity() {
         _viewBinding = null
     }
 
+/*
+
     private fun setThemeOnInitialStart() {
         with(viewModel.themeManager) {
             if(themeKey == -1){
@@ -80,6 +83,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+*/
+/*
+
     private fun getHomeLayoutOnInitialStart() {
         with(viewModel.themeManager) {
             if(homeLayoutKey == -1) {
@@ -89,6 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+*/
 
     fun statusBarColorSetter() {
         window.statusBarColor = MaterialColors.getColor(

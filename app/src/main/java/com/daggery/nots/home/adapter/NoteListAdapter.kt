@@ -1,5 +1,6 @@
 package com.daggery.nots.home.adapter
 
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +14,7 @@ import com.google.android.material.chip.Chip
 import java.util.*
 
 class NoteListAdapter(
-    val notes: MutableList<Note>,
+    val notes: MutableList<ContactsContract.CommonDataKinds.Note>,
     private val homeFragmentUtils: HomeFragmentUtils,
     private val noteDateUtils: NoteDateUtils
 ) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
@@ -22,7 +23,7 @@ class NoteListAdapter(
     private val notesBatch = NotesBatch(notes)
 
     inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: Note) {
+        fun bind(note: ContactsContract.CommonDataKinds.Note) {
             val homeLayoutKey = homeFragmentUtils.getHomeLayoutKey()
             with(binding) {
                 when {
@@ -88,7 +89,7 @@ class NoteListAdapter(
         return notes.size
     }
 
-    fun submitList(updatedList: List<Note>) {
+    fun submitList(updatedList: List<ContactsContract.CommonDataKinds.Note>) {
         diffCallback.newList = updatedList
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
@@ -109,7 +110,7 @@ class NoteListAdapter(
     }
 }
 
-class NotesBatch(private var _notesBatch: MutableList<Note>) {
+class NotesBatch(private var _notesBatch: MutableList<ContactsContract.CommonDataKinds.Note>) {
 
     val batch get() = _notesBatch.toList()
 
@@ -128,7 +129,7 @@ class NotesBatch(private var _notesBatch: MutableList<Note>) {
     }
 }
 
-class NotesDiff(var oldList: List<Note>, var newList: List<Note>) : DiffUtil.Callback() {
+class NotesDiff(var oldList: List<ContactsContract.CommonDataKinds.Note>, var newList: List<Note>) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldList.size

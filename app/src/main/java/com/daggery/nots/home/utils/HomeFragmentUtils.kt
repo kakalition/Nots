@@ -39,7 +39,7 @@ class HomeFragmentUtils(
         fragment.notesLinearLayoutManager?.changeScrollState(state)
     }
 
-    val noteClickListener: (Note) -> Unit = { note ->
+    val noteClickListener: (ContactsContract.CommonDataKinds.Note) -> Unit = { note ->
         val uuid = note.uuid
         val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
         fragment.findNavController().navigate(action)
@@ -108,9 +108,10 @@ class HomeFragmentUtils(
 
     fun bindsRecyclerView() {
         fragment.viewBinding.notesRecyclerview.apply {
-            layoutManager = fragment.notesLinearLayoutManager
             adapter = fragment.notesAdapter
         }
+        val itemTouchHelper = ItemTouchHelper(NotesItemTouchHelper(fragment.notesAdapter!!))
+        itemTouchHelper.attachToRecyclerView(fragment.viewBinding.notesRecyclerview)
     }
 
     fun bindsFab() {
@@ -125,11 +126,11 @@ class HomeFragmentUtils(
         fragment.viewModel.prioritize(note)
     }
 
-    fun unprioritize(note: Note) {
+    fun unprioritize(note: ContactsContract.CommonDataKinds.Note) {
         fragment.viewModel.unprioritize(note)
     }
 
-    fun showDeleteDialog(note: Note) {
+    fun showDeleteDialog(note: ContactsContract.CommonDataKinds.Note) {
         MaterialAlertDialogBuilder(
             fragment.requireContext(),
             R.style.NotsAlertDialog
@@ -193,18 +194,4 @@ class HomeFragmentUtils(
         return fragment.resources.getColor(R.color.blue_pastel, null)
     }
 
-    // Conditionally display empty illustration and notes list
-    fun changeHomeState(isNotesEmpty: Boolean) {
-        if(isNotesEmpty) {
-            fragment.viewBinding.apply {
-                emptyNotesLayout.visibility = View.VISIBLE
-                notesRecyclerview.visibility = View.GONE
-            }
-        } else {
-            fragment.viewBinding.apply {
-                emptyNotesLayout.visibility = View.GONE
-                notesRecyclerview.visibility = View.VISIBLE
-            }
-        }
-    }
 }

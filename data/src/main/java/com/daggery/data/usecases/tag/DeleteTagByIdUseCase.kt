@@ -5,6 +5,6 @@ import com.daggery.domain.repositories.NotesRepository
 import com.daggery.domain.repositories.TagsRepository
 import javax.inject.Inject
 
-class DeleteTagByIdUseCase @Inject constructor(private val tagsRepository: TagsRepository) : BaseDeleteTagByIdUseCase{
-    override suspend operator fun invoke(id: Int) = tagsRepository.deleteTagById(id)
+class DeleteTagByIdUseCase @Inject constructor(private val tagsRepository: TagsRepository) {
+    suspend operator fun invoke(id: Int) = tagsRepository.deleteTagById(id)
 }

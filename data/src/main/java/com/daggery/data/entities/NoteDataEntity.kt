@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "notes")
-internal data class NoteDataEntity(
+data class NoteDataEntity(
     @PrimaryKey val uuid: String,
     @ColumnInfo(name = "priority") val priority: Int,
     @ColumnInfo(name = "note_order") val noteOrder: Int,

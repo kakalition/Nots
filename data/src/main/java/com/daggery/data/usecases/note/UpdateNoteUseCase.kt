@@ -4,6 +4,6 @@ import com.daggery.domain.entities.NoteData
 import com.daggery.domain.repositories.NotesRepository
 import javax.inject.Inject
 
-class UpdateNoteUseCase @Inject constructor(private val notesRepository: NotesRepository) : BaseUpdateNoteUseCase{
-    override suspend operator fun invoke(noteData: NoteData) = notesRepository.updateNote(noteData)
+class UpdateNoteUseCase @Inject constructor(private val notesRepository: NotesRepository) {
+    suspend operator fun invoke(noteData: NoteData) = notesRepository.updateNote(noteData)
 }
