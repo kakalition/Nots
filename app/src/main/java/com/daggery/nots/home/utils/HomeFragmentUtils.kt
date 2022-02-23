@@ -70,40 +70,6 @@ class HomeFragmentUtils(
         return fragment.mainViewModel.themeManager.homeLayoutKey
     }
 
-    fun bindsToolbar() {
-        fragment.viewBinding.toolbarBinding.apply {
-/*
-            toolbarTitle.text = fragment.resources.getString(R.string.fragment_home_toolbar)
-*/
-            toolbar.inflateMenu(R.menu.menu_home_fragment)
-            toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
-        }
-    }
-
-    fun bindsRecyclerView() {
-        fragment.viewBinding.notesRecyclerview.apply {
-            adapter = fragment.notesAdapter
-        }
-        val itemTouchHelper = ItemTouchHelper(NotesItemTouchHelper(fragment.notesAdapter!!))
-        itemTouchHelper.attachToRecyclerView(fragment.viewBinding.notesRecyclerview)
-    }
-
-    fun bindsFab() {
-        fragment.viewBinding.fab.setOnClickListener(fabOnClickListener)
-    }
-
-    fun rearrangeNoteOrder(notes: MutableList<NoteData>) {
-        fragment.viewModel.rearrangeNoteOrder(notes)
-    }
-
-    fun prioritize(note: NoteData) {
-        fragment.viewModel.prioritize(note)
-    }
-
-    fun unprioritize(note: NoteData) {
-        fragment.viewModel.unprioritize(note)
-    }
-
     fun showDeleteDialog(note: NoteData) {
         MaterialAlertDialogBuilder(
             fragment.requireContext(),
@@ -148,24 +114,4 @@ class HomeFragmentUtils(
             }
             .show()
     }
-
-    fun getSwipeBgColor(): Int {
-        return ColorUtils.setAlphaComponent(
-            MaterialColors.getColor(
-                fragment.requireContext(),
-                com.google.android.material.R.attr.colorPrimary,
-                Color.parseColor("#FFFFFFFF")
-            ),
-            200
-        )
-    }
-
-    fun getDeleteBgColor(): Int {
-        return fragment.resources.getColor(R.color.red_pastel, null)
-    }
-
-    fun getPrioritizeColor(): Int {
-        return fragment.resources.getColor(R.color.blue_pastel, null)
-    }
-
 }

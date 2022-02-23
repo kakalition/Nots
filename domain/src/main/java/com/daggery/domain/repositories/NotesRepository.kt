@@ -11,6 +11,8 @@ interface NotesRepository {
 
     suspend fun getNoteById(id: String): NoteData
 
+    suspend fun reorderNotesChronologically()
+
     suspend fun rearrangeNotesOrder(modifiedList: List<NoteData>)
 
     suspend fun addNote(noteData: NoteData)

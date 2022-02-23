@@ -20,6 +20,10 @@ internal class NotesRepositoryImpl @Inject constructor(private val notesLocalDat
         return notesLocalDataSource.getNoteById(id)
     }
 
+    override suspend fun reorderNotesChronologically() {
+        notesLocalDataSource.reorderChronologically()
+    }
+
     override suspend fun rearrangeNotesOrder(modifiedList: List<NoteData>) {
         return notesLocalDataSource.rearrangeNotesOrder(modifiedList)
     }

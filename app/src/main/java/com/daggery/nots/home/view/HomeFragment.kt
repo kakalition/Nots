@@ -9,10 +9,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.daggery.data.entities.NoteDataEntity
+import com.daggery.domain.entities.NoteData
 import com.daggery.nots.MainViewModel
+import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
+import com.daggery.nots.home.adapter.NotesItemTouchHelper
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.NoteDateUtils
@@ -91,6 +95,31 @@ class HomeFragment : Fragment() {
         _fragmentUtils = null
         notesAdapter = null
     }
+
+
+    fun bindsToolbar() {
+        viewBinding.toolbarBinding.apply {
+            toolbar.inflateMenu(R.menu.menu_home_fragment)
+            toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
+        }
+    }
+
+    fun bindsRecyclerView() {
+        viewBinding.notesRecyclerview.apply {
+            adapter = notesAdapter
+        }
+        val itemTouchHelper = ItemTouchHelper(NotesItemTouchHelper(notesAdapter!!))
+        itemTouchHelper.attachToRecyclerView(viewBinding.notesRecyclerview)
+    }
+
+    fun bindsFab() {
+        viewBinding.fab.setOnClickListener(fabOnClickListener)
+    }
+
+    fun rearrangeNoteOrder(notes: MutableList<NoteData>) {
+        viewModel.rearrangeNoteOrder(notes)
+    }
+
 
     // Conditionally display empty illustration and notes list
     fun changeHomeState(isNotesEmpty: Boolean) {

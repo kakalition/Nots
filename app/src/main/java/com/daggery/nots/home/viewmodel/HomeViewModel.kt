@@ -2,6 +2,7 @@ package com.daggery.nots.home.viewmodel
 
 import androidx.lifecycle.*
 import com.daggery.data.common.DbNoteResult
+import com.daggery.data.usecases.note.ReorderNotesChronologicallyUseCase
 import com.daggery.domain.entities.NoteData
 import com.daggery.domain.usecases.note.DeleteAllNotesUseCase
 import com.daggery.domain.usecases.note.GetNotesUseCase
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getNotesUseCase: GetNotesUseCase,
     private val rearrangeNotesOrderUseCase: RearrangeNotesOrderUseCase,
+    private val reorderNotesChronologicallyUseCase: ReorderNotesChronologicallyUseCase,
     private val deleteAllNotesUseCase: DeleteAllNotesUseCase
 ) : ViewModel() {
 
@@ -35,6 +37,12 @@ class HomeViewModel @Inject constructor(
     fun rearrangeNoteOrder(notes: List<NoteData>) {
         viewModelScope.launch {
             rearrangeNotesOrderUseCase(notes)
+        }
+    }
+
+    fun reorderNotesChronologically() {
+        viewModelScope.launch {
+            reorderNotesChronologicallyUseCase()
         }
     }
 
