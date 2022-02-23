@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.daggery.domain.entities.NoteTag
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentTagsFilterBottomSheetBinding
+import com.daggery.nots.extractChecked
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,12 +54,7 @@ class TagsFilterBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 
-        val checkedTags = viewBinding.chipGroup.children
-            .toList()
-            .filter { (it as Chip).isChecked }
-            .map { (it as Chip).text.toString() }
-
-        viewModel.updateTagByTagName(checkedTags)
+        viewModel.updateTagByTagName((viewBinding.chipGroup.children.filterIsInstance<Chip>()).extractChecked())
     }
 
     override fun onDestroyView() {

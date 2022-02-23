@@ -3,7 +3,9 @@ package com.daggery.nots.addviewnote.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.daggery.domain.entities.NoteData
+import com.daggery.domain.entities.NoteTag
 import com.daggery.domain.usecases.note.*
+import com.daggery.domain.usecases.tag.GetTagsUseCase
 import com.daggery.nots.addviewnote.data.NoteValidity
 import com.daggery.nots.utils.NoteDateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,22 +19,9 @@ class AddViewNoteViewModel @Inject constructor(
     private val getNoteByIdUseCase: GetNoteByIdUseCase,
     private val addNoteUseCase: AddNoteUseCase,
     private val updateNoteUseCase: UpdateNoteUseCase,
-    private val deleteNoteUseCase: DeleteNoteUseCase
+    private val deleteNoteUseCase: DeleteNoteUseCase,
+    private val getTagsUseCase: GetTagsUseCase
 ) : ViewModel() {
-
-    inner class NoteCache {
-        private var _value: NoteData? = null
-        val value = _value
-        fun updateCache(title: String? = null, body: String? = null, tags: List<String>? = null) {
-            _value = value?.copy(
-                noteTitle = title ?: value.noteTitle,
-                noteBody = body ?: value.noteBody,
-                noteTags = tags ?: value.noteTags
-            )
-        }
-        fun saveNoteCache(note: NoteData) { _value = note }
-        fun deleteNoteCache() { _value = null }
-    }
 
     private var _noteCache = NoteCache()
     val noteCache get() = _noteCache
@@ -41,6 +30,10 @@ class AddViewNoteViewModel @Inject constructor(
 
     suspend fun getNote(uuid: String): NoteData {
         return getNoteByIdUseCase(uuid)
+    }
+
+    suspend fun getTags(): List<NoteTag> {
+        return getTagsUseCase()
     }
 
     private suspend fun getUpperIndex(): Int {
@@ -101,4 +94,17 @@ class AddViewNoteViewModel @Inject constructor(
         }
     }
 
+    inner class NoteCache {
+        private var _value: NoteData? = null
+        val value = _value
+        fun updateCache(title: String? = null, body: String? = null, tags: List<String>? = null) {
+            _value = value?.copy(
+                noteTitle = title ?: value.noteTitle,
+                noteBody = body ?: value.noteBody,
+                noteTags = tags ?: value.noteTags
+            )
+        }
+        fun saveNoteCache(note: NoteData) { _value = note }
+        fun deleteNoteCache() { _value = null }
+    }
 }
