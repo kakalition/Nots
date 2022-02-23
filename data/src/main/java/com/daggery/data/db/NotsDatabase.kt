@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.daggery.data.entities.NoteDataEntity
 import com.daggery.data.entities.NoteTagEntity
 
-@Database(entities = [NoteDataEntity::class, NoteTagEntity::class], version = 1)
+@Database(entities = [NoteDataEntity::class, NoteTagEntity::class], version = 1, exportSchema = true)
 @TypeConverters(TypeConverter::class)
 abstract class NotsDatabase : RoomDatabase() {
 
