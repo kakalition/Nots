@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 
 @Entity(tableName = "tags")
-data class NoteTagEntity(
+internal data class NoteTagEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "tag_name") val tagName: String,
     @ColumnInfo(name = "checked") val checked: Boolean

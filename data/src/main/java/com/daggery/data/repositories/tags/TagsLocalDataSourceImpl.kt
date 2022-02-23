@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class TagsLocalDataSourceImpl @Inject constructor(
+internal class TagsLocalDataSourceImpl @Inject constructor(
     private val tagDao: TagDao,
     private val coroutineDispatcher: CoroutineDispatcher,
     private val tagEntityMapper: NoteTagEntityMapper

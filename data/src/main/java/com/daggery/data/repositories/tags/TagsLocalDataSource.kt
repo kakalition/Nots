@@ -3,7 +3,7 @@ package com.daggery.data.repositories.tags
 import com.daggery.domain.entities.NoteTag
 import kotlinx.coroutines.flow.Flow
 
-interface TagsLocalDataSource {
+internal interface TagsLocalDataSource {
 
     suspend fun getTags(): Flow<List<NoteTag>>
 

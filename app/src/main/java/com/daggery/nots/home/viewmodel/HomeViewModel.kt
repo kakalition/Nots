@@ -1,10 +1,8 @@
 package com.daggery.nots.home.viewmodel
 
-import android.util.Log
+import android.provider.ContactsContract
 import androidx.lifecycle.*
-import com.daggery.nots.data.Note
-import com.daggery.nots.data.NoteDao
-import com.daggery.nots.data.NotsDatabase
+import com.daggery.data.db.NoteDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -16,31 +14,31 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Get all notes
-    val notes: Flow<List<Note>> = noteDao.getNotes()
+    val notes: Flow<List<ContactsContract.CommonDataKinds.Note>> = noteDao.getNotes()
 
     // Change note order of corresponding note
     // TODO: Could be optimized using upper and lower bound of index
-    fun rearrangeNoteOrder(notes: MutableList<Note>) {
+    fun rearrangeNoteOrder(notes: MutableList<ContactsContract.CommonDataKinds.Note>) {
         viewModelScope.launch {
             noteDao.rearrangeNoteOrder(notes)
         }
     }
 
     // Change note priority to active
-    fun prioritize(note: Note) {
+    fun prioritize(note: ContactsContract.CommonDataKinds.Note) {
         viewModelScope.launch {
             noteDao.updateNote(note.copy(priority = 1))
         }
     }
 
     // Change note priority to inactive
-    fun unprioritize(note: Note) {
+    fun unprioritize(note: ContactsContract.CommonDataKinds.Note) {
         viewModelScope.launch {
             noteDao.updateNote(note.copy(priority = 0))
         }
     }
 
-    fun deleteNote(note: Note) {
+    fun deleteNote(note: ContactsContract.CommonDataKinds.Note) {
         viewModelScope.launch {
             noteDao.deleteNote(note)
         }

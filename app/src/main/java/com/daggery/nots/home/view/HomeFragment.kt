@@ -2,6 +2,7 @@ package com.daggery.nots.home.view
 
 import android.content.Context
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -21,8 +22,6 @@ import com.daggery.nots.utils.NoteDateUtils
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO: Check if DatabaseOperation by Referring to Note UUID is Possible
-
 class HomeFragment : Fragment() {
 
     private var _viewBinding: FragmentHomeBinding? = null
@@ -37,17 +36,17 @@ class HomeFragment : Fragment() {
     internal var notesLinearLayoutManager: NoteLinearLayoutManager? = null
     internal var notesAdapter: NoteListAdapter? = null
 
-    private var localNotes: List<Note> = listOf()
+    private var localNotes: List<NoteData> = listOf()
     private var checkedTagsName: List<String> = listOf()
 
     internal val filterBottomSheet = TagsFilterBottomSheetFragment()
 
-    fun filterListWithTags(notes: List<Note>, tagNameList: List<String>): List<Note> {
+    fun filterListWithTags(notes: List<ContactsContract.CommonDataKinds.Note>, tagNameList: List<String>): List<ContactsContract.CommonDataKinds.Note> {
         return  if (tagNameList.isEmpty()) { notes }
         else { notes.filter { tagNameList.intersect(it.noteTags).isNotEmpty() } }
     }
 
-    fun invalidateHomeLayout(notes: List<Note>) {
+    fun invalidateHomeLayout(notes: List<ContactsContract.CommonDataKinds.Note>) {
         notesAdapter?.submitList(notes)
         fragmentUtils.changeHomeState(notes.isEmpty())
     }
@@ -65,7 +64,7 @@ class HomeFragment : Fragment() {
 
         _fragmentUtils = HomeFragmentUtils(this, findNavController())
 
-        val initialNotes: MutableList<Note> = mutableListOf()
+        val initialNotes: MutableList<ContactsContract.CommonDataKinds.Note> = mutableListOf()
         notesLinearLayoutManager =  NoteLinearLayoutManager(requireContext())
         notesAdapter = NoteListAdapter(initialNotes, fragmentUtils, NoteDateUtils())
 

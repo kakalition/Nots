@@ -17,7 +17,7 @@ private const val DATA_STORE_NAME = "nots_datastore"
 private val Context.dataStore by preferencesDataStore(DATA_STORE_NAME)
 
 @Singleton
-class DataStoreManager @Inject constructor(@ApplicationContext private val appContext: Context) {
+internal class DataStoreManager @Inject constructor(@ApplicationContext private val appContext: Context) {
 
     private val dataStore = appContext.dataStore
 

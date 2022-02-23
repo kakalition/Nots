@@ -5,7 +5,8 @@ import com.daggery.domain.repositories.TagsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class TagsRepositoryImpl @Inject constructor(private val tagsLocalDataSource: TagsLocalDataSource) : TagsRepository {
+internal class TagsRepositoryImpl
+    @Inject constructor(private val tagsLocalDataSource: TagsLocalDataSource) : TagsRepository {
 
     override suspend fun getTags(): Flow<List<NoteTag>> {
         return tagsLocalDataSource.getTags()

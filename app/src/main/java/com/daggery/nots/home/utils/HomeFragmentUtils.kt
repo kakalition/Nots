@@ -121,7 +121,7 @@ class HomeFragmentUtils(
         fragment.viewModel.rearrangeNoteOrder(notes)
     }
 
-    fun prioritize(note: Note) {
+    fun prioritize(note: ContactsContract.CommonDataKinds.Note) {
         fragment.viewModel.prioritize(note)
     }
 

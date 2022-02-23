@@ -5,7 +5,7 @@ import com.daggery.data.entities.NoteTagEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TagDao {
+internal interface TagDao {
 
     @Query("SELECT * FROM tags ORDER BY tag_name ASC")
     fun getTags(): Flow<List<NoteTagEntity>>

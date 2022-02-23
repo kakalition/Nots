@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class NotesLocalDataSourceImpl @Inject constructor(
+internal class NotesLocalDataSourceImpl @Inject constructor(
     private val noteDao: NoteDao,
     private val coroutineDispatcher: CoroutineDispatcher,
     private val noteDataEntityMapper: NoteDataEntityMapper

@@ -5,7 +5,7 @@ import com.daggery.data.entities.NoteDataEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface NoteDao {
+internal interface NoteDao {
 
     @Query("SELECT * FROM notes ORDER BY priority DESC, note_order DESC")
     fun getNotes(): Flow<List<NoteDataEntity>>

@@ -4,7 +4,7 @@ import com.daggery.data.entities.NoteDataEntity
 import com.daggery.domain.entities.NoteData
 import javax.inject.Inject
 
-class NoteDataEntityMapper @Inject constructor(){
+internal class NoteDataEntityMapper @Inject constructor(){
     fun toNoteDataEntity(noteData: NoteData): NoteDataEntity {
         return NoteDataEntity(
             noteData.uuid,

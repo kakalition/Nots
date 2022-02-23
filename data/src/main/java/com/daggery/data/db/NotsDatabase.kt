@@ -10,7 +10,7 @@ import com.daggery.data.entities.NoteTagEntity
 
 @Database(entities = [NoteDataEntity::class, NoteTagEntity::class], version = 1, exportSchema = true)
 @TypeConverters(TypeConverter::class)
-abstract class NotsDatabase : RoomDatabase() {
+internal abstract class NotsDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
     abstract fun tagDao(): TagDao
