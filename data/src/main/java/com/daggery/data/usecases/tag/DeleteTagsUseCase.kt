@@ -2,7 +2,8 @@ package com.daggery.domain.usecases.tag
 
 import com.daggery.domain.entities.NoteTag
 import com.daggery.domain.repositories.TagsRepository
+import javax.inject.Inject
 
-class DeleteTagsUseCase(private val tagsRepository: TagsRepository) : BaseDeleteTagsUseCase {
+class DeleteTagsUseCase @Inject constructor(private val tagsRepository: TagsRepository) : BaseDeleteTagsUseCase {
     override suspend operator fun invoke(tagList: List<NoteTag>) = tagsRepository.deleteTags(tagList)
 }

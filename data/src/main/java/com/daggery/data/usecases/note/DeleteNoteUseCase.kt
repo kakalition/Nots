@@ -2,7 +2,8 @@ package com.daggery.domain.usecases.note
 
 import com.daggery.domain.entities.NoteData
 import com.daggery.domain.repositories.NotesRepository
+import javax.inject.Inject
 
-class DeleteNoteUseCase(private val notesRepository: NotesRepository) : BaseDeleteNoteUseCase {
+class DeleteNoteUseCase @Inject constructor(private val notesRepository: NotesRepository) : BaseDeleteNoteUseCase {
     override suspend operator fun invoke(noteData: NoteData) = notesRepository.deleteNote(noteData)
 }
