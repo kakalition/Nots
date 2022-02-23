@@ -27,45 +27,6 @@ class HomeFragmentUtils(
         com.google.android.material.R.attr.colorOnSurface,
         fragment.resources.getColor(R.color.white, null)
     )
-
-    val noteClickListener: (NoteData) -> Unit = { note ->
-        val uuid = note.uuid
-        val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
-        fragment.findNavController().navigate(action)
-    }
-
-    private val fabOnClickListener = { _ : View ->
-        val extras = FragmentNavigatorExtras(fragment.viewBinding.fab to "from_fab_to_add")
-        navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = ""), extras)
-    }
-
-    private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
-        when(item.itemId) {
-            R.id.filter_button -> {
-                fragment.filterBottomSheet.show(fragment.parentFragmentManager, TagsFilterBottomSheetFragment.TAG)
-                true
-            }
-            R.id.reorder_button -> {
-                showReorderChronologicallyDialog()
-                true
-            }
-            R.id.delete_all_notes_button -> {
-                showDeleteAllDialog()
-                true
-            }
-            R.id.manage_tags_button -> {
-                fragment.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToManageTagsFragment())
-                true
-            }
-            R.id.settings_button -> {
-                val destination = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
-                fragment.findNavController().navigate(destination)
-                true
-            }
-            else -> false
-        }
-    }
-
     fun getHomeLayoutKey(): Int {
         return fragment.mainViewModel.themeManager.homeLayoutKey
     }
@@ -77,7 +38,7 @@ class HomeFragmentUtils(
         )
             .setView(R.layout.dialog_delete_note)
             .setPositiveButton("Delete") { _, _ ->
-                fragment.viewModel.deleteNote(note)
+                //fragment.viewModel.deleteNote(note)
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
@@ -85,33 +46,4 @@ class HomeFragmentUtils(
             .show()
     }
 
-    private fun showDeleteAllDialog() {
-        MaterialAlertDialogBuilder(
-            fragment.requireContext(),
-            R.style.NotsAlertDialog
-        )
-            .setView(R.layout.dialog_delete_all_notes)
-            .setPositiveButton("Delete") { _, _ ->
-                fragment.viewModel.deleteAllNotes()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
-
-    fun showReorderChronologicallyDialog() {
-        MaterialAlertDialogBuilder(
-            fragment.requireContext(),
-            R.style.NotsAlertDialog
-        )
-            .setView(R.layout.dialog_reorder_notes_chronologically)
-            .setPositiveButton("Reorder") { _, _ ->
-                reorderChronologically()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
 }

@@ -2,14 +2,17 @@ package com.daggery.nots.home.view
 
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.transition.Visibility
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.daggery.data.common.DbNoteResult
 import com.daggery.data.entities.NoteDataEntity
 import com.daggery.domain.entities.NoteData
 import com.daggery.nots.MainViewModel
@@ -20,6 +23,7 @@ import com.daggery.nots.home.adapter.NotesItemTouchHelper
 import com.daggery.nots.home.utils.HomeFragmentUtils
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.nots.utils.NoteDateUtils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -30,15 +34,15 @@ class HomeFragment : Fragment() {
     internal val viewModel: HomeViewModel by activityViewModels()
     internal val mainViewModel: MainViewModel by activityViewModels()
 
-    private var _fragmentUtils: HomeFragmentUtils? = null
-    private val fragmentUtils get() = _fragmentUtils!!
+    private var _noteDateUtils: NoteDateUtils? = null
+    private val noteDateUtils get() = _noteDateUtils!!
 
-    internal var notesAdapter: NoteListAdapter? = null
+    private var notesAdapter: NoteListAdapter? = null
 
     private var localNotes: List<NoteDataEntity> = listOf()
     private var checkedTagsName: List<String> = listOf()
 
-    internal val filterBottomSheet = TagsFilterBottomSheetFragment()
+    private val filterBottomSheet = TagsFilterBottomSheetFragment()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,16 +55,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _fragmentUtils = HomeFragmentUtils(this, findNavController())
+        _noteDateUtils = NoteDateUtils()
 
-        val initialNotes: MutableList<ContactsContract.CommonDataKinds.Note> = mutableListOf()
-        notesAdapter = NoteListAdapter(initialNotes, fragmentUtils, NoteDateUtils())
+        bindsToolbar()
+        bindsFab()
+        bindsRecyclerView()
 
-        with(fragmentUtils) {
-            bindsToolbar()
-            bindsFab()
-            bindsRecyclerView()
-        }
+        val initialNotes: MutableList<NoteData> = mutableListOf()
+
+        notesAdapter = NoteListAdapter(
+            notes = initialNotes,
+            dateParser = { noteDateUtils.getParsedDate(it) },
+            onNoteClickListener = { onNoteClickListener },
+            reorderCallback = { viewModel.rearrangeNoteOrder(it) }
+        )
 
         viewLifecycleOwner.lifecycleScope.launch {
 
@@ -80,10 +88,7 @@ class HomeFragment : Fragment() {
 
             launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.allNotes.collect { list ->
-                        localNotes = list
-                        invalidateHomeLayout(filterListWithTags(list, checkedTagsName))
-                    }
+                    viewModel.allNotes.collect(onReceiveDbNoteResult)
                 }
             }
         }
@@ -92,10 +97,8 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
-        _fragmentUtils = null
         notesAdapter = null
     }
-
 
     fun bindsToolbar() {
         viewBinding.toolbarBinding.apply {
@@ -104,7 +107,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun bindsRecyclerView() {
+    private fun bindsRecyclerView() {
         viewBinding.notesRecyclerview.apply {
             adapter = notesAdapter
         }
@@ -112,57 +115,93 @@ class HomeFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(viewBinding.notesRecyclerview)
     }
 
-    fun bindsFab() {
+    private fun bindsFab() {
         viewBinding.fab.setOnClickListener(fabOnClickListener)
     }
 
-    fun rearrangeNoteOrder(notes: MutableList<NoteData>) {
-        viewModel.rearrangeNoteOrder(notes)
-    }
-
-
-    // Conditionally display empty illustration and notes list
-    fun changeHomeState(isNotesEmpty: Boolean) {
-        if(isNotesEmpty) {
-            viewBinding.apply {
-                emptyNotesLayout.visibility = View.VISIBLE
+    private val onReceiveDbNoteResult = { result: DbNoteResult ->
+        if (result is DbNoteResult.Loading) {
+            with(viewBinding) {
+                emptyNotesLayout.visibility = View.GONE
                 notesRecyclerview.visibility = View.GONE
+                loadingSpinner.visibility = View.VISIBLE
             }
-        } else {
-            viewBinding.apply {
+        } else if (result is DbNoteResult.Success && result.data.isNotEmpty()) {
+            notesAdapter?.submitList(result.data)
+            with(viewBinding) {
                 emptyNotesLayout.visibility = View.GONE
                 notesRecyclerview.visibility = View.VISIBLE
+                loadingSpinner.setVisibilityAfterHide(View.GONE)
+            }
+        } else if (result is DbNoteResult.Success && result.data.isEmpty()) {
+            with(viewBinding) {
+                emptyNotesLayout.visibility = View.VISIBLE
+                notesRecyclerview.visibility = View.GONE
+                loadingSpinner.setVisibilityAfterHide(View.GONE)
             }
         }
     }
 
+/*
     fun filterListWithTags(notes: List<ContactsContract.CommonDataKinds.Note>, tagNameList: List<String>): List<ContactsContract.CommonDataKinds.Note> {
         return  if (tagNameList.isEmpty()) { notes }
         else { notes.filter { tagNameList.intersect(it.noteTags).isNotEmpty() } }
     }
-
-    fun invalidateHomeLayout(notes: List<ContactsContract.CommonDataKinds.Note>) {
-        notesAdapter?.submitList(notes)
-        changeHomeState(notes.isEmpty())
-    }
-
-}
-
-/*
-
-
-class NoteLinearLayoutManager(context: Context) : LinearLayoutManager(
-    context,
-    VERTICAL,
-    false
-) {
-    private var canScrollVerticallyState: Boolean = true
-    fun changeScrollState(state: Boolean) {
-        canScrollVerticallyState = state
-    }
-
-    override fun canScrollVertically(): Boolean {
-        return canScrollVerticallyState && super.canScrollVertically()
-    }
-}
 */
+
+
+    val onNoteClickListener: (NoteData) -> Unit = { note ->
+        val uuid = note.uuid
+        val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
+        findNavController().navigate(action)
+    }
+
+    private val fabOnClickListener = { _ : View ->
+        val extras = FragmentNavigatorExtras(viewBinding.fab to "from_fab_to_add")
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = ""), extras)
+    }
+
+    private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
+        when(item.itemId) {
+            R.id.filter_button -> {
+                filterBottomSheet.show(parentFragmentManager, TagsFilterBottomSheetFragment.TAG)
+                true
+            }
+            R.id.reorder_button -> {
+                showReorderChronologicallyDialog()
+                true
+            }
+            R.id.delete_all_notes_button -> {
+                showDeleteAllDialog()
+                true
+            }
+            R.id.manage_tags_button -> {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToManageTagsFragment())
+                true
+            }
+            R.id.settings_button -> {
+                val destination = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+                findNavController().navigate(destination)
+                true
+            }
+            else -> false
+        }
+    }
+
+    private fun showReorderChronologicallyDialog() {
+        MaterialAlertDialogBuilder(requireContext(), R.style.NotsAlertDialog)
+            .setView(R.layout.dialog_reorder_notes_chronologically)
+            .setPositiveButton("Reorder") { _, _ -> viewModel.reorderNotesChronologically() }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    private fun showDeleteAllDialog() {
+        MaterialAlertDialogBuilder(requireContext(), R.style.NotsAlertDialog)
+            .setView(R.layout.dialog_delete_all_notes)
+            .setPositiveButton("Delete") { _, _ -> viewModel.deleteAllNotes() }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+}
