@@ -11,10 +11,7 @@ interface NoteDao {
     fun getNotes(): Flow<List<NoteDataEntity>>
 
     @Query("SELECT * from notes WHERE uuid = :uuid")
-    fun getNote(uuid: String): Flow<NoteDataEntity>
-
-    @Query("SELECT * from notes WHERE uuid = :uuid")
-    fun getStaticNote(uuid: String): NoteDataEntity
+    fun getNoteById(uuid: String): NoteDataEntity
 
     @Update
     suspend fun rearrangeNoteOrder(notes: List<NoteDataEntity>)

@@ -20,7 +20,7 @@ interface NoteTagDao {
     suspend fun addTag(noteTag: NoteTagEntity)
 
     @Update
-    suspend fun editTag(noteTag: NoteTagEntity)
+    suspend fun updateTag(noteTag: NoteTagEntity)
 
     @Update
     suspend fun updateTags(noteTags: List<NoteTagEntity>)
