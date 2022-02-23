@@ -1,6 +1,7 @@
 package com.daggery.data.repositories.tags
 
 import com.daggery.data.db.TagDao
+import com.daggery.data.di.IoDispatcher
 import com.daggery.data.mappers.NoteTagEntityMapper
 import com.daggery.domain.entities.NoteTag
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 internal class TagsLocalDataSourceImpl @Inject constructor(
     private val tagDao: TagDao,
-    private val coroutineDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val tagEntityMapper: NoteTagEntityMapper
 ) : TagsLocalDataSource {
 

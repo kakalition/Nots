@@ -1,6 +1,7 @@
 package com.daggery.data.repositories.notes
 
 import com.daggery.data.db.NoteDao
+import com.daggery.data.di.IoDispatcher
 import com.daggery.data.mappers.NoteDataEntityMapper
 import com.daggery.domain.entities.NoteData
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 internal class NotesLocalDataSourceImpl @Inject constructor(
     private val noteDao: NoteDao,
-    private val coroutineDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val noteDataEntityMapper: NoteDataEntityMapper
 ) : NotesLocalDataSource {
 
