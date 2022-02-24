@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.7">
+    <bytecodeTargetLevel target="1.8">
       <module name="Nots.app" target="11" />
+      <module name="Nots.buildsrc" target="11" />
       <module name="Nots.data" target="11" />
+      <module name="Nots.feature.books" target="11" />
+      <module name="Nots.feature.dashboard" target="11" />
+      <module name="Nots.feature.notes" target="11" />
+      <module name="Nots.features.books" target="11" />
+      <module name="Nots.features.dashboard" target="11" />
+      <module name="Nots.features.notes" target="11" />
+      <module name="Nots.features.settings" target="11" />
+      <module name="Nots.features.tags" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
