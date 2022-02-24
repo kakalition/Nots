@@ -45,6 +45,8 @@ class CommonAndroidPlugin : Plugin<Project> {
                     targetCompatibility = JavaVersion.VERSION_1_8
                 }
 
+                buildFeatures.viewBinding = true
+
                 project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
                     kotlinOptions {
                         jvmTarget = "1.8"

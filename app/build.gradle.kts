@@ -13,9 +13,6 @@ android {
     defaultConfig {
         applicationId = ApplicationId.id
     }
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
