@@ -111,6 +111,8 @@
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3045" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1515" />
         <entry key="feature/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.12526720820863618" />
+        <entry key="features/dashboard/src/main/res/layout/activity_test.xml" value="0.26849080803762293" />
+        <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.26849080803762293" />
         <entry key="themecolor/src/main/res/layout/activity_main.xml" value="0.2821718683197948" />
       </map>
     </option>

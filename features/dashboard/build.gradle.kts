@@ -12,9 +12,16 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.domain))
 
+    addFragmentKtx()
+    addActivityKtx()
+
+    // Hilt
+    addHilt()
+
     // Android
     addAndroidCore()
     addAndroidMaterial()
+    //addLifecycle()
 
     // Test
     addJunit()
