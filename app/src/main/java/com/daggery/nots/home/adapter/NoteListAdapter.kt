@@ -72,6 +72,7 @@ class NoteListAdapter(
 
         notes.clear()
         notes.addAll(updatedList)
+        notesBatch.submitList(updatedList)
 
         diffResult.dispatchUpdatesTo(this)
     }
@@ -90,6 +91,10 @@ class NoteListAdapter(
 class NotesBatch(private var _notesBatch: MutableList<NoteData>) {
 
     val batch get() = _notesBatch.toList()
+
+    fun submitList(noteDataList: List<NoteData>) {
+        _notesBatch = noteDataList.toMutableList()
+    }
 
     fun updateBatch(firstIndex: Int, secondIndex: Int) {
         val firstNote = batch[firstIndex]
