@@ -23,8 +23,10 @@ internal class TagsLocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getTags(): List<NoteTag> {
-        return tagDao.getTags().map {
-            tagEntityMapper.toNoteTag(it)
+        return withContext(coroutineDispatcher) {
+            return@withContext tagDao.getTags().map {
+                tagEntityMapper.toNoteTag(it)
+            }
         }
     }
 
