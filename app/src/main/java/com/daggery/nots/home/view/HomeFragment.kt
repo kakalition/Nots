@@ -105,12 +105,14 @@ class HomeFragment : Fragment() {
                 emptyNotesLayout.visibility = View.GONE
                 notesRecyclerview.visibility = View.VISIBLE
                 loadingSpinner.setVisibilityAfterHide(View.GONE)
+                loadingSpinner.hide()
             }
         } else if (result is DbNoteResult.Success && result.data.isEmpty()) {
             with(viewBinding) {
                 emptyNotesLayout.visibility = View.VISIBLE
                 notesRecyclerview.visibility = View.GONE
                 loadingSpinner.setVisibilityAfterHide(View.GONE)
+                loadingSpinner.hide()
             }
         }
     }
