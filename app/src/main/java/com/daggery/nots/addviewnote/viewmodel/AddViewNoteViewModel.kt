@@ -106,9 +106,7 @@ class AddViewNoteViewModel @Inject constructor(
             )
         }
         fun saveNoteCache(note: NoteData) {
-            Log.d("LOL saveInput", note.toString())
             _value = note
-            Log.d("LOL saveCache", value.toString())
         }
         fun deleteNoteCache() { _value = null }
     }

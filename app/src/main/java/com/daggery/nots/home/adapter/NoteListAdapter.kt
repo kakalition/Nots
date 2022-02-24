@@ -1,5 +1,6 @@
 package com.daggery.nots.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -55,7 +56,9 @@ class NoteListAdapter(
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val current = notes[position]
-        holder.binding.listItemLayout.setOnClickListener{ onNoteClickListener(current) }
+        holder.binding.root.setOnClickListener{
+            onNoteClickListener(current)
+        }
         holder.bind(current)
     }
 

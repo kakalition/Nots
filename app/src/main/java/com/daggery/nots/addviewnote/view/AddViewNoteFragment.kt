@@ -174,10 +174,8 @@ class AddViewNoteFragment : Fragment() {
 
         noteData?.let {
             viewModel.noteCache.saveNoteCache(it)
-            Log.d("LOL let", "true")
         }
 
-        Log.d("LOL NOTE", noteData.toString())
         bindsFields(noteData)
     }
 

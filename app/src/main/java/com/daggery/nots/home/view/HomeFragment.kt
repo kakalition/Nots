@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
 
         notesAdapter = NoteListAdapter(
             dateParser = { noteDateUtils.getParsedDate(it) },
-            onNoteClickListener = { onNoteClickListener },
+            onNoteClickListener = { onNoteClickListener(it) },
             reorderCallback = { viewModel.rearrangeNoteOrder(it) }
         )
 
