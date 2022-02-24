@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
@@ -150,10 +151,8 @@ class AddViewNoteFragment : Fragment() {
     private fun bindsFields(note: NoteData?) {
         with(viewBinding) {
             noteTitle.text = editableFactory.newEditable(note?.noteTitle ?: "")
-            noteDate.text = editableFactory.newEditable(
-                viewModel.noteDateUtils.getParsedDate(
-                    note?.noteDate ?: viewModel.noteDateUtils.getRawCurrentDate()
-                )
+            noteDate.text = viewModel.noteDateUtils.getParsedDate(
+                note?.noteDate ?: viewModel.noteDateUtils.getRawCurrentDate()
             )
             noteBody.text = editableFactory.newEditable(note?.noteBody ?: "")
             bindsChips(note?.noteTags ?: listOf())
@@ -173,7 +172,12 @@ class AddViewNoteFragment : Fragment() {
             noteData = viewModel.noteCache.value
         }
 
-        noteData?.let { viewModel.noteCache.saveNoteCache(it) }
+        noteData?.let {
+            viewModel.noteCache.saveNoteCache(it)
+            Log.d("LOL let", "true")
+        }
+
+        Log.d("LOL NOTE", noteData.toString())
         bindsFields(noteData)
     }
 
@@ -247,6 +251,16 @@ class AddViewNoteFragment : Fragment() {
             noteTitle = viewBinding.noteTitle.text.toString(),
             noteBody = viewBinding.noteBody.text.toString()
         )
+
+        Log.d("LOL newnote", newNote.toString())
+
+        var validity: NoteValidity? = null
+
+        newNote?.let {
+            validity = viewModel.assertNoteValidity(newNote)
+        }
+
+        Log.d("LOL validity", validity.toString())
 
         newNote?.let {
             when(viewModel.assertNoteValidity(it)) {

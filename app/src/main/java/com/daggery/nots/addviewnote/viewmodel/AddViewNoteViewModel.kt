@@ -1,5 +1,6 @@
 package com.daggery.nots.addviewnote.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.daggery.data.usecases.note.*
@@ -96,15 +97,19 @@ class AddViewNoteViewModel @Inject constructor(
 
     inner class NoteCache {
         private var _value: NoteData? = null
-        val value = _value
+        val value get() = _value
         fun updateCache(title: String? = null, body: String? = null, tags: List<String>? = null) {
             _value = value?.copy(
-                noteTitle = title ?: value.noteTitle,
-                noteBody = body ?: value.noteBody,
-                noteTags = tags ?: value.noteTags
+                noteTitle = title ?: value!!.noteTitle,
+                noteBody = body ?: value!!.noteBody,
+                noteTags = tags ?: value!!.noteTags
             )
         }
-        fun saveNoteCache(note: NoteData) { _value = note }
+        fun saveNoteCache(note: NoteData) {
+            Log.d("LOL saveInput", note.toString())
+            _value = note
+            Log.d("LOL saveCache", value.toString())
+        }
         fun deleteNoteCache() { _value = null }
     }
 }

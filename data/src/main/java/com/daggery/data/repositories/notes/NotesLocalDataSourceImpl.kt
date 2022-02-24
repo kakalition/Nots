@@ -25,8 +25,10 @@ internal class NotesLocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getNotes(): List<NoteData> {
-        return noteDao.getNotes().map {
-            noteDataEntityMapper.toNoteData(it)
+        return withContext(coroutineDispatcher) {
+            return@withContext noteDao.getNotes().map {
+                noteDataEntityMapper.toNoteData(it)
+            }
         }
     }
 
