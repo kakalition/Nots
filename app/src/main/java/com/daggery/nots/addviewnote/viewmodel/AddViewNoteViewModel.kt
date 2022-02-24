@@ -2,10 +2,10 @@ package com.daggery.nots.addviewnote.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daggery.data.usecases.note.*
 import com.daggery.domain.entities.NoteData
 import com.daggery.domain.entities.NoteTag
-import com.daggery.domain.usecases.note.*
-import com.daggery.domain.usecases.tag.GetTagsUseCase
+import com.daggery.data.usecases.tag.GetTagsUseCase
 import com.daggery.nots.addviewnote.data.NoteValidity
 import com.daggery.nots.utils.NoteDateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel

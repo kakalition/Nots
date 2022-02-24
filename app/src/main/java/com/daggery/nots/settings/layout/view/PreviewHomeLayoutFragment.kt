@@ -45,7 +45,7 @@ class PreviewHomeLayoutFragment : Fragment() {
             previewTwo.bind(fragmentUtils, "Two", noteItemTileRes)
             previewThree.bind(fragmentUtils, "Three", noteItemTileRes)
             previewFour.bind(fragmentUtils, "Four", noteItemTileRes)
-            applyLayoutButton.setOnClickListener { fragmentUtils.applyLayout(args.homeLayoutKey) }
+            //applyLayoutButton.setOnClickListener { fragmentUtils.applyLayout(args.homeLayoutKey) }
         }
     }
 }

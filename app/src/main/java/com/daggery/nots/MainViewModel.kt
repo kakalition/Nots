@@ -1,4 +1,5 @@
 package com.daggery.nots
+/*
 
 import android.util.Log
 import androidx.annotation.StyleRes
@@ -89,4 +90,4 @@ class MainViewModel @Inject constructor(
             noteTagDao.editTag(noteTag)
         }
     }
-}
+}*/

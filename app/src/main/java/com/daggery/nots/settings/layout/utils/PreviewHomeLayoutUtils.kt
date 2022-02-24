@@ -52,12 +52,14 @@ class PreviewHomeLayoutUtils(private val fragment: PreviewHomeLayoutFragment) {
     }
 
     // TODO: Can be optimized
+/*
     fun applyLayout(layoutId: Int) {
         with(fragment) {
             (requireActivity() as MainActivity).viewModel.applyLayout(layoutId)
             findNavController().navigateUp()
         }
     }
+*/
 
     fun bindsToolbar() {
         fragment.viewBinding.toolbarBinding.apply {

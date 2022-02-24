@@ -1,5 +1,6 @@
-package com.daggery.nots.home.view
+package com.daggery.nots.managetags.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -7,19 +8,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.daggery.nots.R
 import com.daggery.nots.databinding.FragmentManageTagsBinding
-import com.daggery.nots.home.adapter.TagListAdapter
-import com.daggery.nots.managetags.utils.ManageTagsFragmentUtils
-import com.daggery.nots.home.viewmodel.ManageTagsViewModel
-import com.daggery.nots.managetags.view.AddEditTagBottomSheetFragment
+import com.daggery.nots.managetags.adapter.TagListAdapter
+import com.daggery.nots.managetags.viewmodel.ManageTagsViewModel
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import timber.log.Timber
-
-// TODO: Show Context Action Mode when Any of list is selected
 
 @AndroidEntryPoint
 class ManageTagsFragment : Fragment() {
@@ -28,9 +26,6 @@ class ManageTagsFragment : Fragment() {
     internal val viewBinding get() = _viewBinding!!
 
     val viewModel: ManageTagsViewModel by activityViewModels()
-
-    private var _fragmentUtils: ManageTagsFragmentUtils? = null
-    private val fragmentUtils get() = _fragmentUtils!!
 
     val newTagsDialog = AddEditTagBottomSheetFragment()
     var actionMode: ActionMode? = null
@@ -41,7 +36,6 @@ class ManageTagsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        Timber.plant(Timber.DebugTree())
         _viewBinding = FragmentManageTagsBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
@@ -49,14 +43,10 @@ class ManageTagsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _fragmentUtils = ManageTagsFragmentUtils(this)
+        bindsToolbar()
+
         _tagListAdapter = TagListAdapter()
-
-        fragmentUtils.bindsToolbar()
-
-        with(viewBinding) {
-            tagsRecyclerView.adapter = tagListAdapter
-        }
+        viewBinding.tagsRecyclerView.adapter = tagListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -85,8 +75,37 @@ class ManageTagsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
-        _fragmentUtils = null
         _tagListAdapter = null
+    }
+
+    private val menuItemClickListener = { item: MenuItem ->
+        when(item.itemId) {
+            R.id.add_tags_button -> {
+                newTagsDialog.show(
+                    requireActivity().supportFragmentManager,
+                    AddEditTagBottomSheetFragment.TAG
+                )
+                true
+            }
+            else -> false
+        }
+    }
+
+    internal fun bindsToolbar() {
+        with(viewBinding.toolbarBinding.toolbar) {
+            setNavigationIcon(R.drawable.ic_back)
+            setNavigationOnClickListener { findNavController().navigateUp() }
+            inflateMenu(R.menu.menu_filter_fragment)
+            menu.findItem(R.id.add_tags_button).icon.setTint(
+                MaterialColors.getColor(
+                    requireContext(),
+                    com.google.android.material.R.attr.colorOnSurface,
+                    Color.parseColor("#FF212121")
+                )
+            )
+            setOnMenuItemClickListener(menuItemClickListener)
+            title = "Manage Tags"
+        }
     }
 
     fun showDeleteDialog() {

@@ -5,11 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
-import androidx.fragment.app.activityViewModels
-import com.daggery.nots.MainViewModel
 import com.daggery.nots.databinding.FragmentThemeSettingsBinding
-import com.daggery.nots.setMargin
 import com.daggery.nots.settings.theme.utils.ThemeSettingsUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +15,7 @@ class ThemeSettingsFragment : Fragment() {
     private var _viewBinding: FragmentThemeSettingsBinding? = null
     val viewBinding get() = _viewBinding!!
 
-    val viewModel: MainViewModel by activityViewModels()
+    //val viewModel: MainViewModel by activityViewModels()
 
     private var _fragmentUtils: ThemeSettingsUtil? = null
     val fragmentUtils get() = _fragmentUtils!!

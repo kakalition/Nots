@@ -5,11 +5,11 @@ import com.daggery.data.common.DbNoteResult
 import com.daggery.data.usecases.note.ReorderNotesChronologicallyUseCase
 import com.daggery.domain.entities.NoteData
 import com.daggery.domain.entities.NoteTag
-import com.daggery.domain.usecases.note.DeleteAllNotesUseCase
-import com.daggery.domain.usecases.note.GetNotesFlowUseCase
-import com.daggery.domain.usecases.note.RearrangeNotesOrderUseCase
-import com.daggery.domain.usecases.tag.GetTagsUseCase
-import com.daggery.domain.usecases.tag.UpdateTagsUseCase
+import com.daggery.data.usecases.note.DeleteAllNotesUseCase
+import com.daggery.data.usecases.note.GetNotesFlowUseCase
+import com.daggery.data.usecases.note.RearrangeNotesOrderUseCase
+import com.daggery.data.usecases.tag.GetTagsUseCase
+import com.daggery.data.usecases.tag.UpdateTagsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
-import com.daggery.nots.addviewnote.utils.AddViewNoteFragmentUtils
 
 class AddViewLinearLayout(ctx: Context, attrs: AttributeSet) : LinearLayout(ctx, attrs) {
     private var hideKeyboardCallback: ((View) -> Boolean)? = null

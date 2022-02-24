@@ -1,41 +1,42 @@
-package com.daggery.nots.home.viewmodel
+package com.daggery.nots.managetags.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.daggery.nots.data.NoteTag
-import com.daggery.nots.data.NoteTagDao
+import com.daggery.data.usecases.tag.AddTagUseCase
+import com.daggery.data.usecases.tag.DeleteTagsUseCase
+import com.daggery.data.usecases.tag.GetTagsFlowUseCase
+import com.daggery.data.usecases.tag.UpdateTagUseCase
+import com.daggery.domain.entities.NoteTag
+import com.daggery.domain.usecases.tag.*
+import com.daggery.nots.managetags.data.NoteTagWithStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-data class ManageTagsNoteTag(
-    val id: Int,
-    val tagName: String,
-    var isSelected: Boolean,
-    val onClickListener: (List<ManageTagsNoteTag>, ManageTagsNoteTag) -> Unit
-)
+// TODO: Maybe I Can Use Cache
 
 @HiltViewModel
 class ManageTagsViewModel @Inject constructor(
-    private val dao: NoteTagDao
+    private val getTagsFlowUseCase: GetTagsFlowUseCase,
+    private val getTagByIdUseCase: GetTagByIdUseCase,
+    private val addTagUseCase: AddTagUseCase,
+    private val updateTagUseCase: UpdateTagUseCase,
+    private val deleteTagsUseCase: DeleteTagsUseCase
 ) : ViewModel() {
 
-    private var _manageTagsList = MutableStateFlow<List<ManageTagsNoteTag>>(listOf())
+    private var _manageTagsList = MutableStateFlow<List<NoteTagWithStatus>>(listOf())
     val manageTagsList get() = _manageTagsList.asStateFlow()
 
-    private var _checkedTagsList = MutableStateFlow<List<ManageTagsNoteTag>>(listOf())
+    private var _checkedTagsList = MutableStateFlow<List<NoteTagWithStatus>>(listOf())
     val checkedTagList get() = _checkedTagsList.asStateFlow()
 
     init {
         viewModelScope.launch {
             launch {
-                dao.getTags().collect {
+                getTagsFlowUseCase().collect {
                     _manageTagsList.emit(
-                        it.map { note ->
-                            ManageTagsNoteTag(note.id, note.tagName, false) { list, noteTag -> select(list.toMutableList(), noteTag) }
-                        }
+                        it.map { note -> note.toNoteTagWithStatus() }
                     )
                 }
             }
@@ -51,7 +52,13 @@ class ManageTagsViewModel @Inject constructor(
 
     fun getEditTag() = checkedTagList.value.single()
 
-    fun select(list: MutableList<ManageTagsNoteTag>, noteTag: ManageTagsNoteTag) {
+    private fun NoteTag.toNoteTagWithStatus(): NoteTagWithStatus {
+        return NoteTagWithStatus(id, tagName, false) { list, noteTagWithStatus ->
+            select(list.toMutableList(), noteTagWithStatus)
+        }
+    }
+
+    private fun select(list: MutableList<NoteTagWithStatus>, noteTag: NoteTagWithStatus) {
         viewModelScope.launch {
             val index = list.indexOfFirst { it.id == noteTag.id }
             list[index] = noteTag.copy(isSelected = !noteTag.isSelected)
@@ -60,26 +67,25 @@ class ManageTagsViewModel @Inject constructor(
     }
 
     fun addTag(noteTag: NoteTag) {
-        viewModelScope.launch {
-            dao.addTag(noteTag)
-        }
+        viewModelScope.launch { addTagUseCase(noteTag) }
     }
 
-    fun editTag(value: ManageTagsNoteTag) {
+    fun updateTag(value: NoteTagWithStatus) {
         viewModelScope.launch {
-            val noteTag = dao.getTagById(value.id)
-            dao.editTag(noteTag.copy(tagName = value.tagName))
+            val sourceNoteTag = getTagByIdUseCase(value.id)
+            updateTagUseCase(sourceNoteTag.copy(tagName = value.tagName))
         }
     }
 
     fun deleteTags() {
         viewModelScope.launch {
-            val noteTag = mutableListOf<Deferred<NoteTag>>()
+            val tagList = mutableListOf<Deferred<NoteTag>>()
 
             for(checkedTag in checkedTagList.value) {
-                noteTag.add(async { dao.getTagByTagName(checkedTag.tagName) })
+                tagList.add(async { getTagByIdUseCase(checkedTag.id) })
             }
-            dao.deleteTags(noteTag.awaitAll())
+
+            deleteTagsUseCase(tagList.awaitAll())
         }
     }
 }

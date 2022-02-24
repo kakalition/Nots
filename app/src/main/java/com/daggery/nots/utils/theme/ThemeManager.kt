@@ -2,12 +2,11 @@ package com.daggery.nots.utils.theme
 
 import androidx.annotation.StyleRes
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import com.daggery.nots.R
-import com.daggery.nots.datastore.DataStoreManager
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
+/*
 
 class ThemeManager @Inject constructor(private val dataStoreManager: DataStoreManager) {
 
@@ -45,3 +44,4 @@ class ThemeManager @Inject constructor(private val dataStoreManager: DataStoreMa
         }
     }
 }
+*/

@@ -1,4 +1,4 @@
-package com.daggery.domain.usecases.tag
+package com.daggery.data.usecases.tag
 
 import com.daggery.domain.entities.NoteTag
 import com.daggery.domain.repositories.TagsRepository

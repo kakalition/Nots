@@ -13,9 +13,11 @@ class HomeLayoutSettingsUtils(private val fragment: HomeLayoutSettingsFragment) 
         fragment.findNavController().navigateUp()
     }
 
+/*
     fun getHomeLayoutKey(): Int {
         return fragment.themeManager.homeLayoutKey
     }
+*/
 
     fun bindsToolbar() {
         fragment.viewBinding.toolbarBinding.apply {

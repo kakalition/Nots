@@ -1,13 +1,9 @@
 package com.daggery.nots
 
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.daggery.nots.databinding.ActivityMainBinding
-import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,8 +34,6 @@ class MainActivity : AppCompatActivity() {
     private var _viewBinding: ActivityMainBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    internal val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
 */
 
+/*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             viewModel.themeManager.themeKey == R.style.MaterialYouTheme
         ) {
@@ -61,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             setTheme(viewModel.themeManager.themeKey)
         }
+*/
+
         statusBarColorSetter()
 
         // Binder
@@ -109,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateTheme(themeRes: Int) {
-        viewModel.applyTheme(themeRes)
+        //viewModel.applyTheme(themeRes)
         recreate()
     }
 }

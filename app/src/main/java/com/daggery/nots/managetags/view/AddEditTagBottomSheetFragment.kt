@@ -3,7 +3,6 @@ package com.daggery.nots.managetags.view
 import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +10,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.daggery.nots.data.NoteTag
+import com.daggery.domain.entities.NoteTag
 import com.daggery.nots.databinding.FragmentNewTagsBottomSheetBinding
-import com.daggery.nots.home.viewmodel.ManageTagsViewModel
+import com.daggery.nots.managetags.viewmodel.ManageTagsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-// TODO: Implement Edit Tag
+// TODO: Test: Is AddTagUseCase works as expected
 
 @AndroidEntryPoint
 class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
@@ -42,7 +41,7 @@ class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _viewBinding = FragmentNewTagsBottomSheetBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
@@ -51,29 +50,25 @@ class AddEditTagBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.confirmButton.setOnClickListener {
-            if(!viewModel.isEditingTag()) {
-                val tag = viewBinding.newTagInput.text.toString()
-                if(tag.isNotBlank()) {
-                    viewModel.addTag(NoteTag(tagName = tag, checked = false))
-                    this.dismiss()
-                } else {
+
+            val tag = viewBinding.newTagInput.text.toString()
+            when {
+                tag.isBlank() -> {
                     Snackbar.make(viewBinding.root, "Tag is empty", Snackbar.LENGTH_SHORT)
                         .setAnchorView(viewBinding.newTagInput)
                         .show()
                 }
-            } else {
-                // TODO: Handle existing note
-                val tag = viewBinding.newTagInput.text.toString()
-                Log.d("LOL tagname", tag.toString())
-                if(tag.isNotBlank()) {
+
+                tag.isNotBlank() && !viewModel.isEditingTag() -> {
+                    viewModel.addTag(NoteTag(id = 0, tagName = tag, checked = false))
+                    this.dismiss()
+                }
+
+                tag.isNotBlank() && viewModel.isEditingTag() -> {
                     viewModel.getEditTag().let {
-                        viewModel.editTag(it.copy(tagName = tag))
+                        viewModel.updateTag(it.copy(tagName = tag))
                         this.dismiss()
                     }
-                } else {
-                    Snackbar.make(viewBinding.root, "Tag is empty", Snackbar.LENGTH_SHORT)
-                        .setAnchorView(viewBinding.newTagInput)
-                        .show()
                 }
             }
         }
