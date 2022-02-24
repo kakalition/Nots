@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/manageTagsFragment"
-        android:name="com.daggery.nots.home.view.ManageTagsFragment"
+        android:name="com.daggery.nots.managetags.view.ManageTagsFragment"
         android:label="fragment_manage_tags"
         tools:layout="@layout/fragment_manage_tags" />
 </navigation>

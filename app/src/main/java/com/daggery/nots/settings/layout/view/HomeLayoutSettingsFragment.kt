@@ -5,23 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.daggery.nots.MainViewModel
 import com.daggery.nots.databinding.FragmentHomeLayoutSettingsBinding
 import com.daggery.nots.settings.layout.utils.HomeLayoutSettingsUtils
-import com.daggery.nots.utils.theme.ThemeManager
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeLayoutSettingsFragment : Fragment() {
     private var _viewBinding: FragmentHomeLayoutSettingsBinding? = null
     val viewBinding get() = _viewBinding!!
 
+/*
     @Inject
     lateinit var themeManager: ThemeManager
 
+*/
     private var _fragmentUtils: HomeLayoutSettingsUtils? = null
     val fragmentUtils get() = _fragmentUtils!!
 
@@ -44,6 +41,7 @@ class HomeLayoutSettingsFragment : Fragment() {
         }
 
         with(viewBinding) {
+/*
             when(fragmentUtils.getHomeLayoutKey()) {
                 0 -> {
                     filledLayoutActive.visibility = View.VISIBLE
@@ -54,6 +52,7 @@ class HomeLayoutSettingsFragment : Fragment() {
                     outlinedLayoutActive.visibility = View.VISIBLE
                 }
             }
+*/
 
             filledLayoutTile.setOnClickListener { fragmentUtils.navigateToPreview(0) }
             outlinedLayoutTile.setOnClickListener { fragmentUtils.navigateToPreview(1) }

@@ -64,7 +64,7 @@
         <entry key="app/src/main/res/layout/dialog_unprioritize.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/dialog_unsaved_confirmation.xml" value="0.3159469858914066" />
         <entry key="app/src/main/res/layout/fragment_add_edit_note.xml" value="0.32901296111665007" />
-        <entry key="app/src/main/res/layout/fragment_add_view_note.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_add_view_note.xml" value="0.3287292817679558" />
         <entry key="app/src/main/res/layout/fragment_assign_tags_bottom_sheet.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_azalea_preview.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_chip_long_press_dialog.xml" value="0.3159469858914066" />
@@ -110,10 +110,11 @@
         <entry key="app/src/main/res/menu/menu_home_fragment.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3045" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1515" />
+        <entry key="themecolor/src/main/res/layout/activity_main.xml" value="0.2821718683197948" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

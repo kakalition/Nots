@@ -1,12 +1,9 @@
 package com.daggery.nots
 
-import android.os.Build
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.daggery.nots.databinding.ActivityMainBinding
-import com.google.android.material.color.DynamicColors
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,18 +34,20 @@ class MainActivity : AppCompatActivity() {
     private var _viewBinding: ActivityMainBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    internal val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Show SplashScreen until ThemeKey is Loaded
-        installSplashScreen().setKeepOnScreenCondition { viewModel.themeManager.themeKey == 0 }
+        installSplashScreen()
 
+/*
         // Theme Setting
         setThemeOnInitialStart()
         getHomeLayoutOnInitialStart()
 
+*/
+
+/*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
             viewModel.themeManager.themeKey == R.style.MaterialYouTheme
         ) {
@@ -57,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             setTheme(viewModel.themeManager.themeKey)
         }
+*/
+
         statusBarColorSetter()
 
         // Binder
@@ -69,6 +70,8 @@ class MainActivity : AppCompatActivity() {
         _viewBinding = null
     }
 
+/*
+
     private fun setThemeOnInitialStart() {
         with(viewModel.themeManager) {
             if(themeKey == -1){
@@ -80,6 +83,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+*/
+/*
+
     private fun getHomeLayoutOnInitialStart() {
         with(viewModel.themeManager) {
             if(homeLayoutKey == -1) {
@@ -89,6 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+*/
 
     fun statusBarColorSetter() {
         window.statusBarColor = MaterialColors.getColor(
@@ -99,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateTheme(themeRes: Int) {
-        viewModel.applyTheme(themeRes)
+        //viewModel.applyTheme(themeRes)
         recreate()
     }
 }

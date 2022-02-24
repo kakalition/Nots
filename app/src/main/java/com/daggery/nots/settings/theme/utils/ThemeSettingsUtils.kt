@@ -23,7 +23,8 @@ private fun TileActiveThemeBinding.bind(themeText: String) {
 }
 
 fun TileInactiveThemeBinding.bind(fragment: ThemeSettingsFragment, tileThemeData: TileThemeData) {
-    val shouldHide = tileThemeData.title == fragment.fragmentUtils.getActiveThemeName()
+    // val shouldHide = tileThemeData.title == fragment.fragmentUtils.getActiveThemeName()
+    val shouldHide = true
     if(shouldHide) {
         fragment.viewBinding.gridlayout.removeView(this.root)
     } else {
@@ -39,7 +40,8 @@ fun TileInactiveThemeBinding.bind(fragment: ThemeSettingsFragment, tileThemeData
 }
 
 fun TileMaterialYouThemeBinding.bind(fragment: ThemeSettingsFragment, onClickListener: ((View) -> Unit)) {
-    val shouldHide = fragment.fragmentUtils.getActiveThemeName() == "Material You Theme"
+    // val shouldHide = fragment.fragmentUtils.getActiveThemeName() == "Material You Theme"
+    val shouldHide = true
     if (shouldHide) {
         root.visibility = View.GONE
     }
@@ -71,6 +73,7 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
             toolbar.setNavigationOnClickListener(navigationClickListener)
         }
     }
+/*
 
     private fun getActiveThemeKey(): Int {
         return fragment.viewModel.themeManager.themeKey
@@ -80,8 +83,11 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
         return fragment.viewModel.themeManager.getThemeName()
     }
 
+*/
     fun bindsCurrentTheme() {
         with(fragment.viewBinding.currentTheme) {
+            bind("Nord")
+/*
             when(getActiveThemeKey()) {
                 R.style.MaterialYouTheme -> bind("Material You")
                 R.style.NordTheme -> bind("Nord")
@@ -90,6 +96,7 @@ class ThemeSettingsUtil(private val fragment: ThemeSettingsFragment) {
                 R.style.HeatherBerryTheme -> bind("Heather Berry")
                 else -> bind("Dark")
             }
+*/
         }
     }
 

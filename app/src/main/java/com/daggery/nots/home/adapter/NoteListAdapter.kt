@@ -1,58 +1,36 @@
 package com.daggery.nots.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.daggery.domain.entities.NoteData
 import com.daggery.nots.R
-import com.daggery.nots.data.Note
 import com.daggery.nots.databinding.TileNoteItemBinding
-import com.daggery.nots.home.utils.HomeFragmentUtils
-import com.daggery.nots.utils.NoteDateUtils
 import com.google.android.material.chip.Chip
 import java.util.*
 
 class NoteListAdapter(
-    val notes: MutableList<Note>,
-    private val homeFragmentUtils: HomeFragmentUtils,
-    private val noteDateUtils: NoteDateUtils
-) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
+    private val dateParser: (Long) -> String,
+    private val onNoteClickListener: (NoteData) -> Unit,
+    private val reorderCallback: (List<NoteData>) -> Unit,) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>() {
 
+    private val notes: MutableList<NoteData> = mutableListOf()
     private val diffCallback = NotesDiff(notes, listOf())
-    private val notesBatch = NotesBatch(notes)
+    private val notesBatch = NotesBatch(notes.toMutableList())
 
     inner class NoteViewHolder(val binding: TileNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: Note) {
-            val homeLayoutKey = homeFragmentUtils.getHomeLayoutKey()
+        fun bind(note: NoteData) {
             with(binding) {
-                when {
-                    // Filled and Not Priority
-                    homeLayoutKey == 0 && note.priority == 0 -> {
-                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled)
-                    }
-                    // Filled and Priority
-                    homeLayoutKey == 0 && note.priority == 1 -> {
-                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled_priority)
-                    }
-                    // Outlined and Not Priority
-                    homeLayoutKey == 1 && note.priority == 0 -> {
-                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_outlined)
-                        noteTitle.setTextColor(homeFragmentUtils.outlinedTextColor)
-                        noteBody.setTextColor(homeFragmentUtils.outlinedTextColor)
-                        noteDate.setTextColor(homeFragmentUtils.outlinedTextColor)
-                    }
-                    // Outlined and Priority
-                    homeLayoutKey == 1 && note.priority == 1 -> {
-                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_outlined_priority)
-                        noteTitle.setTextColor(homeFragmentUtils.outlinedTextColor)
-                        noteBody.setTextColor(homeFragmentUtils.outlinedTextColor)
-                        noteDate.setTextColor(homeFragmentUtils.outlinedTextColor)
-                    }
+                when (note.priority) {
+                    0 -> { listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled) }
+                    1 -> { listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled_priority) }
                 }
 
                 noteTitle.text = note.noteTitle
                 noteBody.text = note.noteBody
-                noteDate.text = "Date: " + noteDateUtils.getParsedDate(note.noteDate)
+                noteDate.text = "Date: ${dateParser(note.noteDate)}"
                 note.noteTags.forEach {
                     val chip = LayoutInflater.from(chipGroup.context).inflate(R.layout.chip_note_item, chipGroup, false) as Chip
                     chip.text = it
@@ -68,7 +46,7 @@ class NoteListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ) : NoteViewHolder {
+    ) : NoteListAdapter.NoteViewHolder {
         return NoteViewHolder(TileNoteItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -78,8 +56,8 @@ class NoteListAdapter(
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val current = notes[position]
-        holder.binding.listItemLayout.apply {
-            setOnClickListener{ homeFragmentUtils.noteClickListener(current) }
+        holder.binding.root.setOnClickListener{
+            onNoteClickListener(current)
         }
         holder.bind(current)
     }
@@ -88,12 +66,13 @@ class NoteListAdapter(
         return notes.size
     }
 
-    fun submitList(updatedList: List<Note>) {
+    fun submitList(updatedList: List<NoteData>) {
         diffCallback.newList = updatedList
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         notes.clear()
         notes.addAll(updatedList)
+        notesBatch.submitList(updatedList)
 
         diffResult.dispatchUpdatesTo(this)
     }
@@ -105,13 +84,17 @@ class NoteListAdapter(
     }
 
     fun updateDatabase() {
-        homeFragmentUtils.rearrangeNoteOrder(notesBatch.batch.toMutableList())
+        reorderCallback(notesBatch.batch.toMutableList())
     }
 }
 
-class NotesBatch(private var _notesBatch: MutableList<Note>) {
+class NotesBatch(private var _notesBatch: MutableList<NoteData>) {
 
     val batch get() = _notesBatch.toList()
+
+    fun submitList(noteDataList: List<NoteData>) {
+        _notesBatch = noteDataList.toMutableList()
+    }
 
     fun updateBatch(firstIndex: Int, secondIndex: Int) {
         val firstNote = batch[firstIndex]
@@ -128,7 +111,7 @@ class NotesBatch(private var _notesBatch: MutableList<Note>) {
     }
 }
 
-class NotesDiff(var oldList: List<Note>, var newList: List<Note>) : DiffUtil.Callback() {
+class NotesDiff(private var oldList: List<NoteData>, var newList: List<NoteData>) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldList.size

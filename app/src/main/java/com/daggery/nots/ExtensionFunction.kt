@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.chip.Chip
 
-fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: (T) -> Unit) {
-    observe(owner, object : Observer<T> {
-        override fun onChanged(value: T) {
-            removeObserver(this)
-            observer(value)
-        }
-    })
+fun Sequence<Chip>.extractChecked(): List<String> {
+    return this.toList()
+        .filter { it.isChecked }
+        .map { it.text.toString() }
 }
 
 fun View.setMargin(
