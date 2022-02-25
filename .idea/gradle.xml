@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/features/notes" />
             <option value="$PROJECT_DIR$/features/settings" />
             <option value="$PROJECT_DIR$/features/tags" />
+            <option value="$PROJECT_DIR$/sharedAssets" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
