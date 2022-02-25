@@ -1,4 +1,4 @@
-package com.daggery.features.books.view
+package com.daggery.features.books.viewmodel
 
 import androidx.lifecycle.ViewModel
 

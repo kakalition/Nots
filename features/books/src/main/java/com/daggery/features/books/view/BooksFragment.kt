@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.daggery.features.books.databinding.BooksFragmentBinding
+import com.daggery.features.books.viewmodel.BooksViewModel
 
 class BooksFragment : Fragment() {
 
