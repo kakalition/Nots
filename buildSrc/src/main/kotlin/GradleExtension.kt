@@ -67,6 +67,12 @@ fun Project.addActivityKtx() {
     }
 }
 
+fun Project.addFragmentKtx() {
+    dependencies {
+        add("implementation", AndroidLibraries.fragmentKtx)
+    }
+}
+
 fun Project.addLifecycle() {
     dependencies {
         add("implementation", AndroidLibraries.lifecycleRuntimeKtx)

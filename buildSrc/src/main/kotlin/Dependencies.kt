@@ -8,6 +8,11 @@ object Modules {
     const val app = ":app"
     const val data = ":data"
     const val domain = ":domain"
+    const val sharedAssets = ":sharedAssets"
+    const val dashboard = ":features:dashboard"
+    const val notes = ":features:notes"
+    const val tags = ":features:tags"
+    const val books = ":features:books"
 }
 
 object Release {
@@ -17,6 +22,7 @@ object Release {
 
 object Version {
     const val activityKtx = "1.4.0"
+    const val fragmentKtx = "1.4.0"
     const val androidJunit = "3.4.0"
     const val androidJunitKtx = "1.1.3"
     const val appCompat = "1.4.1"
@@ -63,6 +69,7 @@ object KotlinLibraries {
 
 object AndroidLibraries {
     const val activityKtx = "androidx.activity:activity-ktx:${Version.activityKtx}"
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:${Version.fragmentKtx}"
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
     const val coreKtx = "androidx.core:core-ktx:${Version.coreKtx}"

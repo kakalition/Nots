@@ -13,6 +13,7 @@
       <module name="Nots.features.notes" target="11" />
       <module name="Nots.features.settings" target="11" />
       <module name="Nots.features.tags" target="11" />
+      <module name="Nots.sharedAssets" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
