@@ -1,17 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:orientation="vertical"
+    android:layout_marginHorizontal="20dp"
+    android:fillViewport="true"
     tools:context=".view.DashboardFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="42sp"
-        android:textColor="?attr/colorOnSurface"
-        android:text="Hello User"/>
+        android:orientation="vertical">
 
-</LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="72dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_semi_bold"
+            android:text="Hello, User"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="42sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:text="Ready to write some\nnotes?"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="22sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="36dp" />
+
+        <include layout="@layout/tile_current_book"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <include layout="@layout/tile_highlighted_note"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <include layout="@layout/tile_last_written_note"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <include layout="@layout/tile_top_tags"/>
+
+    </LinearLayout>
+
+</ScrollView>

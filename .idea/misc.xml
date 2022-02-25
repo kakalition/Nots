@@ -114,7 +114,16 @@
         <entry key="feature/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.12526720820863618" />
         <entry key="features/dashboard/src/main/res/drawable/bg_rounded_corner.xml" value="0.1625" />
         <entry key="features/dashboard/src/main/res/layout/activity_test.xml" value="0.26849080803762293" />
-        <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.26849080803762293" />
+        <entry key="features/dashboard/src/main/res/layout/current_book_layout.xml" value="0.2821718683197948" />
+        <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.33" />
+        <entry key="features/dashboard/src/main/res/layout/tile_current_book.xml" value="0.2821718683197948" />
+        <entry key="features/dashboard/src/main/res/layout/tile_highlighted_note.xml" value="0.2821718683197948" />
+        <entry key="features/dashboard/src/main/res/layout/tile_last_written_note.xml" value="0.5339925834363412" />
+        <entry key="features/dashboard/src/main/res/layout/tile_tag.xml" value="0.782608695652174" />
+        <entry key="features/dashboard/src/main/res/layout/tile_top_tags.xml" value="0.2821718683197948" />
+        <entry key="sharedAssets/src/main/res/drawable/ic_add.xml" value="0.1615" />
+        <entry key="sharedAssets/src/main/res/drawable/test.xml" value="0.1615" />
+        <entry key="sharedAssets/src/main/res/font/test.xml" value="0.29935125115848005" />
         <entry key="themecolor/src/main/res/layout/activity_main.xml" value="0.2821718683197948" />
       </map>
     </option>

@@ -8,6 +8,11 @@ object Modules {
     const val app = ":app"
     const val data = ":data"
     const val domain = ":domain"
+    const val sharedAssets = ":sharedAssets"
+    const val dashboard = ":features:dashboard"
+    const val notes = ":features:notes"
+    const val tags = ":features:tags"
+    const val books = ":features:books"
 }
 
 object Release {

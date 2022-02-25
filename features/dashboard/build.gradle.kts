@@ -9,6 +9,7 @@ plugins {
 dependencies {
 
     // Module
+    implementation(project(Modules.sharedAssets))
     implementation(project(Modules.data))
     implementation(project(Modules.domain))
 
