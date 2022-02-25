@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.daggery.features.books.BooksAdapter
 import com.daggery.features.books.databinding.BooksFragmentBinding
 import com.daggery.features.books.viewmodel.BooksViewModel
 
@@ -16,12 +17,22 @@ class BooksFragment : Fragment() {
 
     private val viewModel: BooksViewModel by activityViewModels()
 
+    private var _booksAdapter: BooksAdapter? = null
+    private val booksAdapter get() = _booksAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _viewBinding = BooksFragmentBinding.inflate(inflater, container, false)
         return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        _booksAdapter = BooksAdapter()
+        viewBinding.recyclerView.adapter = booksAdapter
     }
 
     override fun onDestroyView() {
