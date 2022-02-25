@@ -12,6 +12,7 @@ dependencies {
     implementation(project(Modules.sharedAssets))
     implementation(project(Modules.data))
     implementation(project(Modules.domain))
+
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
