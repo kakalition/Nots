@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.daggery.nots.databinding.TileItemTagBinding
 import com.daggery.features.tags.data.NoteTagWithStatus
+import com.daggery.features.tags.databinding.TileItemTagBinding
 
 class TagListAdapter : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListViewHolder>(TagsDiff()) {
 

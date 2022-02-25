@@ -18,6 +18,7 @@ import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.sharedassets.utils.NoteDateUtils
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
@@ -201,4 +202,33 @@ class HomeFragment : Fragment() {
     private var localNotes: List<NoteDataEntity> = listOf()
     private var checkedTagsName: List<String> = listOf()
 
+*/
+/*
+val outlinedTextColor = MaterialColors.getColor(
+    fragment.requireContext(),
+    com.google.android.material.R.attr.colorOnSurface,
+    fragment.resources.getColor(R.color.white, null)
+)
+*/
+/*
+    fun getHomeLayoutKey(): Int {
+        return fragment.mainViewModel.themeManager.homeLayoutKey
+    }
+*//*
+
+
+    fun showDeleteDialog(note: NoteData) {
+        MaterialAlertDialogBuilder(
+            fragment.requireContext(),
+            R.style.NotsAlertDialog
+        )
+            .setView(R.layout.dialog_delete_note)
+            .setPositiveButton("Delete") { _, _ ->
+                //fragment.viewModel.deleteNote(note)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
 */

@@ -1,5 +1,6 @@
 package com.daggery.features.tags.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,10 +9,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.daggery.nots.R
-import com.daggery.nots.databinding.FragmentManageTagsBinding
+import com.daggery.features.tags.R
+import com.daggery.sharedassets.R as SharedR
 import com.daggery.features.tags.adapter.TagListAdapter
+import com.daggery.features.tags.databinding.FragmentManageTagsBinding
 import com.daggery.features.tags.viewmodel.ManageTagsViewModel
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -21,7 +24,7 @@ import kotlinx.coroutines.launch
 class ManageTagsFragment : Fragment() {
 
     private var _viewBinding: FragmentManageTagsBinding? = null
-    internal val viewBinding get() = _viewBinding!!
+    private val viewBinding get() = _viewBinding!!
 
     val viewModel: ManageTagsViewModel by activityViewModels()
 
@@ -89,9 +92,10 @@ class ManageTagsFragment : Fragment() {
         }
     }
 
-    internal fun bindsToolbar() {
+    private fun bindsToolbar() {
+/*
         with(viewBinding.toolbarBinding.toolbar) {
-            setNavigationIcon(R.drawable.ic_back)
+            setNavigationIcon(SharedR.drawable.ic_back)
             setNavigationOnClickListener { findNavController().navigateUp() }
             inflateMenu(R.menu.menu_filter_fragment)
             menu.findItem(R.id.add_tags_button).icon.setTint(
@@ -104,6 +108,7 @@ class ManageTagsFragment : Fragment() {
             setOnMenuItemClickListener(menuItemClickListener)
             title = "Manage Tags"
         }
+*/
     }
 
     fun showDeleteDialog() {

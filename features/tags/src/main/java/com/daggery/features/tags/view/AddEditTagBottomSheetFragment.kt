@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.daggery.domain.entities.NoteTag
-import com.daggery.nots.databinding.FragmentNewTagsBottomSheetBinding
+import com.daggery.features.tags.databinding.FragmentNewTagsBottomSheetBinding
 import com.daggery.features.tags.viewmodel.ManageTagsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,7 +1,6 @@
 package com.daggery.features.addviewnote.view
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,19 +14,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.daggery.domain.entities.NoteData
-import com.daggery.nots.R
+import com.daggery.features.addviewnote.R
+import com.daggery.sharedassets.R as SharedR
 import com.daggery.features.addviewnote.data.NoteValidity
+import com.daggery.features.addviewnote.databinding.FragmentAddViewNoteBinding
 import com.daggery.features.addviewnote.viewmodel.AddViewNoteViewModel
-import com.daggery.nots.databinding.FragmentAddViewNoteBinding
 import com.google.android.material.chip.Chip
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+// TODO: Handle Receive Args
 
 @AndroidEntryPoint
 class AddViewNoteFragment : Fragment() {
@@ -37,12 +36,15 @@ class AddViewNoteFragment : Fragment() {
 
     internal val viewModel: AddViewNoteViewModel by activityViewModels()
 
-    private val args: AddViewNoteFragmentArgs by navArgs()
-
     private var _assignTagsBottomSheetFragment: AssignTagsBottomSheetFragment? = null
     private val assignTagsBottomSheetFragment get() = _assignTagsBottomSheetFragment!!
 
     private val editableFactory = Editable.Factory()
+
+    // TODO: Change this to real implementation
+    private val args = object {
+        val uuid = "0"
+    }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -57,7 +59,6 @@ class AddViewNoteFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = getMaterialTransformTransition()
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
@@ -76,7 +77,7 @@ class AddViewNoteFragment : Fragment() {
 
         bindsToolbar()
 
-        if (args.uuid.isBlank()) addEnvironment()
+        //if (args.uuid.isBlank()) addEnvironment()
         viewBinding.customLinearLayout.setCallback(hideKeyboard, clearNoteTypingFocus)
         viewBinding.noteTitle.addTextChangedListener(titleTextWatcher)
         viewBinding.emptySpace.setOnClickListener(onEmptySpaceClickListener)
@@ -102,6 +103,7 @@ class AddViewNoteFragment : Fragment() {
         _viewBinding = null
     }
 
+/*
     private fun getMaterialTransformTransition(): MaterialContainerTransform {
         return MaterialContainerTransform().apply {
             duration = 700
@@ -116,14 +118,17 @@ class AddViewNoteFragment : Fragment() {
             drawingViewId = R.id.fragment_container_view
         }
     }
+*/
 
     private fun bindsToolbar() {
+/*
         viewBinding.toolbarBinding.toolbar.apply {
             inflateMenu(R.menu.menu_add_view_fragment)
             setNavigationIcon(R.drawable.ic_back)
             setNavigationOnClickListener(navigationClickListener)
             setOnMenuItemClickListener(onMenuItemClickListener)
         }
+*/
     }
 
     private fun bindsChips(chipsName: List<String>) {

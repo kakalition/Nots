@@ -4,14 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.daggery.nots.databinding.ActivityMainBinding
+import com.daggery.sharedassets.R as SharedR
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
-
-// TODO: Refactor with clean architecture
-// TODO: create repository
-// TODO: implement correct data flow
-
-// TODO: Modify bookmarked note layout as in Figma
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Issue: Tags Sorting in ManageTagsFragment
@@ -101,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = MaterialColors.getColor(
             this,
             com.google.android.material.R.attr.colorSurface,
-            resources.getColor(R.color.transparent, null)
+            resources.getColor(SharedR.color.transparent, null)
         )
     }
 

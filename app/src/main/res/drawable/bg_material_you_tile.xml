@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners android:radius="20dp" />
-    <gradient android:angle="0"
-        android:startColor="@color/material_you_tile_start_color"
-        android:centerColor="@color/material_you_tile_middle_color"
-        android:endColor="@color/material_you_tile_end_color" />
-</shape>

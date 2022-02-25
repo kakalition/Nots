@@ -6,11 +6,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.daggery.nots.R
+import com.daggery.features.addviewnote.R
+import com.daggery.features.addviewnote.databinding.FragmentAssignTagsBottomSheetBinding
 import com.daggery.features.addviewnote.viewmodel.AddViewNoteViewModel
-import com.daggery.nots.databinding.FragmentAssignTagsBottomSheetBinding
 import com.daggery.nots.extractChecked
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint

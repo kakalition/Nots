@@ -112,6 +112,10 @@
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3045" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1515" />
         <entry key="feature/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.12526720820863618" />
+        <entry key="features/addviewnote/src/main/res/layout/appbar_title.xml" value="0.2821718683197948" />
+        <entry key="features/addviewnote/src/main/res/layout/fragment_assign_tags_bottom_sheet.xml" value="0.2821718683197948" />
+        <entry key="features/addviewnote/src/main/res/layout/test.xml" value="0.2821718683197948" />
+        <entry key="features/addviewnote/src/main/res/menu/test.xml" value="0.2821718683197948" />
         <entry key="features/books/src/main/res/drawable/bg_rounded_accent.xml" value="0.1615" />
         <entry key="features/books/src/main/res/layout/books_fragment.xml" value="0.41500765696784075" />
         <entry key="features/books/src/main/res/layout/tile_book.xml" value="0.67" />
@@ -137,6 +141,10 @@
         <entry key="features/notes/src/main/res/layout/tile_note_item.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/menu/menu_home_fragment.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/menu/test.xml" value="0.2821718683197948" />
+        <entry key="features/settings/src/main/res/layout/appbar_title.xml" value="0.2821718683197948" />
+        <entry key="features/settings/src/main/res/layout/test.xml" value="0.2821718683197948" />
+        <entry key="features/settings/src/main/res/layout/tile_settings.xml" value="0.2821718683197948" />
+        <entry key="features/tags/src/main/res/menu/test.xml" value="0.2821718683197948" />
         <entry key="sharedAssets/src/main/res/drawable/bg_rounded_corner.xml" value="0.1615" />
         <entry key="sharedAssets/src/main/res/drawable/ic_add.xml" value="0.1615" />
         <entry key="sharedAssets/src/main/res/drawable/ic_close.xml" value="0.242" />
