@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="22dp"
+    android:orientation="vertical"
+    tools:background="@drawable/bg_note_item_filled">
+
+    <TextView
+        android:id="@+id/note_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_semi_bold"
+        android:paddingStart="20dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="20dp"
+        android:textSize="24sp"
+        android:textColor="?attr/colorOnSecondary"
+        tools:text="Nots Feature" />
+
+    <TextView
+        android:id="@+id/note_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/opensans_regular"
+        android:maxLines="3"
+        android:layout_marginTop="8dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="14sp"
+        android:textColor="?attr/colorOnSecondary"
+        tools:text="@string/lorem_ipsum" />
+
+    <TextView
+        android:id="@+id/note_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_light"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="7dp"
+        android:textSize="14sp"
+        android:textColor="?attr/colorOnSecondary"
+        tools:text="Date: Friday, 01 October 2021" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginBottom="14dp"
+        app:itemSpacing="12dp"
+        app:lineSpacing="12dp" />
+
+</LinearLayout>

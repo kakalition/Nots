@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/addViewNoteFragment"
-        android:name="com.daggery.nots.addviewnote.view.AddViewNoteFragment"
+        android:name="com.daggery.features.addviewnote.view.AddViewNoteFragment"
         android:label="fragment_add_view_note"
         tools:layout="@layout/fragment_add_view_note">
         <argument
@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/manageTagsFragment"
-        android:name="com.daggery.nots.managetags.view.ManageTagsFragment"
+        android:name="com.daggery.features.tags.view.ManageTagsFragment"
         android:label="fragment_manage_tags"
         tools:layout="@layout/fragment_manage_tags" />
 </navigation>

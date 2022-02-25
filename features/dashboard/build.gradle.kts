@@ -3,6 +3,7 @@ import com.daggery.buildsrc.*
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
     id("common-android")
 }
 
@@ -13,8 +14,8 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.domain))
 
-    addFragmentKtx()
-    addActivityKtx()
+    // Kotlin
+    addCoroutineCore()
 
     // Hilt
     addHilt()
@@ -22,7 +23,9 @@ dependencies {
     // Android
     addAndroidCore()
     addAndroidMaterial()
-    //addLifecycle()
+    addFragmentKtx()
+    addActivityKtx()
+    addLifecycle()
 
     // Test
     addJunit()

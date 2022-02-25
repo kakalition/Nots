@@ -124,10 +124,28 @@
         <entry key="features/dashboard/src/main/res/layout/tile_last_written_note.xml" value="0.5339925834363412" />
         <entry key="features/dashboard/src/main/res/layout/tile_tag.xml" value="0.782608695652174" />
         <entry key="features/dashboard/src/main/res/layout/tile_top_tags.xml" value="0.5" />
+        <entry key="features/notes/src/main/res/drawable/bg_note_item_filled.xml" value="0.242" />
+        <entry key="features/notes/src/main/res/drawable/bg_note_item_filled_priority.xml" value="0.1615" />
+        <entry key="features/notes/src/main/res/drawable/test.xml" value="0.1615" />
+        <entry key="features/notes/src/main/res/layout/appbar_title.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/chip_filter.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/chip_note_item.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/dialog_delete_all_notes.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/dialog_reorder_notes_chronologically.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/fragment_tags_filter_bottom_sheet.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/tile_active_theme.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/tile_note_item.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/menu/menu_home_fragment.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/menu/test.xml" value="0.2821718683197948" />
         <entry key="sharedAssets/src/main/res/drawable/bg_rounded_corner.xml" value="0.1615" />
         <entry key="sharedAssets/src/main/res/drawable/ic_add.xml" value="0.1615" />
+        <entry key="sharedAssets/src/main/res/drawable/ic_close.xml" value="0.242" />
+        <entry key="sharedAssets/src/main/res/drawable/ic_delete.xml" value="0.1615" />
         <entry key="sharedAssets/src/main/res/drawable/test.xml" value="0.1615" />
         <entry key="sharedAssets/src/main/res/font/test.xml" value="0.29935125115848005" />
+        <entry key="sharedAssets/src/main/res/layout/appbar_title.xml" value="0.2821718683197948" />
+        <entry key="sharedAssets/src/main/res/layout/test.xml" value="0.2821718683197948" />
+        <entry key="sharedAssets/src/main/res/layout/tile_note_item.xml" value="0.2821718683197948" />
         <entry key="themecolor/src/main/res/layout/activity_main.xml" value="0.2821718683197948" />
       </map>
     </option>
