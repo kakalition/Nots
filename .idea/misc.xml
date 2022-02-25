@@ -112,6 +112,8 @@
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3045" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1515" />
         <entry key="feature/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.12526720820863618" />
+        <entry key="features/books/src/main/res/layout/books_fragment.xml" value="0.2384393063583815" />
+        <entry key="features/books/src/main/res/layout/tile_book.xml" value="0.5" />
         <entry key="features/dashboard/src/main/res/drawable/bg_rounded_corner.xml" value="0.1625" />
         <entry key="features/dashboard/src/main/res/layout/activity_test.xml" value="0.26849080803762293" />
         <entry key="features/dashboard/src/main/res/layout/current_book_layout.xml" value="0.2821718683197948" />
