@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.daggery.features.dashboard.databinding.FragmentDashboardBinding
 import com.daggery.features.dashboard.viewmodel.DashboardViewModel
 
@@ -24,4 +25,8 @@ class DashboardFragment : Fragment() {
         return viewBinding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
 }

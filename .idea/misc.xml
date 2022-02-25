@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/bg_material_you_tile.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/bg_merge_intersect.xml" value="0.169" />
         <entry key="app/src/main/res/drawable/bg_note_item.xml" value="0.173" />
+        <entry key="app/src/main/res/drawable/bg_note_item_filled.xml" value="0.242" />
         <entry key="app/src/main/res/drawable/bg_note_item_outlined.xml" value="0.166" />
         <entry key="app/src/main/res/drawable/bg_note_item_outlined_priority.xml" value="0.166" />
         <entry key="app/src/main/res/drawable/bg_note_item_priority.xml" value="0.173" />
@@ -111,6 +112,7 @@
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3045" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1515" />
         <entry key="feature/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.12526720820863618" />
+        <entry key="features/dashboard/src/main/res/drawable/bg_rounded_corner.xml" value="0.1625" />
         <entry key="features/dashboard/src/main/res/layout/activity_test.xml" value="0.26849080803762293" />
         <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.26849080803762293" />
         <entry key="themecolor/src/main/res/layout/activity_main.xml" value="0.2821718683197948" />
