@@ -19,6 +19,11 @@ dependencies {
 
     // Module
     implementation(project(Modules.sharedAssets))
+    implementation(project(Modules.addViewNote))
+    implementation(project(Modules.dashboard))
+    implementation(project(Modules.notes))
+    implementation(project(Modules.tags))
+    implementation(project(Modules.books))
     implementation(project(Modules.data))
     implementation(project(Modules.domain))
 
