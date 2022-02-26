@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="20dp"
     android:fillViewport="true"
+    android:scrollbars="none"
     tools:context=".view.DashboardFragment">
 
     <LinearLayout
