@@ -43,10 +43,12 @@ class SettingsFragment : Fragment() {
     }
 
     private fun bindsToolbar() {
+/*
         viewBinding.toolbarBinding.apply {
             toolbar.setNavigationIcon(SharedR.drawable.ic_back)
             toolbar.setNavigationOnClickListener(navigationClickListener)
         }
+*/
     }
 
     private fun bindsLanguageSettings() {

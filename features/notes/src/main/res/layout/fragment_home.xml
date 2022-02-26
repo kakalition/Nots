@@ -7,19 +7,9 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_frame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/toolbar_binding"
-            layout="@layout/appbar_title"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <include
+        android:id="@+id/toolbar_binding"
+        layout="@layout/appbar_title"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -45,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_frame"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_binding"
         tools:visibility="gone">
 
         <TextView
@@ -89,7 +79,7 @@
         android:id="@+id/notes_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="22dp"
+        android:layout_marginHorizontal="16dp"
         android:backgroundTintMode="add"
         android:foregroundTintMode="add"
         android:visibility="gone"
@@ -97,7 +87,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_frame"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_binding"
         tools:visibility="gone" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
