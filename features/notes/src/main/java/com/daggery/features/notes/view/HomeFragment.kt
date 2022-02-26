@@ -1,4 +1,4 @@
-package com.daggery.nots.home.view
+package com.daggery.features.notes.view
 
 import android.os.Bundle
 import android.view.*
@@ -7,27 +7,25 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.daggery.data.common.DbNoteResult
 import com.daggery.domain.entities.NoteData
 import com.daggery.features.notes.R
-import com.daggery.features.notes.databinding.AppbarTitleBinding
 import com.daggery.features.notes.databinding.FragmentHomeBinding
 import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
+import com.daggery.nots.home.view.TagsFilterBottomSheetFragment
 import com.daggery.nots.home.viewmodel.HomeViewModel
 import com.daggery.sharedassets.utils.NoteDateUtils
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private var _viewBinding: FragmentHomeBinding? = null
-    internal val viewBinding get() = _viewBinding!!
+    private val viewBinding get() = _viewBinding!!
 
-    internal val viewModel: HomeViewModel by activityViewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
     private var _noteDateUtils: NoteDateUtils? = null
     private val noteDateUtils get() = _noteDateUtils!!

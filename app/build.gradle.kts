@@ -20,6 +20,7 @@ dependencies {
     // Module
     implementation(project(Modules.sharedAssets))
     implementation(project(Modules.addViewNote))
+    implementation(project(Modules.settings))
     implementation(project(Modules.dashboard))
     implementation(project(Modules.notes))
     implementation(project(Modules.tags))

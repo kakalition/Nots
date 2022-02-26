@@ -125,7 +125,7 @@
         <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.5" />
         <entry key="features/dashboard/src/main/res/layout/tile_current_book.xml" value="0.2821718683197948" />
         <entry key="features/dashboard/src/main/res/layout/tile_highlighted_note.xml" value="0.2821718683197948" />
-        <entry key="features/dashboard/src/main/res/layout/tile_last_written_note.xml" value="0.5339925834363412" />
+        <entry key="features/dashboard/src/main/res/layout/tile_last_written_note.xml" value="0.4704861111111111" />
         <entry key="features/dashboard/src/main/res/layout/tile_tag.xml" value="0.782608695652174" />
         <entry key="features/dashboard/src/main/res/layout/tile_top_tags.xml" value="0.5" />
         <entry key="features/notes/src/main/res/drawable/bg_note_item_filled.xml" value="0.242" />
@@ -138,6 +138,7 @@
         <entry key="features/notes/src/main/res/layout/dialog_reorder_notes_chronologically.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/fragment_tags_filter_bottom_sheet.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/tile_active_theme.xml" value="0.2821718683197948" />
+        <entry key="features/notes/src/main/res/layout/tile_material_you_theme.xml" value="0.26849080803762293" />
         <entry key="features/notes/src/main/res/layout/tile_note_item.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/menu/menu_home_fragment.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/menu/test.xml" value="0.2821718683197948" />
