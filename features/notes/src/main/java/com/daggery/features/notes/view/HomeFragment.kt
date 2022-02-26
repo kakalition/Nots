@@ -2,11 +2,13 @@ package com.daggery.features.notes.view
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.daggery.data.common.DbNoteResult
 import com.daggery.domain.entities.NoteData
@@ -16,6 +18,7 @@ import com.daggery.nots.home.adapter.NoteListAdapter
 import com.daggery.nots.home.adapter.NotesItemTouchHelper
 import com.daggery.nots.home.view.TagsFilterBottomSheetFragment
 import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.sharedassets.data.BundleKeys
 import com.daggery.sharedassets.utils.NoteDateUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
@@ -117,10 +120,8 @@ class HomeFragment : Fragment() {
     }
 
     private val onNoteClickListener: (NoteData) -> Unit = { note ->
-        val uuid = note.uuid
-        //val action = HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = uuid)
-        // TODO: Navigate
-        //findNavController().navigate(action)
+        val bundle = bundleOf(BundleKeys.UUID to note.uuid)
+        //findNavController().navigate(, bundle)
     }
 
     private val fabOnClickListener = { _ : View ->

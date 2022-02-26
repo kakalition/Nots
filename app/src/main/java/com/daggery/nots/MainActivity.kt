@@ -30,6 +30,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    object FragmentNavigator {
+        const val FROM_NOTES_TO_VIEW = R.id.action_homeFragment_to_addViewNoteFragment
+    }
+
     private var _viewBinding: ActivityMainBinding? = null
     private val viewBinding get() = _viewBinding!!
 
