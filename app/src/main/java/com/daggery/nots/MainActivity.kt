@@ -3,9 +3,13 @@ package com.daggery.nots
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.daggery.nots.databinding.ActivityMainBinding
 import com.daggery.sharedassets.R as SharedR
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Known Issue: MaterialYou text color is not clear
@@ -35,6 +39,37 @@ class MainActivity : AppCompatActivity() {
         // Show SplashScreen until ThemeKey is Loaded
         installSplashScreen()
 
+
+        // Initialization
+        statusBarColorSetter()
+        _viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        viewBinding.bottomNavigation.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.nav_dashboard -> {
+                    navController.navigate(R.id.dashboardFragment)
+                    true
+                }
+                R.id.nav_notes -> {
+                    navController.navigate(R.id.notesFragment)
+                    true
+                }
+                R.id.nav_tags -> {
+                    navController.navigate(R.id.tagsFragment)
+                    true
+                }
+                R.id.nav_books -> {
+                    navController.navigate(R.id.booksFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+
 /*
         // Theme Setting
         setThemeOnInitialStart()
@@ -53,11 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
 */
 
-        statusBarColorSetter()
 
-        // Binder
-        _viewBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
     }
 
     override fun onDestroy() {

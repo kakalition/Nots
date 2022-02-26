@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/dashboardFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/notesFragment"
         android:name="com.daggery.features.notes.view.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
@@ -16,10 +16,8 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_manageTagsFragment"
-            app:destination="@id/manageTagsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addViewNoteFragment"
         android:name="com.daggery.features.addviewnote.view.AddViewNoteFragment"
@@ -29,15 +27,31 @@
             android:name="uuid"
             app:argType="string" />
     </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.daggery.features.settings.view.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
     </fragment>
+
     <fragment
-        android:id="@+id/manageTagsFragment"
+        android:id="@+id/tagsFragment"
         android:name="com.daggery.features.tags.view.ManageTagsFragment"
         android:label="fragment_manage_tags"
-        tools:layout="@layout/fragment_manage_tags" />
+        tools:layout="@layout/fragment_manage_tags" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/booksFragment"
+        android:name="com.daggery.features.books.view.BooksFragment"
+        android:label="BooksFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.daggery.features.dashboard.view.DashboardFragment"
+        android:label="DashboardFragment" >
+
+    </fragment>
 </navigation>
