@@ -1,5 +1,11 @@
 <resources>
     <style name="Theme.Nots" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorSurface">@color/nord_surface</item>
+        <item name="colorOnSurface">@color/nord_on_surface</item>
+        <item name="colorPrimary">@color/nord_primary</item>
+        <item name="colorOnPrimary">@color/nord_on_primary</item>
+        <item name="colorSecondary">@color/nord_secondary</item>
+        <item name="colorOnSecondary">@color/nord_on_secondary</item>
         <item name="android:statusBarColor">@color/black_surface</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
