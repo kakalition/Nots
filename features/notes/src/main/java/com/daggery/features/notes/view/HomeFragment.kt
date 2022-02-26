@@ -1,6 +1,7 @@
 package com.daggery.features.notes.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -76,7 +77,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindsToolbar() {
-        viewBinding.toolbarBinding.apply {
+        viewBinding.notesToolbarBinding.apply {
             toolbar.inflateMenu(R.menu.menu_home_fragment)
             toolbar.setOnMenuItemClickListener(onMenuItemClickListener)
         }
@@ -121,7 +122,8 @@ class HomeFragment : Fragment() {
 
     private val onNoteClickListener: (NoteData) -> Unit = { note ->
         val bundle = bundleOf(BundleKeys.UUID to note.uuid)
-        //findNavController().navigate(, bundle)
+        Log.d("LOL UUID Home", note.uuid)
+        findNavController().navigate(com.daggery.sharedassets.R.id.action_homeFragment_to_addViewNoteFragment, bundle)
     }
 
     private val fabOnClickListener = { _ : View ->

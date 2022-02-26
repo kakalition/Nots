@@ -20,6 +20,7 @@ import com.daggery.sharedassets.R as SharedR
 import com.daggery.features.addviewnote.data.NoteValidity
 import com.daggery.features.addviewnote.databinding.FragmentAddViewNoteBinding
 import com.daggery.features.addviewnote.viewmodel.AddViewNoteViewModel
+import com.daggery.sharedassets.data.BundleKeys
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,9 +42,8 @@ class AddViewNoteFragment : Fragment() {
 
     private val editableFactory = Editable.Factory()
 
-    // TODO: Change this to real implementation
     private val args = object {
-        val uuid = "0"
+        lateinit var uuid: String
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -66,6 +66,12 @@ class AddViewNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        // Retrieves Arguments
+        with(args) {
+            uuid = arguments?.getString(BundleKeys.UUID) ?: ""
+        }
+
         _viewBinding = FragmentAddViewNoteBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
@@ -77,7 +83,9 @@ class AddViewNoteFragment : Fragment() {
 
         bindsToolbar()
 
-        //if (args.uuid.isBlank()) addEnvironment()
+        Log.d("LOL UUID AddView", args.uuid)
+
+        if (args.uuid.isBlank()) addEnvironment()
         viewBinding.customLinearLayout.setCallback(hideKeyboard, clearNoteTypingFocus)
         viewBinding.noteTitle.addTextChangedListener(titleTextWatcher)
         viewBinding.emptySpace.setOnClickListener(onEmptySpaceClickListener)
@@ -121,14 +129,12 @@ class AddViewNoteFragment : Fragment() {
 */
 
     private fun bindsToolbar() {
-/*
-        viewBinding.toolbarBinding.toolbar.apply {
+        viewBinding.addViewToolbarBinding.toolbar.apply {
             inflateMenu(R.menu.menu_add_view_fragment)
-            setNavigationIcon(R.drawable.ic_back)
+            setNavigationIcon(com.daggery.sharedassets.R.drawable.ic_back)
             setNavigationOnClickListener(navigationClickListener)
             setOnMenuItemClickListener(onMenuItemClickListener)
         }
-*/
     }
 
     private fun bindsChips(chipsName: List<String>) {

@@ -10,18 +10,9 @@
     android:transitionName="from_fab_to_add"
     tools:context="com.daggery.features.addviewnote.view.AddViewNoteFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_frame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/toolbar_binding"
-            layout="@layout/appbar_title" />
-    </com.google.android.material.appbar.AppBarLayout>
+    <include
+        android:id="@+id/add_view_toolbar_binding"
+        layout="@layout/add_view_appbar" />
 
     <ScrollView
         android:id="@+id/scrollview"

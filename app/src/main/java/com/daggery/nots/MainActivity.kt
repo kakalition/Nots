@@ -3,13 +3,10 @@ package com.daggery.nots
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.daggery.nots.databinding.ActivityMainBinding
 import com.daggery.sharedassets.R as SharedR
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Known Issue: MaterialYou text color is not clear
@@ -31,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     object FragmentNavigator {
-        const val FROM_NOTES_TO_VIEW = R.id.action_homeFragment_to_addViewNoteFragment
+        val FROM_NOTES_TO_VIEW = SharedR.id.action_homeFragment_to_addViewNoteFragment
     }
 
     private var _viewBinding: ActivityMainBinding? = null
@@ -55,19 +52,19 @@ class MainActivity : AppCompatActivity() {
         viewBinding.bottomNavigation.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_dashboard -> {
-                    navController.navigate(R.id.dashboardFragment)
+                    navController.navigate(SharedR.id.dashboardFragment)
                     true
                 }
                 R.id.nav_notes -> {
-                    navController.navigate(R.id.notesFragment)
+                    navController.navigate(SharedR.id.notesFragment)
                     true
                 }
                 R.id.nav_tags -> {
-                    navController.navigate(R.id.tagsFragment)
+                    navController.navigate(SharedR.id.tagsFragment)
                     true
                 }
                 R.id.nav_books -> {
-                    navController.navigate(R.id.booksFragment)
+                    navController.navigate(SharedR.id.booksFragment)
                     true
                 }
                 else -> false
