@@ -40,6 +40,7 @@ dependencies {
     addAndroidMaterial()
     addRecyclerView()
     addActivityKtx()
+    addFragmentKtx()
 
     // Room
     addRoom()

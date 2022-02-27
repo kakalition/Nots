@@ -98,21 +98,21 @@ class HomeFragment : Fragment() {
     private val onReceiveDbNoteResult = { result: DbNoteResult ->
         if (result is DbNoteResult.Loading) {
             with(viewBinding) {
-                emptyNotesLayout.visibility = View.GONE
+                emptyNotesLayoutBinding.emptyNotesLayout.visibility = View.GONE
                 notesRecyclerview.visibility = View.GONE
                 loadingSpinner.visibility = View.VISIBLE
             }
         } else if (result is DbNoteResult.Success && result.data.isNotEmpty()) {
             notesAdapter?.submitList(result.data)
             with(viewBinding) {
-                emptyNotesLayout.visibility = View.GONE
+                emptyNotesLayoutBinding.emptyNotesLayout.visibility = View.GONE
                 notesRecyclerview.visibility = View.VISIBLE
                 loadingSpinner.setVisibilityAfterHide(View.GONE)
                 loadingSpinner.hide()
             }
         } else if (result is DbNoteResult.Success && result.data.isEmpty()) {
             with(viewBinding) {
-                emptyNotesLayout.visibility = View.VISIBLE
+                emptyNotesLayoutBinding.emptyNotesLayout.visibility = View.VISIBLE
                 notesRecyclerview.visibility = View.GONE
                 loadingSpinner.setVisibilityAfterHide(View.GONE)
                 loadingSpinner.hide()
