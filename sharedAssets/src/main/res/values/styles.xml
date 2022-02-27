@@ -91,7 +91,8 @@
     </style>
 
     <style name="AppBarTitle" parent="android:TextAppearance.Material.Widget.Toolbar.Title">
-        <item name="fontFamily">@font/raleway_medium</item>
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 

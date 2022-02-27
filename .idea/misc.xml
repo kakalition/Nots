@@ -124,7 +124,8 @@
         <entry key="features/dashboard/src/main/res/drawable/bg_rounded_corner.xml" value="0.1625" />
         <entry key="features/dashboard/src/main/res/layout/activity_test.xml" value="0.26849080803762293" />
         <entry key="features/dashboard/src/main/res/layout/current_book_layout.xml" value="0.2821718683197948" />
-        <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.5" />
+        <entry key="features/dashboard/src/main/res/layout/dashboard_appbar.xml" value="0.2821718683197948" />
+        <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.3020446096654275" />
         <entry key="features/dashboard/src/main/res/layout/tile_current_book.xml" value="0.2821718683197948" />
         <entry key="features/dashboard/src/main/res/layout/tile_highlighted_note.xml" value="0.2821718683197948" />
         <entry key="features/dashboard/src/main/res/layout/tile_last_written_note.xml" value="0.4704861111111111" />
