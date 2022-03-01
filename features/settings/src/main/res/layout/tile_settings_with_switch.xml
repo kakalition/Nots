@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="18dp"
+    android:id="@+id/settings_tile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/settings_item_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_theme"
+        app:tint="?attr/colorOnSurface"
+        android:contentDescription="@string/settings_setting_icon" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/settings_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/settings_item_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:textColor="?attr/colorOnSurface"
+        android:fontFamily="@font/opensans_medium"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        app:layout_constraintBottom_toTopOf="@id/settings_item_body"
+        app:layout_constraintStart_toEndOf="@id/settings_item_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Theme" />
+
+    <TextView
+        android:id="@+id/settings_item_body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:fontFamily="@font/opensans_light"
+        android:textColor="?attr/colorOnSurface"
+        android:textAppearance="?attr/textAppearanceSubtitle2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/settings_item_icon"
+        app:layout_constraintTop_toBottomOf="@id/settings_item_title"
+        tools:text="Dark Mode" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

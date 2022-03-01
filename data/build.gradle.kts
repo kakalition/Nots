@@ -3,9 +3,6 @@ import com.daggery.buildsrc.*
 
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
     id("common-android")
 }
 
@@ -13,17 +10,6 @@ plugins {
 dependencies {
 
     implementation(project(Modules.domain))
-
-    // Coroutine
-    addCoroutineCore()
-
-    // Android
-    addAndroidCore()
-    addSplashScreen()
-    addAndroidMaterial()
-
-    // Hilt
-    addHilt()
 
     // Room
     addRoom()
@@ -33,11 +19,6 @@ dependencies {
 
     // Kotlin Json
     addKotlinJson()
-
-    addJunit()
-
-    addAndroidTestJunit()
-    addEspresso()
 }
 
 kapt {

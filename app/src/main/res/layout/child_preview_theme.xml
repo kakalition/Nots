@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/toolbar_binding"
-            layout="@layout/appbar_title" />
+            layout="@layout/add_view_appbar" />
     </FrameLayout>
 
     <ScrollView

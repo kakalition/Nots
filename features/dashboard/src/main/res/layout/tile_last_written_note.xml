@@ -30,7 +30,7 @@
             android:background="@drawable/bg_rounded_corner"
             android:minHeight="70dp"
             android:paddingHorizontal="20dp"
-            app:layout_constraintEnd_toStartOf=""
+            app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

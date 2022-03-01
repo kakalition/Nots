@@ -3,15 +3,11 @@ package com.daggery.nots
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.fragment.NavHostFragment
 import com.daggery.nots.databinding.ActivityMainBinding
+import com.daggery.sharedassets.R as SharedR
 import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
-
-// TODO: Refactor with clean architecture
-// TODO: create repository
-// TODO: implement correct data flow
-
-// TODO: Modify bookmarked note layout as in Figma
 
 // TODO: Known Issue: MaterialYou text color is not clear
 // TODO: Known Issue: Tags Sorting in ManageTagsFragment
@@ -31,6 +27,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    object FragmentNavigator {
+        val FROM_NOTES_TO_VIEW = SharedR.id.action_homeFragment_to_addViewNoteFragment
+    }
+
     private var _viewBinding: ActivityMainBinding? = null
     private val viewBinding get() = _viewBinding!!
 
@@ -39,6 +39,37 @@ class MainActivity : AppCompatActivity() {
 
         // Show SplashScreen until ThemeKey is Loaded
         installSplashScreen()
+
+
+        // Initialization
+        statusBarColorSetter()
+        _viewBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        viewBinding.bottomNavigation.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.nav_dashboard -> {
+                    navController.navigate(SharedR.id.dashboardFragment)
+                    true
+                }
+                R.id.nav_notes -> {
+                    navController.navigate(SharedR.id.notesFragment)
+                    true
+                }
+                R.id.nav_tags -> {
+                    navController.navigate(SharedR.id.tagsFragment)
+                    true
+                }
+                R.id.nav_books -> {
+                    navController.navigate(SharedR.id.booksFragment)
+                    true
+                }
+                else -> false
+            }
+        }
 
 /*
         // Theme Setting
@@ -58,11 +89,7 @@ class MainActivity : AppCompatActivity() {
         }
 */
 
-        statusBarColorSetter()
 
-        // Binder
-        _viewBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
     }
 
     override fun onDestroy() {
@@ -101,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = MaterialColors.getColor(
             this,
             com.google.android.material.R.attr.colorSurface,
-            resources.getColor(R.color.transparent, null)
+            resources.getColor(SharedR.color.transparent, null)
         )
     }
 

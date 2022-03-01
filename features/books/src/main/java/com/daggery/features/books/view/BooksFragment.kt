@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.daggery.features.books.BooksAdapter
+import com.daggery.features.books.adapter.BooksAdapter
 import com.daggery.features.books.databinding.BooksFragmentBinding
 import com.daggery.features.books.viewmodel.BooksViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BooksFragment : Fragment() {
 
     private var _viewBinding: BooksFragmentBinding? = null

@@ -6,6 +6,8 @@ object ApplicationId {
 
 object Modules {
     const val app = ":app"
+    const val addViewNote = ":features:addviewnote"
+    const val settings = ":features:settings"
     const val data = ":data"
     const val domain = ":domain"
     const val sharedAssets = ":sharedAssets"

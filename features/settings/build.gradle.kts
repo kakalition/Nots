@@ -2,24 +2,19 @@ import com.daggery.buildsrc.*
 
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
     id("common-android")
 }
 
 dependencies {
 
     // Module
-    implementation(project(Modules.data))
-    implementation(project(Modules.domain))
+    addDataDomain()
+    implementation(project(Modules.sharedAssets))
 
     // Android
-    addAndroidCore()
     addAndroidMaterial()
+    addFragmentKtx()
+    addNavigation()
+    addLifecycle()
 
-    // Test
-    addJunit()
-
-    // Android Test
-    addAndroidTestJunit()
-    addEspresso()
 }
