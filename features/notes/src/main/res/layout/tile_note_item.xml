@@ -25,15 +25,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <TextView
+                android:id="@+id/note_index"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_circle" />
+                android:fontFamily="@font/opensans_semi_bold"
+                android:textSize="18dp"
+                tools:text="12"/>
 
         </FrameLayout>
 
         <ImageView
+            android:id="@+id/bookmark_icon"
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_width="32dp"
             android:layout_height="32dp"
