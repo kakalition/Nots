@@ -26,7 +26,6 @@ class TagListAdapter(private val primaryColor: Int) : ListAdapter<NoteTagWithSta
                 viewBinding.bgCircle.background.setTint(Color.parseColor("#FFFF6961"))
                 viewBinding.root.background.setTint(Color.parseColor("#1A000000"))
             } else {
-                //viewBinding.bgCircle.background.setTint(Color.parseColor("#00000000"))
                 viewBinding.bgCircle.background.setTintList(null)
                 viewBinding.root.background.setTintList(null)
             }

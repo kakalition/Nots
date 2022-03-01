@@ -90,6 +90,10 @@
         <item name="android:background">?attr/colorSurface</item>
     </style>
 
+    <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/black_surface</item>
+    </style>
+
     <style name="AppBarTitle" parent="android:TextAppearance.Material.Widget.Toolbar.Title">
         <item name="fontFamily">@font/inter_bold</item>
         <item name="android:textSize">24sp</item>
