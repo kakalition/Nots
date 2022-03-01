@@ -3,13 +3,13 @@
     <item
         android:id="@+id/nav_dashboard"
         android:enabled="true"
-        android:icon="@drawable/ic_circle"
+        android:icon="@drawable/ic_dashboard"
         android:title="Dashboard"/>
 
     <item
         android:id="@+id/nav_notes"
         android:enabled="true"
-        android:icon="@drawable/ic_circle"
+        android:icon="@drawable/ic_note"
         android:title="Notes"/>
 
     <item
@@ -21,6 +21,6 @@
     <item
         android:id="@+id/nav_books"
         android:enabled="true"
-        android:icon="@drawable/ic_circle"
+        android:icon="@drawable/ic_books"
         android:title="Books"/>
 </menu>

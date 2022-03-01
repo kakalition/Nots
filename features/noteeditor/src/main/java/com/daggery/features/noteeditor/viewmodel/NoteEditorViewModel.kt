@@ -40,7 +40,7 @@ class NoteEditorViewModel @Inject constructor(
         var upperIndex = -1
         val allNotes = getNotesUseCase()
         if (allNotes.isEmpty()) {
-            upperIndex = 0
+            upperIndex = 1
         } else {
             allNotes.forEach { note ->
                 if (note.noteOrder >= upperIndex) {
