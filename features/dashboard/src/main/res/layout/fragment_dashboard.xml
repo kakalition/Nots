@@ -1,54 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.DashboardFragment">
-
-    <include android:id="@+id/dashboard_appbar"
-        layout="@layout/dashboard_appbar"/>
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginHorizontal="20dp"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="?attr/colorSurface"
+            tools:context=".view.DashboardFragment">
+
+            <include android:id="@+id/dashboard_appbar"
+                layout="@layout/dashboard_appbar"/>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="36dp" />
+                android:layout_height="24dp" />
+
+            <TextView
+                android:layout_marginHorizontal="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semi_bold"
+                android:text="Welcome Back, Kaka"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="28sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <TextView
+                android:layout_marginHorizontal="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="You have written 12 notes today!"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="56dp" />
 
             <include layout="@layout/tile_current_book" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="36dp" />
 
-            <include layout="@layout/tile_highlighted_note" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
-
-            <include layout="@layout/tile_last_written_note" />
+            <include layout="@layout/tile_quick_action"/>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
-
-            <include layout="@layout/tile_top_tags" />
+                android:layout_height="8dp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="420dp" />
+                android:layout_height="28dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="22dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Highlighted Note"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <include android:id="@+id/higlighted_note"
+                layout="@layout/tile_dashboard_note" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="28dp" />
+
+            <TextView
+                android:layout_marginHorizontal="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Last Written Note"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <include android:id="@+id/last_written_note"
+                layout="@layout/tile_dashboard_note" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="28dp" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

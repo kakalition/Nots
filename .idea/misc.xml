@@ -122,14 +122,18 @@
         <entry key="features/books/src/main/res/layout/books_appbar.xml" value="0.2821718683197948" />
         <entry key="features/books/src/main/res/layout/books_fragment.xml" value="0.41500765696784075" />
         <entry key="features/books/src/main/res/layout/tile_book.xml" value="0.67" />
+        <entry key="features/dashboard/src/main/res/drawable/bg_circle.xml" value="0.2595" />
         <entry key="features/dashboard/src/main/res/drawable/bg_rounded_corner.xml" value="0.1625" />
         <entry key="features/dashboard/src/main/res/layout/activity_test.xml" value="0.26849080803762293" />
         <entry key="features/dashboard/src/main/res/layout/current_book_layout.xml" value="0.2821718683197948" />
         <entry key="features/dashboard/src/main/res/layout/dashboard_appbar.xml" value="0.2821718683197948" />
         <entry key="features/dashboard/src/main/res/layout/fragment_dashboard.xml" value="0.3020446096654275" />
-        <entry key="features/dashboard/src/main/res/layout/tile_current_book.xml" value="0.2821718683197948" />
+        <entry key="features/dashboard/src/main/res/layout/tile_current_book.xml" value="0.5" />
+        <entry key="features/dashboard/src/main/res/layout/tile_dashboard_note.xml" value="0.67" />
         <entry key="features/dashboard/src/main/res/layout/tile_highlighted_note.xml" value="0.2821718683197948" />
         <entry key="features/dashboard/src/main/res/layout/tile_last_written_note.xml" value="0.4704861111111111" />
+        <entry key="features/dashboard/src/main/res/layout/tile_quick_action.xml" value="0.67" />
+        <entry key="features/dashboard/src/main/res/layout/tile_quick_action_item.xml" value="0.67" />
         <entry key="features/dashboard/src/main/res/layout/tile_tag.xml" value="0.782608695652174" />
         <entry key="features/dashboard/src/main/res/layout/tile_top_tags.xml" value="0.5" />
         <entry key="features/notes/src/main/res/drawable/bg_note_item_filled.xml" value="0.242" />
@@ -156,6 +160,7 @@
         <entry key="features/tageditorsheet/src/main/res/layout/fragment_tag_editor_sheet.xml" value="0.2821718683197948" />
         <entry key="features/tags/src/main/res/menu/test.xml" value="0.2821718683197948" />
         <entry key="sharedAssets/src/main/res/drawable/bg_rounded_corner.xml" value="0.1615" />
+        <entry key="sharedAssets/src/main/res/drawable/bg_rounded_corner_outlined.xml" value="0.3455" />
         <entry key="sharedAssets/src/main/res/drawable/ic_add.xml" value="0.1615" />
         <entry key="sharedAssets/src/main/res/drawable/ic_close.xml" value="0.242" />
         <entry key="sharedAssets/src/main/res/drawable/ic_delete.xml" value="0.1615" />

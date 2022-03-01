@@ -1,4 +1,14 @@
 <resources>
     <style name="Theme.Nots" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorSurface">#FFE4F6FF</item>
+        <item name="colorOnSurface">#FF212121</item>
+        <item name="colorPrimary">#FF84D9FF</item>
+        <item name="colorOnPrimary">#FF212121</item>
+        <item name="colorSecondary">#FFCBEFFF</item>
+        <item name="colorOnSecondary">#FF212121</item>
+        <item name="android:statusBarColor">#FFE4F6FF</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_close</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
     </style>
 </resources>

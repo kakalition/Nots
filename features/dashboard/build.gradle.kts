@@ -10,6 +10,8 @@ dependencies {
     // Module
     addDataDomain()
     implementation(project(Modules.sharedAssets))
+    implementation(project(":features:tageditorsheet"))
+    implementation(project(":features:bookeditorsheet"))
 
     // Android
     addAndroidMaterial()

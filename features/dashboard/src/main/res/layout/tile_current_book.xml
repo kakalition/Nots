@@ -4,74 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TextView
+    <LinearLayout
+        android:layout_marginHorizontal="22dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_regular"
-        android:text="Current Book"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="16sp" />
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/current_book_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_rounded_corner"
-        android:minHeight="100dp"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="15dp">
-
-        <TextView
-            android:id="@+id/current_book_title"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_weight="1"
+            android:id="@+id/current_book_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/opensans_semi_bold"
-            android:maxLines="1"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toTopOf="@+id/current_book_description"
-            app:layout_constraintEnd_toStartOf="@id/current_book_total_notes"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Dream Journal" />
+            android:background="@drawable/bg_rounded_corner"
+            android:minHeight="200dp"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="22dp">
 
-        <TextView
-            android:id="@+id/current_book_description"
+            <TextView
+                android:id="@+id/current_book_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/opensans_semi_bold"
+                android:maxLines="1"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toTopOf="@+id/current_book_description"
+                app:layout_constraintEnd_toStartOf="@id/current_book_total_notes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Dream Journal" />
+
+            <TextView
+                android:id="@+id/current_book_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/opensans_regular"
+                android:maxLines="2"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="All about dreams recollection." />
+
+            <TextView
+                android:id="@+id/current_book_total_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_light"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="46sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="36" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:layout_marginStart="22dp"
+            android:layout_weight=".2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/opensans_regular"
-            android:maxLines="2"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/current_book_total_notes"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/current_book_title"
-            tools:text="All about dreams recollection." />
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_rounded_corner_outlined" >
 
-        <TextView
-            android:id="@+id/current_book_total_notes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/opensans_light"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="46sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="36" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add"
+                app:tint="?attr/colorOnSurface"
+                android:layout_gravity="center"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+    </LinearLayout>
 
 </merge>
