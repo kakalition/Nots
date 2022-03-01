@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.daggery.features.tags.data.NoteTagWithStatus
 import com.daggery.features.tags.databinding.TileItemTagBinding
+import com.google.android.material.color.MaterialColors
 
-class TagListAdapter : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListViewHolder>(TagsDiff()) {
+class TagListAdapter(private val primaryColor: Int) : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListViewHolder>(TagsDiff()) {
 
     inner class TagListViewHolder(private val viewBinding: TileItemTagBinding) : RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(noteTag: NoteTagWithStatus) {
@@ -23,9 +24,11 @@ class TagListAdapter : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListView
 
             if(noteTag.isSelected) {
                 viewBinding.bgCircle.background.setTint(Color.parseColor("#FFFF6961"))
+                viewBinding.root.background.setTint(Color.parseColor("#1A000000"))
             } else {
                 //viewBinding.bgCircle.background.setTint(Color.parseColor("#00000000"))
-                viewBinding.bgCircle.background.clearColorFilter()
+                viewBinding.bgCircle.background.setTintList(null)
+                viewBinding.root.background.setTintList(null)
             }
         }
     }

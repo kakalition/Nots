@@ -62,6 +62,13 @@ class TagsViewModel @Inject constructor(
         }
     }
 
+    fun clearCheckedTags() {
+        val uncheckedTags = manageTagsList.value.map { it.copy(isSelected = false) }
+        viewModelScope.launch {
+            _manageTagsList.emit(uncheckedTags)
+        }
+    }
+
     fun addTag(noteTag: NoteTag) {
         viewModelScope.launch { addTagUseCase(noteTag) }
     }

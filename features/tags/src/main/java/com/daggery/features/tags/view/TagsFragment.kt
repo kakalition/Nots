@@ -1,6 +1,8 @@
 package com.daggery.features.tags.view
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,6 +14,7 @@ import com.daggery.features.tags.R
 import com.daggery.features.tags.adapter.TagListAdapter
 import com.daggery.features.tags.databinding.FragmentManageTagsBinding
 import com.daggery.features.tags.viewmodel.TagsViewModel
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -30,7 +33,7 @@ class ManageTagsFragment : Fragment() {
     private val tagsActionModeCallback = TagsActionModeCallback(this)
 
     private var _tagListAdapter: TagListAdapter? = null
-    private val tagListAdapter get() = _tagListAdapter!!
+    internal val tagListAdapter get() = _tagListAdapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -43,7 +46,9 @@ class ManageTagsFragment : Fragment() {
 
         bindsToolbar()
 
-        _tagListAdapter = TagListAdapter()
+        _tagListAdapter = TagListAdapter(
+            MaterialColors.getColor(requireContext(), com.google.android.material.R.attr.colorPrimary, Color.parseColor("#FFFAFAFA"))
+        )
         viewBinding.tagsRecyclerView.adapter = tagListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -171,6 +176,7 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
 
     override fun onDestroyActionMode(mode: ActionMode?) {
         fragment.actionMode = null
+        fragment.viewModel.clearCheckedTags()
     }
 
 }
