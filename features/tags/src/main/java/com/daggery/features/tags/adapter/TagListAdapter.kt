@@ -1,5 +1,6 @@
 package com.daggery.features.tags.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +17,7 @@ class TagListAdapter : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListView
             viewBinding.root.setOnLongClickListener { noteTag.onClickListener(currentList, noteTag)
                 true}
             viewBinding.tagTitle.text = noteTag.tagName
+            viewBinding.circleContent.text = noteTag.tagName[0].toString()
             viewBinding.tagCount.text = "8"
         }
     }
