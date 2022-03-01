@@ -1,5 +1,6 @@
 package com.daggery.features.tags.adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,6 +20,13 @@ class TagListAdapter : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListView
             viewBinding.tagTitle.text = noteTag.tagName
             viewBinding.circleContent.text = noteTag.tagName[0].toString()
             viewBinding.tagCount.text = "8"
+
+            if(noteTag.isSelected) {
+                viewBinding.bgCircle.background.setTint(Color.parseColor("#FFFF6961"))
+            } else {
+                //viewBinding.bgCircle.background.setTint(Color.parseColor("#00000000"))
+                viewBinding.bgCircle.background.clearColorFilter()
+            }
         }
     }
 
