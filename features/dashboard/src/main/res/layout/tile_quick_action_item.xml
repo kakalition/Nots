@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
     android:background="@drawable/bg_rounded_corner"
-    android:layout_marginHorizontal="22dp"
-    android:padding="22dp"
-    tools:layout_height="100dp">
+    android:padding="16dp"
+    tools:layout_height="80dp">
 
     <FrameLayout
         android:id="@+id/bg_circle"
@@ -30,28 +30,15 @@
         android:id="@+id/note_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="12dp"
         android:ellipsize="end"
         android:fontFamily="@font/opensans_regular"
         android:maxLines="1"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/note_body"
-        app:layout_constraintStart_toEndOf="@id/bg_circle"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="New Note" />
-
-    <TextView
-        android:id="@+id/note_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/opensans_light"
-        android:maxLines="1"
-        android:textSize="16dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/bg_circle"
-        app:layout_constraintTop_toBottomOf="@+id/note_title"
-        tools:text="Body" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="New Note" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
