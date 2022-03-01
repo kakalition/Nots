@@ -27,10 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    object FragmentNavigator {
-        val FROM_NOTES_TO_VIEW = SharedR.id.action_homeFragment_to_addViewNoteFragment
-    }
-
     private var _viewBinding: ActivityMainBinding? = null
     private val viewBinding get() = _viewBinding!!
 
@@ -39,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         // Show SplashScreen until ThemeKey is Loaded
         installSplashScreen()
-
 
         // Initialization
         statusBarColorSetter()

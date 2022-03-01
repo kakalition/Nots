@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.Nots" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Nots" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorSurface">#FFE4F6FF</item>
         <item name="colorOnSurface">#FF212121</item>
         <item name="colorPrimary">#FF84D9FF</item>
@@ -10,5 +10,12 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+    </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">@color/black_surface</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/white_surface</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground_black</item>
+        <item name="postSplashScreenTheme">@style/Theme.Nots</item>
     </style>
 </resources>
