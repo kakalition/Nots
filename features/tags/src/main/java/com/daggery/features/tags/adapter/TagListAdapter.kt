@@ -15,8 +15,8 @@ class TagListAdapter : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListView
             viewBinding.root.setOnClickListener { noteTag.onClickListener(currentList, noteTag) }
             viewBinding.root.setOnLongClickListener { noteTag.onClickListener(currentList, noteTag)
                 true}
-            viewBinding.checkbox.text = noteTag.tagName
-            viewBinding.checkbox.isChecked = noteTag.isSelected
+            viewBinding.tagTitle.text = noteTag.tagName
+            viewBinding.tagCount.text = "8"
         }
     }
 

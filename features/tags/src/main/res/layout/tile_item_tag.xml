@@ -1,22 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_rounded_corner"
+    android:padding="22dp"
     android:clickable="true"
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginBottom="22dp"
     android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="horizontal"
-    android:paddingStart="22dp"
-    android:paddingEnd="12dp">
+    android:orientation="horizontal">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        android:button="@null"
-        android:clickable="false"
-        android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+    <FrameLayout
+        android:id="@+id/bg_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/circle_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/opensans_semi_bold"
+            android:textSize="18dp"
+            tools:text="12"/>
+    </FrameLayout>
+
+    <TextView
+        android:layout_marginHorizontal="22dp"
+        android:layout_gravity="center"
+        android:id="@+id/tag_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_regular"
+        android:textSize="24sp"
+        android:textColor="?attr/colorOnSecondary"
         tools:text="Development" />
 
-</FrameLayout>
+    <Space
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_gravity="center"
+        android:id="@+id/tag_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_light"
+        android:textSize="32sp"
+        android:textColor="?attr/colorOnSecondary"
+        android:layout_marginEnd="6dp"
+        tools:text="18" />
+
+</LinearLayout>

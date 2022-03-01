@@ -158,6 +158,7 @@
         <entry key="features/settings/src/main/res/layout/tile_settings.xml" value="0.2821718683197948" />
         <entry key="features/settings/src/main/res/layout/tile_settings_with_switch.xml" value="0.13894826849080805" />
         <entry key="features/tageditorsheet/src/main/res/layout/fragment_tag_editor_sheet.xml" value="0.2821718683197948" />
+        <entry key="features/tags/src/main/res/layout/tile_item_tag.xml" value="0.67" />
         <entry key="features/tags/src/main/res/menu/test.xml" value="0.2821718683197948" />
         <entry key="sharedAssets/src/main/res/drawable/bg_rounded_corner.xml" value="0.1615" />
         <entry key="sharedAssets/src/main/res/drawable/bg_rounded_corner_outlined.xml" value="0.3455" />
