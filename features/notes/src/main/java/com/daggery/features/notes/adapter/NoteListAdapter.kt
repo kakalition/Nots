@@ -1,6 +1,7 @@
 package com.daggery.nots.home.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +24,14 @@ class NoteListAdapter(
         fun bind(note: NoteData) {
             with(binding) {
                 when (note.priority) {
-                    0 -> { listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled) }
-                    1 -> { listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled_priority) }
+                    0 -> {
+                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled)
+                        bookmarkIcon.visibility = View.GONE
+                    }
+                    1 -> {
+                        listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled_priority)
+                        bookmarkIcon.visibility = View.VISIBLE
+                    }
                 }
 
                 noteTitle.text = note.noteTitle
