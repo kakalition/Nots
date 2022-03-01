@@ -36,6 +36,7 @@ class NoteListAdapter(
                     chip.isCheckable = false
                     chip.isClickable = false
                     chip.isFocusable = false
+                    chip.setEnsureMinTouchTargetSize(false)
                     chipGroup.addView(chip)
                 }
             }
