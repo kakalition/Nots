@@ -8,6 +8,7 @@
       <module name="Nots.feature.books" target="11" />
       <module name="Nots.feature.dashboard" target="11" />
       <module name="Nots.feature.notes" target="11" />
+      <module name="Nots.features.addbookdialog" target="11" />
       <module name="Nots.features.addtagdialog" target="11" />
       <module name="Nots.features.addviewnote" target="11" />
       <module name="Nots.features.books" target="11" />

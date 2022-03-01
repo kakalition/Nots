@@ -2,10 +2,6 @@ import com.daggery.buildsrc.*
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("androidx.navigation.safeargs.kotlin")
-    id("dagger.hilt.android.plugin")
-    id("kotlin-kapt")
     id("common-android")
 }
 
@@ -18,6 +14,7 @@ android {
 dependencies {
 
     // Module
+    addDataDomain()
     implementation(project(Modules.sharedAssets))
     implementation(project(Modules.addViewNote))
     implementation(project(Modules.settings))
@@ -25,17 +22,11 @@ dependencies {
     implementation(project(Modules.notes))
     implementation(project(Modules.tags))
     implementation(project(Modules.books))
-    implementation(project(Modules.data))
-    implementation(project(Modules.domain))
 
     // Kotlin Json
     addKotlinJson()
 
-    // Kotlin Coroutine
-    addCoroutineCore()
-
     // Android
-    addAndroidCore()
     addSplashScreen()
     addAndroidMaterial()
     addRecyclerView()
@@ -51,21 +42,13 @@ dependencies {
     // Lifecycle
     addLifecycle()
 
-    // Hilt
-    addHilt()
-
     // Leak Canary
     addLeakCanary()
 
     // Test
-    addJunit()
     addTestJunit()
     addArchTesting()
     addRobolectric()
-
-    // Android Test
-    addAndroidTestJunit()
-    addEspresso()
 }
 
 kapt {
