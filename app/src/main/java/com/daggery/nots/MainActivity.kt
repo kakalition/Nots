@@ -80,12 +80,12 @@ class MainActivity : AppCompatActivity() {
 
 /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            viewModel.themeManager.themeKey == R.style.MaterialYouTheme
+            editorViewModel.themeManager.themeKey == R.style.MaterialYouTheme
         ) {
             DynamicColors.applyIfAvailable(this)
-            setTheme(viewModel.themeManager.themeKey)
+            setTheme(editorViewModel.themeManager.themeKey)
         } else {
-            setTheme(viewModel.themeManager.themeKey)
+            setTheme(editorViewModel.themeManager.themeKey)
         }
 */
 
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 /*
 
     private fun setThemeOnInitialStart() {
-        with(viewModel.themeManager) {
+        with(editorViewModel.themeManager) {
             if(themeKey == -1){
                 themeDataStore.observeOnce(this@MainActivity) {
                     setThemeKey(it)
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 /*
 
     private fun getHomeLayoutOnInitialStart() {
-        with(viewModel.themeManager) {
+        with(editorViewModel.themeManager) {
             if(homeLayoutKey == -1) {
                 homeLayoutDataStore.observeOnce(this@MainActivity) {
                     setHomeLayoutKey(it)
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateTheme(themeRes: Int) {
-        //viewModel.applyTheme(themeRes)
+        //editorViewModel.applyTheme(themeRes)
         recreate()
     }
 }

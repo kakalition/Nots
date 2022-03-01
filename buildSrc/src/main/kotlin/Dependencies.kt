@@ -6,7 +6,7 @@ object ApplicationId {
 
 object Modules {
     const val app = ":app"
-    const val addViewNote = ":features:addviewnote"
+    const val noteeditor = ":features:noteeditor"
     const val settings = ":features:settings"
     const val data = ":data"
     const val domain = ":domain"

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.daggery.features.notes.view.HomeFragment"
+        android:name="com.daggery.features.notes.view.NotesFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/addViewNoteFragment"
-        android:name="com.daggery.features.addviewnote.view.AddViewNoteFragment"
+        android:name="com.daggery.features.noteeditor.view.AddViewNoteFragment"
         android:label="fragment_add_view_note"
         tools:layout="@layout/fragment_add_view_note">
         <argument

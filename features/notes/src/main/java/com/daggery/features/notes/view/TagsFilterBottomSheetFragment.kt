@@ -15,7 +15,7 @@ import com.daggery.domain.entities.NoteTag
 import com.daggery.features.notes.R
 import com.daggery.features.notes.databinding.FragmentTagsFilterBottomSheetBinding
 import com.daggery.nots.extractChecked
-import com.daggery.nots.home.viewmodel.HomeViewModel
+import com.daggery.nots.home.viewmodel.NotesViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,7 +30,7 @@ class TagsFilterBottomSheetFragment : BottomSheetDialogFragment() {
     private var _viewBinding: FragmentTagsFilterBottomSheetBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    private val viewModel: HomeViewModel by activityViewModels()
+    private val viewModel: NotesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
