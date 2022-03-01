@@ -16,7 +16,7 @@ dependencies {
     // Module
     addDataDomain()
     implementation(project(Modules.sharedAssets))
-    implementation(project(Modules.addViewNote))
+    implementation(project(Modules.noteeditor))
     implementation(project(Modules.settings))
     implementation(project(Modules.dashboard))
     implementation(project(Modules.notes))

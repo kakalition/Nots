@@ -16,13 +16,13 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/features" />
-            <option value="$PROJECT_DIR$/features/addbookdialog" />
-            <option value="$PROJECT_DIR$/features/addtagdialog" />
-            <option value="$PROJECT_DIR$/features/addviewnote" />
+            <option value="$PROJECT_DIR$/features/bookeditorsheet" />
             <option value="$PROJECT_DIR$/features/books" />
             <option value="$PROJECT_DIR$/features/dashboard" />
+            <option value="$PROJECT_DIR$/features/noteeditor" />
             <option value="$PROJECT_DIR$/features/notes" />
             <option value="$PROJECT_DIR$/features/settings" />
+            <option value="$PROJECT_DIR$/features/tageditorsheet" />
             <option value="$PROJECT_DIR$/features/tags" />
             <option value="$PROJECT_DIR$/sharedAssets" />
           </set>
