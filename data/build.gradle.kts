@@ -19,8 +19,6 @@ dependencies {
 
     // Android
     addAndroidCore()
-    addSplashScreen()
-    addAndroidMaterial()
 
     // Hilt
     addHilt()

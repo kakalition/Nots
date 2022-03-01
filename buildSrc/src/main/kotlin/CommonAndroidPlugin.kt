@@ -8,6 +8,7 @@ class CommonAndroidPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.pluginManager.apply("org.jetbrains.kotlin.android")
         project.pluginManager.apply("kotlin-kapt")
+        project.pluginManager.apply("dagger.hilt.android.plugin")
 
         val androidExtension = project.extensions.getByName("android")
         if(androidExtension is com.android.build.gradle.BaseExtension) {
@@ -39,6 +40,13 @@ class CommonAndroidPlugin : Plugin<Project> {
                         }
                     }
                 }
+
+                project.addCoroutineCore()
+                project.addHilt()
+                project.addAndroidCore()
+                project.addJunit()
+                project.addAndroidTestJunit()
+                project.addEspresso()
 
                 compileOptions {
                     sourceCompatibility = JavaVersion.VERSION_1_8

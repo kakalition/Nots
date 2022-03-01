@@ -3,6 +3,13 @@ package com.daggery.buildsrc
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
+fun Project.addDataDomain() {
+    dependencies {
+        add("implementation", project(":data"))
+        add("implementation", project(":domain"))
+    }
+}
+
 fun Project.addKotlinJson() {
     dependencies {
         add("implementation", KotlinLibraries.kotlinJson)
