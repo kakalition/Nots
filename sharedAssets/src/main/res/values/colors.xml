@@ -10,7 +10,14 @@
     <color name="jungle_mist">#FFA1CDCE</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    
+
+    <color name="gold_surface">#FFFFF4B9</color>
+    <color name="gold_surface_accent">#FFFFD700</color>
+    <color name="silver_surface">#FFEAEAEA</color>
+    <color name="silver_surface_accent">#FFC0C0C0</color>
+    <color name="bronze_surface">#FFFFD2A5</color>
+    <color name="bronze_surface_accent">#FFCD7F32</color>
+
     <color name="material_you_tile_start_color">#FF03001E</color>
     <color name="material_you_tile_middle_color">#FF7303C0</color>
     <color name="material_you_tile_end_color">#FFEC38BC</color>

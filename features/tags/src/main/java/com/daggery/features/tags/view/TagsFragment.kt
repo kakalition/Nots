@@ -1,21 +1,32 @@
 package com.daggery.features.tags.view
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.daggery.features.tageditorsheet.view.TagEditorSheetFragment
 import com.daggery.features.tags.R
 import com.daggery.features.tags.adapter.TagListAdapter
 import com.daggery.features.tags.databinding.FragmentManageTagsBinding
+import com.daggery.features.tags.databinding.TileItemTagBinding
 import com.daggery.features.tags.viewmodel.TagsViewModel
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+// TODO: Configure ActionMode Color
 
 @AndroidEntryPoint
 class ManageTagsFragment : Fragment() {
@@ -30,11 +41,12 @@ class ManageTagsFragment : Fragment() {
     private val tagsActionModeCallback = TagsActionModeCallback(this)
 
     private var _tagListAdapter: TagListAdapter? = null
-    private val tagListAdapter get() = _tagListAdapter!!
+    internal val tagListAdapter get() = _tagListAdapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _viewBinding = FragmentManageTagsBinding.inflate(inflater, container, false)
+
         return viewBinding.root
     }
 
@@ -43,7 +55,9 @@ class ManageTagsFragment : Fragment() {
 
         bindsToolbar()
 
-        _tagListAdapter = TagListAdapter()
+        _tagListAdapter = TagListAdapter(
+            MaterialColors.getColor(requireContext(), com.google.android.material.R.attr.colorPrimary, Color.parseColor("#FFFAFAFA"))
+        )
         viewBinding.tagsRecyclerView.adapter = tagListAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -63,17 +77,62 @@ class ManageTagsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.manageTagsList.collect {
-                    tagListAdapter.submitList(it)
+                launch {
+                    viewModel.manageTagsList.collect {
+                        tagListAdapter.submitList(it)
+                        bindFrequentlyUsedTags()
+                    }
                 }
             }
         }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
         _tagListAdapter = null
+    }
+
+    private fun bindFrequentlyUsedTags() {
+        val frequentlyUsedTags = viewModel.getFrequentlyUsedTag()
+        if(frequentlyUsedTags.isNotEmpty()) {
+            with(frequentlyUsedTags) {
+                viewBinding.firstTag.apply {
+                    tagTitle.text = this@with[0].tagName
+                    circleContent.text = this@with[0].tagName[0].toString()
+                    tagCount.text = this@with[0].tagCount.toString()
+                }
+                viewBinding.secondTag.apply {
+                    tagTitle.text = this@with[1].tagName
+                    circleContent.text = this@with[1].tagName[0].toString()
+                    tagCount.text = this@with[1].tagCount.toString()
+                }
+                viewBinding.thirdTag.apply {
+                    tagTitle.text = this@with[2].tagName
+                    circleContent.text = this@with[2].tagName[0].toString()
+                    tagCount.text = this@with[2].tagCount.toString()
+                }
+            }
+        } else {
+            with(viewBinding) {
+                frequentlyUsedTitle.visibility = View.GONE
+                firstTag.root.visibility = View.GONE
+                secondTag.root.visibility = View.GONE
+                thirdTag.root.visibility = View.GONE
+            }
+        }
+    }
+
+    internal fun animateStatusBarColor(colorFrom: Int, colorTo: Int, duration: Long) {
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+        colorAnimation.duration = duration
+        // TODO: Adjust Interpolator
+        colorAnimation.interpolator = DecelerateInterpolator()
+        colorAnimation.addUpdateListener { animator ->
+            requireActivity().window.statusBarColor = animator.animatedValue as Int
+        }
+        colorAnimation.start()
     }
 
     private val menuItemClickListener = { item: MenuItem ->
@@ -90,10 +149,7 @@ class ManageTagsFragment : Fragment() {
     }
 
     private fun bindsToolbar() {
-/*
-        with(viewBinding.toolbarBinding.toolbar) {
-            setNavigationIcon(SharedR.drawable.ic_back)
-            setNavigationOnClickListener { findNavController().navigateUp() }
+        with(viewBinding.tagsAppbar.toolbar) {
             inflateMenu(R.menu.menu_filter_fragment)
             menu.findItem(R.id.add_tags_button).icon.setTint(
                 MaterialColors.getColor(
@@ -103,9 +159,7 @@ class ManageTagsFragment : Fragment() {
                 )
             )
             setOnMenuItemClickListener(menuItemClickListener)
-            title = "Manage Tags"
         }
-*/
     }
 
     fun showDeleteDialog() {
@@ -126,7 +180,14 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     fun setCheckedCount(value: Int) { checkedCount = value }
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        fragment.animateStatusBarColor(
+            Color.parseColor("#FF84D9FF"),
+            Color.parseColor("#FF212121"),
+            300
+        )
         mode?.menuInflater?.inflate(R.menu.menu_filter_fragment_action_mode, menu)
+        menu?.findItem(R.id.edit_button)?.icon?.setTint(Color.parseColor("#FFFAFAFA"))
+        menu?.findItem(R.id.delete_button)?.icon?.setTint(Color.parseColor("#FFFAFAFA"))
         return true
     }
 
@@ -170,7 +231,13 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
+        fragment.animateStatusBarColor(
+            Color.parseColor("#FF212121"),
+            Color.parseColor("#FF84D9FF"),
+            400
+        )
         fragment.actionMode = null
+        fragment.viewModel.clearCheckedTags()
     }
 
 }

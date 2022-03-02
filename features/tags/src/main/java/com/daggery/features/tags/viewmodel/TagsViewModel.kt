@@ -2,6 +2,7 @@ package com.daggery.features.tags.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daggery.data.usecases.note.GetNotesUseCase
 import com.daggery.data.usecases.tag.AddTagUseCase
 import com.daggery.data.usecases.tag.DeleteTagsUseCase
 import com.daggery.data.usecases.tag.GetTagsFlowUseCase
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TagsViewModel @Inject constructor(
+    private val getNotesUseCase: GetNotesUseCase,
     private val getTagsFlowUseCase: GetTagsFlowUseCase,
     private val getTagByIdUseCase: GetTagByIdUseCase,
     private val addTagUseCase: AddTagUseCase,
@@ -34,10 +36,17 @@ class TagsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             launch {
-                getTagsFlowUseCase().collect {
-                    _manageTagsList.emit(
-                        it.map { note -> note.toNoteTagWithStatus() }
-                    )
+                // Get Tag Count
+                getTagsFlowUseCase().collect { noteTagList ->
+                    val allTagsFromNotes = getNotesUseCase().flatMap { noteData -> noteData.noteTags }
+                    val noteTagWithStatus = noteTagList.map { note ->
+                        var tagCount = 0
+                        allTagsFromNotes.forEach {
+                            if(it == note.tagName) tagCount++
+                        }
+                        note.toNoteTagWithStatus(tagCount)
+                    }
+                    _manageTagsList.emit(noteTagWithStatus)
                 }
             }
             launch {
@@ -48,10 +57,14 @@ class TagsViewModel @Inject constructor(
         }
     }
 
-    private fun NoteTag.toNoteTagWithStatus(): NoteTagWithStatus {
-        return NoteTagWithStatus(id, tagName, false) { list, noteTagWithStatus ->
+    private fun NoteTag.toNoteTagWithStatus(tagCount: Int): NoteTagWithStatus {
+        return NoteTagWithStatus(id, tagName, false, tagCount) { list, noteTagWithStatus ->
             select(list.toMutableList(), noteTagWithStatus)
         }
+    }
+
+    fun getFrequentlyUsedTag(): List<NoteTagWithStatus> {
+        return manageTagsList.value.sortedByDescending { it.tagCount }
     }
 
     private fun select(list: MutableList<NoteTagWithStatus>, noteTag: NoteTagWithStatus) {
@@ -59,6 +72,13 @@ class TagsViewModel @Inject constructor(
             val index = list.indexOfFirst { it.id == noteTag.id }
             list[index] = noteTag.copy(isSelected = !noteTag.isSelected)
             _manageTagsList.emit(list)
+        }
+    }
+
+    fun clearCheckedTags() {
+        val uncheckedTags = manageTagsList.value.map { it.copy(isSelected = false) }
+        viewModelScope.launch {
+            _manageTagsList.emit(uncheckedTags)
         }
     }
 

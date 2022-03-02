@@ -6,9 +6,13 @@
         <item name="colorOnPrimary">#FF212121</item>
         <item name="colorSecondary">#FFCBEFFF</item>
         <item name="colorOnSecondary">#FF212121</item>
-        <item name="android:statusBarColor">#FFE4F6FF</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackgroundColor">#FF212121</item>
+        <item name="actionModeTextColor">#FFFAFAFA</item>
+        <item name="actionModeStyle">@style/Widget.App.ActionMode</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
+        <item name="actionModeCloseDrawableColor">#FFFAFAFA</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
     </style>
 

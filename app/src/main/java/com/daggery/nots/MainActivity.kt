@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
 
         // Initialization
-        statusBarColorSetter()
+        //statusBarColorSetter()
         _viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
