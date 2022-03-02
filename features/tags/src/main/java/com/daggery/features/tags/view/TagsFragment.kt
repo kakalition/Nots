@@ -1,6 +1,7 @@
 package com.daggery.features.tags.view
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -133,6 +134,8 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mode?.menuInflater?.inflate(R.menu.menu_filter_fragment_action_mode, menu)
+        menu?.findItem(R.id.edit_button)?.icon?.setTint(Color.parseColor("#FFFAFAFA"))
+        menu?.findItem(R.id.delete_button)?.icon?.setTint(Color.parseColor("#FFFAFAFA"))
         return true
     }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="actionModeBackgroundColor" format="reference|color" />
+    <attr name="actionModeTextColor" format="reference|color" />
+    <attr name="actionModeCloseDrawableColor" format="reference|color" />
+</resources>

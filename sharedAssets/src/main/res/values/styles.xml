@@ -91,7 +91,12 @@
     </style>
 
     <style name="Widget.App.ActionMode" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@color/black_surface</item>
+        <item name="background">?actionModeBackgroundColor</item>
+        <item name="titleTextStyle">@style/TitleActionBar</item>
+    </style>
+
+    <style name="TitleActionBar" parent="TextAppearance.Material3.ActionBar.Title">
+        <item name="android:textColor">?actionModeTextColor</item>
     </style>
 
     <style name="AppBarTitle" parent="android:TextAppearance.Material.Widget.Toolbar.Title">
