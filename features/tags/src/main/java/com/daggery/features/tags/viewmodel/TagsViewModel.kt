@@ -67,6 +67,10 @@ class TagsViewModel @Inject constructor(
         return manageTagsList.value.sortedByDescending { it.tagCount }
     }
 
+    fun getCheckedTagId(): Int {
+        return checkedTagList.value.single().id
+    }
+
     private fun select(list: MutableList<NoteTagWithStatus>, noteTag: NoteTagWithStatus) {
         viewModelScope.launch {
             val index = list.indexOfFirst { it.id == noteTag.id }

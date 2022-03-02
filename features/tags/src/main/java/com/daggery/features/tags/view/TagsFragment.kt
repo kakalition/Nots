@@ -3,9 +3,7 @@ package com.daggery.features.tags.view
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
@@ -13,18 +11,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.daggery.features.tageditorsheet.view.TagEditorSheetFragment
 import com.daggery.features.tags.R
 import com.daggery.features.tags.adapter.TagListAdapter
 import com.daggery.features.tags.databinding.FragmentManageTagsBinding
-import com.daggery.features.tags.databinding.TileItemTagBinding
 import com.daggery.features.tags.viewmodel.TagsViewModel
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // TODO: Configure ActionMode Color
 
@@ -35,8 +32,8 @@ class ManageTagsFragment : Fragment() {
     private val viewBinding get() = _viewBinding!!
 
     val viewModel: TagsViewModel by activityViewModels()
+    internal val newTagsDialog: TagEditorSheetFragment = TagEditorSheetFragment()
 
-    val newTagsDialog = TagEditorSheetFragment()
     var actionMode: ActionMode? = null
     private val tagsActionModeCallback = TagsActionModeCallback(this)
 
@@ -210,6 +207,7 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         return when(item?.itemId) {
             R.id.edit_button -> {
+                fragment.newTagsDialog.loadTagById(fragment.viewModel.getCheckedTagId())
                 fragment.newTagsDialog.show(
                     fragment.requireActivity().supportFragmentManager,
                     TagEditorSheetFragment.TAG
