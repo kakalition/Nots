@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +11,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.daggery.domain.entities.NoteTag
 import com.daggery.features.tageditorsheet.databinding.FragmentTagEditorSheetBinding
 import com.daggery.features.tageditorsheet.viewmodel.TagEditorSheetViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 // TODO: Test: Is AddTagUseCase works as expected
 
@@ -31,9 +28,11 @@ class TagEditorSheetFragment : BottomSheetDialogFragment() {
     }
 
     private var _viewBinding: FragmentTagEditorSheetBinding? = null
-    val viewBinding get() = _viewBinding!!
+    private val viewBinding get() = _viewBinding!!
 
     private val viewModel: TagEditorSheetViewModel by activityViewModels()
+
+    var id: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +45,13 @@ class TagEditorSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.newTagInput.text = Editable.Factory().newEditable(viewModel.getTagItemName())
+        viewLifecycleOwner.lifecycleScope.launch {
+            id?.let {
+                loadTagById(it)
+                while(viewModel.tagItemRetrieved == null) { delay(50) }
+                viewBinding.newTagInput.text = Editable.Factory().newEditable(viewModel.getTagItemName())
+            }
+        }
 
         viewBinding.confirmButton.setOnClickListener {
 
@@ -71,17 +76,6 @@ class TagEditorSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-/*
-        if(viewModel.checkedTagList.value.isNotEmpty()) {
-            viewModel.checkedTagList.value.single().tagName.let {
-                viewBinding.newTagInput.setText(it)
-            }
-        }
-*/
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -95,7 +89,7 @@ class TagEditorSheetFragment : BottomSheetDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         viewBinding.newTagInput.text?.clear()
-        viewModel.clearTagId()
+        viewModel.cleanUp()
     }
 
     fun loadTagById(value: Int) {

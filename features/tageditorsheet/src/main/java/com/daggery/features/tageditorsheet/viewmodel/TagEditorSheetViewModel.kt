@@ -1,5 +1,6 @@
 package com.daggery.features.tageditorsheet.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.daggery.data.usecases.tag.AddTagUseCase
@@ -19,17 +20,22 @@ class TagEditorSheetViewModel @Inject constructor(
 
     private var tagItem: NoteTag? = null
 
+    var tagItemRetrieved: Boolean = false
+
     fun loadTagById(value: Int) {
         viewModelScope.launch {
             tagItem = getTagByIdUseCase(value)
+            tagItemRetrieved = true
         }
     }
 
-    fun clearTagId() {
+    fun cleanUp() {
         tagItem = null
+        tagItemRetrieved = false
     }
 
     fun getTagItemName(): String {
+        Log.d("LOL TagItemName", tagItem?.tagName.toString())
         return tagItem?.tagName ?: ""
     }
 
@@ -50,11 +56,4 @@ class TagEditorSheetViewModel @Inject constructor(
             }
         }
     }
-
-/*
-    fun isEditingTag() = checkedTagList.value.size == 1
-
-    fun getEditTag() = checkedTagList.value.single()
-*/
-
 }

@@ -207,7 +207,7 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         return when(item?.itemId) {
             R.id.edit_button -> {
-                fragment.newTagsDialog.loadTagById(fragment.viewModel.getCheckedTagId())
+                fragment.newTagsDialog.id = fragment.viewModel.getCheckedTagId()
                 fragment.newTagsDialog.show(
                     fragment.requireActivity().supportFragmentManager,
                     TagEditorSheetFragment.TAG
