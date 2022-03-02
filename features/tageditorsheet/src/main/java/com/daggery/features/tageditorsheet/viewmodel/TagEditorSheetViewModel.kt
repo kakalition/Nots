@@ -55,8 +55,18 @@ class TagEditorSheetViewModel @Inject constructor(
 
     fun updateTag(tagName: String) {
         viewModelScope.launch {
-            tagItem?.let {
-                updateTagUseCase(it.copy(tagName = tagName))
+            tagItem?.let { noteTag ->
+                val updatedNotes = getNotesUseCase().map { noteData ->
+                    if(noteData.noteTags.contains(noteTag.tagName)) {
+                        val mutableNoteTags = noteData.noteTags.toMutableList()
+                        mutableNoteTags[noteData.noteTags.indexOf(noteTag.tagName)] = tagName
+                        return@map noteData.copy(noteTags = mutableNoteTags)
+                    } else {
+                        return@map noteData
+                    }
+                }
+                updateTagUseCase(noteTag.copy(tagName = tagName))
+                updateNotesUseCase(updatedNotes)
             }
         }
     }

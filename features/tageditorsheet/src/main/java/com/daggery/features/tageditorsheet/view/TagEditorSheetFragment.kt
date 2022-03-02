@@ -48,7 +48,7 @@ class TagEditorSheetFragment : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             id?.let {
                 loadTagById(it)
-                while(viewModel.tagItemRetrieved == null) { delay(50) }
+                while(!viewModel.tagItemRetrieved) { delay(50) }
                 viewBinding.newTagInput.text = Editable.Factory().newEditable(viewModel.getTagItemName())
             }
         }
