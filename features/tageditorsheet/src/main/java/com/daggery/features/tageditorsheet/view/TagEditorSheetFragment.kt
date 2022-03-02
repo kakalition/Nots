@@ -15,11 +15,11 @@ import com.daggery.features.tageditorsheet.viewmodel.TagEditorSheetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // TODO: Test: Is AddTagUseCase works as expected
 
-@AndroidEntryPoint
-class TagEditorSheetFragment : BottomSheetDialogFragment() {
+class TagEditorSheetFragment @Inject constructor(): BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "NewTagsDialog"

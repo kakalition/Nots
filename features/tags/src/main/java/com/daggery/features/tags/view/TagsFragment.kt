@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.daggery.features.tageditorsheet.view.TagEditorSheetFragment
 import com.daggery.features.tags.R
 import com.daggery.features.tags.adapter.TagListAdapter
@@ -46,23 +47,6 @@ class ManageTagsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _viewBinding = FragmentManageTagsBinding.inflate(inflater, container, false)
 
-/*
-        viewBinding.firstTag.apply {
-            root.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.gold_surface, null))
-            bgCircle.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.gold_surface_accent, null))
-            circleContent.text = "1"
-        }
-        viewBinding.secondTag.apply {
-            root.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.silver_surface, null))
-            bgCircle.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.silver_surface_accent, null))
-            circleContent.text = "2"
-        }
-        viewBinding.thirdTag.apply {
-            root.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.bronze_surface, null))
-            bgCircle.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.bronze_surface_accent, null))
-            circleContent.text = "3"
-        }
-*/
         return viewBinding.root
     }
 
@@ -130,6 +114,13 @@ class ManageTagsFragment : Fragment() {
                     tagCount.text = this@with[2].tagCount.toString()
                 }
             }
+        } else {
+            with(viewBinding) {
+                frequentlyUsedTitle.visibility = View.GONE
+                firstTag.root.visibility = View.GONE
+                secondTag.root.visibility = View.GONE
+                thirdTag.root.visibility = View.GONE
+            }
         }
     }
 
@@ -158,10 +149,7 @@ class ManageTagsFragment : Fragment() {
     }
 
     private fun bindsToolbar() {
-/*
-        with(viewBinding.toolbarBinding.toolbar) {
-            setNavigationIcon(SharedR.drawable.ic_back)
-            setNavigationOnClickListener { findNavController().navigateUp() }
+        with(viewBinding.tagsAppbar.toolbar) {
             inflateMenu(R.menu.menu_filter_fragment)
             menu.findItem(R.id.add_tags_button).icon.setTint(
                 MaterialColors.getColor(
@@ -171,9 +159,7 @@ class ManageTagsFragment : Fragment() {
                 )
             )
             setOnMenuItemClickListener(menuItemClickListener)
-            title = "Manage Tags"
         }
-*/
     }
 
     fun showDeleteDialog() {
