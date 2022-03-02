@@ -26,6 +26,9 @@ internal interface NoteDao {
     @Update
     suspend fun updateNote(note: NoteDataEntity)
 
+    @Update
+    suspend fun updateNotes(notes: List<NoteDataEntity>)
+
     @Delete
     suspend fun deleteNote(note: NoteDataEntity)
 

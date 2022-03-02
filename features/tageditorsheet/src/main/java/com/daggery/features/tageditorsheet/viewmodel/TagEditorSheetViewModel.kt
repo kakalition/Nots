@@ -3,6 +3,8 @@ package com.daggery.features.tageditorsheet.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daggery.data.usecases.note.GetNotesUseCase
+import com.daggery.data.usecases.note.UpdateNotesUseCase
 import com.daggery.data.usecases.tag.AddTagUseCase
 import com.daggery.data.usecases.tag.UpdateTagUseCase
 import com.daggery.domain.entities.NoteTag
@@ -13,6 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TagEditorSheetViewModel @Inject constructor(
+    private val getNotesUseCase: GetNotesUseCase,
+    private val updateNotesUseCase: UpdateNotesUseCase,
     private val getTagByIdUseCase: GetTagByIdUseCase,
     private val addTagUseCase: AddTagUseCase,
     private val updateTagUseCase: UpdateTagUseCase
