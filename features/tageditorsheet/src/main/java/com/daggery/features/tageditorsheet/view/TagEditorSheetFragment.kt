@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,7 @@ import javax.inject.Inject
 // TODO: Test: Is AddTagUseCase works as expected
 
 @AndroidEntryPoint
-class TagEditorSheetFragment @Inject constructor(): BottomSheetDialogFragment() {
+class TagEditorSheetFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "NewTagsDialog"
