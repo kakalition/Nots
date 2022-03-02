@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/opensans_semi_bold"
-            android:textSize="18dp"
+            android:textSize="24dp"
             tools:text="12"/>
     </FrameLayout>
 

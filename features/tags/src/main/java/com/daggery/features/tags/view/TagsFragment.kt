@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import com.daggery.features.tageditorsheet.view.TagEditorSheetFragment
 import com.daggery.features.tags.R
 import com.daggery.features.tags.adapter.TagListAdapter
 import com.daggery.features.tags.databinding.FragmentManageTagsBinding
+import com.daggery.features.tags.databinding.TileItemTagBinding
 import com.daggery.features.tags.viewmodel.TagsViewModel
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -43,6 +45,24 @@ class ManageTagsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _viewBinding = FragmentManageTagsBinding.inflate(inflater, container, false)
+
+/*
+        viewBinding.firstTag.apply {
+            root.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.gold_surface, null))
+            bgCircle.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.gold_surface_accent, null))
+            circleContent.text = "1"
+        }
+        viewBinding.secondTag.apply {
+            root.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.silver_surface, null))
+            bgCircle.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.silver_surface_accent, null))
+            circleContent.text = "2"
+        }
+        viewBinding.thirdTag.apply {
+            root.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.bronze_surface, null))
+            bgCircle.background.setTint(resources.getColor(com.daggery.sharedassets.R.color.bronze_surface_accent, null))
+            circleContent.text = "3"
+        }
+*/
         return viewBinding.root
     }
 
@@ -73,17 +93,44 @@ class ManageTagsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.manageTagsList.collect {
-                    tagListAdapter.submitList(it)
+                launch {
+                    viewModel.manageTagsList.collect {
+                        tagListAdapter.submitList(it)
+                        bindFrequentlyUsedTags()
+                    }
                 }
             }
         }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
         _tagListAdapter = null
+    }
+
+    private fun bindFrequentlyUsedTags() {
+        val frequentlyUsedTags = viewModel.getFrequentlyUsedTag()
+        if(frequentlyUsedTags.isNotEmpty()) {
+            with(frequentlyUsedTags) {
+                viewBinding.firstTag.apply {
+                    tagTitle.text = this@with[0].tagName
+                    circleContent.text = this@with[0].tagName[0].toString()
+                    tagCount.text = this@with[0].tagCount.toString()
+                }
+                viewBinding.secondTag.apply {
+                    tagTitle.text = this@with[1].tagName
+                    circleContent.text = this@with[1].tagName[0].toString()
+                    tagCount.text = this@with[1].tagCount.toString()
+                }
+                viewBinding.thirdTag.apply {
+                    tagTitle.text = this@with[2].tagName
+                    circleContent.text = this@with[2].tagName[0].toString()
+                    tagCount.text = this@with[2].tagCount.toString()
+                }
+            }
+        }
     }
 
     internal fun animateStatusBarColor(colorFrom: Int, colorTo: Int, duration: Long) {

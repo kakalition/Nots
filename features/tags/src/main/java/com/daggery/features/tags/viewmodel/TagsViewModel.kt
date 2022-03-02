@@ -36,6 +36,7 @@ class TagsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             launch {
+                // Get Tag Count
                 getTagsFlowUseCase().collect { noteTagList ->
                     val allTagsFromNotes = getNotesUseCase().flatMap { noteData -> noteData.noteTags }
                     val noteTagWithStatus = noteTagList.map { note ->
@@ -60,6 +61,10 @@ class TagsViewModel @Inject constructor(
         return NoteTagWithStatus(id, tagName, false, tagCount) { list, noteTagWithStatus ->
             select(list.toMutableList(), noteTagWithStatus)
         }
+    }
+
+    fun getFrequentlyUsedTag(): List<NoteTagWithStatus> {
+        return manageTagsList.value.sortedByDescending { it.tagCount }
     }
 
     private fun select(list: MutableList<NoteTagWithStatus>, noteTag: NoteTagWithStatus) {
