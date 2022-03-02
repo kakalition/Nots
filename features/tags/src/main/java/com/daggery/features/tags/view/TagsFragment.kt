@@ -1,9 +1,12 @@
 package com.daggery.features.tags.view
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -83,6 +86,17 @@ class ManageTagsFragment : Fragment() {
         _tagListAdapter = null
     }
 
+    internal fun animateStatusBarColor(colorFrom: Int, colorTo: Int, duration: Long) {
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+        colorAnimation.duration = duration
+        // TODO: Adjust Interpolator
+        colorAnimation.interpolator = DecelerateInterpolator()
+        colorAnimation.addUpdateListener { animator ->
+            requireActivity().window.statusBarColor = animator.animatedValue as Int
+        }
+        colorAnimation.start()
+    }
+
     private val menuItemClickListener = { item: MenuItem ->
         when(item.itemId) {
             R.id.add_tags_button -> {
@@ -133,6 +147,11 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     fun setCheckedCount(value: Int) { checkedCount = value }
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        fragment.animateStatusBarColor(
+            Color.parseColor("#FF84D9FF"),
+            Color.parseColor("#FF212121"),
+            300
+        )
         mode?.menuInflater?.inflate(R.menu.menu_filter_fragment_action_mode, menu)
         menu?.findItem(R.id.edit_button)?.icon?.setTint(Color.parseColor("#FFFAFAFA"))
         menu?.findItem(R.id.delete_button)?.icon?.setTint(Color.parseColor("#FFFAFAFA"))
@@ -179,6 +198,11 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
+        fragment.animateStatusBarColor(
+            Color.parseColor("#FF212121"),
+            Color.parseColor("#FF84D9FF"),
+            400
+        )
         fragment.actionMode = null
         fragment.viewModel.clearCheckedTags()
     }

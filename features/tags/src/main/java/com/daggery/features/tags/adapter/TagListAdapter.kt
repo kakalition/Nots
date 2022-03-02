@@ -20,7 +20,7 @@ class TagListAdapter(private val primaryColor: Int) : ListAdapter<NoteTagWithSta
                 true}
             viewBinding.tagTitle.text = noteTag.tagName
             viewBinding.circleContent.text = noteTag.tagName[0].toString()
-            viewBinding.tagCount.text = "8"
+            viewBinding.tagCount.text = noteTag.tagCount.toString()
 
             if(noteTag.isSelected) {
                 viewBinding.bgCircle.background.setTint(Color.parseColor("#FFFF6961"))
