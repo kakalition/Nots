@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.daggery.features.tageditorsheet.view.TagEditorSheetFragment
 import com.daggery.features.tags.R
 import com.daggery.features.tags.adapter.TagListAdapter
+import com.daggery.features.tags.data.NoteTagWithStatus
 import com.daggery.features.tags.databinding.FragmentManageTagsBinding
 import com.daggery.features.tags.viewmodel.TagsViewModel
 import com.google.android.material.color.MaterialColors
@@ -91,24 +92,48 @@ class ManageTagsFragment : Fragment() {
         _tagListAdapter = null
     }
 
+    private fun bindFirstTag(tagList: List<NoteTagWithStatus>) {
+        viewBinding.firstTag.apply {
+            tagTitle.text = tagList[0].tagName
+            circleContent.text = tagList[0].tagName[0].toString()
+            tagCount.text = tagList[0].tagCount.toString()
+        }
+    }
+
+    private fun bindSecondTag(tagList: List<NoteTagWithStatus>) {
+        viewBinding.secondTag.apply {
+            tagTitle.text = tagList[1].tagName
+            circleContent.text = tagList[1].tagName[0].toString()
+            tagCount.text = tagList[1].tagCount.toString()
+        }
+    }
+
+    private fun bindThirdTag(tagList: List<NoteTagWithStatus>) {
+        viewBinding.thirdTag.apply {
+            tagTitle.text = tagList[2].tagName
+            circleContent.text = tagList[2].tagName[0].toString()
+            tagCount.text = tagList[2].tagCount.toString()
+        }
+    }
+
     private fun bindFrequentlyUsedTags() {
         val frequentlyUsedTags = viewModel.getFrequentlyUsedTag()
-        if(frequentlyUsedTags.isNotEmpty()) {
-            with(frequentlyUsedTags) {
-                viewBinding.firstTag.apply {
-                    tagTitle.text = this@with[0].tagName
-                    circleContent.text = this@with[0].tagName[0].toString()
-                    tagCount.text = this@with[0].tagCount.toString()
+        if (frequentlyUsedTags.isNotEmpty()) {
+            when (frequentlyUsedTags.size) {
+                1 -> {
+                    bindFirstTag(frequentlyUsedTags)
+                    viewBinding.secondTag.root.visibility = View.GONE
+                    viewBinding.thirdTag.root.visibility = View.GONE
                 }
-                viewBinding.secondTag.apply {
-                    tagTitle.text = this@with[1].tagName
-                    circleContent.text = this@with[1].tagName[0].toString()
-                    tagCount.text = this@with[1].tagCount.toString()
+                2 -> {
+                    bindFirstTag(frequentlyUsedTags)
+                    bindSecondTag(frequentlyUsedTags)
+                    viewBinding.thirdTag.root.visibility = View.GONE
                 }
-                viewBinding.thirdTag.apply {
-                    tagTitle.text = this@with[2].tagName
-                    circleContent.text = this@with[2].tagName[0].toString()
-                    tagCount.text = this@with[2].tagCount.toString()
+                else -> {
+                    bindFirstTag(frequentlyUsedTags)
+                    bindSecondTag(frequentlyUsedTags)
+                    bindThirdTag(frequentlyUsedTags)
                 }
             }
         } else {
