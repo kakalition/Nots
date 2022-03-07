@@ -71,6 +71,14 @@ internal class NotesLocalDataSourceImpl @Inject constructor(
         )
     }
 
+    override suspend fun updateNotes(notes: List<NoteData>) {
+        noteDao.updateNotes(
+            notes.map {
+                noteDataEntityMapper.toNoteDataEntity(it)
+            }
+        )
+    }
+
     override suspend fun deleteNote(noteData: NoteData) = withContext(coroutineDispatcher) {
         noteDao.deleteNote(
             noteDataEntityMapper.toNoteDataEntity(noteData)

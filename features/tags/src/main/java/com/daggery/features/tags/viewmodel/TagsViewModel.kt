@@ -64,7 +64,13 @@ class TagsViewModel @Inject constructor(
     }
 
     fun getFrequentlyUsedTag(): List<NoteTagWithStatus> {
-        return manageTagsList.value.sortedByDescending { it.tagCount }
+        return manageTagsList.value
+            .sortedByDescending { it.tagCount }
+            .filter { it.tagCount != 0 }
+    }
+
+    fun getCheckedTagId(): Int {
+        return checkedTagList.value.single().id
     }
 
     private fun select(list: MutableList<NoteTagWithStatus>, noteTag: NoteTagWithStatus) {

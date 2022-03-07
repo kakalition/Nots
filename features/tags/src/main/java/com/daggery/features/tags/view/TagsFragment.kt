@@ -3,9 +3,7 @@ package com.daggery.features.tags.view
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
@@ -13,18 +11,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.daggery.features.tageditorsheet.view.TagEditorSheetFragment
 import com.daggery.features.tags.R
 import com.daggery.features.tags.adapter.TagListAdapter
+import com.daggery.features.tags.data.NoteTagWithStatus
 import com.daggery.features.tags.databinding.FragmentManageTagsBinding
-import com.daggery.features.tags.databinding.TileItemTagBinding
 import com.daggery.features.tags.viewmodel.TagsViewModel
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 // TODO: Configure ActionMode Color
 
@@ -35,8 +33,8 @@ class ManageTagsFragment : Fragment() {
     private val viewBinding get() = _viewBinding!!
 
     val viewModel: TagsViewModel by activityViewModels()
+    internal val newTagsDialog: TagEditorSheetFragment = TagEditorSheetFragment()
 
-    val newTagsDialog = TagEditorSheetFragment()
     var actionMode: ActionMode? = null
     private val tagsActionModeCallback = TagsActionModeCallback(this)
 
@@ -94,24 +92,48 @@ class ManageTagsFragment : Fragment() {
         _tagListAdapter = null
     }
 
+    private fun bindFirstTag(tagList: List<NoteTagWithStatus>) {
+        viewBinding.firstTag.apply {
+            tagTitle.text = tagList[0].tagName
+            circleContent.text = tagList[0].tagName[0].toString()
+            tagCount.text = tagList[0].tagCount.toString()
+        }
+    }
+
+    private fun bindSecondTag(tagList: List<NoteTagWithStatus>) {
+        viewBinding.secondTag.apply {
+            tagTitle.text = tagList[1].tagName
+            circleContent.text = tagList[1].tagName[0].toString()
+            tagCount.text = tagList[1].tagCount.toString()
+        }
+    }
+
+    private fun bindThirdTag(tagList: List<NoteTagWithStatus>) {
+        viewBinding.thirdTag.apply {
+            tagTitle.text = tagList[2].tagName
+            circleContent.text = tagList[2].tagName[0].toString()
+            tagCount.text = tagList[2].tagCount.toString()
+        }
+    }
+
     private fun bindFrequentlyUsedTags() {
         val frequentlyUsedTags = viewModel.getFrequentlyUsedTag()
-        if(frequentlyUsedTags.isNotEmpty()) {
-            with(frequentlyUsedTags) {
-                viewBinding.firstTag.apply {
-                    tagTitle.text = this@with[0].tagName
-                    circleContent.text = this@with[0].tagName[0].toString()
-                    tagCount.text = this@with[0].tagCount.toString()
+        if (frequentlyUsedTags.isNotEmpty()) {
+            when (frequentlyUsedTags.size) {
+                1 -> {
+                    bindFirstTag(frequentlyUsedTags)
+                    viewBinding.secondTag.root.visibility = View.GONE
+                    viewBinding.thirdTag.root.visibility = View.GONE
                 }
-                viewBinding.secondTag.apply {
-                    tagTitle.text = this@with[1].tagName
-                    circleContent.text = this@with[1].tagName[0].toString()
-                    tagCount.text = this@with[1].tagCount.toString()
+                2 -> {
+                    bindFirstTag(frequentlyUsedTags)
+                    bindSecondTag(frequentlyUsedTags)
+                    viewBinding.thirdTag.root.visibility = View.GONE
                 }
-                viewBinding.thirdTag.apply {
-                    tagTitle.text = this@with[2].tagName
-                    circleContent.text = this@with[2].tagName[0].toString()
-                    tagCount.text = this@with[2].tagCount.toString()
+                else -> {
+                    bindFirstTag(frequentlyUsedTags)
+                    bindSecondTag(frequentlyUsedTags)
+                    bindThirdTag(frequentlyUsedTags)
                 }
             }
         } else {
@@ -210,6 +232,7 @@ class TagsActionModeCallback(private val fragment: ManageTagsFragment) : ActionM
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         return when(item?.itemId) {
             R.id.edit_button -> {
+                fragment.newTagsDialog.id = fragment.viewModel.getCheckedTagId()
                 fragment.newTagsDialog.show(
                     fragment.requireActivity().supportFragmentManager,
                     TagEditorSheetFragment.TAG

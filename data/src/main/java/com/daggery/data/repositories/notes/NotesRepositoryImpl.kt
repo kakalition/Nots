@@ -36,6 +36,10 @@ internal class NotesRepositoryImpl @Inject constructor(private val notesLocalDat
         notesLocalDataSource.updateNote(noteData)
     }
 
+    override suspend fun updateNotes(notes: List<NoteData>) {
+        notesLocalDataSource.updateNotes(notes)
+    }
+
     override suspend fun deleteNote(noteData: NoteData) {
         notesLocalDataSource.deleteNote(noteData)
     }

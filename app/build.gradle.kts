@@ -21,6 +21,7 @@ dependencies {
     implementation(project(Modules.dashboard))
     implementation(project(Modules.notes))
     implementation(project(Modules.tags))
+    implementation(project(":features:tageditorsheet"))
     implementation(project(Modules.books))
 
     // Kotlin Json
