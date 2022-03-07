@@ -1,8 +1,8 @@
 <resources>
     <style name="Theme.Nots" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorSurface">#FFE4F6FF</item>
-        <item name="colorOnSurface">#FF212121</item>
-        <item name="colorPrimary">#FF84D9FF</item>
+        <item name="colorSurface">@color/surface_color</item>
+        <item name="colorOnSurface">@color/on_surface_color</item>
+        <item name="colorPrimary">#FF5AB0FF</item>
         <item name="colorOnPrimary">#FF212121</item>
         <item name="colorSecondary">#FFCBEFFF</item>
         <item name="colorOnSecondary">#FF212121</item>
@@ -17,8 +17,8 @@
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen.IconBackground">
-        <item name="windowSplashScreenBackground">@color/black_surface</item>
-        <item name="windowSplashScreenIconBackgroundColor">@color/white_surface</item>
+        <item name="windowSplashScreenBackground">@color/surface_color</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/on_surface_color</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground_black</item>
         <item name="postSplashScreenTheme">@style/Theme.Nots</item>
     </style>
