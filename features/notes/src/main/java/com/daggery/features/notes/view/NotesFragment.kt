@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.daggery.sharedassets.R as SharedR
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.daggery.data.common.DbNoteResult
 import com.daggery.domain.entities.NoteData
@@ -123,13 +124,11 @@ class NotesFragment : Fragment() {
     private val onNoteClickListener: (NoteData) -> Unit = { note ->
         val bundle = bundleOf(BundleKeys.UUID to note.uuid)
         Log.d("LOL UUID Home", note.uuid)
-        findNavController().navigate(com.daggery.sharedassets.R.id.action_homeFragment_to_addViewNoteFragment, bundle)
+        findNavController().navigate(SharedR.id.action_notesFragment_to_addViewNoteFragment, bundle)
     }
 
     private val fabOnClickListener = { _ : View ->
-        //val extras = FragmentNavigatorExtras(viewBinding.fab to "from_fab_to_add")
-        // TODO: Navigate
-        //findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddViewNoteFragment(uuid = ""), extras)
+        findNavController().navigate(SharedR.id.action_notesFragment_to_addViewNoteFragment)
     }
 
     private val onMenuItemClickListener: (MenuItem) -> Boolean = { item: MenuItem ->
