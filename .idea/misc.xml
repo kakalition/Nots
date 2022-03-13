@@ -139,6 +139,7 @@
         <entry key="features/dashboard/src/main/res/layout/tile_quick_action_item.xml" value="0.67" />
         <entry key="features/dashboard/src/main/res/layout/tile_tag.xml" value="0.782608695652174" />
         <entry key="features/dashboard/src/main/res/layout/tile_top_tags.xml" value="0.5" />
+        <entry key="features/noteeditor/src/main/res/layout/fragment_add_view_note.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/drawable/bg_note_item_filled.xml" value="0.242" />
         <entry key="features/notes/src/main/res/drawable/bg_note_item_filled_priority.xml" value="0.1615" />
         <entry key="features/notes/src/main/res/drawable/test.xml" value="0.1615" />
