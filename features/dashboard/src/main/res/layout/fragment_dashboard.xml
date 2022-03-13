@@ -47,7 +47,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="42dp" />
+                android:layout_height="48dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="28dp" />
+                android:layout_height="24dp" />
 
             <TextView
                 android:layout_marginHorizontal="22dp"
@@ -101,7 +101,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="8dp" />
 
-            <include android:id="@+id/last_written_note"
+            <include android:id="@+id/last_written_note_one"
+                layout="@layout/tile_dashboard_note_last" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <include android:id="@+id/last_written_note_two"
+                layout="@layout/tile_dashboard_note_last" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <include android:id="@+id/last_written_note_three"
                 layout="@layout/tile_dashboard_note_last" />
 
             <Space
