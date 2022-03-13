@@ -39,7 +39,7 @@ class ManageTagsFragment : Fragment() {
     private val tagsActionModeCallback = TagsActionModeCallback(this)
 
     private var _tagListAdapter: TagListAdapter? = null
-    internal val tagListAdapter get() = _tagListAdapter!!
+    private val tagListAdapter get() = _tagListAdapter!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

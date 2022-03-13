@@ -6,6 +6,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:fillViewport="true"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -46,19 +47,26 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="56dp" />
+                android:layout_height="42dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="22dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semi_bold"
+                android:text="Current Book"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
 
             <include layout="@layout/tile_current_book" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="36dp" />
-
-            <include layout="@layout/tile_quick_action"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="28dp" />
 
             <TextView
                 android:layout_width="match_parent"

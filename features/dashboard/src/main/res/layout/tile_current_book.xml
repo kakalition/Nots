@@ -7,6 +7,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        tools:background="@color/black"
         android:layout_marginHorizontal="22dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +21,6 @@
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorPrimary"
             android:background="@drawable/bg_rounded_corner"
-            android:minHeight="200dp"
             android:paddingHorizontal="22dp"
             android:paddingVertical="22dp">
 
@@ -34,10 +34,8 @@
                 android:maxLines="1"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@+id/current_book_description"
-                app:layout_constraintEnd_toStartOf="@id/current_book_total_notes"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Dream Journal" />
 
             <TextView
@@ -47,23 +45,47 @@
                 android:layout_marginEnd="15dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/opensans_regular"
+                android:layout_marginTop="8dp"
                 android:maxLines="2"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/current_book_title"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="All about dreams recollection." />
 
-            <TextView
-                android:id="@+id/current_book_total_notes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/opensans_light"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="46sp"
+            <Space
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="36" />
+                app:layout_constraintTop_toBottomOf="@id/current_book_description"
+                app:layout_constraintBottom_toTopOf="@id/detail_total_notes"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+            <include
+                android:id="@+id/detail_total_notes"
+                layout="@layout/tile_accessory_book_detail"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <include
+                android:id="@+id/detail_total_tags"
+                layout="@layout/tile_accessory_book_detail"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/detail_total_notes"
+                app:layout_constraintEnd_toStartOf="@id/detail_total_date"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <include
+                android:id="@+id/detail_total_date"
+                layout="@layout/tile_accessory_book_detail"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/detail_total_tags"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
