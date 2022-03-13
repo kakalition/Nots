@@ -3,17 +3,17 @@
         <item name="background">@color/black</item>
         <item name="colorSurface">@color/surface_color</item>
         <item name="colorOnSurface">@color/on_surface_color</item>
-        <item name="colorPrimary">#FF5AB0FF</item>
-        <item name="colorOnPrimary">#FF212121</item>
-        <item name="colorSecondary">#FFCBEFFF</item>
-        <item name="colorOnSecondary">#FF212121</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorOnPrimary">@color/on_primary_color</item>
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorOnSecondary">@color/on_secondary_color</item>
+        <item name="android:statusBarColor">?attr/colorSecondary</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackgroundColor">#FF212121</item>
-        <item name="actionModeTextColor">#FFFAFAFA</item>
+        <item name="actionModeBackgroundColor">@color/secondary_color</item>
+        <item name="actionModeTextColor">@color/on_secondary_color</item>
         <item name="actionModeStyle">@style/Widget.App.ActionMode</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
-        <item name="actionModeCloseDrawableColor">#FFFAFAFA</item>
+        <item name="actionModeCloseDrawableColor">@color/on_secondary_color</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
     </style>
 
