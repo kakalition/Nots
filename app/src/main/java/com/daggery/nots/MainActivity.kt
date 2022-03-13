@@ -1,6 +1,7 @@
 package com.daggery.nots
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
@@ -63,6 +64,14 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> false
+            }
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == SharedR.id.addViewNoteFragment) {
+                viewBinding.bottomNavigation.visibility = View.GONE
+            } else {
+                viewBinding.bottomNavigation.visibility = View.VISIBLE
             }
         }
 
