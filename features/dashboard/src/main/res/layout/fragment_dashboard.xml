@@ -72,8 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_marginHorizontal="22dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/opensans_regular"
-                android:text="Highlighted Note"
+                android:fontFamily="@font/opensans_semi_bold"
+                android:text="Dashboard Note"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp" />
 
@@ -92,7 +92,7 @@
                 android:layout_marginHorizontal="22dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/opensans_regular"
+                android:fontFamily="@font/opensans_semi_bold"
                 android:text="Last Written Note"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp" />
@@ -102,6 +102,8 @@
                 android:layout_height="8dp" />
 
             <include android:id="@+id/last_written_note_one"
+                android:visibility="gone"
+                tools:visibility="visible"
                 layout="@layout/tile_dashboard_note_last" />
 
             <Space
@@ -109,6 +111,8 @@
                 android:layout_height="12dp" />
 
             <include android:id="@+id/last_written_note_two"
+                android:visibility="gone"
+                tools:visibility="visible"
                 layout="@layout/tile_dashboard_note_last" />
 
             <Space
@@ -116,6 +120,8 @@
                 android:layout_height="12dp" />
 
             <include android:id="@+id/last_written_note_three"
+                android:visibility="gone"
+                tools:visibility="visible"
                 layout="@layout/tile_dashboard_note_last" />
 
             <Space
