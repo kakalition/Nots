@@ -26,11 +26,9 @@ class NoteListAdapter(
                 when (note.priority) {
                     0 -> {
                         listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled)
-                        bookmarkIcon.visibility = View.GONE
                     }
                     1 -> {
                         listItemLayout.setBackgroundResource(R.drawable.bg_note_item_filled_priority)
-                        bookmarkIcon.visibility = View.VISIBLE
                     }
                 }
 

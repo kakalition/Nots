@@ -148,13 +148,13 @@
         <entry key="features/notes/src/main/res/layout/chip_note_item.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/dialog_delete_all_notes.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/dialog_reorder_notes_chronologically.xml" value="0.2821718683197948" />
-        <entry key="features/notes/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="features/notes/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="features/notes/src/main/res/layout/fragment_tags_filter_bottom_sheet.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/illustration_empty.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/notes_appbar.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/tile_active_theme.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/layout/tile_material_you_theme.xml" value="0.26849080803762293" />
-        <entry key="features/notes/src/main/res/layout/tile_note_item.xml" value="0.7296875" />
+        <entry key="features/notes/src/main/res/layout/tile_note_item.xml" value="0.4441105769230769" />
         <entry key="features/notes/src/main/res/menu/menu_home_fragment.xml" value="0.2821718683197948" />
         <entry key="features/notes/src/main/res/menu/test.xml" value="0.2821718683197948" />
         <entry key="features/settings/src/main/res/layout/appbar_title.xml" value="0.2821718683197948" />
