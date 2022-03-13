@@ -11,10 +11,10 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_addViewNoteFragment"
+            android:id="@+id/action_notesFragment_to_addViewNoteFragment"
             app:destination="@id/addViewNoteFragment"/>
         <action
-            android:id="@+id/action_homeFragment_to_settingsFragment"
+            android:id="@+id/action_notesFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
 

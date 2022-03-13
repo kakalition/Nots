@@ -8,4 +8,5 @@ plugins {
 dependencies {
     addAndroidMaterial()
     addSplashScreen()
+    addNavigation()
 }

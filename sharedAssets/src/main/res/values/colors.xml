@@ -12,6 +12,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
 
+    <color name="hint_color">#FF868686</color>
+
     <color name="gold_surface">#FFFFF4B9</color>
     <color name="gold_surface_accent">#FFFFD700</color>
     <color name="silver_surface">#FFEAEAEA</color>

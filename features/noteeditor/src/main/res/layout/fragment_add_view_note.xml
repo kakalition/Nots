@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
     android:orientation="vertical"
-    android:transitionName="from_fab_to_add"
     tools:context="com.daggery.features.noteeditor.view.AddViewNoteFragment">
 
     <include
@@ -36,6 +35,7 @@
                 android:backgroundTint="?attr/colorSurface"
                 android:fontFamily="@font/opensans_bold"
                 android:hint="@string/fragment_add_view_note_title_hint"
+                android:textColorHint="@color/hint_color"
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:maxLines="1"
                 android:paddingStart="0dp"
@@ -76,6 +76,7 @@
                 android:fontFamily="@font/opensans_regular"
                 android:gravity="top"
                 android:hint="@string/fragment_add_view_note_body_hint"
+                android:textColorHint="@color/hint_color"
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:paddingStart="0dp"
                 android:paddingTop="0dp"
