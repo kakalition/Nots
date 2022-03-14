@@ -54,7 +54,10 @@ class ManageTagsFragment : Fragment() {
         bindsToolbar()
 
         _tagListAdapter = TagListAdapter(
-            MaterialColors.getColor(requireContext(), com.google.android.material.R.attr.colorPrimary, Color.parseColor("#FFFAFAFA"))
+            MaterialColors.getColor(requireContext(), com.google.android.material.R.attr.colorPrimary, Color.parseColor("#FFFAFAFA")),
+            MaterialColors.getColor(requireContext(), com.google.android.material.R.attr.colorSecondary, Color.parseColor("#FFFAFAFA")),
+            Color.parseColor("#FFF5426C"),
+            Color.parseColor("#FF636363"),
         )
         viewBinding.tagsRecyclerView.adapter = tagListAdapter
 

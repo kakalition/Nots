@@ -19,7 +19,7 @@
             android:id="@+id/current_book_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="?attr/colorPrimary"
+            android:backgroundTint="?attr/colorSecondary"
             android:background="@drawable/bg_rounded_corner"
             android:paddingHorizontal="22dp"
             android:paddingVertical="22dp">

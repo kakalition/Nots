@@ -4,10 +4,10 @@
     <color name="on_surface_color">#FFFAFAFA</color>
     <color name="surface_variant">#FF2E2E2E</color>
     <color name="on_surface_variant">#FFFAFAFA</color>
-    <color name="primary_color">#FF5AB0FF</color>
-    <color name="on_primary_color">#FF212121</color>
-    <color name="secondary_color">#FF2E2E2E</color>
-    <color name="on_secondary_color">#FFFFFFFF</color>
+    <color name="primary_color">#FF2E2E2E</color>
+    <color name="on_primary_color">#FFFFFFFF</color>
+    <color name="secondary_color">#FF5AB0FF</color>
+    <color name="on_secondary_color">#FF212121</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>

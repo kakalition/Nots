@@ -11,9 +11,15 @@ import com.daggery.features.tags.data.NoteTagWithStatus
 import com.daggery.features.tags.databinding.TileItemTagBinding
 import com.google.android.material.color.MaterialColors
 
-class TagListAdapter(private val primaryColor: Int) : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListViewHolder>(TagsDiff()) {
+class TagListAdapter(
+    private val primaryColor: Int,
+    private val secondaryColor: Int,
+    private val circleSelectedColor: Int,
+    private val rootSelectedColor: Int
+) : ListAdapter<NoteTagWithStatus, TagListAdapter.TagListViewHolder>(TagsDiff()) {
 
-    inner class TagListViewHolder(private val viewBinding: TileItemTagBinding) : RecyclerView.ViewHolder(viewBinding.root) {
+    inner class TagListViewHolder(private val viewBinding: TileItemTagBinding) :
+        RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(noteTag: NoteTagWithStatus) {
             viewBinding.root.setOnClickListener { noteTag.onClickListener(currentList, noteTag) }
             viewBinding.root.setOnLongClickListener { noteTag.onClickListener(currentList, noteTag)
@@ -23,11 +29,11 @@ class TagListAdapter(private val primaryColor: Int) : ListAdapter<NoteTagWithSta
             viewBinding.tagCount.text = noteTag.tagCount.toString()
 
             if(noteTag.isSelected) {
-                viewBinding.bgCircle.background.setTint(Color.parseColor("#FFFF6961"))
-                viewBinding.root.background.setTint(Color.parseColor("#1A000000"))
+                viewBinding.bgCircle.background.setTint(circleSelectedColor)
+                viewBinding.root.background.setTint(rootSelectedColor)
             } else {
-                viewBinding.bgCircle.background.setTintList(null)
-                viewBinding.root.background.setTintList(null)
+                viewBinding.bgCircle.background.setTint(secondaryColor)
+                viewBinding.root.background.setTint(primaryColor)
             }
         }
     }

@@ -10,6 +10,7 @@
         android:id="@+id/bg_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorSecondary"
         android:background="@drawable/bg_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/opensans_semi_bold"
             android:textSize="18sp"
-            android:textColor="?attr/colorOnSecondary"
+            android:textColor="?attr/colorOnPrimary"
             tools:text="Nots Feature" />
 
         <Space
@@ -58,7 +59,7 @@
             android:fontFamily="@font/opensans_regular"
             android:maxLines="3"
             android:textSize="14sp"
-            android:textColor="?attr/colorOnSecondary"
+            android:textColor="?attr/colorOnPrimary"
             tools:text="@string/lorem_ipsum" />
 
         <Space
@@ -71,7 +72,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/opensans_light"
             android:textSize="12sp"
-            android:textColor="?attr/colorOnSecondary"
+            android:textColor="?attr/colorOnPrimary"
             tools:text="Date: Friday, 01 October 2021" />
 
         <Space

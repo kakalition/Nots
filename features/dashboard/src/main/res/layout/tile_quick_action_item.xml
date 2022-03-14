@@ -10,7 +10,7 @@
     tools:layout_height="80dp">
 
     <FrameLayout
-        android:id="@+id/bg_circle"
+        android:id="@+id/note_index_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_circle"
@@ -36,7 +36,7 @@
         android:maxLines="1"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bg_circle"
+        app:layout_constraintStart_toEndOf="@id/note_index_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="New Note" />

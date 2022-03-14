@@ -36,7 +36,7 @@ class NoteListAdapter(
                 noteDate.text = "Date: ${dateParser(note.noteDate)}"
                 noteIndex.text = note.noteOrder.toString()
                 note.noteTags.forEach {
-                    val chip = LayoutInflater.from(chipGroup.context).inflate(R.layout.chip_note_item, chipGroup, false) as Chip
+                    val chip = LayoutInflater.from(chipGroup.context).inflate(R.layout.chip_note_it, chipGroup, false) as Chip
                     chip.text = it
                     chip.isCheckable = false
                     chip.isClickable = false

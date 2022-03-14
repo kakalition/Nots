@@ -1,7 +1,6 @@
 package com.daggery.features.dashboard.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import com.daggery.domain.entities.NoteData
 import com.daggery.features.dashboard.databinding.FragmentDashboardBinding
 import com.daggery.features.dashboard.databinding.TileCurrentBookBinding
-import com.daggery.features.dashboard.databinding.TileQuickActionBinding
 import com.daggery.features.dashboard.viewmodel.DashboardViewModel
 
 class DashboardFragment : Fragment() {
@@ -58,29 +56,35 @@ class DashboardFragment : Fragment() {
 
     private fun bindDashboardNote(value: NoteData) {
         viewBinding.higlightedNote.apply {
-            noteTitle.text = value.noteTitle
-            noteBody.text = value.noteBody
+            title.text = value.noteTitle
+            body.text = value.noteBody
         }
     }
 
     private fun bindLastWrittenNotes(value: List<NoteData>) {
         if(value.size >= 1) {
-            viewBinding.lastWrittenNoteOne.root.visibility = View.VISIBLE
-            viewBinding.lastWrittenNoteOne.noteIndex.text = value[0].noteOrder.toString()
-            viewBinding.lastWrittenNoteOne.noteTitle.text = value[0].noteTitle
-            viewBinding.lastWrittenNoteOne.noteBody.text = value[0].noteBody
+            with(viewBinding.lastWrittenNoteOne) {
+                root.visibility = View.VISIBLE
+                index.text = value[0].noteOrder.toString()
+                title.text = value[0].noteTitle
+                body.text = value[0].noteBody
+            }
         }
         if(value.size >= 2) {
-            viewBinding.lastWrittenNoteTwo.root.visibility = View.VISIBLE
-            viewBinding.lastWrittenNoteTwo.noteIndex.text = value[1].noteOrder.toString()
-            viewBinding.lastWrittenNoteTwo.noteTitle.text = value[1].noteTitle
-            viewBinding.lastWrittenNoteTwo.noteBody.text = value[1].noteBody
+            with(viewBinding.lastWrittenNoteTwo) {
+                root.visibility = View.VISIBLE
+                index.text = value[1].noteOrder.toString()
+                title.text = value[1].noteTitle
+                body.text = value[1].noteBody
+            }
         }
         if(value.size == 3) {
-            viewBinding.lastWrittenNoteThree.root.visibility = View.VISIBLE
-            viewBinding.lastWrittenNoteThree.noteIndex.text = value[2].noteOrder.toString()
-            viewBinding.lastWrittenNoteThree.noteTitle.text = value[2].noteTitle
-            viewBinding.lastWrittenNoteThree.noteBody.text = value[2].noteBody
+            with(viewBinding.lastWrittenNoteThree) {
+                root.visibility = View.VISIBLE
+                index.text = value[2].noteOrder.toString()
+                title.text = value[2].noteTitle
+                body.text = value[2].noteBody
+            }
         }
     }
 }
