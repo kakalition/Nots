@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/surface_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,7 +20,9 @@
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:visibility="gone" />
+        tools:listitem="@layout/tile_note_item"
+        tools:itemCount="5"
+        tools:visibility="visible" />
 
     <include
         android:id="@+id/empty_notes_layout_binding"
