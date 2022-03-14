@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/opensans_semi_bold"
+            android:fontFamily="@font/opensans_regular"
             android:textColor="?attr/colorOnSurface"
-            android:textSize="22dp"
+            android:textSize="22sp"
             tools:text="1" />
 
     </FrameLayout>
@@ -49,7 +49,7 @@
             android:fontFamily="@font/opensans_semi_bold"
             android:maxLines="1"
             android:textColor="?attr/colorOnPrimary"
-            android:textSize="22sp"
+            android:textSize="20sp"
             tools:text="New Note" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:fontFamily="@font/opensans_light"
             android:maxLines="3"
             android:textColor="?attr/colorOnPrimary"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text="Body" />
 
     </LinearLayout>

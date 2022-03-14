@@ -17,7 +17,7 @@
         android:fontFamily="@font/opensans_semi_bold"
         android:textColor="?attr/colorOnPrimary"
         android:maxLines="1"
-        android:textSize="22dp"
+        android:textSize="20dp"
         tools:text="New Note" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/opensans_light"
         android:maxLines="3"
-        android:textSize="16dp"
+        android:textSize="14dp"
         tools:text="Body" />
 
 </LinearLayout>
