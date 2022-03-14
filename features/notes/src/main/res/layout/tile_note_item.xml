@@ -46,6 +46,10 @@
             android:textColor="?attr/colorOnSecondary"
             tools:text="Nots Feature" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
         <TextView
             android:id="@+id/note_body"
             android:layout_width="match_parent"
@@ -53,11 +57,13 @@
             android:ellipsize="end"
             android:fontFamily="@font/opensans_regular"
             android:maxLines="3"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
             android:textSize="14sp"
             android:textColor="?attr/colorOnSecondary"
             tools:text="@string/lorem_ipsum" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="3dp"/>
 
         <TextView
             android:id="@+id/note_date"
@@ -68,8 +74,11 @@
             android:textColor="?attr/colorOnSecondary"
             tools:text="Date: Friday, 01 October 2021" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+
         <com.google.android.material.chip.ChipGroup
-            android:layout_marginTop="8dp"
             android:id="@+id/chip_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

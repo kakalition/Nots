@@ -25,4 +25,9 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
+    <style name="ChipAppearance" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">20dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
 </resources>
